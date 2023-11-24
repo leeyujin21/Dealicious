@@ -1,0 +1,97 @@
+/* index.css */
+/* Pacifico-Regular.ttf 파일 경로 설정 */
+@font-face {
+  font-family: 'Pacifico-Regular';
+  src: local('Pacifico-Regular'), url('\Pacifico-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'NotoSansKR-VariableFont_wght';
+  src: local('NotoSansKR-VariableFont_wght'), url('\NotoSansKR-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'ttangs';
+  src: local('ttangs'), url('\ttangs.ttf') format('truetype');
+}
+
+::-webkit-scrollbar {
+  width: 5px;  /* 세로축 스크롤바 폭 너비 */
+}
+::-webkit-scrollbar-thumb {
+  background: #E6E6E6; /* 스크롤바 막대 색상 */
+  border-radius: 12px 12px 12px 12px;
+}
+
+#root{
+  margin: 0 auto;
+  width: 430px;
+}
+
+.main {
+  font-family: 'NotoSansKR-VariableFont_wght';
+  width: 430px;
+  padding-right: 50px;
+  padding-left: 50px;
+}
+
+/* 헤더에 Pacifico 폰트 적용 */
+.navbar-brand {
+  font-family: 'Pacifico-Regular', sans-serif;
+}
+
+@media (max-width: 768px) {
+  /* 화면 폭이 768px 이하일 때의 스타일 */
+  .navbar-toggler {
+    display: none; /* 햄버거 아이콘 숨기기 */
+  }
+
+  .navbar-nav .nav-item {
+    margin-right: 20px; /* 각 항목 간격 조절 */
+  }
+}
+
+/* nav태그 아래의 자식들을 수평정렬하기 위한 설정 */
+.nav {
+  overflow: hidden;
+  border-top: 1px solid #E6E6E6;
+  height: 100px;
+}
+/* nav태그 아래의 div태그들을 수평정렬 및 세로길이 설정 */
+.nav > div {
+  /* 수평정렬, 4개의 button을 각각 25% width만큼 할당 */
+  text-align: center;
+  float: left;
+  width: 25%;
+  line-height: 45px;
+  padding-top: 5%;
+}
+
+/* 네비바 하단 고정 밑 세로 길이 설정 */
+.b_wrapper {
+  position: relative;
+  text-align: center;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 90px;
+  width: 430px;
+  background-color: white;
+} 
+
+.t_wrapper {
+  text-align: center;
+  left:0;
+  top:0;
+  height:90px;
+  width:430px;
+  border-bottom:1px solid #E6E6E6;
+  position:relative;
+}
+
+.logo{
+  font-size: 35px;
+  margin-left: 20px;
+  margin-top: 10px;
+  color:#00FFAB;
+}
