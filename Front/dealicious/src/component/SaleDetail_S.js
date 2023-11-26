@@ -1,6 +1,7 @@
 import React from 'react';
 import { IoArrowBackOutline } from "react-icons/io5";
 import './img.css';
+import { Input } from 'reactstrap';
 function SaleDetail_S(){
     return(
     <div className='main' style={{textAlign:'left',overflow:"scroll", height:"742px", overflowX:"hidden"}}> 
@@ -8,7 +9,7 @@ function SaleDetail_S(){
          <IoArrowBackOutline size="30" color="14C38E"/>
          <div style={{color:"#14C38E" ,fontSize:"25px" ,textAlign:"center"}}><b>디스펜서 팝니다!</b></div>
         <b>가전제품</b><br/>
-        <img src="./1.png"style={{width:"353px", height:"209px"}}/>
+        <img src="./1.png"style={{width:"328px", height:"209px"}}/>
         <br/><br/>
         <table style={{marginTop:"15px"}}>
                     <tr>
@@ -27,11 +28,11 @@ function SaleDetail_S(){
                     &nbsp;&nbsp;&nbsp;
         </table>
         <div>
-        &nbsp;&nbsp;<span>상세설명</span><textarea cols="40" rows="10" placeholder="
+        &nbsp;&nbsp;<div><span>상세설명</span><span>A동근처</span></div><Input cols="40" rows="10" placeholder="
             디스펜서 팔아요!산지는 3개월 됐는데
             거의 안 써서 미개봉 제품이랑 별 차이
             없습니다!
-            A동 8층까지 오시면 5천원 깎아드려요 "style={{borderRadius:"10px"}}></textarea>
+            A동 8층까지 오시면 5천원 깎아드려요 "style={{borderRadius:"10px",width:"328px",height:"300px"}}></Input>
         </div>
         <div>
         <img src="./zzimheart.png"/>&nbsp; <span>60000원</span>&nbsp;&nbsp;&nbsp;<img src="./꿀2.png"className="right-align"style={{marginLeft:"auto"}}/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

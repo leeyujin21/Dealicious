@@ -6,56 +6,77 @@ function Chatlist(){
   
     return (
         <div className='main' style={{textAlign:'left',overflow:"scroll", height:"742px", overflowX:"hidden"}}>
-            <h2>채팅</h2>
-                <img src="./선1.png" style={{width:"350px",color:"#000000"}}/>
-                    <table style={{marginTop:"15px"}}>
-                    <td rowSpan={3}><img src="./profile.png"/></td>
-                    <td style={{fontSize:"16px",width:"50px"}}> 아이셔</td>
-                    &nbsp;&nbsp;&nbsp;<span style={{ width: "340px" ,textAlign:"left" ,color:"gray"  }}>전자제품</span>&nbsp;&nbsp;&nbsp;<span style={{ width: "340px" ,textAlign:"left" ,color:"gray"  }}>2023.11.15</span>
-                    <br/>
-                    <div style={{fontSize:"15px",color:"gray"}}>네 금방 도착합니다. 곧 뵙겠습니다~<img src="./tablet.png"/></div>
-                    </table>
-                <img src="./선1.png" style={{width:"350px",color:"#000000"}}/>
-                    <table style={{marginTop:"15px"}}>
-                    <td rowSpan={3}><img src="./profile.png"/></td>
-                    <td style={{fontSize:"16px",width:"50px"}}> 아이셔</td>
-                    &nbsp;&nbsp;&nbsp;<span style={{ width: "340px" ,textAlign:"left" ,color:"gray"  }}>전자제품</span>&nbsp;&nbsp;&nbsp;<span style={{ width: "340px" ,textAlign:"left" ,color:"gray"  }}>2023.11.15</span>
-                    <br/>
-                    <div style={{fontSize:"15px",color:"gray"}}>네 금방 도착합니다. 곧 뵙겠습니다~<img src="./tablet.png"/></div>
-                    </table>
-                <img src="./선1.png" style={{width:"350px",color:"#000000"}}/>
-                    <table style={{marginTop:"15px"}}>
-                    <td rowSpan={3}><img src="./profile.png"/></td>
-                    <td style={{fontSize:"16px",width:"50px"}}> 아이셔</td>
-                    &nbsp;&nbsp;&nbsp;<span style={{ width: "340px" ,textAlign:"left" ,color:"gray"  }}>전자제품</span>&nbsp;&nbsp;&nbsp;<span style={{ width: "340px" ,textAlign:"left" ,color:"gray"  }}>2023.11.15</span>
-                    <br/>
-                    <div style={{fontSize:"15px",color:"gray"}}>네 금방 도착합니다. 곧 뵙겠습니다~<img src="./tablet.png"/></div>
-                    </table>
-                <img src="./선1.png" style={{width:"350px",color:"#000000"}}/>
-                    <table style={{marginTop:"15px"}}>
-                    <td rowSpan={3}><img src="./profile.png"/></td>
-                    <td style={{fontSize:"16px",width:"50px"}}> 아이셔</td>
-                    &nbsp;&nbsp;&nbsp;<span style={{ width: "340px" ,textAlign:"left" ,color:"gray"  }}>전자제품</span>&nbsp;&nbsp;&nbsp;<span style={{ width: "340px" ,textAlign:"left" ,color:"gray"  }}>2023.11.15</span>
-                    <br/>
-                    <div style={{fontSize:"15px",color:"gray"}}>네 금방 도착합니다. 곧 뵙겠습니다~<img src="./tablet.png"/></div>
-                    </table>
-                <img src="./선1.png" style={{width:"350px",color:"#000000"}}/>
-                    <table style={{marginTop:"15px"}}>
-                    <td rowSpan={3}><img src="./profile.png"/></td>
-                    <td style={{fontSize:"16px",width:"50px"}}> 아이셔</td>
-                    &nbsp;&nbsp;&nbsp;<span style={{ width: "340px" ,textAlign:"left" ,color:"gray"  }}>전자제품</span>&nbsp;&nbsp;&nbsp;<span style={{ width: "340px" ,textAlign:"left" ,color:"gray"  }}>2023.11.15</span>
-                    <br/>
-                    <div style={{fontSize:"15px",color:"gray"}}>네 금방 도착합니다. 곧 뵙겠습니다~<img src="./tablet.png"/></div>
-                    </table>
-                 <img src="./선1.png" style={{width:"350px",color:"#000000"}}/>
+            <div style={{borderBottom:"1px solid",fontSize:"18px"}}>채팅</div>
                 
-                    <table style={{marginTop:"15px"}}>
-                    <td rowSpan={3}><img src="./profile.png"/></td>
-                    <td style={{fontSize:"16px",width:"50px"}}> 아이셔</td>
-                    &nbsp;&nbsp;&nbsp;<span style={{ width: "340px" ,textAlign:"left" ,color:"gray"  }}>전자제품</span>&nbsp;&nbsp;&nbsp;<span style={{ width: "340px" ,textAlign:"left" ,color:"gray"  }}>2023.11.15</span>
-                    <div style={{fontSize:"15px",color:"gray"}}>네 금방 도착합니다. 곧 뵙겠습니다~ <img src="./tablet.png"/></div>
-                    </table>
-       
+            <table style={{marginTop:"15px"}}>
+                <tr>
+                <td rowSpan={2}><img src="./profile.png"/></td>
+                <td  style={{width:"120px",fontSize:"15px"}}> 아이셔</td>
+                <td  style={{width:"140px",color:"gray",fontSize:"12px"}}>전자제품</td>&nbsp;
+                <td  style={{width:"120px",color:"gray",fontSize:"15px"}}>2023.11.15</td>&nbsp;
+                <td rowSpan={2}><img src="./tablet.png"/></td>
+                </tr>
+                <tr>
+                <td colSpan={5} style={{width:"300px",fontSize:"13px",color:"gray"}}>네 금방 도착합니다. 곧 뵙겠습니다~</td>
+                </tr>
+               
+            </table >
+            
+            <table style={{marginTop:"15px",borderTop:"1px solid gray"}}>
+                <br/>
+                <tr>
+                    
+                <td rowSpan={2}><img src="./profile.png"/></td>
+                <td  style={{width:"120px",fontSize:"15px"}}> 아이셔</td>
+                <td  style={{width:"140px",color:"gray",fontSize:"12px"}}>전자제품</td>&nbsp;
+                <td  style={{width:"120px",color:"gray",fontSize:"15px"}}>2023.11.15</td>&nbsp;
+                <td rowSpan={2}><img src="./tablet.png"/></td>
+                </tr>
+                <tr>
+                <td colSpan={5} style={{width:"300px",fontSize:"13px",color:"gray"}}>네 금방 도착합니다. 곧 뵙겠습니다~</td>
+                </tr>
+            </table >
+            <table style={{marginTop:"15px",borderTop:"1px solid gray"}}>
+                <br/>
+                <tr>
+                <td rowSpan={2}><img src="./profile.png"/></td>
+                <td  style={{width:"120px",fontSize:"15px"}}> 아이셔</td>
+                <td  style={{width:"140px",color:"gray",fontSize:"12px"}}>전자제품</td>&nbsp;
+                <td  style={{width:"120px",color:"gray",fontSize:"15px"}}>2023.11.15</td>&nbsp;
+                <td rowSpan={2}><img src="./tablet.png"/></td>
+                </tr>
+                <tr>
+                <td colSpan={5} style={{width:"300px",fontSize:"13px",color:"gray"}}>네 금방 도착합니다. 곧 뵙겠습니다~</td>
+                </tr>
+            </table >
+            <table style={{marginTop:"15px",borderTop:"1px solid gray"}}>
+                <br/>
+                <tr>
+                <td rowSpan={2}><img src="./profile.png"/></td>
+                <td  style={{width:"120px",fontSize:"15px"}}> 아이셔</td>
+                <td  style={{width:"140px",color:"gray",fontSize:"12px"}}>전자제품</td>&nbsp;
+                <td  style={{width:"120px",color:"gray",fontSize:"15px"}}>2023.11.15</td>&nbsp;
+                <td rowSpan={2}><img src="./tablet.png"/></td>
+                </tr>
+                <tr>
+                <td colSpan={5} style={{width:"300px",fontSize:"13px",color:"gray"}}>네 금방 도착합니다. 곧 뵙겠습니다~</td>
+                </tr>
+            </table >
+            <table style={{marginTop:"15px",borderTop:"1px solid gray"}}>
+                <br/>
+                <tr>
+                <td rowSpan={2}><img src="./profile.png"/></td>
+                <td  style={{width:"120px",fontSize:"15px"}}> 아이셔</td>
+                <td  style={{width:"140px",color:"gray",fontSize:"12px"}}>전자제품</td>&nbsp;
+                <td  style={{width:"120px",color:"gray",fontSize:"15px"}}>2023.11.15</td>&nbsp;
+                <td rowSpan={2}><img src="./tablet.png"/></td>
+                </tr>
+                <tr>
+                <td colSpan={5} style={{width:"300px",fontSize:"13px",color:"gray"}}>네 금방 도착합니다. 곧 뵙겠습니다~</td>
+                </tr>
+            </table >
+            <br/>
+                <div style={{borderBottom:"1px solid gray"}}></div>
         
         </div>
        
