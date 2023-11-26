@@ -14,6 +14,7 @@ import NotiActivity from './component/NotiActivity';
 import NotiKeyword from './component/NotiKeyword';
 import Keyword from './component/Keyword';
 import Search from './component/Search';
+import Chat from './component/Chat';
 
 function App() {
     return (
@@ -29,6 +30,7 @@ function App() {
                 <Route exect path="/notikeyword" element={<NotiKeyword/>}/>
                 <Route exect path="/keyword" element={<Keyword/>}/>
                 <Route exect path="/search" element={<Search/>}/>
+                <Route exect path="/chat" element={<Chat/>}/>
             </Routes>
         </div>
     );
