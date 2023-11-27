@@ -3,8 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {Routes, Route} from 'react-router-dom';
 import Main from './component/Main';
 import './index.css';
-import DEALBottom from './component/DEALBottom';
-import DEALTop from './component/DEALTop';
+
 import AdminMy from './component/AdminMy';
 import AdminMyModi from './component/AdminMyModi';
 import AdminMain from './component/AdminMain';
@@ -27,11 +26,25 @@ import Changepassword from './component/Changepassword';
 import Mypage_zzim from './component/Mypage_zzim';
 import Mypage_review from './component/Mypage_review';
 
+import CategoryDetail from './component/CategoryDetail';
+import Category2 from './component/Category2';
+import Chatlist from './component/chatlist';
+import SaleList from './component/SaleList';
+import SaleWrite from './component/SaleWrite';
+import SaleDetail from './component/SaleDetail';
+import SaleDetail_S from './component/SaleDetail_S';
+import SaleModify from './component/SaleModify';
+
+
+
+
+
 function App() {
     return (
         <div className='App' style={{height:"742px"}}>
             <Routes>
                 <Route exect path="/" element={<Main/>}/>
+
                 <Route exect path="/adminmy" element={<AdminMy/>}/>
                 <Route exect path="/adminmymodi" element={<AdminMyModi/>}/>
                 <Route exect path="/adminmain" element={<AdminMain/>}/>
@@ -53,10 +66,25 @@ function App() {
                 <Route exect path="/profiledetail" element={<Profiledetail/>}/>
                 <Route exect path="/profilemodify" element={<Profilemodify/>}/>
                 <Route exect path="/changepassword" element={<Changepassword/>}/>
+
+                <Route exect path="/categorydetail" element={<CategoryDetail/>}/>
+                <Route path="/category2" element={<Category2/>}></Route>
+                <Route path="/chatlist" element={<Chatlist/>}></Route>
+                <Route path="/salelist" element={<SaleList/>}></Route>
+                <Route path="/salewrite" element={<SaleWrite/>}></Route>
+                <Route path="/saledetail" element={<SaleDetail/>}></Route>
+                <Route path="/saledetail_s" element={<SaleDetail_S/>}></Route>
+                <Route path="/salemodify" element={<SaleModify/>}></Route>
+                
+
+
+
             </Routes>
+             
         </div>
     );
 }
 
 
 export default App;
+

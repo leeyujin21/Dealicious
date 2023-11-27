@@ -16,6 +16,7 @@ const DEALBottom = () => {
           <Link to={"/"}>
             <AiFillHome size='38' color='72DBBB' />
           </Link>
+          
         </div>
         <div>
           <Link to={"/salelist"}>
