@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { GoArrowLeft } from "react-icons/go";
+import { Link } from "react-router-dom";
+
 
 const NotiKeyword = () => {
 
+  function toKeyword(e) {
+    window.location.href="/keyword"
+}
   return (
     <div className='notiKeyword' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
       <br />
@@ -51,7 +56,9 @@ const NotiKeyword = () => {
           </tr>
         </table>
         <br/><br/>
+        <Link to="/keyword">
         <button style={{width:"150px",height:"40px",borderRadius:"5px", backgroundColor:"#D9D9D9",border:"white",fontWeight:"bold"}}>키워드 등록하기</button>
+        </Link>
       </div>
     </div>
   );
