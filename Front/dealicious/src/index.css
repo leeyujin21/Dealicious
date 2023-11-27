@@ -31,8 +31,10 @@
 .main {
   font-family: 'NotoSansKR-VariableFont_wght';
   width: 430px;
+  padding-top: 20px;
   padding-right: 50px;
   padding-left: 50px;
+  padding-bottom: 20px;
 }
 
 /* 헤더에 Pacifico 폰트 적용 */
