@@ -30,17 +30,21 @@ function SaleWrite(){
         <img src="./꿀2.png"className="right-align"style={{marginLeft:"auto"}}/>
         </span>
        
-        <form>
-
-        <div className='price'>
-        <p>가격</p>
-        <Input type="text" placeholder="10,000원" style={{borderRadius:"5px",height:"40px" ,width:"120px"}}></Input>
-        </div>
-        <div className='place'>
-        <p>장소</p>
-        <Input type="text" placeholder="A동 1층" style={{borderRadius:"5px",height:"40px",width:"120px"}}></Input>
-        </div>
-        </form>
+        
+        <table>
+        <tr className='price' colspan={2}>
+        <td>가격</td>
+        <Input type="text" placeholder="10,000원" style={{borderRadius:"5px",height:"40px" ,width:"120px",float:"left"}}></Input>
+        
+       
+       
+        <tr className='place'colspan={2} style={{marginLeft:"70px"}}>
+        <td>장소</td>
+        <Input type="text" placeholder="A동 1층" style={{borderRadius:"5px",height:"40px",width:"120px", float:"right"}}></Input>
+        </tr>
+        </tr>
+        </table>
+        
         <br/>
         
         <div>
