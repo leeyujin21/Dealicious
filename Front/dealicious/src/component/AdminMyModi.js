@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { GoArrowLeft } from "react-icons/go";
+import { Link } from "react-router-dom";
 
 const AdminMyModi = () => {
 
@@ -33,7 +34,9 @@ const AdminMyModi = () => {
       <input style={{width:"360px",height:"50px",borderRadius:"10px",border:"1px solid gray", marginBottom:"25px"}} placeholder='  새 비밀번호를 한번 더 입력하세요'></input>
       </div>
       <br/><br/>
+      <Link to="/adminmy">
       <button style={{width:"360px",height:"50px",borderRadius:"10px", backgroundColor:"#14C38E",border:"white",fontWeight:"bold",color:"white"}}>비밀번호 변경</button>
+      </Link>
       </div>
     </div>
   );

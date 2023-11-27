@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { GoArrowLeft } from "react-icons/go";
+import { Link } from "react-router-dom";
 
 const AdminMy = () => {
 
@@ -30,7 +31,9 @@ const AdminMy = () => {
         <br/>
       </div>
       <br/><br/>
+      <Link to="/adminmymodi">
       <button style={{width:"360px",height:"50px",borderRadius:"10px", backgroundColor:"#14C38E",border:"white",fontWeight:"bold",color:"white"}}>회원 정보 수정</button>
+      </Link>
     </div>
     </div>
   );
