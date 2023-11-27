@@ -5,9 +5,7 @@ import { Link } from "react-router-dom";
 
 const NotiKeyword = () => {
 
-  function toKeyword(e) {
-    window.location.href="/keyword"
-}
+ 
   return (
     <div className='notiKeyword' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
       <br />
