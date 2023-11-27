@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FaStar } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { Button, FormGroup, Input, Label } from "reactstrap";
+import { Button, FormGroup, Label } from "reactstrap";
 
 const Mypage_review = () => {
     const [Image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
@@ -11,8 +11,9 @@ const Mypage_review = () => {
     function toProfileDetail(e) {
         window.location.href="/profiledetail"
     }
-
+    
     return (
+        
         <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", paddingTop:"50px"}}>
             <FormGroup style={{textAlign:"left", paddingBottom:"10px"}}>
                 <IoArrowBackOutline style={{marginRight:"80px"}} size="30" color="#14C38E"/>
@@ -53,40 +54,44 @@ const Mypage_review = () => {
             </div>
             <div style={{height:"10px"}}/>
             <div style={{height:"10px"}}/>
-            <div style={{ display:"inline-block", paddingRight:"10px"}}>
-                <div style ={{width:"100px", height:"100px", 'background-color':"red", borderRadius:"10px", position:"relative"}}>
-                    <div style ={{width:"100px", height:"100px", 'background-color':"lightgray", opacity:"0.7", borderRadius:"10px", position:"absolute"}}>
-                        <a style={{fontWeight:"bold", verticalAlign:"center"}}>예약중</a>
+            <div style={{marginLeft:"5px", display:"flex", width:"100%", height:"80px", borderBottom:"1px solid lightgray"}}>
+                <Avvvatars 
+                    src={Image} 
+                    style={{margin:'20px'}} 
+                    size={55} 
+                    onClick={()=>{fileInput.current.click()}}
+                />
+                <div style={{marginLeft:"10px", fontWeight:"bold", textAlign:"left"}}>
+                    &nbsp;어깡이
+                    <br/>
+                    <div>
+                        <FaStar size="25" color="#F2D43E"/>
+                        <FaStar size="25" color="#F2D43E"/>
+                        <FaStar size="25" color="#F2D43E"/>
+                        <FaStar size="25" color="#F2D43E"/>
+                        <FaStar size="25" color="#F2D43E"/>
                     </div>
                 </div>
-                <div style={{textAlign:"left"}}>
-                    50,000원
-                </div>
-                <div style={{textAlign:"left"}}>
-                    <a style={{fontSize:"11px"}}>접시 세트 판매합니다.</a>
-                </div>
+                <div style ={{width:"55px", height:"55px", 'background-color':"red", borderRadius:"10px", marginLeft:"75px"}}/>
             </div>
-            <div style={{ display:"inline-block", paddingRight:"10px"}}>
-                <div style ={{width:"100px", height:"100px", 'background-color':"red", borderRadius:"10px"}}/>
-                <div style={{textAlign:"left"}}>
-                    50,000원
+            <div style={{marginTop:"20px", marginLeft:"5px", display:"flex", width:"100%", height:"80px", borderBottom:"1px solid lightgray"}}>
+                <Avvvatars 
+                    src={Image} 
+                    style={{margin:'20px'}} 
+                    size={55} 
+                    onClick={()=>{fileInput.current.click()}}
+                />
+                <div style={{marginLeft:"10px", fontWeight:"bold", textAlign:"left"}}>
+                    &nbsp;어깡이
+                    <br/>
+                    <div>
+                        <FaStar size="25" color="#F2D43E"/>
+                        <FaStar size="25" color="#F2D43E"/>
+                        <FaStar size="25" color="#F2D43E"/>
+                    </div>
                 </div>
-                <div style={{textAlign:"left"}}>
-                    <a style={{fontSize:"11px"}}>접시 세트 판매합니다.</a>
-                </div>
+                <div style ={{width:"55px", height:"55px", 'background-color':"red", borderRadius:"10px", marginLeft:"125px"}}/>
             </div>
-            <div style={{ display:"inline-block"}}>
-                <div style ={{width:"100px", height:"100px", 'background-color':"red", borderRadius:"10px"}}/>
-                <div style={{textAlign:"left"}}>
-                    50,000원
-                </div>
-                <div style={{textAlign:"left"}}>
-                    <a style={{fontSize:"11px"}}>접시 세트 판매합니다.</a>
-                </div>
-            </div>
-            {/* <div style ={{width:"100px", height:"100px", 'background-color':"red", display:"inline-block", borderRadius:"10px"}}/>
-            &nbsp;&nbsp;&nbsp;
-            <div style ={{width:"100px", height:"100px", 'background-color':"red", display:"inline-block", borderRadius:"10px"}}/> */}
         </div>
     )
 }

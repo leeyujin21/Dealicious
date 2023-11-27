@@ -4,7 +4,7 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { FaStar } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { Button, FormGroup, Input, Label } from "reactstrap";
-import { RiHeart3Line } from "react-icons/ri";
+import { IoHeartCircleOutline } from "react-icons/io5";
 
 const Mypage_zzim = () => {
     const [Image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
@@ -56,8 +56,8 @@ const Mypage_zzim = () => {
             <div style={{height:"10px"}}/>
             <div style={{ display:"inline-block", paddingRight:"10px"}}>
                 <div style ={{width:"100px", height:"100px", 'background-color':"red", borderRadius:"10px", position:"relative"}}>
-                    <div style={{textAlign:"left", marginLeft:"5px"}}>
-                        <RiHeart3Line color="white" size="20"/>
+                    <div style={{textAlign:"left", marginLeft:"3px", paddingTop:"3px"}}>
+                        <IoHeartCircleOutline color="#E57070" size="30"/>
                     </div>
                 </div>
                 <div style={{textAlign:"left"}}>
