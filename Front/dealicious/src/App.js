@@ -28,12 +28,14 @@ import Mypage_review from './component/Mypage_review';
 
 import CategoryDetail from './component/CategoryDetail';
 import Category2 from './component/Category2';
-import Chatlist from './component/Chatlist';
+import Chatlist from './component/chatlist';
 import SaleList from './component/SaleList';
 import SaleWrite from './component/SaleWrite';
 import SaleDetail from './component/SaleDetail';
 import SaleDetail_S from './component/SaleDetail_S';
 import SaleModify from './component/SaleModify';
+import ChatReview from './component/ChatReview';
+import GpayService from './component/GpayService';
 
 
 
@@ -75,7 +77,9 @@ function App() {
                 <Route path="/saledetail" element={<SaleDetail/>}></Route>
                 <Route path="/saledetail_s" element={<SaleDetail_S/>}></Route>
                 <Route path="/salemodify" element={<SaleModify/>}></Route>
-                
+                <Route path="/chatreview" element={<ChatReview/>}></Route>
+                <Route path="/gpayservice" element={<GpayService/>}></Route>
+
 
 
 

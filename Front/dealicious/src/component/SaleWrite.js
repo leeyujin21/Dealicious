@@ -3,7 +3,9 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import './img.css';
 import './text.css';
 import { Input } from 'reactstrap';
+
 function SaleWrite(){
+    
     return(
         <div className='main' style={{textAlign:'left',overflow:"scroll", height:"742px", overflowX:"hidden"}}> 
         <br/>
