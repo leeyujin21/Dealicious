@@ -15,6 +15,17 @@ import NotiKeyword from './component/NotiKeyword';
 import Keyword from './component/Keyword';
 import Search from './component/Search';
 import Chat from './component/Chat';
+import Login from './component/Login';
+import Join from './component/Join';
+import Join2 from './component/Join2';
+import Join3 from './component/Join3';
+import Join4 from './component/Join4';
+import Profiledetail from './component/Profiledetail';
+import Mypage from './component/Mypage';
+import Profilemodify from './component/Profilemodify';
+import Changepassword from './component/Changepassword';
+import Mypage_zzim from './component/Mypage_zzim';
+import Mypage_review from './component/Mypage_review';
 
 function App() {
     return (
@@ -31,6 +42,17 @@ function App() {
                 <Route exect path="/keyword" element={<Keyword/>}/>
                 <Route exect path="/search" element={<Search/>}/>
                 <Route exect path="/chat" element={<Chat/>}/>
+                <Route exect path="/login" element={<Login/>}/>
+                <Route exect path="/join" element={<Join/>}/>
+                <Route exect path="/join2" element={<Join2/>}/>
+                <Route exect path="/join3" element={<Join3/>}/>
+                <Route exect path="/join4" element={<Join4/>}/>
+                <Route exect path="/mypage" element={<Mypage/>}/>
+                <Route exect path="/myzzim" element={<Mypage_zzim/>}/>
+                <Route exect path="/myreview" element={<Mypage_review/>}/>
+                <Route exect path="/profiledetail" element={<Profiledetail/>}/>
+                <Route exect path="/profilemodify" element={<Profilemodify/>}/>
+                <Route exect path="/changepassword" element={<Changepassword/>}/>
             </Routes>
         </div>
     );
