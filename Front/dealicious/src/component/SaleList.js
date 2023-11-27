@@ -21,9 +21,9 @@ function SaleList(){
             </tr>
             
             <tr>
-             <td style={{width:"250px" }}> 42,000원</td> 
-             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-             <td style={{ width:"400px" ,color:"gray"}}rowSpan={2}>12분 전</td>   
+             <div style={{width:"250px" }}> 42,000원</div> 
+            
+             <div style={{marginLeft:"50px",width:"200px"}}><td style={{color:"gray"}}>12분 전</td></div>   
               </tr>
             </table>
             <br/>

@@ -5,7 +5,7 @@ import Main from './component/Main';
 import './index.css';
 import CategoryDetail from './component/CategoryDetail';
 import Category2 from './component/Category2';
-import Chatlist from './component/chatlist';
+import Chatlist from './component/Chatlist';
 import SaleList from './component/SaleList';
 import SaleWrite from './component/SaleWrite';
 import SaleDetail from './component/SaleDetail';

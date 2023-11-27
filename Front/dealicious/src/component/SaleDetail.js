@@ -15,7 +15,7 @@ function SaleDetail(){
                     <tr>
                     <td rowSpan={2}><img src="./profile.png"/></td>
                     <td style={{fontSize:"16px",width:"50px"}}><b>홍길동</b></td>
-                    <td style={{border:"2px solid black",borderRadius:"2px",width:"170px",height:"45px" ,textAlign:"center"}}>판매중
+                    <td style={{border:"2px solid black",borderRadius:"3px",width:"170px",height:"45px",textAlign:"center"}}>판매중
                     </td>
                     </tr>
                     <tr>
