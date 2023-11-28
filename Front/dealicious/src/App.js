@@ -26,7 +26,7 @@ import Changepassword from './component/Changepassword';
 import Mypage_zzim from './component/Mypage_zzim';
 import Mypage_review from './component/Mypage_review';
 
-import CategoryDetail from './component/CategoryDetail';
+import CategoryList from './component/CategoryList';
 import Category2 from './component/Category2';
 import Chatlist from './component/chatlist';
 import SaleList from './component/SaleList';
@@ -35,6 +35,9 @@ import SaleDetail from './component/SaleDetail';
 import SaleDetail_S from './component/SaleDetail_S';
 import SaleModify from './component/SaleModify';
 import Gpay_finish from './component/Gpay_finish';
+
+import ChatReview from './component/ChatReview';
+import GpayService from './component/GpayService';
 
 
 
@@ -70,7 +73,7 @@ function App() {
                 <Route exect path="/changepassword" element={<Changepassword/>}/>
                 <Route exect path="/gpay_finish" element={<Gpay_finish/>}/>
 
-                <Route exect path="/categorydetail" element={<CategoryDetail/>}/>
+                <Route exect path="/categorylist" element={<CategoryList/>}/>
                 <Route path="/category2" element={<Category2/>}></Route>
                 <Route path="/chatlist" element={<Chatlist/>}></Route>
                 <Route path="/salelist" element={<SaleList/>}></Route>
@@ -78,7 +81,9 @@ function App() {
                 <Route path="/saledetail" element={<SaleDetail/>}></Route>
                 <Route path="/saledetail_s" element={<SaleDetail_S/>}></Route>
                 <Route path="/salemodify" element={<SaleModify/>}></Route>
-                
+                <Route path="/chatreview" element={<ChatReview/>}></Route>
+                <Route path="/gpayservice" element={<GpayService/>}></Route>
+
 
 
 
