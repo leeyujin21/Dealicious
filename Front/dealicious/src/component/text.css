@@ -13,3 +13,6 @@
     display: flex;
   justify-content: space-between; 
 }
+.code{
+  white-space: pre-line;
+}
