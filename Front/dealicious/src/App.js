@@ -34,6 +34,8 @@ import SaleWrite from './component/SaleWrite';
 import SaleDetail from './component/SaleDetail';
 import SaleDetail_S from './component/SaleDetail_S';
 import SaleModify from './component/SaleModify';
+import Gpay_finish from './component/Gpay_finish';
+
 import ChatReview from './component/ChatReview';
 import GpayService from './component/GpayService';
 
@@ -57,6 +59,7 @@ function App() {
                 <Route exect path="/keyword" element={<Keyword/>}/>
                 <Route exect path="/search" element={<Search/>}/>
                 <Route exect path="/chat" element={<Chat/>}/>
+
                 <Route exect path="/login" element={<Login/>}/>
                 <Route exect path="/join" element={<Join/>}/>
                 <Route exect path="/join2" element={<Join2/>}/>
@@ -68,6 +71,7 @@ function App() {
                 <Route exect path="/profiledetail" element={<Profiledetail/>}/>
                 <Route exect path="/profilemodify" element={<Profilemodify/>}/>
                 <Route exect path="/changepassword" element={<Changepassword/>}/>
+                <Route exect path="/gpay_finish" element={<Gpay_finish/>}/>
 
                 <Route exect path="/categorylist" element={<CategoryList/>}/>
                 <Route path="/category2" element={<Category2/>}></Route>
