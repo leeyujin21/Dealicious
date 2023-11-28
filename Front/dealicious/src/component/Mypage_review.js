@@ -82,7 +82,7 @@ const Mypage_review = () => {
                     onClick={()=>{fileInput.current.click()}}
                 />
                 <div style={{marginLeft:"10px", fontWeight:"bold", textAlign:"left"}}>
-                    &nbsp;어깡이
+                    &nbsp;어좁이
                     <br/>
                     <div>
                         <FaStar size="25" color="#F2D43E"/>
