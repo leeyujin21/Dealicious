@@ -1,25 +1,34 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { IoArrowBackOutline } from "react-icons/io5";
 import './img.css';
 import './text.css';
 import { Input } from 'reactstrap';
+import { FaCamera } from "react-icons/fa";
 
 function SaleWrite(){
-    const text="상세설명을 입력하세요\n 구매날짜, 하자 등 자세하게 작성할수록\n 구매자에게 편리합니다";
-   
+    const [Image, setImage] = useState()
+    const fileInput = useRef(null)
+    const [files, setFiles] = useState([]);
+    const fileChange = (e) => {
+        if(e.target.files.length>0){
+            setFiles([...files, e.target.files[0]]);
+        }
+    }
     return(
         <div className='main' style={{textAlign:'left',overflow:"scroll", height:"742px", overflowX:"hidden"}}> 
         <br/>
          <IoArrowBackOutline size="30" color="14C38E"/>
          <span style={{color:"#14C38E",fontSize:"25px",marginLeft:"80px"}}><b>판매글작성</b></span> 
          <br/><br/>
-       
-           
-           <img src="./cam.png" className='image'></img>
-           
-       
-        <br/> <br/>
-        <div style={{marginBottom:"5px", fontSize:"18px"}}>제목</div>
+         <div style={{backgroundColor:"#E9E9E9", width:"48px", height:"63px", textAlign:"center", paddingTop:"5px", position:"relative", cursor:"pointer"}}
+             onClick={()=>document.getElementById("file").click()}>
+        <FaCamera size="30" color='gray'/>
+            <div style={{position:"absolute", textAlign:"center", width:"48px", paddingBottom:"5px", fontWeight:"bold"}}>
+                0/5
+            </div>
+            <Input name="file" type="file" id="file" accept="image/*" onChange={fileChange} hidden/>
+        </div>
+        <div style={{marginBottom:"5px", fontSize:"18px", marginTop:"20px"}}>제목</div>
         <Input type="text" placeholder="제목을 입력해주세요" style={{width:"325px",height:"40px" ,borderColor:"lightgray"}}></Input>
         
         <div style={{marginTop:"20px"}}>
@@ -55,10 +64,9 @@ function SaleWrite(){
             <div style={{fontSize:"18px", marginBottom:"10px"}}>상세설명</div>
             <Input cols="40" rows="10" type='textarea'
              style={{width:"325px",height:"300px", resize:"none"}}
-             placeholder='
-             상세설명을 입력하세요
-             구매날짜, 하자 등 자세하게 작성할수록
-             구매자에게 편리합니다'></Input>
+             placeholder='상세설명을 입력하세요
+구매날짜, 하자 등 자세하게 작성할수록
+구매자에게 편리합니다'></Input>
             
         </div>
         <br/> <p style={{textAlign:"center"}}><input type="submit" value="등록하기" style={{fontWeight:"bold", fontSize:"18px" ,borderRadius:"10px",width:"325px", height:"50px",backgroundColor:'#14C38E',color:"white", borderStyle:"none"}}></input></p>
