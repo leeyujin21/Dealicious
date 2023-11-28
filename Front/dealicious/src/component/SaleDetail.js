@@ -35,7 +35,7 @@ function SaleDetail(){
            
                
         </Input>
-        <img src="./zzimheart.png"/>&nbsp; <span>60000원</span>&nbsp;&nbsp;&nbsp;<img src="./꿀2.png"className="right-align"style={{marginLeft:"auto"}}/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <img src="./zzimheart.png"/>&nbsp; <span>60000원</span>&nbsp;&nbsp;&nbsp;<img src="./ggulpay2.png"className="right-align"style={{marginLeft:"auto"}}/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span style={{textAlign:"right"}}><input type="submit" value="채팅하기" style={{borderRadius:"10px",width:"103px", height:"44px",backgroundColor:'#14C38E',color:"white"}}></input></span>
         </div>
         

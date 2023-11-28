@@ -26,7 +26,7 @@ import Changepassword from './component/Changepassword';
 import Mypage_zzim from './component/Mypage_zzim';
 import Mypage_review from './component/Mypage_review';
 
-import CategoryDetail from './component/CategoryDetail';
+import CategoryList from './component/CategoryList';
 import Category2 from './component/Category2';
 import Chatlist from './component/chatlist';
 import SaleList from './component/SaleList';
@@ -69,7 +69,7 @@ function App() {
                 <Route exect path="/profilemodify" element={<Profilemodify/>}/>
                 <Route exect path="/changepassword" element={<Changepassword/>}/>
 
-                <Route exect path="/categorydetail" element={<CategoryDetail/>}/>
+                <Route exect path="/categorylist" element={<CategoryList/>}/>
                 <Route path="/category2" element={<Category2/>}></Route>
                 <Route path="/chatlist" element={<Chatlist/>}></Route>
                 <Route path="/salelist" element={<SaleList/>}></Route>

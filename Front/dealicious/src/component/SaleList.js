@@ -7,7 +7,6 @@ function SaleList() {
   return (
     <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "742px", overflowX: "hidden" }} >
       <br />
-      <IoArrowBackOutline size="30" color="14C38E" />&nbsp;&nbsp;&nbsp;<span style={{ color: "#14C38E", fontSize: "25px", mt: "10px" }}><b>기타</b></span>
       <br />
 
       <div style={{ marginLeft: "300px", marginTop: "550px", textAlign: "right", position: "absolute" }}>
@@ -15,7 +14,7 @@ function SaleList() {
 
       </div>
       
-      <Link to="/chat" style={{ textDecoration: "none",color:"black" }}>
+      <Link to="/saledetail" style={{ textDecoration: "none",color:"black" }}>
         <div style={{paddingTop:"10px",paddingBottom:"10px",borderBottom:"1px solid lightgray"}}>
           <table>
             <tr style={{ height: "35px" }} >
@@ -24,7 +23,7 @@ function SaleList() {
             </tr>
 
             <tr>
-              <td style={{ width: "300px", color: "gray" }} colSpan={3}>A동 2층</td><img src="./꿀.png" />
+              <td style={{ width: "300px", color: "gray" }} colSpan={3}>A동 2층</td><img src="./ggul.png" />
             </tr>
 
             <tr>
@@ -35,7 +34,7 @@ function SaleList() {
           </table>
         </div>
       </Link>
-      <Link to="/chat" style={{ textDecoration: "none",color:"black" }}>
+      <Link to="/saledetail" style={{ textDecoration: "none",color:"black" }}>
         <div style={{paddingTop:"10px",paddingBottom:"10px",borderBottom:"1px solid lightgray"}}>
           <table>
             <tr style={{ height: "35px" }} >
@@ -44,7 +43,7 @@ function SaleList() {
             </tr>
 
             <tr>
-              <td style={{ width: "300px", color: "gray" }} colSpan={3}>A동 2층</td><img src="./꿀.png" />
+              <td style={{ width: "300px", color: "gray" }} colSpan={3}>A동 2층</td><img src="./ggul.png" />
             </tr>
 
             <tr>
@@ -55,7 +54,7 @@ function SaleList() {
           </table>
         </div>
       </Link>
-      <Link to="/chat" style={{ textDecoration: "none",color:"black" }}>
+      <Link to="/saledetail" style={{ textDecoration: "none",color:"black" }}>
         <div style={{paddingTop:"10px",paddingBottom:"10px",borderBottom:"1px solid lightgray"}}>
           <table>
             <tr style={{ height: "35px" }} >
@@ -64,7 +63,7 @@ function SaleList() {
             </tr>
 
             <tr>
-              <td style={{ width: "300px", color: "gray" }} colSpan={3}>A동 2층</td><img src="./꿀.png" />
+              <td style={{ width: "300px", color: "gray" }} colSpan={3}>A동 2층</td><img src="./ggul.png" />
             </tr>
 
             <tr>
@@ -75,7 +74,7 @@ function SaleList() {
           </table>
         </div>
       </Link>
-      <Link to="/chat" style={{ textDecoration: "none",color:"black" }}>
+      <Link to="/saledetail" style={{ textDecoration: "none",color:"black" }}>
         <div style={{paddingTop:"10px",paddingBottom:"10px",borderBottom:"1px solid lightgray"}}>
           <table>
             <tr style={{ height: "35px" }} >
@@ -84,7 +83,7 @@ function SaleList() {
             </tr>
 
             <tr>
-              <td style={{ width: "300px", color: "gray" }} colSpan={3}>A동 2층</td><img src="./꿀.png" />
+              <td style={{ width: "300px", color: "gray" }} colSpan={3}>A동 2층</td><img src="./ggul.png" />
             </tr>
 
             <tr>
