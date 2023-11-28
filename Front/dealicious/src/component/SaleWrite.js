@@ -15,7 +15,7 @@ function SaleWrite(){
          <br/><br/>
        
            
-           <img src="./cam.png" style={{width:"50px",height:"50px"}} className='image'></img>
+           <img src="./cam.png" style={{width:"50px",height:"50px"}} ></img>
            
        
         <br/> <br/>
@@ -54,7 +54,7 @@ function SaleWrite(){
             상세설명<textarea cols="40" rows="10" placeholder="상세설명을 입력하세요
             구매날짜, 하자 등 자세하게 작성할수록
              구매자에게 편리합니다"
-             style={{borderRadius:"10px",width:"325px",height:"300px",whiteSpace:"pre-wrap"}}></textarea>
+             style={{borderRadius:"10px",width:"325px",height:"300px",whiteSpace:"pre-wrap",padding:"20px"}}></textarea>
             
         </div>
         <br/> <p style={{textAlign:"center"}}><input type="submit" value="등록하기" style={{borderRadius:"10px",width:"325px", height:"50px",backgroundColor:'#14C38E',color:"white"}}></input></p>
