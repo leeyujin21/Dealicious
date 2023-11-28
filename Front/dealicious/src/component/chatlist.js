@@ -89,7 +89,7 @@ function ChatList(){
                     </tr>
                 
                 </table >
-                <br/>
+                
             </diV>
             </Link> 
         
