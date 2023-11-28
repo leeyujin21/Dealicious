@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { GoArrowLeft } from "react-icons/go";
-import { FaImage } from "react-icons/fa6";
+import { FaImage, FaStar } from "react-icons/fa6";
 import { IoMdSend } from "react-icons/io";
+import Modal from 'react-modal';
 import { Link } from "react-router-dom";
 
 const Chat = () => {
-
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   return (
     <div className='main' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
-      <br />
       <div style={{ textAlign: "left", color: "#14C38E" }}>
+
         <GoArrowLeft size={30} style={{ color: "#14C38E" }} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style={{fontSize:"20px"}}>어깡이</span>
+
       </div>
       <div style={{ marginTop: "20px", width: "330px", borderTop: "1px solid gray", borderBottom: "1px solid gray" }}>
         <table  style={{ marginTop: "10px",marginBottom: "10px"}}>
@@ -53,13 +55,34 @@ const Chat = () => {
       <img src='dealicious1.png' style={{marginBottom:"10px",width:"100px"}}></img>
       <p style={{fontWeight:"bold"}}>디스펜서 팔아요!  의 거래가 완료되었어요.</p>
       <p style={{color:"gray"}}>거래는 만족스러우셨나요? 후기를 남겨주세요 :)</p>
-      <button style={{width:"310px", backgroundColor:"#C7FBEB", border:"white", padding:"5px",borderRadius:"10px",  color:"#14C38E",fontWeight:"bold"}}>후기 작성하기</button>
+      <button style={{width:"310px", backgroundColor:"#C7FBEB", border:"white", padding:"5px",borderRadius:"10px",  color:"#14C38E",fontWeight:"bold"}} onClick={()=>setModalIsOpen(true)}>후기 작성하기</button> 
+      <Modal className='main' style={{
+                content: {
+                  width:"300px", height:"330px",position: "absolute",borderRadius:"20px",
+                  top: "50%",left: "50%", transform: "translate(-50%, -50%)", backgroundColor:"white", border:"1px solid lightgray"
+                }
+              }} isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
+        <div style={{ textAlign: "center" }}>
+          <div className="logo">DEALicious</div>
+          <div><img src="./1.png"/></div>
+          <div style={{textAlign:"center", marginTop:"5px"}}>디스펜서</div>
+          <div style={{textAlign:"center"}}><b>60,000원</b></div>
+          <div style={{marginTop:"5px"}}>
+            <FaStar size="25" color="#F2D43E"/>
+            <FaStar size="25" color="#F2D43E"/>
+            <FaStar size="25" color="#F2D43E"/>
+            <FaStar size="25" color="#F2D43E"/>
+            <FaStar size="25" color="#F2D43E"/>
+          </div>
+          <button style={{ width: "60px", height:"35px",borderRadius: "8px", backgroundColor: "#14C38E", border: "white",fontWeight: "bold", color: "white",marginTop:"20px" }} onClick={() => setModalIsOpen(false)}>등록</button>   
+        </div>
+      </Modal>
       </div>
       <br/>
-      <div style={{textAlign:"left",marginBottom:"20px"}}>
-      <FaImage size="30" style={{color:"#D9D9D9"}}/>
-      <input style={{marginLeft:"10px",border:"white", width:"240px",borderRadius:"10px",backgroundColor:"#D9D9D9"}} placeholder='  채팅하기'></input>
-      <IoMdSend size="30" style={{marginLeft:"10px",color:"#D9D9D9"}}/>
+      <div style={{textAlign:"left",marginBottom:"20px", width:"350px"}}>
+        <FaImage size="30" style={{color:"#D9D9D9"}}/>
+        <input style={{marginLeft:"10px",border:"white", width:"240px",height:"40px", borderRadius:"10px",backgroundColor:"#D9D9D9"}} placeholder='  채팅하기'></input>
+        <IoMdSend size="40" style={{marginLeft:"10px",color:"#D9D9D9"}}/>
       </div>
     </div>
 

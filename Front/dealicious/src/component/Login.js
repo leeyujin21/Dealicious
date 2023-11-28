@@ -20,7 +20,7 @@ const Login = () => {
             <a href="join" style={{color:"#999999"}}>회원가입</a>
             <br/><br/>
             <Button style={{width:"330px", height:"55px", fontSize:"20px", backgroundColor:"#FEE500", color:"#000000", borderStyle:"none"}}>카카오로 시작</Button>
-            <br/><br/>
+            <div style={{height:"10px"}}></div>
             <Button style={{width:"330px", height:"55px", fontSize:"20px", backgroundColor:"#03C75A", borderStyle:"none"}}>네이버로 시작</Button>
         </div>
     )

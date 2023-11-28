@@ -9,7 +9,7 @@ const Changepassword = () => {
                 <IoArrowBackOutline style={{marginRight:"75px"}} size="30" color="#14C38E"/>
                 <Label style={{fontSize:"25px", fontWeight:"bold", color:"#14C38E"}}>비밀번호 변경</Label>
             </FormGroup>
-            <div style={{paddingBottom:"50px"}}></div>
+            <div style={{paddingBottom:"30px"}}></div>
             <FormGroup style={{textAlign:"left"}}>
                 <Label for="curpw" style={{fontSize:"20px"}}>현재 비밀번호</Label>
                 <Input type="password" name="curpw" id="curpw" style={{height:"55px", width:"330px"}}
