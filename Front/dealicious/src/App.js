@@ -28,7 +28,7 @@ import Mypage_review from './component/Mypage_review';
 
 import CategoryList from './component/CategoryList';
 import Category2 from './component/Category2';
-import Chatlist from './component/chatlist';
+import ChatList from './component/ChatList';
 import SaleList from './component/SaleList';
 import SaleWrite from './component/SaleWrite';
 import SaleDetail from './component/SaleDetail';
@@ -71,7 +71,7 @@ function App() {
 
                 <Route exect path="/categorylist" element={<CategoryList/>}/>
                 <Route path="/category2" element={<Category2/>}></Route>
-                <Route path="/chatlist" element={<Chatlist/>}></Route>
+                <Route path="/chatlist" element={<ChatList/>}></Route>
                 <Route path="/salelist" element={<SaleList/>}></Route>
                 <Route path="/salewrite" element={<SaleWrite/>}></Route>
                 <Route path="/saledetail" element={<SaleDetail/>}></Route>
