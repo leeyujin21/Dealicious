@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { GoArrowLeft } from "react-icons/go";
 import { FaImage } from "react-icons/fa6";
 import { IoMdSend } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const Chat = () => {
 
@@ -9,7 +10,7 @@ const Chat = () => {
     <div className='main' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
       <br />
       <div style={{ textAlign: "left", color: "#14C38E" }}>
-        <GoArrowLeft style={{ color: "#14C38E" }} />&nbsp;&nbsp;&nbsp;어깡이
+        <GoArrowLeft size={30} style={{ color: "#14C38E" }} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style={{fontSize:"20px"}}>어깡이</span>
       </div>
       <div style={{ marginTop: "20px", width: "330px", borderTop: "1px solid gray", borderBottom: "1px solid gray" }}>
         <table  style={{ marginTop: "10px",marginBottom: "10px"}}>
@@ -23,7 +24,7 @@ const Chat = () => {
           </tr>
           <tr>
             <td></td>
-            <td><img src='ggulpay1.png' style={{width:"50px"}}></img></td>
+            <td><Link to="/gpay"><img src='ggulpay1.png' style={{width:"50px"}}></img></Link></td>
           </tr>
         </table>
       </div>
