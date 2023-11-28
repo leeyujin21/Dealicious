@@ -77,7 +77,7 @@ function App() {
                 <Route path="/salelist" element={<SaleList/>}></Route> {/**/}
                 <Route path="/salewrite" element={<SaleWrite/>}></Route> {/**/}
                 <Route path="/saledetail" element={<SaleDetail/>}></Route> {/**/}
-                <Route path="/saledetail_s" element={<SaleDetail_S/>}></Route>
+                <Route path="/saledetail_s" element={<SaleDetail_S/>}></Route> {/**/}
                 <Route path="/salemodify" element={<SaleModify/>}></Route>
             </Routes>
              
