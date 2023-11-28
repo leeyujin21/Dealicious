@@ -6,7 +6,7 @@ function CategoryList(){
 
     return(
       <div className='main' style={{textAlign:'left',overflow:"scroll", height:"742px", overflowX:"hidden"}}> 
-       <IoArrowBackOutline size="30" color="14C38E" style={{margintop:"0px"}} /><span style={{color:"#14C38E" ,fontSize:"25px", marginLeft:"20px"}}><b>기타</b></span>
+       <IoArrowBackOutline size="30" color="14C38E" /><h3 style={{color:"#14C38E" ,fontSize:"25px", marginLeft:"20px",marginTop:"10px"}}><b>기타</b></h3>
        
               <div style={{ marginLeft: "300px", marginTop: "550px", textAlign: "right", position: "absolute" }}>
                 <FiPlusCircle size="50" color="#14C38E"/>
