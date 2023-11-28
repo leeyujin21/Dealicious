@@ -13,7 +13,7 @@ const Gpay_finish = () => {
                 <IoArrowBackOutline style={{marginRight:"80px"}} size="30" color="lightgray"/>
             </div>
             <div style={{textAlign:"left", marginLeft:"10px"}}>
-                <Label style={{fontSize:"20px", fontWeight:"bold", color:"black"}}>꿀페이 결제하기</Label>
+                <Label style={{fontSize:"20px", fontWeight:"bold", color:"black"}}>꿀페이 결제완료</Label>
             </div>
             <div style={{textAlign:"left", paddingBottom:"20px", borderBottom:"1px solid lightgray", display:"flex"}}>
                 &nbsp;&nbsp;
