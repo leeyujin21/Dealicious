@@ -64,7 +64,9 @@ const ChatReview = () => {
               }} isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
                 <div style={{ textAlign: "center" }}>
 
-                  <div style={{width:"100px",height:"40px"}}></div><img src="./dealicious1.png"></img>
+
+
+                  <div className="logo">DEALicious</div>
 
 
                   <img src="./dealicious1.png" style={{width:"200px",height:"50px"}}></img>
