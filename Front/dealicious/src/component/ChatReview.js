@@ -63,11 +63,16 @@ const ChatReview = () => {
                 }
               }} isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
                 <div style={{ textAlign: "center" }}>
+
                   <div style={{width:"100px",height:"40px"}}></div><img src="./dealicious1.png"></img>
+
+
+                  <img src="./dealicious1.png" style={{width:"200px",height:"50px"}}></img>
+
                   <div><img src="./1.png"/></div>
                   <div style={{textAlign:"center"}}>디스펜서</div>
                   <div style={{textAlign:"center",}}><b>60,000원</b></div>
-                  <FaStar style={{color:"yellow",size:"50px"}}/><FaStar style={{color:"yellow"}}/><FaStar style={{color:"yellow"}}/><FaStar style={{color:"yellow"}}/><FaStar style={{color:"yellow"}}/><br/>
+                  <div><FaStar style={{color:"yellow",width:"30px",height:"20px"}}/><FaStar style={{color:"yellow",width:"30px",height:"20px"}}/><FaStar style={{color:"yellow",width:"30px",height:"20px"}}/><FaStar style={{color:"yellow",width:"30px",height:"20px"}}/><FaStar style={{color:"yellow",width:"30px",height:"20px"}}/></div><br/>
                  <button style={{ width: "50px", borderRadius: "8px", backgroundColor: "#14C38E", border: "white",fontWeight: "bold", color: "white" }} onClick={() => setModalIsOpen(false)}>등록</button>
 
 

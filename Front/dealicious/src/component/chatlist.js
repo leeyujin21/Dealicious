@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 
-function Chatlist(){
+function ChatList(){
 
     
   
     return (
         <div className='main' style={{textAlign:'left',overflow:"scroll", height:"742px", overflowX:"hidden"}}>
-            <div style={{borderBottom:"1px solid",fontSize:"18px"}}>채팅</div>
+            <div style={{borderBottom:"1px solid",fontSize:"20px"}}><b>채팅</b></div>
             
             <Link to="/chat" style={{textDecoration:"none",color:"black"}}>
             <diV style={{paddingTop:"8px",paddingBottom:"8px",borderBottom:"1px solid lightgray"}}>
@@ -104,4 +104,4 @@ function Chatlist(){
 
     )
 }
-export default Chatlist;
+export default ChatList;
