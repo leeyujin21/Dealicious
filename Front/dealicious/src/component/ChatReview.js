@@ -63,11 +63,11 @@ const ChatReview = () => {
                 }
               }} isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
                 <div style={{ textAlign: "center" }}>
-<<<<<<< Updated upstream
+
                   <div className="logo">DEALicious</div>
-=======
+
                   <img src="./dealicious1.png" style={{width:"200px",height:"50px"}}></img>
->>>>>>> Stashed changes
+
                   <div><img src="./1.png"/></div>
                   <div style={{textAlign:"center"}}>디스펜서</div>
                   <div style={{textAlign:"center",}}><b>60,000원</b></div>
