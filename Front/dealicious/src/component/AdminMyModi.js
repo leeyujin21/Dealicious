@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const AdminMyModi = () => {
 
   return (
-    <div className='adminMy' style={{overflow:"scroll", height:"742px", overflowX:"hidden"}}>
+    <div className='admin' style={{overflow:"scroll", height:"742px", overflowX:"hidden"}}>
       <div style={{marginLeft:"15px"}}>
       <br/>
       <div style={{textAlign:"left",color:"gray"}}>
