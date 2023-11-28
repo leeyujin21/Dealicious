@@ -5,12 +5,13 @@ import './text.css';
 import { Input } from 'reactstrap';
 
 function SaleWrite(){
-    
+    const text="상세설명을 입력하세요\n 구매날짜, 하자 등 자세하게 작성할수록\n 구매자에게 편리합니다";
+   
     return(
         <div className='main' style={{textAlign:'left',overflow:"scroll", height:"742px", overflowX:"hidden"}}> 
         <br/>
          <IoArrowBackOutline size="30" color="14C38E"/>
-         <span style={{color:"#14C38E",fontSize:"25px",marginLeft:"80px"}}><b>판매글작성</b></span>
+         <span style={{color:"#14C38E",fontSize:"25px",marginLeft:"80px"}}><b>판매글작성</b></span> 
          <br/><br/>
        
            
@@ -50,13 +51,11 @@ function SaleWrite(){
         
         <div>
             
-            상세설명<Input className="code" cols="40" rows="10" value="디스펜서 팔아요!산지는 3개월 됐는데
-            거의 안 써서 미개봉 제품이랑 별 차이
-            없습니다!
-            A동 8층까지 오시면 5천원 깎아드려요 "style={{borderRadius:"10px",width:"325px",height:"300px"}}></Input>
+            상세설명<Input cols="40" rows="10" value={text}
+             style={{borderRadius:"10px",width:"325px",height:"300px",whiteSpace:"pre-wrap"}}></Input>
             
         </div>
-        <p style={{textAlign:"center"}}><input type="submit" value="등록하기" style={{borderRadius:"10px",width:"325px", height:"50px",backgroundColor:'#14C38E',color:"white"}}></input></p>
+        <br/> <p style={{textAlign:"center"}}><input type="submit" value="등록하기" style={{borderRadius:"10px",width:"325px", height:"50px",backgroundColor:'#14C38E',color:"white"}}></input></p>
         
         </div>
 

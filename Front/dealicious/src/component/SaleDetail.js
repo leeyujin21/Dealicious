@@ -7,16 +7,17 @@ function SaleDetail() {
     return (
         <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "742px", overflowX: "hidden" }}>
             <br />
+            <div>
             <IoArrowBackOutline size="30" color="14C38E" />
-            <div style={{ color: "#14C38E", fontSize: "25px", textAlign: "center" }}><b>디스펜서 팝니다!</b></div>
-            <b>가전제품</b><br />
+            <span style={{ color: "#14C38E", fontSize: "25px", textAlign: "center",marginLeft:"50px" }}><b>디스펜서 팝니다!</b></span></div>
+            <br/><b>가전제품</b><br />
             <img src="./1.png" style={{ width: "324px", height: "209px" }} />
             <table style={{ marginTop: "15px" }}>
                 <tr>
                     <td rowSpan={2}><img src="./profile.png" /></td>
                     <td style={{ fontSize: "16px", width: "50px" }}><b>홍길동</b></td>
-                    <td style={{ border: "2px solid black", borderRadius: "3px", width: "170px", height: "45px", textAlign: "center" }}>판매중
-                    </td>
+                    <Input style={{ borderRadius: "10px", width: "162px", height: "45px", textAlign: "center" }}placeholder='판매중'>
+                    </Input>
                 </tr>
                 <tr>
                     <div style={{ width: "100px", height: "21px" }}>인하대학교</div>
