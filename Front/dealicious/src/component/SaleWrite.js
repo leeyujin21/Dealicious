@@ -24,7 +24,7 @@ function SaleWrite(){
         
         <div style={{marginTop:"20px"}}>
             <div style={{marginBottom:"5px", fontSize:"18px"}}>카테고리</div>
-            <select style={{width:"140px",height:"40px",textAlign:"center",borderRadius:"5px",float:"left", borderColor:"lightgray"}}>
+            <select style={{width:"150px",height:"40px",textAlign:"center",borderRadius:"5px",float:"left", borderColor:"lightgray"}}>
                 <option value="" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;선택</option>   
                 <option value="mobile" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;모바일/태블릿</option>
                 <option value="pc" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;노트북/PC</option>
@@ -45,7 +45,7 @@ function SaleWrite(){
             </div>
             <div>
                 <div style={{marginBottom:"5px", fontSize:"18px", marginLeft:"25px"}}>장소</div>
-                <div><Input type="text" placeholder="A동 1층" style={{borderRadius:"5px",height:"40px",width:"150px",marginLeft:"20px"}}></Input></div>
+                <div><Input type="text" placeholder="A동 1층" style={{borderRadius:"5px",height:"40px",width:"150px",marginLeft:"25px"}}></Input></div>
             </div>   
         </div>
         
