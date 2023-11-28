@@ -1,7 +1,12 @@
 import { IoArrowBackOutline } from "react-icons/io5";
-import { FormGroup, Label } from "reactstrap";
+import { Button, Label, Modal } from "reactstrap";
+import { FaCheck } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { IoClose } from "react-icons/io5";
 
 const Gpay_finish = () => {
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     return (
         <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", paddingTop:"20px"}}>
             <div style={{textAlign:"left", paddingBottom:"10px"}}>
@@ -20,15 +25,35 @@ const Gpay_finish = () => {
             </div>
             <div style={{textAlign:"left", borderBottom:"1px solid lightgray", paddingBottom:"20px"}}>
                 &nbsp;&nbsp;
-                <div>
+                <div style={{marginBottom:"10px", paddingLeft:"5px"}}>
                     <span style={{color:"gray",}}>거래방법</span>
-                    <span style={{fontWeight:"bold", paddingLeft:"10px"}}>직거래</span>
+                    <span style={{fontWeight:"bold", paddingLeft:"20px", fontSize:"18px"}}>직거래</span>
                 </div>
-                <div>
-                    <span style={{color:"gray",}}>결제수단</span>
+                <div style={{paddingLeft:"5px"}}>
+                    <span style={{color:"gray"}}>결제수단</span>
                     <img src="../ggul.png" style={{paddingLeft:"10px"}}/>
                 </div>
             </div>
+            <div style={{textAlign:"left", borderBottom:"1px solid lightgray", paddingBottom:"20px"}}>
+                &nbsp;&nbsp;
+                <div style={{paddingLeft:"5px", fontWeight:"bold", paddingBottom:"10px"}}>꿀페이 결제수단</div>
+                <div style={{paddingLeft:"5px"}}>
+                    <Button style={{backgroundColor:"black", fontWeight:"bold"}}>신용카드</Button>&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+            </div>
+            <div style={{textAlign:"right", marginRight:"10px"}}>
+                &nbsp;&nbsp;
+                <div>
+                    수수료: 3,000원
+                </div>
+                <div style={{fontWeight:"bold"}}>
+                    결제 예정 금액: 63,000원
+                </div>
+            </div>
+            <br/>
+            <Link to="/pay">
+                <Button style={{width:"330px", height:"55px", fontSize:"20px", backgroundColor:"#14C38E", borderStyle:"none"}}>이전화면으로 이동</Button>
+            </Link>
         </div>
     )
 }
