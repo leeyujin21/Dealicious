@@ -8,7 +8,8 @@ function SaleDetail_S(){
             <br />
             <div>
             <IoArrowBackOutline size="30" color="14C38E" />
-            <span style={{ color: "#14C38E", fontSize: "25px", textAlign: "center",marginLeft:"50px" }}><b>디스펜서 팝니다!</b></span></div>
+            <span style={{ color: "#14C38E", fontSize: "25px", textAlign: "center",marginLeft:"50px" }}><b>디스펜서 팝니다!</b></span>
+            </div>
             <br/><b>가전제품</b><br />
             <img src="./1.png" style={{ width: "324px", height: "209px" }} />
             <table style={{ marginTop: "15px" }}>

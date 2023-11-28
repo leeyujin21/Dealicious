@@ -5,7 +5,7 @@ import './text.css';
 import { Input } from 'reactstrap';
 
 function SaleWrite(){
-    const text="상세설명을 입력하세요\n 구매날짜, 하자 등 자세하게 작성할수록\n 구매자에게 편리합니다";
+   
    
     return(
         <div className='main' style={{textAlign:'left',overflow:"scroll", height:"742px", overflowX:"hidden"}}> 
@@ -15,7 +15,7 @@ function SaleWrite(){
          <br/><br/>
        
            
-           <img src="./cam.png" className='image'></img>
+           <img src="./cam.png" style={{width:"50px",height:"50px"}} className='image'></img>
            
        
         <br/> <br/>
@@ -51,8 +51,10 @@ function SaleWrite(){
         
         <div>
             
-            상세설명<Input cols="40" rows="10" value={text}
-             style={{borderRadius:"10px",width:"325px",height:"300px",whiteSpace:"pre-wrap"}}></Input>
+            상세설명<textarea cols="40" rows="10" placeholder="상세설명을 입력하세요
+            구매날짜, 하자 등 자세하게 작성할수록
+             구매자에게 편리합니다"
+             style={{borderRadius:"10px",width:"325px",height:"300px",whiteSpace:"pre-wrap"}}></textarea>
             
         </div>
         <br/> <p style={{textAlign:"center"}}><input type="submit" value="등록하기" style={{borderRadius:"10px",width:"325px", height:"50px",backgroundColor:'#14C38E',color:"white"}}></input></p>
