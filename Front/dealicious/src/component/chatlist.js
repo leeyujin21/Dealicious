@@ -10,7 +10,7 @@ function ChatList(){
             <div style={{borderBottom:"1px solid",fontSize:"20px"}}><b>채팅</b></div>
             
             <Link to="/chat" style={{textDecoration:"none",color:"black"}}>
-            <diV style={{paddingTop:"8px",paddingBottom:"8px",borderBottom:"1px solid gray"}}>
+            <diV style={{paddingTop:"8px",paddingBottom:"8px",borderBottom:"1px solid lightgray"}}>
                 <table>
                     <tr>
                     <td rowSpan={2}><img src="./profile.png"/></td>
@@ -27,7 +27,7 @@ function ChatList(){
             </diV>
             </Link> 
             <Link to="/chat" style={{textDecoration:"none",color:"black"}}>
-            <diV style={{paddingTop:"8px",paddingBottom:"8px",borderBottom:"1px solid gray"}}>
+            <diV style={{paddingTop:"8px",paddingBottom:"8px",borderBottom:"1px solid lightgray"}}>
                 <table>
                     <tr>
                     <td rowSpan={2}><img src="./profile.png"/></td>
@@ -43,7 +43,7 @@ function ChatList(){
                 </table >
             </diV>
             </Link> <Link to="/chat" style={{textDecoration:"none",color:"black"}}>
-            <diV style={{paddingTop:"8px",paddingBottom:"8px",borderBottom:"1px solid gray"}}>
+            <diV style={{paddingTop:"8px",paddingBottom:"8px",borderBottom:"1px solid lightgray"}}>
                 <table>
                     <tr>
                     <td rowSpan={2}><img src="./profile.png"/></td>
@@ -59,7 +59,7 @@ function ChatList(){
                 </table >
             </diV>
             </Link> <Link to="/chat" style={{textDecoration:"none",color:"black"}}>
-            <diV style={{paddingTop:"8px",paddingBottom:"8px",borderBottom:"1px solid gray"}}>
+            <diV style={{paddingTop:"8px",paddingBottom:"8px",borderBottom:"1px solid lightgray"}}>
                 <table>
                     <tr>
                     <td rowSpan={2}><img src="./profile.png"/></td>
@@ -75,7 +75,7 @@ function ChatList(){
                 </table >
             </diV>
             </Link> <Link to="/chat" style={{textDecoration:"none",color:"black"}}>
-            <diV style={{paddingTop:"8px",paddingBottom:"8px",borderBottom:"1px solid gray"}}>
+            <diV style={{paddingTop:"8px",paddingBottom:"8px",borderBottom:"1px solid lightgray"}}>
                 <table>
                     <tr>
                     <td rowSpan={2}><img src="./profile.png"/></td>
@@ -89,7 +89,7 @@ function ChatList(){
                     </tr>
                 
                 </table >
-                <br/>
+                
             </diV>
             </Link> 
         
