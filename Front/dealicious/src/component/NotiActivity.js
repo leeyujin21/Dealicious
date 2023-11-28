@@ -4,7 +4,7 @@ import { GoArrowLeft } from "react-icons/go";
 const NotiActivity = () => {
 
   return (
-    <div className='notiActivity' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
+    <div className='main' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
       <br />
       <div style={{ marginLeft: "15px" }}>
         <p style={{ fontWeight: "bold", textAlign: "left" }}>알림</p>

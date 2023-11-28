@@ -4,7 +4,7 @@ import { GoArrowLeft } from "react-icons/go";
 const AdminMain = () => {
 
   return (
-    <div className='adminMain' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
+    <div className='admin' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
       <br/>
       <div style={{marginLeft:"15px"}}>
       <table style={{marginBottom:"10px"}}>
@@ -24,31 +24,31 @@ const AdminMain = () => {
         </tr>
       </table>
       <table>
-        <tr style={{height:"40px",borderBottom:"1px solid gray"}}>
+        <tr style={{height:"40px",borderBottom:"1px solid lightgray"}}>
           <td style={{width:"30px"}}>1</td>
           <td style={{width:"100px"}}>결제완료</td>
           <td style={{width:"170px"}}>에어팟 프로팔아요</td>
           <td style={{width:"100px"}}>150,000</td>
         </tr>
-        <tr style={{height:"40px",borderBottom:"1px solid gray"}}>
+        <tr style={{height:"40px",borderBottom:"1px solid lightgray"}}>
           <td style={{width:"30px"}}>1</td>
           <td style={{width:"100px"}}>결제완료</td>
           <td style={{width:"170px"}}>에어팟 프로팔아요</td>
           <td style={{width:"100px"}}>150,000</td>
         </tr>
-        <tr style={{height:"40px",borderBottom:"1px solid gray"}}>
+        <tr style={{height:"40px",borderBottom:"1px solid lightgray"}}>
           <td style={{width:"30px"}}>1</td>
           <td style={{width:"100px"}}>결제완료</td>
           <td style={{width:"170px"}}>에어팟 프로팔아요</td>
           <td style={{width:"100px"}}>150,000</td>
         </tr>
-        <tr style={{height:"40px",borderBottom:"1px solid gray"}}>
+        <tr style={{height:"40px",borderBottom:"1px solid lightgray"}}>
           <td style={{width:"30px"}}>1</td>
           <td style={{width:"100px"}}>결제완료</td>
           <td style={{width:"170px"}}>에어팟 프로팔아요</td>
           <td style={{width:"100px"}}>150,000</td>
         </tr>
-        <tr style={{height:"40px",borderBottom:"1px solid gray"}}>
+        <tr style={{height:"40px",borderBottom:"1px solid lightgray"}}>
           <td style={{width:"30px"}}>1</td>
           <td style={{width:"100px"}}>결제완료</td>
           <td style={{width:"170px"}}>에어팟 프로팔아요</td>

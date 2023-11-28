@@ -8,7 +8,7 @@ const AdminSettleList = () => {
   const [startDate, setStartDate] = useState(new Date());
 
   return (
-    <div className='adminSettleList' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
+    <div className='admin' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
       <div style={{marginLeft:"15px"}}>
       <br/>
       <table style={{marginBottom:"15px"}}>
@@ -45,27 +45,27 @@ const AdminSettleList = () => {
         </tr>
       </table>
       <table>
-        <tr style={{height:"40px",borderBottom:"1px solid gray"}}>
+        <tr style={{height:"40px",borderBottom:"1px solid lightgray"}}>
           <td style={{width:"40px"}}>1</td>
           <td style={{width:"220px"}}>에어팟 프로팔아요</td>
           <td style={{width:"140px"}}>150,000</td>
         </tr>
-        <tr style={{height:"40px",borderBottom:"1px solid gray"}}>
+        <tr style={{height:"40px",borderBottom:"1px solid lightgray"}}>
           <td style={{width:"40px"}}>1</td>
           <td style={{width:"220px"}}>에어팟 프로팔아요</td>
           <td style={{width:"140px"}}>150,000</td>
         </tr>
-        <tr style={{height:"40px",borderBottom:"1px solid gray"}}>
+        <tr style={{height:"40px",borderBottom:"1px solid lightgray"}}>
           <td style={{width:"40px"}}>1</td>
           <td style={{width:"220px"}}>에어팟 프로팔아요</td>
           <td style={{width:"140px"}}>150,000</td>
         </tr>
-        <tr style={{height:"40px",borderBottom:"1px solid gray"}}>
+        <tr style={{height:"40px",borderBottom:"1px solid lightgray"}}>
           <td style={{width:"40px"}}>1</td>
           <td style={{width:"220px"}}>에어팟 프로팔아요</td>
           <td style={{width:"140px"}}>150,000</td>
         </tr>
-        <tr style={{height:"40px",borderBottom:"1px solid gray"}}>
+        <tr style={{height:"40px",borderBottom:"1px solid lightgray"}}>
           <td style={{width:"40px"}}>1</td>
           <td style={{width:"220px"}}>에어팟 프로팔아요</td>
           <td style={{width:"140px"}}>150,000</td>

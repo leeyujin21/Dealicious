@@ -7,9 +7,8 @@ const NotiKeyword = () => {
 
  
   return (
-    <div className='notiKeyword' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
+    <div className='main' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
       <br />
-      <div style={{ marginLeft: "15px" }}>
         <p style={{ fontWeight: "bold", textAlign: "left" }}>알림</p>
         <table>
           <tr>
@@ -57,7 +56,6 @@ const NotiKeyword = () => {
         <Link to="/keyword">
         <button style={{width:"150px",height:"40px",borderRadius:"5px", backgroundColor:"#D9D9D9",border:"white",fontWeight:"bold"}}>키워드 등록하기</button>
         </Link>
-      </div>
     </div>
   );
 }
