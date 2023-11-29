@@ -54,7 +54,7 @@ const Main = () => {
           <div style={{ color: "gray" }}>노트북/PC</div>
         </Link>
         <Link to="/categorylist" style={{ color: "black", width: "33%" }}>
-          <MdOutlineMoreHoriz size="50" color="#5F5EAE" style={{ marginBottom: "5px" }} /><br />
+          <MdOutlineMoreHoriz size="50" color="gray" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>기타</div>
         </Link>
       </div>
