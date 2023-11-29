@@ -43,7 +43,7 @@ function SaleWrite(){
                 <option value="others" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;기타</option>
             </select> 
             <span className='ggull'style={{float:"right"}}>
-                <img src="./ggul2.png"className="right-align"/>
+                <img src="./ggul2.png" style={{width:"50px"}}/>
             </span>
         </div>
         <div style={{marginBottom:"60px"}}/>

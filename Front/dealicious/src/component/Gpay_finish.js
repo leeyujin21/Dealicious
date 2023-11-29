@@ -8,7 +8,7 @@ import { IoClose } from "react-icons/io5";
 const Gpay_finish = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     return (
-        <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", paddingTop:"20px"}}>
+        <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", padding:"20px 50px 0 50px"}}>
             <div style={{textAlign:"left", paddingBottom:"10px"}}>
                 <IoArrowBackOutline style={{marginRight:"80px"}} size="30" color="lightgray"/>
             </div>
@@ -31,7 +31,7 @@ const Gpay_finish = () => {
                 </div>
                 <div style={{paddingLeft:"5px"}}>
                     <span style={{color:"gray"}}>결제수단</span>
-                    <img src="../ggul.png" style={{paddingLeft:"10px"}}/>
+                    <img src="../ggul.png" style={{width:"40px", marginLeft:"20px"}}/>
                 </div>
             </div>
             <div style={{textAlign:"left", borderBottom:"1px solid lightgray", paddingBottom:"20px"}}>

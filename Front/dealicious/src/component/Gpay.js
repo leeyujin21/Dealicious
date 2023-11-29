@@ -8,7 +8,7 @@ import { IoClose } from "react-icons/io5";
 const Gpay = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     return (
-        <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", paddingTop:"20px"}}>
+        <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", padding:"20px 50px 0 50px"}}>
             <div style={{textAlign:"left", paddingBottom:"10px"}}>
                 <IoArrowBackOutline style={{marginRight:"80px"}} size="30" color="lightgray"/>
             </div>
@@ -31,7 +31,7 @@ const Gpay = () => {
                 </div>
                 <div style={{paddingLeft:"5px"}}>
                     <span style={{color:"gray"}}>결제수단</span>
-                    <img src="../ggul.png" style={{paddingLeft:"10px"}}/>
+                    <img src="../ggul.png" style={{width:"40px", marginLeft:"20px"}}/>
                 </div>
             </div>
             <div style={{textAlign:"left", borderBottom:"1px solid lightgray", paddingBottom:"20px"}}>
@@ -102,7 +102,7 @@ const Gpay = () => {
             </div>
             <br/>
             <Link to="/gpay_finish">
-                <Button style={{width:"330px", height:"55px", fontSize:"20px", backgroundColor:"#14C38E", borderStyle:"none"}}>결제하기</Button>
+                <Button style={{width:"325px", height:"55px", fontSize:"20px", backgroundColor:"#14C38E", borderStyle:"none"}}>결제하기</Button>
             </Link>
         </div>
     )
