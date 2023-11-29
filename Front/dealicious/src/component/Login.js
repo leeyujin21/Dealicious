@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import { Button, Col, FormGroup, Input, Label } from "reactstrap";
 
 const Login = () => {
     return (
-        <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", paddingTop:"50px"}}>
+        <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", paddingTop:"50px", paddingRight:"50px", paddingLeft:"50px"}}>
             <a style={{fontSize:"30px", fontWeight:"bold", color:"#14C38E"}}>로그인</a>
             <br/><br/>
             <FormGroup style={{textAlign:"left"}}>
@@ -17,7 +18,7 @@ const Login = () => {
             <br/>
             <Button style={{width:"330px", height:"55px", fontSize:"20px", backgroundColor:"#14C38E", borderStyle:"none"}}>이메일로 로그인</Button>
             <br/><br/>
-            <a href="join" style={{color:"#999999"}}>회원가입</a>
+            <Link to="/join" style={{color:"#999999", textDecoration:"none"}}>회원가입</Link>
             <br/><br/>
             <Button style={{width:"330px", height:"55px", fontSize:"20px", backgroundColor:"#FEE500", color:"#000000", borderStyle:"none"}}>카카오로 시작</Button>
             <div style={{height:"10px"}}></div>

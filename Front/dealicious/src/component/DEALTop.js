@@ -18,7 +18,7 @@ const DEALTop = () => {
             <Link to='/search'>
                 <IoIosSearch size='38' color='14C38E' />
             </Link>
-            <Link to='/notikeyword'>
+            <Link to='/notiactivity'>
                 <PiBell size='38' color='14C38E' />
             </Link>
           </div>
