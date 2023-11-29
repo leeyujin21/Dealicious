@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { IoArrowBackOutline } from "react-icons/io5";
 import './img.css';
 import { Input } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 function SaleDetail() {
     return (
@@ -44,8 +45,12 @@ A동 8층까지 오시면 5천원 깎아드려요.">
                     <img src="./zzimheart.png" style={{verticalAlign:"middle"}}/>
                     <div style={{width:"20px", height:"20px" ,position:"absolute", transform: "translate(70%, -165%)", textAlign:"center", color:"white", fontWeight:"bold"}}>12</div>
                 </div>
-                <img src="./ggul2.png" style={{ width: "50px", marginLeft: "121px", marginRight: "5px", marginTop: "5px" }} />
-                <span style={{ textAlign: "right" }}><input type="submit" value="채팅하기" style={{ borderRadius: "5px", width: "100px", height: "45px", backgroundColor: '#14C38E', color: "white", borderStyle: "none" }}></input></span>
+                <Link to="/gpay">
+                    <img src="./ggul2.png" style={{ width: "50px", marginLeft: "121px", marginRight: "5px", marginTop: "5px" }} />
+                </Link>
+                <Link to="/chat">
+                    <span style={{ textAlign: "right" }}><input type="submit" value="채팅하기" style={{ borderRadius: "5px", width: "100px", height: "45px", backgroundColor: '#14C38E', color: "white", borderStyle: "none" }}></input></span>
+                </Link>
             </div>
         </div>
     );
