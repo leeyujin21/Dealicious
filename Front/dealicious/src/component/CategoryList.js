@@ -23,7 +23,7 @@ function CategoryList() {
                 <a style={{ fontSize: "18px" }}>커피 디스펜서</a><br />
                 <div style={{display:"flex"}}>
                   <div style={{ fontSize: "15px", width:"180px" }}>A동 2층</div>
-                  <div style={{textAlign:"right"}}><img src='..\ggul.png'/></div><br />
+                  <div style={{textAlign:"right", width:"30px"}}><img src='..\ggul.png' style={{width:"34px", height:"19px"}}/></div><br />
                 </div>
                 <div style={{ display: "flex" }}>
                   <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "180px" }}>60,000원</div>

@@ -23,7 +23,7 @@ const Chat = () => {
             </div>
             <div style={{lineHeight:"40px", width:"80px", textAlign:"right", marginRight:"10px"}}>
               <div>판매중</div>
-              <div><Link to="/gpay"><img src='ggulpay1.png' style={{width:"50px"}}></img></Link></div>
+              <div><Link to="/gpay"><img src='ggul.png' style={{width:"34px", height:"19px"}}></img></Link></div>
             </div>
           </div>
         </div>
@@ -32,14 +32,14 @@ const Chat = () => {
       <p style={{color:"gray"}}>2023년 11월 17일</p>
       <br/>
       <div style={{textAlign:"left",marginBottom:"15px"}}>
-      <div style={{display: "inline-block",marginRight:"8px"}}><img src='ggulpay1.png' style={{width:"50px"}}></img></div>
+      <div style={{display: "inline-block",marginRight:"8px"}}><img src='profile.png' style={{width:"50px"}}></img></div>
       <div style={{display: "inline-block",width:"auto",maxWidth:"210px",borderRadius:"10px",backgroundColor:"#D9D9D9",padding:"10px"}}>안녕하세요 구매 원하는데 혹시 장소 변경 가능할까요?</div>
       </div>
       <div style={{textAlign:"right",marginBottom:"15px"}}>
       <div style={{display: "inline-block",width:"auto",maxWidth:"210px",borderRadius:"10px",backgroundColor:"#14C38E",padding:"10px",color:"white"}}>되겠냐?</div>
       </div>
       <div style={{textAlign:"left",marginBottom:"15px"}}>
-      <div style={{display: "inline-block",marginRight:"8px"}}><img src='ggulpay1.png' style={{width:"50px"}}></img></div>
+      <div style={{display: "inline-block",marginRight:"8px"}}><img src='profile.png' style={{width:"50px"}}></img></div>
       <div style={{display: "inline-block",width:"auto",maxWidth:"210px",borderRadius:"10px",backgroundColor:"#D9D9D9",padding:"10px"}}>인성보소</div>
       </div>
       <br/>

@@ -15,79 +15,85 @@ const Mypage_zzim = () => {
 
     return (
         <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", paddingTop:"50px"}}>
-            <FormGroup style={{textAlign:"left", paddingBottom:"10px"}}>
-                <IoArrowBackOutline style={{marginRight:"80px"}} size="30" color="#14C38E"/>
-                <Label style={{fontSize:"25px", fontWeight:"bold", color:"#14C38E"}}>마이페이지</Label>
+            <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
+                <IoArrowBackOutline style={{ marginRight: "100px" }} size="30" color="#14C38E" />
+                <Label style={{ fontSize: "25px", fontWeight: "bold", color: "#14C38E" }}>마이페이지</Label>
             </FormGroup>
-            <div style={{paddingBottom:"30px", display:"flex", paddingBottom:"30px"}}>
-                <Avvvatars 
-                    src={Image} 
-                    style={{margin:'20px'}} 
-                    size={65} 
-                    onClick={()=>{fileInput.current.click()}}
+            <div style={{ paddingBottom: "30px", display: "flex", paddingBottom: "30px" }}>
+                <Avvvatars
+                    src={Image}
+                    style={{ margin: '20px' }}
+                    size={65}
+                    onClick={() => { fileInput.current.click() }}
                 />
-                &nbsp;&nbsp;
-                <a style={{fontSize:"20px", fontWeight:"bold", textAlign:"left", paddingLeft:"20px"}}>
+                <div style={{ fontSize: "20px", fontWeight: "bold", textAlign: "left", paddingLeft: "20px", width: "220px" }}>
                     &nbsp;홍길동
-                    <br/>
+                    <br />
                     <div>
-                        <FaStar size="25" color="#F2D43E"/>
-                        <FaStar size="25" color="#F2D43E"/>
-                        <FaStar size="25" color="#F2D43E"/>
-                        <FaStar size="25" color="#F2D43E"/>
+                        <FaStar size="25" color="#F2D43E" />
+                        <FaStar size="25" color="#F2D43E" />
+                        <FaStar size="25" color="#F2D43E" />
+                        <FaStar size="25" color="#F2D43E" />
                     </div>
-                </a>&nbsp;&nbsp;
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Button onClick={toProfileDetail} style={{width:"100px", height:"35px", fontSize:"15px",
-                    backgroundColor:"#D9D9D9", borderStyle:"none", borderRadius:"20px"}}>내 정보 수정
+                </div>
+
+                <Button onClick={toProfileDetail} style={{
+                    width: "100px", height: "35px", fontSize: "15px",
+                    backgroundColor: "#D9D9D9", borderStyle: "none", borderRadius: "20px"
+                }}>내 정보 수정
                 </Button>
             </div>
-            <div style={{textAlign:"left"}}>
-                &nbsp;
-                <Link to="/mypage" style={{fontSize:"18px", color:"black", textDecoration:"none"}}>내가 쓴 글(9)</Link>&nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/myzzim" style={{fontSize:"18px", fontWeight:"bold", color:"black", textDecoration:"none"}}>찜한 글(3)</Link>&nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/myreview" style={{fontSize:"18px", color:"black", textDecoration:"none"}}>받은 후기(2)</Link>   
-            </div> 
-            <div style={{height:"2px", backgroundColor:"#D9D9D9", width:"330px", position:"relative"}}>
-                <div style={{position:"absolute", height:"3px", width:"90px", backgroundColor:"#14C38E", marginLeft:"110px"}}/>
+            <div style={{ display: "flex", textAlign: "left", marginBottom:"3px" }}>
+                <div style={{ width: "100px", marginLeft: "5px", marginRight: "15px" }}><Link to="/mypage" style={{ fontSize: "18px", color: "black", textDecoration: "none" }}>내가 쓴 글(9)</Link></div>
+                <div style={{ width: "80px"}}><Link to="/myzzim" style={{ fontSize: "18px", color: "black", textDecoration: "none", fontWeight: "bold" }}>찜한 글(3)</Link></div>
+                <div style={{ width: "100px", marginLeft:"15px" }}><Link to="/myreview" style={{ fontSize: "18px", color: "black", textDecoration: "none" }}>받은 후기(2)</Link>   </div>
             </div>
-            <div style={{height:"10px"}}/>
-            <div style={{height:"10px"}}/>
-            <div style={{ display:"inline-block", paddingRight:"10px"}}>
-                <div style ={{width:"100px", height:"100px", 'background-color':"red", borderRadius:"10px", position:"relative"}}>
-                    <div style={{textAlign:"left", marginLeft:"3px", paddingTop:"3px"}}>
-                        <IoHeartCircleOutline color="#E57070" size="30"/>
+            <div style={{ height: "2px", backgroundColor: "#D9D9D9", width: "385px", position: "relative" }}>
+                <div style={{ position: "absolute", height: "3px", width: "95px", backgroundColor: "#14C38E", marginLeft:"110px" }} />
+            </div>
+            <div style={{height:"20px"}}/>
+            <Link to="/saledetail" style={{textDecoration:"none", color:"black"}}>
+                <div style={{ display: "inline-block", paddingRight:"10px" }}>
+                    <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative" }}>
+                        <img src="..\1.png" style={{ width: "120px", height: "120px", borderRadius: "10px"}}/>
+                        <IoHeartCircleOutline color="#E57070" size="30" style={{position:"absolute", top:"3%", left:"3%"}}/>
+                    </div>
+                    <div style={{ textAlign: "left", fontWeight: "bold" }}>
+                        50,000원
+                    </div>
+                    <div style={{ textAlign: "left", marginTop: "-5px" }}>
+                        <a style={{ fontSize: "13px" }}>커피 디스펜서 팔아...</a>
                     </div>
                 </div>
-                <div style={{textAlign:"left"}}>
-                    50,000원
+            </Link>
+            <Link to="/saledetail" style={{textDecoration:"none", color:"black"}}>
+                <div style={{ display: "inline-block", paddingRight:"10px" }}>
+                    <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative" }}>
+                        <img src="..\1.png" style={{ width: "120px", height: "120px", borderRadius: "10px"}}/>
+                        <IoHeartCircleOutline color="#E57070" size="30" style={{position:"absolute", top:"3%", left:"3%"}}/>
+                    </div>
+                    <div style={{ textAlign: "left", fontWeight: "bold" }}>
+                        50,000원
+                    </div>
+                    <div style={{ textAlign: "left", marginTop: "-5px" }}>
+                        <a style={{ fontSize: "13px" }}>커피 디스펜서 팔아...</a>
+                    </div>
                 </div>
-                <div style={{textAlign:"left"}}>
-                    <a style={{fontSize:"11px"}}>접시 세트 판매합니다.</a>
+            </Link>
+            <Link to="/saledetail" style={{textDecoration:"none", color:"black"}}>
+                <div style={{ display: "inline-block" }}>
+                    <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative" }}>
+                        <img src="..\1.png" style={{ width: "120px", height: "120px", borderRadius: "10px"}}/>
+                        <IoHeartCircleOutline color="#E57070" size="30" style={{position:"absolute", top:"3%", left:"3%"}}/>
+                    </div>
+                    <div style={{ textAlign: "left", fontWeight: "bold" }}>
+                        50,000원
+                    </div>
+                    <div style={{ textAlign: "left", marginTop: "-5px" }}>
+                        <a style={{ fontSize: "13px" }}>커피 디스펜서 팔아...</a>
+                    </div>
                 </div>
-            </div>
-            <div style={{ display:"inline-block", paddingRight:"10px"}}>
-                <div style ={{width:"100px", height:"100px", 'background-color':"red", borderRadius:"10px"}}/>
-                <div style={{textAlign:"left"}}>
-                    50,000원
-                </div>
-                <div style={{textAlign:"left"}}>
-                    <a style={{fontSize:"11px"}}>접시 세트 판매합니다.</a>
-                </div>
-            </div>
-            <div style={{ display:"inline-block"}}>
-                <div style ={{width:"100px", height:"100px", 'background-color':"red", borderRadius:"10px"}}/>
-                <div style={{textAlign:"left"}}>
-                    50,000원
-                </div>
-                <div style={{textAlign:"left"}}>
-                    <a style={{fontSize:"11px"}}>접시 세트 판매합니다.</a>
-                </div>
-            </div>
-            {/* <div style ={{width:"100px", height:"100px", 'background-color':"red", display:"inline-block", borderRadius:"10px"}}/>
-            &nbsp;&nbsp;&nbsp;
-            <div style ={{width:"100px", height:"100px", 'background-color':"red", display:"inline-block", borderRadius:"10px"}}/> */}
+            </Link>
         </div>
     )
 }

@@ -15,54 +15,54 @@ const Mypage_review = () => {
     return (
         
         <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", paddingTop:"50px"}}>
-            <FormGroup style={{textAlign:"left", paddingBottom:"10px"}}>
-                <IoArrowBackOutline style={{marginRight:"80px"}} size="30" color="#14C38E"/>
-                <Label style={{fontSize:"25px", fontWeight:"bold", color:"#14C38E"}}>마이페이지</Label>
+            <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
+                <IoArrowBackOutline style={{ marginRight: "100px" }} size="30" color="#14C38E" />
+                <Label style={{ fontSize: "25px", fontWeight: "bold", color: "#14C38E" }}>마이페이지</Label>
             </FormGroup>
-            <div style={{paddingBottom:"30px", display:"flex", paddingBottom:"30px"}}>
-                <Avvvatars 
-                    src={Image} 
-                    style={{margin:'20px'}} 
-                    size={65} 
-                    onClick={()=>{fileInput.current.click()}}
+            <div style={{ paddingBottom: "30px", display: "flex", paddingBottom: "30px" }}>
+                <Avvvatars
+                    src={Image}
+                    style={{ margin: '20px' }}
+                    size={65}
+                    onClick={() => { fileInput.current.click() }}
                 />
-                &nbsp;&nbsp;
-                <a style={{fontSize:"20px", fontWeight:"bold", textAlign:"left", paddingLeft:"20px"}}>
+                <div style={{ fontSize: "20px", fontWeight: "bold", textAlign: "left", paddingLeft: "20px", width: "220px" }}>
                     &nbsp;홍길동
-                    <br/>
+                    <br />
                     <div>
-                        <FaStar size="25" color="#F2D43E"/>
-                        <FaStar size="25" color="#F2D43E"/>
-                        <FaStar size="25" color="#F2D43E"/>
-                        <FaStar size="25" color="#F2D43E"/>
+                        <FaStar size="25" color="#F2D43E" />
+                        <FaStar size="25" color="#F2D43E" />
+                        <FaStar size="25" color="#F2D43E" />
+                        <FaStar size="25" color="#F2D43E" />
                     </div>
-                </a>&nbsp;&nbsp;
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Button onClick={toProfileDetail} style={{width:"100px", height:"35px", fontSize:"15px",
-                    backgroundColor:"#D9D9D9", borderStyle:"none", borderRadius:"20px"}}>내 정보 수정
+                </div>
+
+                <Button onClick={toProfileDetail} style={{
+                    width: "100px", height: "35px", fontSize: "15px",
+                    backgroundColor: "#D9D9D9", borderStyle: "none", borderRadius: "20px"
+                }}>내 정보 수정
                 </Button>
             </div>
-            <div style={{textAlign:"left"}}>
-                &nbsp;
-                <Link to="/mypage" style={{fontSize:"18px", color:"black", textDecoration:"none"}}>내가 쓴 글(9)</Link>&nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/myzzim" style={{fontSize:"18px", color:"black", textDecoration:"none"}}>찜한 글(3)</Link>&nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/myreview" style={{fontSize:"18px", fontWeight:"bold", color:"black", textDecoration:"none"}}>받은 후기(2)</Link>   
-            </div> 
-            <div style={{height:"2px", backgroundColor:"#D9D9D9", width:"330px", position:"relative"}}>
-                <div style={{position:"absolute", height:"3px", width:"100px", backgroundColor:"#14C38E", marginLeft:"200px"}}/>
+            <div style={{ display: "flex", textAlign: "left", marginBottom:"3px" }}>
+                <div style={{ width: "100px", marginLeft: "5px", marginRight: "5px" }}><Link to="/mypage" style={{ fontSize: "18px", color: "black", textDecoration: "none" }}>내가 쓴 글(9)</Link></div>
+                <div style={{ width: "80px"}}><Link to="/myzzim" style={{ fontSize: "18px", color: "black", textDecoration: "none" }}>찜한 글(3)</Link></div>
+                <div style={{ width: "100px", marginLeft:"15px" }}><Link to="/myreview" style={{ fontSize: "18px", color: "black", textDecoration: "none", fontWeight: "bold" }}>받은 후기(2)</Link>   </div>
             </div>
-            <div style={{height:"10px"}}/>
-            <div style={{height:"10px"}}/>
-            <div style={{marginLeft:"5px", display:"flex", width:"100%", height:"80px", borderBottom:"1px solid lightgray"}}>
-                <Avvvatars 
-                    src={Image} 
-                    style={{margin:'20px'}} 
-                    size={55} 
-                    onClick={()=>{fileInput.current.click()}}
-                />
-                <div style={{marginLeft:"10px", fontWeight:"bold", textAlign:"left"}}>
-                    &nbsp;어깡이
+            <div style={{ height: "2px", backgroundColor: "#D9D9D9", width: "385px", position: "relative" }}>
+                <div style={{ position: "absolute", height: "3px", width: "105px", backgroundColor: "#14C38E", marginLeft:"198px" }} />
+            </div>
+            <div style={{height:"20px"}}/>
+            <div style={{marginLeft:"5px", display:"flex", width:"100%", height:"90px", borderBottom:"1px solid lightgray"}}>
+                <div style={{marginTop:"7.5px", height:"70px"}}>
+                    <Avvvatars 
+                        src={Image} 
+                        style={{margin:'20px'}} 
+                        size={55} 
+                        onClick={()=>{fileInput.current.click()}}
+                    />
+                </div>
+                <div style={{marginLeft:"10px", textAlign:"left", width:"130px", marginTop:"9px"}}>
+                    &nbsp;<a style={{fontSize:"17px", fontWeight:"bold"}}>어깡이</a>
                     <br/>
                     <div>
                         <FaStar size="25" color="#F2D43E"/>
@@ -72,17 +72,25 @@ const Mypage_review = () => {
                         <FaStar size="25" color="#F2D43E"/>
                     </div>
                 </div>
-                <div style ={{width:"55px", height:"55px", 'background-color':"red", borderRadius:"10px", marginLeft:"75px"}}/>
+                <div style={{width:"95px", textAlign:"right", marginRight:"15px", marginTop:"10px"}}>
+                    <div style={{fontSize:"14px", color:"black", marginBottom:"7px"}}>2023.11.28</div>
+                    <img src="\ggul.png" style={{width:"34px", height:"19px"}}/>
+                </div>
+                <div style ={{width:"70px", height:"70px", borderRadius:"10px", textAlign:"right"}}>
+                    <img src="\1.png" style={{width:"70px", height:"70px", borderRadius:"10px"}}/>
+                </div>
             </div>
-            <div style={{marginTop:"20px", marginLeft:"5px", display:"flex", width:"100%", height:"80px", borderBottom:"1px solid lightgray"}}>
-                <Avvvatars 
-                    src={Image} 
-                    style={{margin:'20px'}} 
-                    size={55} 
-                    onClick={()=>{fileInput.current.click()}}
-                />
-                <div style={{marginLeft:"10px", fontWeight:"bold", textAlign:"left"}}>
-                    &nbsp;어좁이
+            <div style={{marginLeft:"5px", display:"flex", width:"100%", height:"90px", borderBottom:"1px solid lightgray", marginTop:"20px"}}>
+                <div style={{marginTop:"7.5px", height:"70px"}}>
+                    <Avvvatars 
+                        src={Image} 
+                        style={{margin:'20px'}} 
+                        size={55} 
+                        onClick={()=>{fileInput.current.click()}}
+                    />
+                </div>
+                <div style={{marginLeft:"10px", textAlign:"left", width:"130px", marginTop:"9px"}}>
+                    &nbsp;<a style={{fontSize:"17px", fontWeight:"bold"}}>어좁이</a>
                     <br/>
                     <div>
                         <FaStar size="25" color="#F2D43E"/>
@@ -90,7 +98,13 @@ const Mypage_review = () => {
                         <FaStar size="25" color="#F2D43E"/>
                     </div>
                 </div>
-                <div style ={{width:"55px", height:"55px", 'background-color':"red", borderRadius:"10px", marginLeft:"125px"}}/>
+                <div style={{width:"95px", textAlign:"right", marginRight:"15px", marginTop:"10px"}}>
+                    <div style={{fontSize:"14px", color:"black", marginBottom:"7px"}}>2023.11.25</div>
+                    <img src="\ggul2.png" style={{width:"34px", height:"19px"}}/>
+                </div>
+                <div style ={{width:"70px", height:"70px", borderRadius:"10px", textAlign:"right"}}>
+                    <img src="\1.png" style={{width:"70px", height:"70px", borderRadius:"10px"}}/>
+                </div>
             </div>
         </div>
     )
