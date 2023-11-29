@@ -52,13 +52,13 @@ function App() {
                 <Route exect path="/adminmain" element={<AdminMain/>}/>
                 <Route exect path="/adminsettle" element={<AdminSettle/>}/>
                 <Route exect path="/adminsettlelist" element={<AdminSettleList/>}/>
-                <Route exect path="/notiactivity" element={<NotiActivity/>}/> {/**/}
-                <Route exect path="/notikeyword" element={<NotiKeyword/>}/> {/**/}
-                <Route exect path="/keyword" element={<Keyword/>}/> {/**/}
-                <Route exect path="/search" element={<Search/>}/> {/**/}
+                <Route exect path="/notiactivity" element={<NotiActivity/>}/> 
+                <Route exect path="/notikeyword" element={<NotiKeyword/>}/> 
+                <Route exect path="/keyword" element={<Keyword/>}/> 
+                <Route exect path="/search" element={<Search/>}/> 
                 <Route exect path="/chat" element={<Chat/>}/> {/**/}
 
-                <Route exect path="/login" element={<Login/>}/> {/**/}
+                <Route exect path="/login" element={<Login/>}/>
                 <Route exect path="/join" element={<Join/>}/>
                 <Route exect path="/join2" element={<Join2/>}/> {/**/}
                 <Route exect path="/join3" element={<Join3/>}/> {/**/}

@@ -9,40 +9,38 @@ const Chat = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   return (
     <div className='main' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
-      <div style={{ textAlign: "left", color: "#14C38E" }}>
-
-        <GoArrowLeft size={30} style={{ color: "#14C38E" }} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style={{fontSize:"20px"}}>어깡이</span>
-
+      <div style={{ textAlign: "left", color: "#14C38E", display:"flex", verticalAlign:"middle" }}>
+        <Link to="/chatlist"><GoArrowLeft size={30} style={{ color: "#14C38E", height:"40px" }} /></Link>
+        <div style={{fontSize:"20px", fontWeight:"bold", marginLeft:"10px", height:"40px", lineHeight:"40px"}}>어깡이</div>
       </div>
-      <div style={{ marginTop: "20px", width: "330px", borderTop: "1px solid gray", borderBottom: "1px solid gray" }}>
-        <table  style={{ marginTop: "10px",marginBottom: "10px"}}>
-          <tr>
-            <td rowSpan={3}><img src='gg.png' style={{width:"100px"}}></img></td>
-            <td style={{width:"160px", textAlign:"left"}}>디스펜서 팔아요</td>
-            <td>판매중</td>
-          </tr>
-          <tr>
-            <td style={{textAlign:"left"}}>60,000원</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td><Link to="/gpay"><img src='ggulpay1.png' style={{width:"50px"}}></img></Link></td>
-          </tr>
-        </table>
+      <div style={{ marginTop: "20px", width: "385px", borderTop: "1px solid gray", borderBottom: "1px solid gray" }}>
+        <div  style={{ marginTop: "10px",marginBottom: "10px"}}>
+          <div style={{display:"flex"}}>
+            <div><img src='gg.png' style={{width:"80px"}}></img></div>
+            <div style={{width:"230px", textAlign:"left", lineHeight:"40px"}}>
+              <Link to="/saledetail" style={{color:"black", textDecoration:"none"}}><div style={{textAlign:"left"}}>디스펜서 팔아요</div></Link>
+              <div style={{textAlign:"left", fontSize:"18px"}}>60,000원</div>
+            </div>
+            <div style={{lineHeight:"40px", width:"80px", textAlign:"right", marginRight:"10px"}}>
+              <div>판매중</div>
+              <div><Link to="/gpay"><img src='ggulpay1.png' style={{width:"50px"}}></img></Link></div>
+            </div>
+          </div>
+        </div>
       </div>
       <br/>
       <p style={{color:"gray"}}>2023년 11월 17일</p>
       <br/>
       <div style={{textAlign:"left",marginBottom:"15px"}}>
       <div style={{display: "inline-block",marginRight:"8px"}}><img src='ggulpay1.png' style={{width:"50px"}}></img></div>
-      <div style={{display: "inline-block",width:"auto",maxWidth:"210px",borderRadius:"10px",backgroundColor:"#D9D9D9", fontWeight:"bold",padding:"10px"}}>안녕하세요 구매 원하는데 혹시 장소 변경 가능할까요?</div>
+      <div style={{display: "inline-block",width:"auto",maxWidth:"210px",borderRadius:"10px",backgroundColor:"#D9D9D9",padding:"10px"}}>안녕하세요 구매 원하는데 혹시 장소 변경 가능할까요?</div>
       </div>
       <div style={{textAlign:"right",marginBottom:"15px"}}>
-      <div style={{display: "inline-block",width:"auto",maxWidth:"210px",borderRadius:"10px",backgroundColor:"#14C38E", fontWeight:"bold",padding:"10px",color:"white"}}>되겠냐?</div>
+      <div style={{display: "inline-block",width:"auto",maxWidth:"210px",borderRadius:"10px",backgroundColor:"#14C38E",padding:"10px",color:"white"}}>되겠냐?</div>
       </div>
       <div style={{textAlign:"left",marginBottom:"15px"}}>
       <div style={{display: "inline-block",marginRight:"8px"}}><img src='ggulpay1.png' style={{width:"50px"}}></img></div>
-      <div style={{display: "inline-block",width:"auto",maxWidth:"210px",borderRadius:"10px",backgroundColor:"#D9D9D9", fontWeight:"bold",padding:"10px"}}>인성보소</div>
+      <div style={{display: "inline-block",width:"auto",maxWidth:"210px",borderRadius:"10px",backgroundColor:"#D9D9D9",padding:"10px"}}>인성보소</div>
       </div>
       <br/>
       <div style={{borderLeft:"3px solid #D9D9D9",paddingLeft:"10px",textAlign:"left",marginBottom:"15px"}}>
@@ -79,9 +77,9 @@ const Chat = () => {
       </Modal>
       </div>
       <br/>
-      <div style={{textAlign:"left",marginBottom:"20px", width:"350px"}}>
+      <div style={{textAlign:"left",marginBottom:"20px", width:"390px"}}>
         <FaImage size="30" style={{color:"#D9D9D9"}}/>
-        <input style={{marginLeft:"10px",border:"white", width:"240px",height:"40px", borderRadius:"10px",backgroundColor:"#D9D9D9"}} placeholder='  채팅하기'></input>
+        <input style={{marginLeft:"10px",border:"white", width:"300px",height:"40px", borderRadius:"10px",backgroundColor:"#D9D9D9"}} placeholder='  채팅하기'></input>
         <IoMdSend size="40" style={{marginLeft:"10px",color:"#D9D9D9"}}/>
       </div>
     </div>
