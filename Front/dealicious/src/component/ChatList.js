@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function ChatList(){
     return (
-        <div className='main' style={{textAlign:'left',overflow:"scroll", height:"742px", overflowX:"hidden", paddingLeft:"20px", paddingRight:"20px"}}>
+        <div className='main' style={{textAlign:'left',overflow:"scroll", height:"732px", overflowX:"hidden", paddingLeft:"20px", paddingRight:"20px"}}>
             <div style={{borderBottom:"1px solid",fontSize:"20px", paddingBottom:"10px"}}><b>채팅</b></div>
             <Link to="/chat" style={{textDecoration:"none",color:"black"}}>
             <div style={{paddingTop:"10px",paddingBottom:"10px",borderBottom:"1px solid lightgray"}}>

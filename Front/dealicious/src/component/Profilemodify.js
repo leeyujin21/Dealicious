@@ -15,7 +15,7 @@ const Profilemodify = () => {
     }
 
     return (
-        <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", paddingTop:"50px", paddingLeft:"50px", paddingRight:"50px"}}>
+        <div className='main' style={{overflow:"scroll", height:"732px", overflowX:"hidden", paddingTop:"50px", paddingLeft:"50px", paddingRight:"50px"}}>
             <FormGroup style={{textAlign:"left", paddingBottom:"10px"}}>
             <Link to="/profiledetail"><IoArrowBackOutline style={{marginRight:"80px"}} size="30" color="#14C38E"/></Link>
                 <Label style={{fontSize:"25px", fontWeight:"bold", color:"#14C38E"}}>마이페이지</Label>

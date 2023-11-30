@@ -3,7 +3,7 @@ import { Table } from "reactstrap";
 const AdminMain = () => {
 
   return (
-    <div className='admin' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
+    <div className='admin' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
       <div style={{textAlign:"left", marginBottom:"10px"}}>
         <select style={{ border: "1px solid lightgray", marginTop: "12.5px", borderRadius: "10px", width: "133px", height: "45px", textAlign: "left" }}>
           <option value="all">&nbsp;&nbsp;&nbsp;전체</option>

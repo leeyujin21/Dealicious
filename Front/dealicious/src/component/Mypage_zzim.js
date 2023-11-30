@@ -14,7 +14,7 @@ const Mypage_zzim = () => {
     }
 
     return (
-        <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", paddingTop:"50px"}}>
+        <div className='main' style={{overflow:"scroll", height:"732px", overflowX:"hidden", paddingTop:"50px"}}>
             <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
                 <IoArrowBackOutline style={{ marginRight: "100px" }} size="30" color="#14C38E" />
                 <Label style={{ fontSize: "25px", fontWeight: "bold", color: "#14C38E" }}>마이페이지</Label>

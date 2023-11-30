@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Search = () => {
 
   return (
-    <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", paddingTop:"10px"}}>
+    <div className='main' style={{overflow:"scroll", height:"732px", overflowX:"hidden", paddingTop:"10px"}}>
       <br/>
       <div style={{textAlign:"left",color:"gray", borderBottom:"1px solid gray",height:"40px"}}>
       <Link to="/"><GoArrowLeft size={30} style={{color:"gray"}}/></Link><input style={{marginLeft:"10px",border:"white"}}placeholder='어떤 물품을 원하시나요?'></input>

@@ -4,8 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
-import DEALBottom from './component/DEALBottom';
-import DEALTop from './component/DEALTop';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

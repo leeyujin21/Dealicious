@@ -1,87 +1,102 @@
 import { useState } from 'react';
-import Calendar from 'react-calendar';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { GoArrowLeft } from "react-icons/go";
+import { Button, Col, FormGroup, Modal, Table } from 'reactstrap';
 
 const AdminSettleList = () => {
   const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
+  const minEndDate = startDate; // 두 번째 DatePicker의 최소 날짜를 첫 번째 DatePicker의 선택된 날짜로 설정
   return (
-    <div className='admin' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
-      <div style={{marginLeft:"15px"}}>
-      <br/>
-      <table style={{marginBottom:"15px"}}>
+    <div className='admin' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "10px" }}>
+      <div style={{ width: "395px", textAlign: "left", fontSize: "20px", fontWeight: "bold", paddingLeft: "15px", paddingTop: "20px", paddingBottom: "20px" }}>
+        정산완료 내역
+      </div>
+      <div style={{ display: "flex", paddingBottom:"20px", paddingLeft:"15px"}}>
+        <div style={{display:"flex"}}>
+          <div>
+            <div style={{ textAlign: "left", width: "320px", display: "flex" }}>
+              <div style={{ lineHeight: "39px", width: "49px", textAlign:"right" }}>
+                FROM:
+              </div>
+              <div style={{ marginLeft: "10px" }}>
+                <DatePicker
+                  showIcon
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                  maxDate={new Date()} // 오늘 이후의 날짜를 선택할 수 없도록 설정
+                />
+              </div>
+            </div>
+            <div style={{ textAlign: "center", width: "320px", display: "flex", marginTop: "5px" }}>
+              <div style={{ lineHeight: "39px", width: "49px", textAlign:"right" }}>
+                TO:
+              </div>
+              <div style={{ marginLeft: "10px" }}>
+                <DatePicker
+                  showIcon
+                  selected={endDate}
+                  onChange={(date) => setEndDate(date)}
+                  minDate={minEndDate} // 최소 날짜를 첫 번째 DatePicker의 선택된 날짜로 설정
+                  maxDate={new Date()} // 오늘 이후의 날짜를 선택할 수 없도록 설정
+                />
+              </div>
+            </div>
+          </div>
+          <div style={{ textAlign: "center", marginLeft:"5px", lineHeight:"75px" }}>
+            <Button style={{ backgroundColor: "#14C38E", borderStyle: "none" }}>검색</Button>
+          </div>
+        </div>
+      </div>
+      <Table style={{ marginBottom: "10px", borderBottom: "2px solid gray" }}>
+        <thead>
+          <td>번호</td>
+          <td>판매자</td>
+          <td>정산액</td>
+          <td>수수료</td>
+          <td>결제금액</td>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>홍길동</td>
+            <td style={{ textAlign: "right" }}>150,000</td>
+            <td style={{ textAlign: "right" }}>7,500</td>
+            <td style={{ textAlign: "right" }}>157,500</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>홍길동</td>
+            <td style={{ textAlign: "right" }}>50,000</td>
+            <td style={{ textAlign: "right" }}>2,500</td>
+            <td style={{ textAlign: "right" }}>52,500</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>어깡이</td>
+            <td style={{ textAlign: "right" }}>60,000</td>
+            <td style={{ textAlign: "right" }}>3,000</td>
+            <td style={{ textAlign: "right" }}>63,000</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>어좁이</td>
+            <td style={{ textAlign: "right" }}>150,000</td>
+            <td style={{ textAlign: "right" }}>7,500</td>
+            <td style={{ textAlign: "right" }}>157,500</td>
+          </tr>
+        </tbody>
+      </Table>
+      <div>
         <tr>
-          <td style={{textAlign:"left",width:"280px", fontWeight:"bold"}}>정산 내역</td>
-          <td><button style={{width:"120px",borderRadius:"5px", backgroundColor:"#14C38E",border:"white",fontWeight:"bold",color:"white"}}>일자별 검색</button></td>
-        </tr>
-      </table>
-      <table>
-        <tr style={{height:"60px"}}>
-          <td style={{width:"80px"}}>From:</td>
-          <td><DatePicker style={{width:"70px"}}
-      showIcon
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
-    /></td>
+          <td style={{ textAlign: "right", width: "300px", fontWeight: "bold" }}>총 정산액 : </td>
+          <td style={{ textAlign: "right", width: "100px" }}>410,000 원</td>
         </tr>
         <tr>
-        <td style={{width:"80px"}}>To:</td>
-        <td>
-        <DatePicker style={{width:"70px"}}
-      showIcon
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
-    /></td>
+          <td style={{ textAlign: "right", width: "300px", fontWeight: "bold" }}>총 수수료 : </td>
+          <td style={{ textAlign: "right", width: "100px" }}>20,500 원</td>
         </tr>
-      </table>
-      <br/>
-      <table style={{height:"40px",marginBottom:"10px",borderBottom:"2px solid gray"}}>
-        <tr>
-          <td style={{width:"40px", fontWeight:"bold"}}>No.</td>
-          <td style={{width:"220px", fontWeight:"bold"}}>Subject</td>
-          <td style={{width:"140px", fontWeight:"bold"}}>Price</td>
-        </tr>
-      </table>
-      <table>
-        <tr style={{height:"40px",borderBottom:"1px solid lightgray"}}>
-          <td style={{width:"40px"}}>1</td>
-          <td style={{width:"220px"}}>에어팟 프로팔아요</td>
-          <td style={{width:"140px"}}>150,000</td>
-        </tr>
-        <tr style={{height:"40px",borderBottom:"1px solid lightgray"}}>
-          <td style={{width:"40px"}}>1</td>
-          <td style={{width:"220px"}}>에어팟 프로팔아요</td>
-          <td style={{width:"140px"}}>150,000</td>
-        </tr>
-        <tr style={{height:"40px",borderBottom:"1px solid lightgray"}}>
-          <td style={{width:"40px"}}>1</td>
-          <td style={{width:"220px"}}>에어팟 프로팔아요</td>
-          <td style={{width:"140px"}}>150,000</td>
-        </tr>
-        <tr style={{height:"40px",borderBottom:"1px solid lightgray"}}>
-          <td style={{width:"40px"}}>1</td>
-          <td style={{width:"220px"}}>에어팟 프로팔아요</td>
-          <td style={{width:"140px"}}>150,000</td>
-        </tr>
-        <tr style={{height:"40px",borderBottom:"1px solid lightgray"}}>
-          <td style={{width:"40px"}}>1</td>
-          <td style={{width:"220px"}}>에어팟 프로팔아요</td>
-          <td style={{width:"140px"}}>150,000</td>
-        </tr>
-      </table>
-      <br/><br/>
-      <table>
-        <tr>
-          <td style={{textAlign:"right",width:"300px", fontWeight:"bold"}}>총 정산 금액 : </td>
-          <td style={{textAlign:"right",width:"100px"}}>990,000 원</td>
-        </tr>
-        <tr>
-          <td style={{textAlign:"right",width:"300px", fontWeight:"bold"}}>발생 수수료 : </td>
-          <td style={{textAlign:"right",width:"100px"}}>49,500 원</td>
-        </tr>
-      </table>
       </div>
     </div>
   );

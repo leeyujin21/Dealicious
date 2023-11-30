@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 function SaleDetail_S() {
     return (
-        <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "742px", overflowX: "hidden" }}>
+        <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden" }}>
             
             <div style={{marginTop:"10px", marginBottom:"20px"}}>
                 <IoArrowBackOutline size="30" color="14C38E" />

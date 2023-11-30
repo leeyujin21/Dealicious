@@ -1,43 +1,51 @@
 import { useState } from 'react';
 import { GoArrowLeft } from "react-icons/go";
 import { Link } from "react-router-dom";
+import { Button, Input, Table } from 'reactstrap';
 
 const AdminMyModi = () => {
 
   return (
-    <div className='admin' style={{overflow:"scroll", height:"742px", overflowX:"hidden"}}>
-      <div style={{marginLeft:"15px"}}>
-      <br/>
-      <div style={{textAlign:"left",color:"gray"}}>
-      <GoArrowLeft style={{color:"gray"}}/>&nbsp;&nbsp;&nbsp;관리자 마이페이지
+    <div className='admin' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "10px" }}>
+      <div style={{ width: "395px", textAlign: "left", fontSize: "20px", fontWeight: "bold", paddingLeft: "15px", paddingTop: "20px", paddingBottom: "20px" }}>
+        마이페이지 수정하기
       </div>
-      <div style={{marginTop:"20px",width:"400px", borderTop:"1px solid",borderBottom:"1px solid"}}>
-        <p style={{marginTop:"15px", marginLeft:"20px", textAlign:"left",fontWeight:"bold"}}>기본정보</p>
-        <hr></hr>
-        <table style={{marginLeft:"20px"}}>
-          <tr>
-            <td style={{width:"200px",height:"50px",textAlign:"left", fontWeight:"bold"}}>아이디</td>
-            <td>dealadmin1</td>
-          </tr>
-          <tr>
-            <td style={{width:"200px",height:"50px",textAlign:"left", fontWeight:"bold"}}>관리자코드</td>
-            <td>*********</td>
-          </tr>
-        </table>
-        <br/>
+      <div style={{ width: "395px", borderTop: "1px solid", borderBottom: "1px solid" }}>
+        <Table borderless style={{ textAlign: "left" }}>
+          <thead style={{borderBottom:"1px solid lightgray"}}>
+            <th>기본정보</th><th></th><th></th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>아이디</td><td>dealadmin1</td><td></td>
+            </tr>
+            <tr>
+              <td>관리자코드</td><td>*********</td><td></td>
+            </tr>
+          </tbody>
+        </Table>
       </div>
-      <div style={{width:"400px",borderBottom:"1px solid"}}>
-      <p style={{marginTop:"15px", marginLeft:"20px", textAlign:"left",fontWeight:"bold"}}>비밀번호 변경</p>
-      <hr></hr>
-      <input style={{width:"360px",height:"50px",borderRadius:"10px",border:"1px solid gray", marginBottom:"15px"}} placeholder='  현재 비밀번호를 입력하세요'></input>
-      <input style={{width:"360px",height:"50px",borderRadius:"10px",border:"1px solid gray", marginBottom:"15px"}} placeholder='  새 비밀번호를 입력하세요'></input>
-      <input style={{width:"360px",height:"50px",borderRadius:"10px",border:"1px solid gray", marginBottom:"25px"}} placeholder='  새 비밀번호를 한번 더 입력하세요'></input>
+      <div style={{ width: "395px", borderBottom: "1px solid", marginBottom:"20px" }}>
+        <Table borderless style={{ textAlign: "left" }}>
+          <thead style={{borderBottom:"1px solid lightgray"}}>
+            <th>비밀번호 변경</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td><Input type='password' style={{ width: "371px", height: "45px", borderRadius: "10px", border: "1px solid gray" }} placeholder='현재 비밀번호를 입력하세요'></Input></td>
+            </tr>
+            <tr>
+              <td><Input type='password' style={{ width: "371px", height: "45px", borderRadius: "10px", border: "1px solid gray" }} placeholder='현재 비밀번호를 입력하세요'></Input></td>
+            </tr>
+            <tr>
+              <td><Input type='password' style={{ width: "371px", height: "45px", borderRadius: "10px", border: "1px solid gray" }} placeholder='현재 비밀번호를 입력하세요'></Input></td>
+            </tr>
+          </tbody>
+        </Table>
       </div>
-      <br/><br/>
       <Link to="/adminmy">
-      <button style={{width:"360px",height:"50px",borderRadius:"10px", backgroundColor:"#14C38E",border:"white",fontWeight:"bold",color:"white"}}>비밀번호 변경</button>
+        <Button style={{ width: "200px", height: "45px", backgroundColor: "#14C38E", borderStyle:"none", color: "white" }}>변경하기</Button>
       </Link>
-      </div>
     </div>
   );
 }

@@ -14,7 +14,6 @@
   font-family: 'ttangs';
   src: local('ttangs'), url('\ttangs.ttf') format('truetype');
 }
-
 ::-webkit-scrollbar {
   width: 5px;  /* 세로축 스크롤바 폭 너비 */
 }
@@ -27,7 +26,6 @@
   margin: 0 auto;
   width: 430px;
 }
-
 .main {
   font-family: 'NotoSansKR-VariableFont_wght';
   width: 430px;
@@ -92,7 +90,8 @@
   text-align: center;
   left:0;
   top:0;
-  height:90px;
+  height:100px;
+  padding-top: 10px;
   width:430px;
   border-bottom:1px solid #E6E6E6;
   position:relative;
