@@ -10,8 +10,8 @@ function CategoryList() {
         <FiPlusCircle size="50" color="#14C38E" />
       </Link>
       <div style={{ display: "flex", marginTop:"10px" }}>
-        <Link to="/"><IoArrowBackOutline size="30" color="14C38E" style={{ height: "50px" }} /></Link>
-        <h3 style={{ color: "#14C38E", fontSize: "25px", marginLeft: "20px", marginTop: "10px" }}><b>기타</b></h3>
+        <Link to="/"><IoArrowBackOutline size="30" color="14C38E" style={{ height: "50px", marginTop:"5px" }} /></Link>
+        <h3 style={{ color: "#14C38E", fontSize: "25px", marginLeft: "20px", marginTop: "15px" }}><b>기타</b></h3>
       </div>
 
       <Link to="/saledetail" style={{ textDecoration: "none", color: "black" }}>
@@ -23,7 +23,7 @@ function CategoryList() {
                 <a style={{ fontSize: "18px" }}>커피 디스펜서</a><br />
                 <div style={{display:"flex"}}>
                   <div style={{ fontSize: "15px", width:"180px" }}>A동 2층</div>
-                  <div style={{textAlign:"right", width:"30px"}}><img src='..\ggul.png' style={{width:"34px", height:"19px"}}/></div><br />
+                  <div style={{textAlign:"right", width:"30                       px"}}><img src='..\ggul.png' style={{width:"34px", height:"19px"}}/></div><br />
                 </div>
                 <div style={{ display: "flex" }}>
                   <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "180px" }}>60,000원</div>
