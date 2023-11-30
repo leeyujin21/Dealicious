@@ -58,20 +58,20 @@ function App() {
             <Routes>
                 <Route exect path="/" element={<Main />} /> {/**/}
 
-                <Route exect path="/adminmy" element={<AdminMy />} />
-                <Route exect path="/adminmymodi" element={<AdminMyModi />} />
+                <Route exect path="/adminmy" element={<AdminMy />} /> {/**/}
+                <Route exect path="/adminmymodi" element={<AdminMyModi />} /> 
                 <Route exect path="/adminmain" element={<AdminMain />} /> {/**/}
                 <Route exect path="/adminsettle" element={<AdminSettle />} /> {/**/}
-                <Route exect path="/adminsettlelist" element={<AdminSettleList />} />
-                <Route exect path="/adminlogin" element={<AdminLogin />} />
-                <Route exect path="/adminjoin" element={<AdminJoin />} />
+                <Route exect path="/adminsettlelist" element={<AdminSettleList />} /> {/**/}
+                <Route exect path="/adminlogin" element={<AdminLogin />} /> {/**/}
+                <Route exect path="/adminjoin" element={<AdminJoin />} /> {/**/}
 
 
                 <Route exect path="/notiactivity" element={<NotiActivity />} /> {/**/}
                 <Route exect path="/notikeyword" element={<NotiKeyword />} /> {/**/}
                 <Route exect path="/keyword" element={<Keyword />} /> {/**/}
                 <Route exect path="/search" element={<Search />} /> {/**/}
-                <Route exect path="/chat" element={<Chat />} />
+                <Route exect path="/chat" element={<Chat />} /> 
 
                 <Route exect path="/login" element={<Login />} /> {/**/}
                 <Route exect path="/join" element={<Join />} /> {/**/}
@@ -96,7 +96,7 @@ function App() {
                 <Route path="/salemodify" element={<SaleModify />}></Route> {/**/}
             </Routes>
 
-            {isLoginJoinRoute? '': isAdminRoute? <AdminBottom />: <DEALBottom />}
+            {isAdminRoute? <AdminBottom />: <DEALBottom />}
 
         </div>
     );

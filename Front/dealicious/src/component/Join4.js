@@ -3,7 +3,7 @@ import { Button, Col, FormGroup, Input, Label } from "reactstrap";
 
 const Join4 = () => {
     return (
-        <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", paddingTop:"50px", paddingRight:"50px", paddingLeft:"50px"}}>
+        <div className='main' style={{overflow:"scroll", height:"832px", overflowX:"hidden", paddingTop:"150px", paddingRight:"50px", paddingLeft:"50px"}}>
             <a style={{fontSize:"30px", fontWeight:"bold", textAlign:"center", color:"#14C38E"}}>회원가입</a>
             <div style={{paddingBottom:"30px"}}></div>
             <FormGroup style={{textAlign:"left", paddingBottom:"20px"}}>
@@ -23,7 +23,7 @@ const Join4 = () => {
                 <Input type="text" name="phonenum" id="phonenum" style={{height:"55px", width:"325px"}}
                     placeholder="010-XXXX-XXXX"/>
             </FormGroup>
-            <Link to="/join4">
+            <Link to="/login">
                 <Button style={{width:"325px", height:"55px", fontSize:"20px", backgroundColor:"#14C38E", borderStyle:"none"}}>가입하기</Button>
             </Link>
         </div>

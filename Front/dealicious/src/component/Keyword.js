@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const Keyword = () => {
 
   return (
-    <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", paddingTop:"10px"}}>
+    <div className='main' style={{overflow:"scroll", height:"732px", overflowX:"hidden", paddingTop:"10px"}}>
       <br/>
       <div style={{textAlign:"left",color:"gray"}}>
       <Link to="/notikeyword"><GoArrowLeft  size={30} style={{color:"gray"}}/></Link>&nbsp;&nbsp;&nbsp;<a style={{fontSize:"18px"}}>알림 키워드 등록</a>

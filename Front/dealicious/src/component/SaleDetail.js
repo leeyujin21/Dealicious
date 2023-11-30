@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 function SaleDetail() {
     return (
-        <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "742px", overflowX: "hidden" }}>
+        <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden" }}>
             <div style={{marginTop:"10px", marginBottom:"20px"}}>
                 <IoArrowBackOutline size="30" color="14C38E" />
                 <span style={{ color: "#14C38E", fontSize: "25px", textAlign: "center", marginLeft: "75px" }}><b>디스펜서 팝니다!</b></span>

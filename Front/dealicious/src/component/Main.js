@@ -14,7 +14,7 @@ import { id } from "date-fns/locale";
 
 const Main = () => {
   return (
-    <div className='main' style={{ overflow: "scroll", height: "742px", overflowX: "hidden" }}>
+    <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
       <div style={{ textAlign: "left", fontSize: "20px", fontWeight: "bold", marginBottom: "10px", marginTop: "10px" }}>
         딜리셔스란?
       </div>

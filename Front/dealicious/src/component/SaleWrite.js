@@ -15,7 +15,7 @@ function SaleWrite(){
         }
     }
     return(
-        <div className='main' style={{textAlign:'left',overflow:"scroll", height:"742px", overflowX:"hidden"}}> 
+        <div className='main' style={{textAlign:'left',overflow:"scroll", height:"732px", overflowX:"hidden"}}> 
         <br/>
          <IoArrowBackOutline size="30" color="14C38E"/>
          <span style={{color:"#14C38E",fontSize:"25px",marginLeft:"105px"}}><b>판매글작성</b></span> 

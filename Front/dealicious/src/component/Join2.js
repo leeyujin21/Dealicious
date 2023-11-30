@@ -4,7 +4,7 @@ import { IoIosSearch } from "react-icons/io";
 
 const Join2 = () => {
     return (
-        <div className='main' style={{overflow:"scroll", height:"742px", overflowX:"hidden", paddingTop:"50px", paddingRight:"50px", paddingLeft:"50px"}}>
+        <div className='main' style={{overflow:"scroll", height:"832px", overflowX:"hidden", paddingTop:"150px", paddingRight:"50px", paddingLeft:"50px"}}>
             <a style={{fontSize:"30px", fontWeight:"bold", textAlign:"center", color:"#14C38E"}}>회원가입</a>
             <div style={{paddingBottom:"50px"}}></div>
             <FormGroup>

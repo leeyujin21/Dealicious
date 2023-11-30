@@ -13,9 +13,9 @@ const DEALBottom = () => {
   return (
     <Nav className="b_wrapper nav">
         <div>
-          <Link to={"/"}>
+          <a href="/">
             <AiFillHome size='38' color='72DBBB' />
-          </Link>
+          </a>
           
         </div>
         <div>
