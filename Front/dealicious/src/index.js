@@ -11,9 +11,7 @@ import DEALTop from './component/DEALTop';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
-      <DEALTop/>
       <App />
-      <DEALBottom/>
     </BrowserRouter>
 );
 

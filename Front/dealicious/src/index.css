@@ -39,6 +39,9 @@
 .admin {
   font-family: 'NotoSansKR-VariableFont_wght';
   width: 430px;
+  padding-left:15px;
+  padding-right:15px;
+  padding-top: 10px;
 }
 
 /* 헤더에 Pacifico 폰트 적용 */

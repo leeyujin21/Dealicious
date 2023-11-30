@@ -29,7 +29,7 @@ const Main = () => {
         </Link>
       </div>
       <br />
-      <div style={{ display: "flex", width: "330px" }}>
+      <div style={{ display: "flex", width: "380px" }}>
         <Link style={{ color: "black", width: "33%" }}>
           <FaMobileAlt size="50" color="#E25D5D" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>모바일/태블릿</div>
@@ -44,7 +44,7 @@ const Main = () => {
         </Link>
       </div>
       <br />
-      <div style={{ display: "flex", width: "330px" }}>
+      <div style={{ display: "flex", width: "380px" }}>
         <Link style={{ color: "black", width: "33%" }}>
           <IoTicketSharp size="50" color="#3FCC80" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>티켓/쿠폰</div>
@@ -67,36 +67,36 @@ const Main = () => {
       <div style={{ display: "flex", marginBottom:"10px" }}>
         <div>
           <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "100px",
-            height: "100px",
+            width: "120px",
+            height: "120px",
             borderRadius: "5px"
           }}>
           </img>
           <div style={{textAlign:"left"}}>
-            <div style={{fontSize:"13px"}}>사과 팔아요 맛있...</div>
+            <div style={{fontSize:"13px"}}>사과 팔아요 맛있는...</div>
             <div style={{fontSize:"16px", fontWeight:"bold"}}>5,000원</div>
           </div>
         </div>&nbsp;&nbsp;&nbsp;
         <div>
           <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "100px",
-            height: "100px",
+            width: "120px",
+            height: "120px",
             borderRadius: "5px"
-          }}>
+          }}> 
           </img>
           <div style={{textAlign:"left"}}>
-            <div style={{fontSize:"13px"}}>사과 팔아요 맛있...</div>
+            <div style={{fontSize:"13px"}}>사과 팔아요 맛있는...</div>
             <div style={{fontSize:"16px", fontWeight:"bold"}}>5,000원</div>
           </div>
         </div>&nbsp;&nbsp;&nbsp;<div>
           <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "100px",
-            height: "100px",
+            width: "120px",
+            height: "120px",
             borderRadius: "5px"
           }}>
           </img>
           <div style={{textAlign:"left"}}>
-            <div style={{fontSize:"13px"}}>사과 팔아요 맛있...</div>
+            <div style={{fontSize:"13px"}}>사과 팔아요 맛있는...</div>
             <div style={{fontSize:"16px", fontWeight:"bold"}}>5,000원</div>
           </div>
         </div>
@@ -104,36 +104,36 @@ const Main = () => {
       <div style={{ display: "flex" }}>
         <div>
           <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "100px",
-            height: "100px",
+            width: "120px",
+            height: "120px",
             borderRadius: "5px"
           }}>
           </img>
           <div style={{textAlign:"left"}}>
-            <div style={{fontSize:"13px"}}>사과 팔아요 맛있...</div>
+            <div style={{fontSize:"13px"}}>사과 팔아요 맛있는...</div>
             <div style={{fontSize:"16px", fontWeight:"bold"}}>5,000원</div>
           </div>
         </div>&nbsp;&nbsp;&nbsp;
         <div>
           <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "100px",
-            height: "100px",
+            width: "120px",
+            height: "120px",
             borderRadius: "5px"
           }}>
           </img>
           <div style={{textAlign:"left"}}>
-            <div style={{fontSize:"13px"}}>사과 팔아요 맛있...</div>
+            <div style={{fontSize:"13px"}}>사과 팔아요 맛있는...</div>
             <div style={{fontSize:"16px", fontWeight:"bold"}}>5,000원</div>
           </div>
         </div>&nbsp;&nbsp;&nbsp;<div>
           <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "100px",
-            height: "100px",
+            width: "120px",
+            height: "120px",
             borderRadius: "5px"
           }}>
           </img>
           <div style={{textAlign:"left"}}>
-            <div style={{fontSize:"13px"}}>사과 팔아요 맛있...</div>
+            <div style={{fontSize:"13px"}}>사과 팔아요 맛있는...</div>
             <div style={{fontSize:"16px", fontWeight:"bold"}}>5,000원</div>
           </div>
         </div>
