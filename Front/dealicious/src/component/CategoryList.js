@@ -6,8 +6,8 @@ function CategoryList() {
 
   return (
     <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px", paddingTop: "0px" }}>
-      <Link to="/salewrite" style={{ marginLeft: "330px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor:"white", width:"43px", height:"43px" }}>
-        <FiPlusCircle size="50" color="#14C38E" />
+      <Link to="/salewrite" style={{ marginLeft: "330px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor:"white", width:"45px", height:"45px",borderRadius:"50px" }}>
+        <FiPlusCircle size="50" color="#14C38E"/>
       </Link>
       <div style={{ display: "flex", marginTop:"10px" }}>
         <Link to="/"><IoArrowBackOutline size="30" color="14C38E" style={{ height: "50px", marginTop:"5px" }} /></Link>
