@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 function SaleList() {
   return (
     <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px", paddingTop: "0px" }}>
-      <Link to="/salewrite" style={{ marginLeft: "330px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor:"white", width:"43px", height:"43px" }}>
-        <FiPlusCircle size="50" color="#14C38E" />
+      <Link to="/salewrite" style={{ marginLeft: "330px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor:"white", width:"45px", height:"45px",borderRadius:"50px" }}>
+        <FiPlusCircle size="50" color="#14C38E"/>
       </Link>
       <Link to="/saledetail" style={{ textDecoration: "none", color: "black" }}>
         <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "124px" }}>

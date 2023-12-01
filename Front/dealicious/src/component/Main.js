@@ -15,13 +15,88 @@ import { id } from "date-fns/locale";
 const Main = () => {
   return (
     <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
-      <div style={{ textAlign: "left", fontSize: "20px", fontWeight: "bold", marginBottom: "10px", marginTop: "10px" }}>
-        딜리셔스란?
-      </div>
-      <Card style={{ height: "180px" }}>
-        딜리셔스에 대한 설명
-      </Card>
+      <Link><img src="..\ggulmain.png"></img></Link>
       <br /><br />
+      <div style={{ textAlign: "left", fontSize: "20px", fontWeight: "bold" }}>
+        지금 딜리셔스에서<br />
+        가장 인기있는 상품&nbsp;<FaFire size='20' color='F4900C' />
+      </div>
+      <br />
+      <div style={{ display: "flex", marginBottom: "10px" }}>
+        <div>
+          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
+            width: "120px",
+            height: "120px",
+            borderRadius: "5px"
+          }}>
+          </img>
+          <div style={{ textAlign: "left" }}>
+            <div style={{ fontSize: "13px" }}>사과 팔아요 맛있는...</div>
+            <div style={{ fontSize: "16px", fontWeight: "bold" }}>5,000원</div>
+          </div>
+        </div>&nbsp;&nbsp;&nbsp;
+        <div>
+          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
+            width: "120px",
+            height: "120px",
+            borderRadius: "5px"
+          }}>
+          </img>
+          <div style={{ textAlign: "left" }}>
+            <div style={{ fontSize: "13px" }}>사과 팔아요 맛있는...</div>
+            <div style={{ fontSize: "16px", fontWeight: "bold" }}>5,000원</div>
+          </div>
+        </div>&nbsp;&nbsp;&nbsp;<div>
+          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
+            width: "120px",
+            height: "120px",
+            borderRadius: "5px"
+          }}>
+          </img>
+          <div style={{ textAlign: "left" }}>
+            <div style={{ fontSize: "13px" }}>사과 팔아요 맛있는...</div>
+            <div style={{ fontSize: "16px", fontWeight: "bold" }}>5,000원</div>
+          </div>
+        </div>
+      </div>
+      <div style={{ display: "flex" }}>
+        <div>
+          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
+            width: "120px",
+            height: "120px",
+            borderRadius: "5px"
+          }}>
+          </img>
+          <div style={{ textAlign: "left" }}>
+            <div style={{ fontSize: "13px" }}>사과 팔아요 맛있는...</div>
+            <div style={{ fontSize: "16px", fontWeight: "bold" }}>5,000원</div>
+          </div>
+        </div>&nbsp;&nbsp;&nbsp;
+        <div>
+          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
+            width: "120px",
+            height: "120px",
+            borderRadius: "5px"
+          }}>
+          </img>
+          <div style={{ textAlign: "left" }}>
+            <div style={{ fontSize: "13px" }}>사과 팔아요 맛있는...</div>
+            <div style={{ fontSize: "16px", fontWeight: "bold" }}>5,000원</div>
+          </div>
+        </div>&nbsp;&nbsp;&nbsp;<div>
+          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
+            width: "120px",
+            height: "120px",
+            borderRadius: "5px"
+          }}>
+          </img>
+          <div style={{ textAlign: "left" }}>
+            <div style={{ fontSize: "13px" }}>사과 팔아요 맛있는...</div>
+            <div style={{ fontSize: "16px", fontWeight: "bold" }}>5,000원</div>
+          </div>
+        </div>
+      </div>
+      <br /><br/>
       <div style={{ textAlign: "left", fontSize: "20px", fontWeight: "bold", display: "flex" }}>
         <div style={{ height: "30px" }}>카테고리&nbsp;&nbsp;</div>
         <Link to="/salelist" style={{ fontSize: "15px", color: "gray", height: "30px", marginTop: "3px" }}>전체보기
@@ -44,7 +119,7 @@ const Main = () => {
         </Link>
       </div>
       <br />
-      <div style={{ display: "flex", width: "380px" }}>
+      <div style={{ display: "flex", width: "380px", paddingBottom:"10px" }}>
         <Link style={{ color: "black", width: "33%" }}>
           <IoTicketSharp size="50" color="#3FCC80" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>티켓/쿠폰</div>
@@ -58,88 +133,6 @@ const Main = () => {
           <div style={{ color: "gray" }}>기타</div>
         </Link>
       </div>
-      <br /><br />
-      <div style={{ textAlign: "left", fontSize: "20px", fontWeight: "bold" }}>
-        지금 딜리셔스에서<br />
-        가장 인기있는 상품&nbsp;<FaFire size='20' color='F4900C' />
-      </div>
-      <br />
-      <div style={{ display: "flex", marginBottom:"10px" }}>
-        <div>
-          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "120px",
-            height: "120px",
-            borderRadius: "5px"
-          }}>
-          </img>
-          <div style={{textAlign:"left"}}>
-            <div style={{fontSize:"13px"}}>사과 팔아요 맛있는...</div>
-            <div style={{fontSize:"16px", fontWeight:"bold"}}>5,000원</div>
-          </div>
-        </div>&nbsp;&nbsp;&nbsp;
-        <div>
-          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "120px",
-            height: "120px",
-            borderRadius: "5px"
-          }}> 
-          </img>
-          <div style={{textAlign:"left"}}>
-            <div style={{fontSize:"13px"}}>사과 팔아요 맛있는...</div>
-            <div style={{fontSize:"16px", fontWeight:"bold"}}>5,000원</div>
-          </div>
-        </div>&nbsp;&nbsp;&nbsp;<div>
-          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "120px",
-            height: "120px",
-            borderRadius: "5px"
-          }}>
-          </img>
-          <div style={{textAlign:"left"}}>
-            <div style={{fontSize:"13px"}}>사과 팔아요 맛있는...</div>
-            <div style={{fontSize:"16px", fontWeight:"bold"}}>5,000원</div>
-          </div>
-        </div>
-      </div>
-      <div style={{ display: "flex" }}>
-        <div>
-          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "120px",
-            height: "120px",
-            borderRadius: "5px"
-          }}>
-          </img>
-          <div style={{textAlign:"left"}}>
-            <div style={{fontSize:"13px"}}>사과 팔아요 맛있는...</div>
-            <div style={{fontSize:"16px", fontWeight:"bold"}}>5,000원</div>
-          </div>
-        </div>&nbsp;&nbsp;&nbsp;
-        <div>
-          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "120px",
-            height: "120px",
-            borderRadius: "5px"
-          }}>
-          </img>
-          <div style={{textAlign:"left"}}>
-            <div style={{fontSize:"13px"}}>사과 팔아요 맛있는...</div>
-            <div style={{fontSize:"16px", fontWeight:"bold"}}>5,000원</div>
-          </div>
-        </div>&nbsp;&nbsp;&nbsp;<div>
-          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "120px",
-            height: "120px",
-            borderRadius: "5px"
-          }}>
-          </img>
-          <div style={{textAlign:"left"}}>
-            <div style={{fontSize:"13px"}}>사과 팔아요 맛있는...</div>
-            <div style={{fontSize:"16px", fontWeight:"bold"}}>5,000원</div>
-          </div>
-        </div>
-      </div>
-      
-      <div style={{ height: "50px" }} />
     </div>
   );
 }
