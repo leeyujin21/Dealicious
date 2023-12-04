@@ -6,19 +6,15 @@ import { IoTicketSharp } from "react-icons/io5";
 import { GiLaptop } from "react-icons/gi";
 import { MdOutlineMoreHoriz } from "react-icons/md";
 import { MdArrowForward } from "react-icons/md";
-import {
-  Card,
-} from 'reactstrap';
 import { Link } from "react-router-dom";
-import { id } from "date-fns/locale";
 
 const Main = () => {
   return (
     <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
-      <Link><img src="..\ggulmain.png"></img></Link>
+      <Link><img src="..\dealmain.png" style={{width:"385px"}}></img></Link>
       <br /><br />
       <div style={{ textAlign: "left", fontSize: "20px", fontWeight: "bold" }}>
-        지금 딜리셔스에서<br />
+        지금 <a style={{color:"#72DBBB"}}>딜리셔스</a>에서<br />
         가장 인기있는 상품&nbsp;<FaFire size='20' color='F4900C' />
       </div>
       <br />
