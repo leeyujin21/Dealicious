@@ -36,15 +36,6 @@ const Gpay = () => {
             </div>
             <div style={{textAlign:"left", borderBottom:"1px solid lightgray", paddingBottom:"20px"}}>
                 &nbsp;&nbsp;
-                <div style={{paddingLeft:"5px", fontWeight:"bold", paddingBottom:"10px"}}>꿀페이 결제수단</div>
-                <div style={{paddingLeft:"5px"}}>
-                    <Button style={{backgroundColor:"black", fontWeight:"bold"}}>신용카드</Button>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Button style={{backgroundColor:"white", color:"black"}}>카카오페이</Button>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Button style={{backgroundColor:"white", color:"black"}}>네이버페이</Button>
-                </div>
-            </div>
-            <div style={{textAlign:"left", borderBottom:"1px solid lightgray", paddingBottom:"20px"}}>
-                &nbsp;&nbsp;
                 <div style={{paddingLeft:"5px"}}>
                     <FaCheck size="20" color="gray"/>&nbsp;&nbsp;
                     <Button style={{backgroundColor:"lightgray", borderStyle:"none"}}>
