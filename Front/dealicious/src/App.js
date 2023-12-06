@@ -49,6 +49,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import User from './component/User';
 import Oauth from './component/Oauth';
 import Logout from './component/Logout';
+import Oauth2 from './component/Oauth2';
 
 export const persistor = persistStore(store);
 function App() {
@@ -106,6 +107,7 @@ function App() {
 
 
                             <Route exect path="/oauth/redirect/:token" element={<Oauth />} />
+                            <Route exect path="/oauth2/redirect/:token" element={<Oauth2 />} />
                             <Route path="/user" element={<User />}></Route> {/**/}
                             <Route path="/logout" element={<Logout />}></Route> {/**/}
                         </Routes>

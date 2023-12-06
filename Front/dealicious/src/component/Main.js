@@ -100,7 +100,7 @@ const Main = () => {
         </Link>
       </div>
       <br />
-      <div style={{ display: "flex", width: "380px" }}>
+      <div style={{ display: "flex", width: "385px" }}>
         <Link style={{ color: "black", width: "33%" }}>
           <FaMobileAlt size="50" color="#E25D5D" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>모바일/태블릿</div>
@@ -115,7 +115,7 @@ const Main = () => {
         </Link>
       </div>
       <br />
-      <div style={{ display: "flex", width: "380px", paddingBottom:"10px" }}>
+      <div style={{ display: "flex", width: "385px", paddingBottom:"10px" }}>
         <Link style={{ color: "black", width: "33%" }}>
           <IoTicketSharp size="50" color="#3FCC80" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>티켓/쿠폰</div>
