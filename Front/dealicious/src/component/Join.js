@@ -1,12 +1,36 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, FormGroup, Input, Label } from "reactstrap";
 import { CgClose } from "react-icons/cg";
+import { useState } from "react";
+import Swal from 'sweetalert2';
 
 const Join = () => {
+    const [type, setType] = useState(); // 사용자가 선택한 값 저장
+    const navigate = useNavigate();
+
+    const handleTypeChange = (e) => {
+        setType(e.target.value);
+    };
+
+    const handleClick = () => {
+        // 체크 여부 확인
+        if (!type) {
+            // sweetalert2로 경고창 표시
+            Swal.fire({
+                icon: 'warning',
+                title: '경고',
+                text: '학교 또는 회사를 선택해주세요.',
+            });
+        } else {
+            // navigate 함수를 호출하여 Join2.js로 이동하면서 필요한 데이터를 전달
+            navigate('/join2', { state: { type: type } });
+            console.log(type);
+        }
+    };
     return (
         <div className='main' style={{ overflow: "scroll", height: "832px", overflowX: "hidden", paddingTop: "130px", paddingRight: "50px", paddingLeft: "50px" }}>
             <div style={{ width: "330px", textAlign: "right", paddingBottom: "20px" }}>
-            <Link to={"/login"}><CgClose size={30} color="darkgray" /></Link>
+                <Link to={"/login"}><CgClose size={30} color="darkgray" /></Link>
             </div>
             <a style={{ fontSize: "30px", fontWeight: "bold", color: "#14C38E" }}>회원가입</a>
             <div style={{ paddingBottom: "50px" }}></div>
@@ -18,18 +42,32 @@ const Join = () => {
             </FormGroup>
             <FormGroup style={{ paddingBottom: "122px" }}>
                 <Label style={{ marginRight: "50px", fontSize: "20px", fontWeight: "bold" }}>
-                    <Input type="radio" name="select" id="select" value="univ" />학생
+                    <Input
+                        type="radio"
+                        name="select"
+                        id="univ"
+                        value="univ"
+                        onChange={handleTypeChange}
+                        checked={type === 'univ'}
+                    />
+                    학생
                 </Label>
                 <Label style={{ marginRight: "-30px", fontSize: "20px", fontWeight: "bold" }}>
-                    <Input type="radio" name="select" id="select" value="com" />직장인
+                    <Input
+                        type="radio"
+                        name="select"
+                        id="com"
+                        value="com"
+                        onChange={handleTypeChange}
+                        checked={type === 'com'}
+                    />
+                    직장인
                 </Label>
             </FormGroup>
-            <Link to="/join2">
-                <Button style={{
-                    width: "325px", height: "55px", fontSize: "20px",
-                    backgroundColor: "#14C38E", borderStyle: "none"
-                }}>다음(1/4)</Button>
-            </Link>
+            <Button style={{
+                width: "325px", height: "55px", fontSize: "20px",
+                backgroundColor: "#14C38E", borderStyle: "none"
+            }} onClick={handleClick}>다음(1/4)</Button>
         </div>
     )
 }

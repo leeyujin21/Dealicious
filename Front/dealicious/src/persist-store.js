@@ -8,7 +8,7 @@ import storage from "redux-persist/lib/storage";  //localStorage에 저장
 
 export const initialState = {
     token:'',
-    user:{id:'', email:'', username:'', roles:''},
+    user:{email:'', nickname:'', password:'', type:'', typename:'', tel:''},
 }
 
 const reducer = (currentState,action) => {
