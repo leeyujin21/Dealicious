@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const Gpay = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [pay, setPay] = useState({saletitle:'결제테스트', amount:'1004',buyeremail:'gudtjq444@naver.com'});
+    const [pay, setPay] = useState({saletitle:'결제테스트', amount:'1004',buyeremail:'gudtjq444@naver.com',imp_uid:''});
 
     const navigate = useNavigate();
 
@@ -42,10 +42,12 @@ const Gpay = () => {
             buyer_postcode: '123-456',
         }, function (rsp) { // callback
             if (rsp.success) {
-                console.log(rsp);
+                console.log(rsp.imp_uid);
                 console.log("결제성공");
-                console.log(pay);
-                axios.post(`http://localhost:8090/pay`,pay)
+                
+                const pay1 = {saletitle:'결제테스트', amount:'1004',buyeremail:'gudtjq444@naver.com',imp_uid:rsp.imp_uid};
+                console.log(pay1);
+                axios.post(`http://localhost:8090/pay`,pay1)
                 .then(res=> {
                     console.log("어드민 계좌 입금 성공");
                     navigate(`/gpay_finish`)
