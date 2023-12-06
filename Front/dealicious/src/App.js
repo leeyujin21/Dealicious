@@ -50,12 +50,20 @@ import User from './component/User';
 import Oauth from './component/Oauth';
 import Logout from './component/Logout';
 import Oauth2 from './component/Oauth2';
+import StompChatting from './component/StompChatting';
+import { useEffect } from 'react';
 
 export const persistor = persistStore(store);
 function App() {
     // 현재 경로에 "/admin"이 포함되어 있는지 확인
     const isAdminRoute = window.location.pathname.includes('admin');
     const isLoginJoinRoute = window.location.pathname.includes('login') || window.location.pathname.includes('join') || window.location.pathname.includes('/oauth');
+    
+    // useEffect(() => {
+    //     window.onbeforeunload = () => {
+    //       persistor.purge();
+    //     };
+    //   }, []);
 
     return (
         <div className='App'>
@@ -110,6 +118,7 @@ function App() {
                             <Route exect path="/oauth2/redirect/:token" element={<Oauth2 />} />
                             <Route path="/user" element={<User />}></Route> {/**/}
                             <Route path="/logout" element={<Logout />}></Route> {/**/}
+                            <Route exect path="/chat/:channelId" element={<StompChatting />} />
                         </Routes>
                         {isLoginJoinRoute ? '' : isAdminRoute ? <AdminBottom /> : <DEALBottom />}
                     </BrowserRouter>
