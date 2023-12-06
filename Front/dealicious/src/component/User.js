@@ -4,6 +4,7 @@ import {useSelector} from 'react-redux';
 const User = () => {
     const [user, setUser] = useState({id:'', email:'', username:'', roles:''})
     const token = useSelector(state=>state.persistedReducer.token);
+    console.log("token:"+token);
     useEffect(()=> {
         axios.get("http://localhost:8090/user",{
             headers : {
