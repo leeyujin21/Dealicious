@@ -6,19 +6,15 @@ import { IoTicketSharp } from "react-icons/io5";
 import { GiLaptop } from "react-icons/gi";
 import { MdOutlineMoreHoriz } from "react-icons/md";
 import { MdArrowForward } from "react-icons/md";
-import {
-  Card,
-} from 'reactstrap';
 import { Link } from "react-router-dom";
-import { id } from "date-fns/locale";
 
 const Main = () => {
   return (
     <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
-      <Link><img src="..\ggulmain.png"></img></Link>
+      <Link><img src="..\dealmain.png" style={{width:"385px"}}></img></Link>
       <br /><br />
       <div style={{ textAlign: "left", fontSize: "20px", fontWeight: "bold" }}>
-        지금 딜리셔스에서<br />
+        지금 <a style={{color:"#72DBBB"}}>딜리셔스</a>에서<br />
         가장 인기있는 상품&nbsp;<FaFire size='20' color='F4900C' />
       </div>
       <br />
@@ -104,7 +100,7 @@ const Main = () => {
         </Link>
       </div>
       <br />
-      <div style={{ display: "flex", width: "380px" }}>
+      <div style={{ display: "flex", width: "385px" }}>
         <Link style={{ color: "black", width: "33%" }}>
           <FaMobileAlt size="50" color="#E25D5D" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>모바일/태블릿</div>
@@ -119,7 +115,7 @@ const Main = () => {
         </Link>
       </div>
       <br />
-      <div style={{ display: "flex", width: "380px", paddingBottom:"10px" }}>
+      <div style={{ display: "flex", width: "385px", paddingBottom:"10px" }}>
         <Link style={{ color: "black", width: "33%" }}>
           <IoTicketSharp size="50" color="#3FCC80" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>티켓/쿠폰</div>
