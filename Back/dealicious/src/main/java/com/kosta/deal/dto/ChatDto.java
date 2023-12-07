@@ -2,6 +2,7 @@ package com.kosta.deal.dto;
 
 import lombok.Data;
 
+
 @Data
 public class ChatDto {
     private Integer channelId;

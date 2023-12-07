@@ -33,6 +33,10 @@ import ChatList from './component/ChatList';
 import SaleList from './component/SaleList';
 import SaleWrite from './component/SaleWrite';
 import SaleDetail from './component/SaleDetail';
+import SaleDetail2 from './component/SaleDetail2';
+import SaleDetail3 from './component/SaleDetail3';
+import SaleDetail4 from './component/SaleDetail4';
+
 import SaleDetail_S from './component/SaleDetail_S';
 import SaleModify from './component/SaleModify';
 
@@ -110,6 +114,10 @@ function App() {
                             <Route path="/salelist" element={<SaleList />}></Route> {/**/}
                             <Route path="/salewrite" element={<SaleWrite />}></Route> {/**/}
                             <Route path="/saledetail" element={<SaleDetail />}></Route> {/**/}
+                            <Route path="/saledetail2" element={<SaleDetail2 />}></Route>
+                            <Route path="/saledetail3" element={<SaleDetail3 />}></Route>
+                            <Route path="/saledetail4" element={<SaleDetail4 />}></Route>
+
                             <Route path="/saledetail_s" element={<SaleDetail_S />}></Route> {/**/}
                             <Route path="/salemodify" element={<SaleModify />}></Route> {/**/}
 

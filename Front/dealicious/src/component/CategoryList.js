@@ -22,11 +22,11 @@ function CategoryList() {
               <div style={{ textAlign: "left", marginLeft: "20px" }}>
                 <a style={{ fontSize: "18px" }}>커피 디스펜서</a><br />
                 <div style={{display:"flex"}}>
-                  <div style={{ fontSize: "15px", width:"180px" }}>A동 2층</div>
+                  <div style={{ fontSize: "15px", width:"180px" }}>A동 8층</div>
                   <div style={{textAlign:"right", width:"30                       px"}}><img src='..\ggul.png' style={{width:"34px", height:"19px"}}/></div><br />
                 </div>
                 <div style={{ display: "flex" }}>
-                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "180px" }}>60,000원</div>
+                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "180px" }}>42,000원</div>
                   <div style={{ textAlign: "right", color: "gray" }}>12분 전</div>
                 </div>
               </div>
