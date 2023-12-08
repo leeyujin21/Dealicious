@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
+
+
 
 import com.kosta.deal.entity.Sale;
-import com.kosta.deal.service.SaleServiceImpl;
+import com.kosta.deal.service.SaleService;
 
 
 
@@ -26,13 +26,13 @@ import com.kosta.deal.service.SaleServiceImpl;
 public class SaleController {
 	
 	@Autowired
-	private SaleServiceImpl saleService;
+	private SaleService saleService;
 	
 	
 	@GetMapping("/salelist/{category}")
-	public ResponseEntity<Sale> saleList(@PathVariable String category){
+	public ResponseEntity<Sale> saleList(@PathVariable(required=false) String category){
 		try {
-			List<Sale> sale= saleService.saleList(category);
+			List<Sale> saleList= saleService.saleList(category);
 			return new ResponseEntity<Sale> (HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -41,18 +41,28 @@ public class SaleController {
 		
 		
 	}
-	@GetMapping("/saledetail/{num}")
-	public ResponseEntity<Sale> saleList(@PathVariable Integer num){
+	@GetMapping("/saledetail/{sect}/{num}")
+	public ResponseEntity<Map<String,Object>> saleDetail(@PathVariable String sect,@PathVariable Integer num){
 		try {
+			Map<String,Object> res= new HashMap<>();
 			Sale sale = saleService.saleDetail(num);
-			return new ResponseEntity<Sale> (sale,HttpStatus.OK);
+			res.put("sale", sale);
+			if(sect.equals("only-detail")) {
+				saleService.plusViewCount(num);
+				Boolean heart= saleService.isSelectedSaleLike("lubby",num);
+				res.put("heart", heart);
+			}else if(sect.equals("after-modify")) {
+				Boolean heart=saleService.isSelectedSaleLike("lubby",num);
+				res.put("heart", heart);
+			}
+			return new ResponseEntity<Map<String,Object>> (res,HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
-			return new ResponseEntity<Sale>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	@PostMapping("/salewrite")
-	public ResponseEntity<Integer> saleWrite(@ModelAttribute Sale sale,MultipartFile file) {
+	public ResponseEntity<Integer> saleWrite(@ModelAttribute Sale sale,List<MultipartFile> file) {
 		
 		try {
 			Integer num=saleService.saleWrite(sale, file);
@@ -63,60 +73,48 @@ public class SaleController {
 		}
 		
 	}
-	@GetMapping("/salemodify/{num}/")
-	public ModelAndView saleModify(@PathVariable("num")Integer num) {
-		ModelAndView mav= new ModelAndView();
+	@GetMapping("/salemodify/{num}")
+	public  ResponseEntity<Sale> saleModify(@PathVariable Integer num) {
 		try {
 			Sale sale = saleService.saleDetail(num);
-			mav.addObject("sale",sale);
-			mav.setViewName("salemodify");
-		}catch(Exception e) {
-			mav.addObject("err","글 수정 실패");
-			mav.setViewName("error");
-		}
-		
-		return mav;
-	}
-	@PostMapping("/salemodify")
-	public ModelAndView saleModify(@ModelAttribute Sale sale, @RequestParam("file")MultipartFile file) {
-		ModelAndView mav=new ModelAndView();
-		try {
-		
-			saleService.saleModify(sale, file);
-			mav.setViewName("saledetail");
+			return new ResponseEntity<Sale>(sale,HttpStatus.OK);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity<Sale>(HttpStatus.BAD_REQUEST);
 		}
-		return mav;
+		
+		
 	}
-	@GetMapping("/salesearch/{type}/{keyword}")
-	public ResponseEntity<Map<String,Object>>saleSearch(@PathVariable(required=false)String type,@PathVariable(required=false)String keyword){
+	@PostMapping("/salemodify")
+	public ResponseEntity<Integer> saleModify(@ModelAttribute Sale sale,@RequestParam(value="file",required=false)List<MultipartFile>file){
 		try {
-			List<Sale> saleList=saleService.searchList(type,keyword);
+			Integer num =saleService.saleModify(sale,file);
+			return new ResponseEntity<Integer>(num,HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/salelike/{num}")
+	public ResponseEntity<Map<String,Object>> saleLike(@PathVariable Integer num){
+		try {
 			Map<String,Object> res= new HashMap<>();
-			res.put("saleList", saleList);
-			return new ResponseEntity<Map<String,Object>> (res,HttpStatus.OK);
-
-		}catch(Exception e){
+			Boolean selectSale=saleService.selHeartSale("lubby", num);
+			res.put("isSelect", selectSale);
+			Integer likeCount = saleService.saleDetail(num).getLikecount();
+			res.put("likeCount", likeCount);
+			return new ResponseEntity<Map<String,Object>>(res,HttpStatus.OK);
+		}catch(Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
 		}
-	}
-	@PostMapping("/salesearch")
-	public ResponseEntity<Object> saleSearch(@RequestBody Map<String,Object>param) {
 		
-		try {
-			String type=(String)param.get("type");
-			String keyword=(String)param.get("keyword");
-			Map<String,Object> res=new HashMap<>();
-			res.put("type", type);
-			res.put("keyword", keyword);
-			return new ResponseEntity<Object>(res,HttpStatus.OK);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<Object>(e.getMessage(),HttpStatus.BAD_REQUEST);
-		}
+		
+		
 	}
+	
+	
 	
 }

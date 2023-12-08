@@ -1,7 +1,6 @@
 package com.kosta.deal.entity;
 
 import java.security.Timestamp;
-import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,4 +42,9 @@ public class Sale {
 	private String buyeremail;
 	@CreationTimestamp
 	private Timestamp writedate;
+	public Integer getLikecount() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }
