@@ -12,7 +12,8 @@ const StompChatting = () => {
   const token = useSelector(state => state.persistedReducer.token);
   const client = useRef({});
 
-  const chatBox = { border: "1px solid gray", borderRadius: "20%" };
+  const chatBox = {border:"1px solid gray",borderRadius:"20%",width:"87px",height:"41px",textAlign:"center",float:"right",backgroundColor:"#14C38E",color:"white",marginTop:"-30px"};
+  const opponent={backgroundColor:"#D9D9D9",borderRadius:"20%",width:"87px",height:"41px",textAlign:"center",paddingTop:"5px",marginLeft:"70px",marginTop:"-10px"}
 
   console.log(token);
   useEffect(() => {
@@ -124,18 +125,42 @@ const StompChatting = () => {
 
   return (
     <div>
-      <div style={{ width: "300px", height: "400px", border: "1px solid black", padding: "10px" }}>
+      <div style={{width:"300px",height:"600px", border:"1px solid black", padding:"10px"}}>
         {chatList.map((item, index) =>
-          <div key={index} >
-            {item.writerId !== writerId && <div>{item.writerId}</div>}
-            {item.chat != null && item.chat !== '' && <div><span style={chatBox}>{item.chat}</span></div>}
-            {item.data != null && item.data !== '' && <img src={item.data} alt='' width={"10%"} />}
-          </div>
+          
+          <div key={index}>
+            {item.writerId!==writerId&&(
+              <div>
+                  <div>{item.writerId}</div>
+                  <div style={opponent}>{item.chat}</div>
+                  {item.data!=null&&item.data!=='' && <img src={item.data} alt='' width={"20%"} style={{marginTop:"20px",float:"right"}}/>}
+
+              </div>
+              
+            )}
+            {item.writerId==writerId&&(
+              <div style={{marginTop:"50px"}}>
+                <div>
+                <div>{item.chat!=null&&item.chat!==''}</div>
+                <br/>
+                <div style={chatBox}>{item.chat}</div>
+    
+                </div>
+              </div>
+
+            )}
+
+            
+             
+            {item.writerId==writerId&&item.data!=null&&item.data!=='' && <img src={item.data} alt='' width={"20%"} style={{marginTop:"20px",float:"right"}}/>}
+          
+          
+          </div>  
         )}
       </div>
       <form onSubmit={(event) => handleSubmit(event, chat)}>
+        <input type={'file'} onChange={uploadFile} accept="image/*"/>
         <input type={'text'} name={'chatInput'} onChange={handleChange} value={chat} />
-        <input type={'file'} onChange={uploadFile} accept="image/*" />
         <input type={'submit'} value={'의견 보내기'} />
       </form>
     </div>
