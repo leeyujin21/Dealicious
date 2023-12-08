@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { IoArrowBackOutline } from "react-icons/io5";
 import './img.css';
 import { Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import {useParams, useNavigate} from 'react-router-dom';
-import {useState, useEffect} from 'react';
 import axios from 'axios';
 
 
