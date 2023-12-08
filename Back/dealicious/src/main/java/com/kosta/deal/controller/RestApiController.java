@@ -2,6 +2,7 @@ package com.kosta.deal.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -47,10 +48,14 @@ public class RestApiController {
 	public String join(@RequestBody User user, Authentication authentication) {
 		if (authentication == null) {
 			System.out.println("어림도 없지");
+			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+			user.setRoles("ROLE_USER");
+			user.setUsername(user.getName());
 			userRepository.save(user);
 
 		} else {
 			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+			System.out.println(principalDetails.getUser());
 			System.out.println(principalDetails.getUser().getId());
 			System.out.println(principalDetails.getUser().getUsername());
 			System.out.println(principalDetails.getUser().getPassword());
@@ -62,9 +67,10 @@ public class RestApiController {
 					.createDate(principalDetails.getUser().getCreateDate())
 					.roles(principalDetails.getUser().getRoles())
 					.username(principalDetails.getUser().getUsername())
+					.name(user.getName())
 					.email(user.getEmail())
 					.nickname(user.getNickname())
-					.password(user.getPassword())
+					.password(bCryptPasswordEncoder.encode(user.getPassword()))
 					.tel(user.getTel())
 					.type(user.getType())
 					.typename(user.getTypename())

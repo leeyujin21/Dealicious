@@ -1,5 +1,5 @@
 import {configureStore} from "@reduxjs/toolkit";
-import {persistReducer,PERSIST, PURGE} from "redux-persist";
+import {persistReducer} from "redux-persist";
 import storage from "redux-persist/lib/storage";  //localStorage에 저장
 //import storageSession from "redux-persist/lib/storage/session";  //sessionStorage에 저장
 //왜? redux의 storage 페이지를 새로고침하면 state가 사라짐
@@ -8,13 +8,14 @@ import storage from "redux-persist/lib/storage";  //localStorage에 저장
 
 export const initialState = {
     token:'',
-    user:{email:'', nickname:'', password:'', type:'', typename:'', tel:''},
+    user:{email:'', nickname:'', password:'', type:'', typename:'', tel:'', accountbank:'', accountbank:''},
 }
 
 const reducer = (currentState,action) => {
     if(currentState===undefined) {
         return initialState;
     }
+    console.log(currentState)
     const newState = {...currentState};
     switch(action.type) {
         case "token":  newState.token=action.payload; break;

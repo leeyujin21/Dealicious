@@ -4,10 +4,9 @@ import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { IoPerson } from "react-icons/io5";
 import {
     Nav,
-    Navbar,
-    NavbarBrand,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+
 
 const DEALBottom = () => {
   return (

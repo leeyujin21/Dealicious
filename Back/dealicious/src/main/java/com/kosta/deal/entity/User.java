@@ -41,6 +41,8 @@ public class User {
 	private String email;
 	private String tel;
 	private String accountid;
+	private String accountbank;
+	private String name;
 	@CreationTimestamp
 	private Timestamp createDate;
 	//OAuth를 위해 구성한 추가 필드 2개

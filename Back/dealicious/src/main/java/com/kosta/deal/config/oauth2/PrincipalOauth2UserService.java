@@ -31,7 +31,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 	private UserRepository userRepository;
 	
 //	@Autowired
-//	private BCryptPasswordEncoder bCryptPasswordEncoder; 
+//	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	//userRequest는 code를 받아서 accessToken을 응답받은 객체
 	@Override
@@ -65,7 +65,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 		User user = null;
 		if(userOptional.isPresent()) { //이미 가입되어 있으면 update
 			user = userOptional.get();
-			user.setEmail(oAuth2UserInfo.getEmail());
+			//user.setEmail(oAuth2UserInfo.getEmail());
 			aa=false;
 		} else {  //가입되어있지 않으면 insert
 			user = User.builder().username(oAuth2UserInfo.getProvider()+"_"+oAuth2UserInfo.getProviderId())
