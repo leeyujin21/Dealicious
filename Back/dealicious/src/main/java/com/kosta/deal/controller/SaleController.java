@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-
-
 import com.kosta.deal.entity.Sale;
 import com.kosta.deal.service.SaleService;
+import com.kosta.deal.util.PageInfo;
 
 
 
@@ -29,14 +28,19 @@ public class SaleController {
 	private SaleService saleService;
 	
 	
-	@GetMapping("/salelist/{category}")
-	public ResponseEntity<Sale> saleList(@PathVariable(required=false) String category){
+	@GetMapping({"/salelist/{page}/{category}"})
+	public ResponseEntity<Map<String,Object>> saleList(@PathVariable(required=false) Integer page){
 		try {
-			List<Sale> saleList= saleService.saleList(category);
-			return new ResponseEntity<Sale> (HttpStatus.OK);
-		}catch(Exception e) {
+			PageInfo pageInfo=new PageInfo(page);
+			List<Sale> saleList=saleService.saleListByPage(pageInfo);
+			Map<String,Object> res= new HashMap<>();
+			res.put("saleList", saleList);
+			res.put("pageInfo", pageInfo);
+			return new ResponseEntity<Map<String,Object>> (res,HttpStatus.OK);
+
+		}catch(Exception e){
 			e.printStackTrace();
-			return new ResponseEntity<Sale>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
 		}
 		
 		

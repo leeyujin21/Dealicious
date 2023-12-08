@@ -42,9 +42,6 @@ public class Sale {
 	private String buyeremail;
 	@CreationTimestamp
 	private Timestamp writedate;
-	public Integer getLikecount() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 }

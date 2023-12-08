@@ -1,6 +1,7 @@
 package com.kosta.deal.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,20 +18,18 @@ public class SaleServiceImpl implements SaleService{
 
 	@Override
 	public List<Sale> saleList(String category) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<>
 	}
 
 	@Override
 	public Sale saleDetail(Integer num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Sale> osale= saleRepository.findById(num);
+		if(osale.isEmpty()) throw new Exception("")
 	}
 
 	@Override
 	public Integer saleWrite(Sale sale, List<MultipartFile> file) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 	@Override

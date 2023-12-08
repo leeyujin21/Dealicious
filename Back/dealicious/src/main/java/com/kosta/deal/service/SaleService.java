@@ -13,8 +13,6 @@ public interface SaleService {
 	Sale saleDetail(Integer num) throws Exception;
 	Integer saleWrite(Sale sale, List<MultipartFile> file) throws Exception;
 	
-	
-	
 	void plusViewCount(Integer num);
 
 	Boolean isSelectedSaleLike(String string, Integer num);
