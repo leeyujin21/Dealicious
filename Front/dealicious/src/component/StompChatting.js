@@ -4,6 +4,10 @@ import { Stomp } from '@stomp/stompjs'; //npm install --save @stomp/stompjs
 import * as SockJS from 'sockjs-client'; //npm install --save sockjs-client
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { FaImage } from "react-icons/fa6";
+import './img.css';
+
+
 
 const StompChatting = () => {
   const [chatList, setChatList] = useState([]);
@@ -13,7 +17,7 @@ const StompChatting = () => {
   const client = useRef({});
 
   const chatBox = {border:"1px solid gray",borderRadius:"20%",width:"87px",height:"41px",textAlign:"center",float:"right",backgroundColor:"#14C38E",color:"white",marginTop:"-30px"};
-  const opponent={backgroundColor:"#D9D9D9",borderRadius:"20%",width:"87px",height:"41px",textAlign:"center",paddingTop:"5px",marginLeft:"70px",marginTop:"-10px"}
+  const opponent={backgroundColor:"#D9D9D9",borderRadius:"20%",width:"87px",height:"41px",textAlign:"center",paddingTop:"5px",marginLeft:"20px",marginTop:"20px"}
 
   console.log(token);
   useEffect(() => {
@@ -122,6 +126,11 @@ const StompChatting = () => {
 
     publish(chat);
   };
+  useEffect(() => {     //컴포넌트가 마운트될 때 connect() 함수를 호출하여 Stomp 클라이언트를 연결하고, 컴포넌트가 언마운트될때  disconnect() 함수를 호출하여 연결을 끊습니다.
+    connect();
+
+    return () => disconnect();
+  }, []);
 
   return (
     <div>
@@ -133,8 +142,8 @@ const StompChatting = () => {
               <div>
                   <div>{item.writerId}</div>
                   <div style={opponent}>{item.chat}</div>
-                  {item.data!=null&&item.data!=='' && <img src={item.data} alt='' width={"20%"} style={{marginTop:"20px",float:"right"}}/>}
-
+                  
+         
               </div>
               
             )}
@@ -144,24 +153,23 @@ const StompChatting = () => {
                 <div>{item.chat!=null&&item.chat!==''}</div>
                 <br/>
                 <div style={chatBox}>{item.chat}</div>
-    
+                 
                 </div>
               </div>
 
             )}
+           {item.data!=null&&item.data!==''&& item.chat!=null&&item.chat!==''&&(
+            <img src={item.data} alt='' width={"20%"} style={{marginTop:"20px",float:"right"}}/>
+           )}
 
-            
-             
-            {item.writerId==writerId&&item.data!=null&&item.data!=='' && <img src={item.data} alt='' width={"20%"} style={{marginTop:"20px",float:"right"}}/>}
-          
-          
           </div>  
         )}
       </div>
       <form onSubmit={(event) => handleSubmit(event, chat)}>
-        <input type={'file'} onChange={uploadFile} accept="image/*"/>
-        <input type={'text'} name={'chatInput'} onChange={handleChange} value={chat} />
-        <input type={'submit'} value={'의견 보내기'} />
+        <label for="file" style={{cursor:"pointer",marginLeft:"-90px",width:'30px',height:"30px",borderRadius:"50%",backgroundColor:"#D9D9D9"}} onChange={uploadFile} accept="image/*"><FaImage /></label>
+        <input type={'file'} id="file" style={{display:"none"}}></input>
+        <input type={'text'} style={{marginLeft:"10px",backgroundColor:"#D9D9D9",borderRadius:"10px",borderColor:"white"}} placeholder='채팅하기' name={'chatInput'} onChange={handleChange} value={chat} />
+        <input type="image" style={{marginLeft:"10px",marginTop:"30px"}} src="..\Sent.png" name="submit"  />
       </form>
     </div>
   );

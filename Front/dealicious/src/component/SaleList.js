@@ -1,5 +1,4 @@
 import React from 'react';
-import { IoArrowBackOutline } from "react-icons/io5";
 import { FiPlusCircle } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
@@ -17,11 +16,11 @@ function SaleList() {
               <div style={{ textAlign: "left", marginLeft: "20px" }}>
                 <a style={{ fontSize: "18px" }}>커피 디스펜서</a><br />
                 <div style={{display:"flex"}}>
-                  <div style={{ fontSize: "15px", width:"180px" }}>A동 2층</div>
+                  <div style={{ fontSize: "15px", width:"180px" }}>A동 8층</div>
                   <div style={{textAlign:"right"}}><img src='..\ggul.png' style={{width:"34px", height:"19px"}}/></div><br />
                 </div>
                 <div style={{ display: "flex" }}>
-                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "180px" }}>60,000원</div>
+                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "170px" }}>42,000원</div>
                   <div style={{ textAlign: "right", color: "gray" }}>12분 전</div>
                 </div>
               </div>
@@ -29,102 +28,119 @@ function SaleList() {
           </div>
         </div>
       </Link>
-      <Link to="/saledetail" style={{ textDecoration: "none", color: "black" }}>
+      <Link to="/saledetail2" style={{ textDecoration: "none", color: "black" }}>
         <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "124px" }}>
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: "8px" }}>
             <div style={{ height: "35px", display: "flex" }} >
-              <div style={{ width: "130px", height: "87px" }}><img src="./1.png" /></div>
+              <div style={{ width: "130px", height: "87px" }}><img src="./2.png" style={{ width: "130px", height: "87px"}} /></div>
               <div style={{ textAlign: "left", marginLeft: "20px" }}>
-                <a style={{ fontSize: "18px" }}>커피 디스펜서</a><br />
-                <a style={{ fontSize: "15px" }}>A동 2층</a><br />
+                <a style={{ fontSize: "18px" }}>LG TV</a><br />
+                <a style={{ fontSize: "15px" }}>B동 1층</a><br />
                 <div style={{ display: "flex" }}>
-                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "180px" }}>60,000원</div>
-                  <div style={{ textAlign: "right", color: "gray" }}>12분 전</div>
+                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "170px" }}>332,000원</div>
+                  <div style={{ textAlign: "right", color: "gray" }}>1시간 전</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </Link>
-      <Link to="/saledetail" style={{ textDecoration: "none", color: "black" }}>
+      <Link to="/saledetail3" style={{ textDecoration: "none", color: "black" }}>
         <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "124px" }}>
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: "5px" }}>
             <div style={{ height: "35px", display: "flex" }} >
-              <div style={{ width: "130px", height: "87px" }}><img src="./1.png" /></div>
+              <div style={{ width: "130px", height: "87px" }}><img src="./3.png" style={{width: "130px", height: "87px"}}/></div>
               <div style={{ textAlign: "left", marginLeft: "20px" }}>
-                <a style={{ fontSize: "18px" }}>커피 디스펜서</a><br />
-                <a style={{ fontSize: "15px" }}>A동 2층</a><br />
+                <a style={{ fontSize: "18px" }}>에보나이트 터보R-볼링공</a><br />
+                <a style={{ fontSize: "15px" }}>C동 3층</a><br />
                 <div style={{ display: "flex" }}>
-                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "180px" }}>60,000원</div>
-                  <div style={{ textAlign: "right", color: "gray" }}>12분 전</div>
+                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "170px" }}>22,000원</div>
+                  <div style={{ textAlign: "right", color: "gray" }}>2시간 전</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </Link>
-      <Link to="/saledetail" style={{ textDecoration: "none", color: "black" }}>
+      <Link to="/saledetail4" style={{ textDecoration: "none", color: "black" }}>
         <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "124px" }}>
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: "5px" }}>
             <div style={{ height: "35px", display: "flex" }} >
-              <div style={{ width: "130px", height: "87px" }}><img src="./1.png" /></div>
+              <div style={{ width: "130px", height: "87px" }}><img src="./4.png" style={{ width: "130px", height: "87px" }}/></div>
               <div style={{ textAlign: "left", marginLeft: "20px" }}>
-                <a style={{ fontSize: "18px" }}>커피 디스펜서</a><br />
-                <a style={{ fontSize: "15px" }}>A동 2층</a><br />
+                <a style={{ fontSize: "18px" }}>닥터바이크 서스펜션</a><br />
+                <a style={{ fontSize: "15px" }}>학교 1층</a><br />
                 <div style={{ display: "flex" }}>
-                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "180px" }}>60,000원</div>
-                  <div style={{ textAlign: "right", color: "gray" }}>12분 전</div>
+                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "170px" }}>20,000원</div>
+                  <div style={{ textAlign: "right", color: "gray" }}>5시간 전</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </Link>
-      <Link to="/saledetail" style={{ textDecoration: "none", color: "black" }}>
+      <Link to="/saledetail5" style={{ textDecoration: "none", color: "black" }}>
         <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "124px" }}>
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: "5px" }}>
             <div style={{ height: "35px", display: "flex" }} >
-              <div style={{ width: "130px", height: "87px" }}><img src="./1.png" /></div>
+              <img src="./5.png" style={{width:"130px",height:"100px"}}/>
               <div style={{ textAlign: "left", marginLeft: "20px" }}>
-                <a style={{ fontSize: "18px" }}>커피 디스펜서</a><br />
-                <a style={{ fontSize: "15px" }}>A동 2층</a><br />
+                <a style={{ fontSize: "18px", marginTop:"50px" }}>뉴발란스 2002</a><br />
+                <a style={{ fontSize: "15px" }}>학교 3층</a><br />
                 <div style={{ display: "flex" }}>
-                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "180px" }}>60,000원</div>
-                  <div style={{ textAlign: "right", color: "gray" }}>12분 전</div>
+                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "170px" }}>100,000원</div>
+                  <div style={{ textAlign: "right", color: "gray" }}>9시간 전</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </Link>
-      <Link to="/saledetail" style={{ textDecoration: "none", color: "black" }}>
+      <Link to="/saledetail6" style={{ textDecoration: "none", color: "black" }}>
         <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "124px" }}>
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: "5px" }}>
             <div style={{ height: "35px", display: "flex" }} >
-              <div style={{ width: "130px", height: "87px" }}><img src="./1.png" /></div>
+              <div style={{ width: "130px", height: "87px" }}><img src="./cloth1.png" style={{width: "130px", height: "87px" }}/></div>
               <div style={{ textAlign: "left", marginLeft: "20px" }}>
-                <a style={{ fontSize: "18px" }}>커피 디스펜서</a><br />
-                <a style={{ fontSize: "15px" }}>A동 2층</a><br />
+                <a style={{ fontSize: "18px" }}>반 목폴라 니트</a><br />
+                <a style={{ fontSize: "15px" }}>A동 9층</a><br />
                 <div style={{ display: "flex" }}>
-                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "180px" }}>60,000원</div>
-                  <div style={{ textAlign: "right", color: "gray" }}>12분 전</div>
+                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "170px" }}>60,000원</div>
+                  <div style={{ textAlign: "right", color: "gray" }}>40분 전</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </Link>
-      <Link to="/saledetail" style={{ textDecoration: "none", color: "black" }}>
-        <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "124px" }}>
+      <Link to="/saledetail7" style={{ textDecoration: "none", color: "black" }}>
+        <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "150px" }}>
           <div style={{ marginTop: "15px" }}>
             <div style={{ height: "35px", display: "flex" }} >
-              <div style={{ width: "130px", height: "87px" }}><img src="./1.png" /></div>
+              <div style={{ width: "130px", height: "87px" }}><img src="./cloth2.png" style={{width: "130px", height: "87px" }}/></div>
               <div style={{ textAlign: "left", marginLeft: "20px" }}>
-                <a style={{ fontSize: "18px" }}>커피 디스펜서</a><br />
-                <a style={{ fontSize: "15px" }}>A동 2층</a><br />
+                <a style={{ fontSize: "18px" }}>벤힛 스트릿 로고 세미 오버핏 특양면 맨투맨</a><br />
+                <a style={{ fontSize: "15px" }}>B동 8층</a><br />
                 <div style={{ display: "flex" }}>
-                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "180px" }}>60,000원</div>
-                  <div style={{ textAlign: "right", color: "gray" }}>12분 전</div>
+                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "170px" }}>60,000원</div>
+                  <div style={{ textAlign: "right", color: "gray" }}>2시간 전</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Link>
+      <Link to="/saledetail7" style={{ textDecoration: "none", color: "black" }}>
+        <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "150px" }}>
+          <div style={{ marginTop: "15px" }}>
+            <div style={{ height: "35px", display: "flex" }} >
+              <div style={{ width: "130px", height: "87px" }}><img src="./drawer.png" style={{width: "130px", height: "87px" }}/></div>
+              <div style={{ textAlign: "left", marginLeft: "20px" }}>
+                <a style={{ fontSize: "18px" }}>서랍</a><br />
+                <a style={{ fontSize: "15px" }}>B동 6층</a><br />
+                <div style={{ display: "flex" }}>
+                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "170px" }}>40,000원</div>
+                  <div style={{ textAlign: "right", color: "gray" }}>3시간 전</div>
                 </div>
               </div>
             </div>

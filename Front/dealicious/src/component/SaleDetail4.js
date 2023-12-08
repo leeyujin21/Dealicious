@@ -3,43 +3,16 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import './img.css';
 import { Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import {useParams, useNavigate} from 'react-router-dom';
-import {useState, useEffect} from 'react';
-import axios from 'axios';
 
-
-function SaleDetail() {
-    const {num} =useParams();
-    const [sale,setSale] = useState({
-        num:null,email:'',title:'',type:'',amount:'',category:'',content:'',place:'',fileurl:'',status:'',viewcount:null,zzimcnt:null,
-        buyeremail:'',writerdate:''})
-        const [heart, setHeart] = useState(false);
-        const navigate = useNavigate();
-    
-    useEffect(()=>{
-        axios.get(`http://localhost:8090/saledetail/${num}`)
-        .then(res=>{
-            setSale(res.data.sale);
-            setHeart(res.data.heart);
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-    })
-    const selectSale=(e)=>{
-        axios.get(`http://localhost:8090/salelike/${num}`)
-        .then(res=>{
-            setSale({...sale,likeCount:res.data.likeCount})
-        })
-    }
-     return (
+function SaleDetail4() {
+    return (
         <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden" }}>
             <div style={{marginTop:"10px", marginBottom:"20px"}}>
                 <IoArrowBackOutline size="30" color="14C38E" />
-                <span style={{ color: "#14C38E", fontSize: "25px", textAlign: "center", marginLeft: "75px" }}><b>디스펜서 팝니다!</b></span>
+                <span style={{ color: "#14C38E", fontSize: "25px", textAlign: "center", marginLeft: "75px" }}><b>자전거 팝니다!</b></span>
             </div>
 
-            <img src="./1.png" style={{ width: "385px", height: "210px", borderRadius:"10px"}} />
+            <img src="./4.png" style={{ width: "385px", height: "210px", borderRadius:"10px"}} />
             <div style={{ marginTop: "15px" }}>
                 <div style={{display:"flex"}}>
                     <div rowSpan={2}><img src="./profile.png" /></div>
@@ -56,13 +29,11 @@ function SaleDetail() {
             </div>
             <div style={{textAlign:"left"}}><b>가전제품</b></div>
             <tr>
-                <td style={{ textAlign: "left", width:"200px" }}>장소: A동 8층근처</td>
-                <td style={{ width: "250px", fontWeight: "bold",textAlign:"right" }}>가격: 42,000원</td>
+                <td style={{ textAlign: "left", width:"200px" }}>장소: 학교 1층 근처</td>
+                <td style={{ width: "250px", fontWeight: "bold",textAlign:"right" }}>가격: 20,000원</td>
             </tr>
             <Input type="textarea" style={{ width: "385px", marginTop: "10px", marginBottom: "15px", height: "300px", resize: "none", backgroundColor: "white" }} disabled
-                value="디스펜서 팔아요!
-산지는 3개월 됐는데 거의 안 써서 미개봉 제품이랑 별 차이없습니다!
-A동 8층까지 오시면 5천원 깎아드려요.">
+                value="자전거 팔아요! 학교 1층에 오시면 2천원 깎아드려요.">
 
             </Input>
             <div style={{ display: "flex" }}>
@@ -80,4 +51,4 @@ A동 8층까지 오시면 5천원 깎아드려요.">
         </div>
     );
 };
-export default SaleDetail;
+export default SaleDetail4;

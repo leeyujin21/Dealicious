@@ -42,7 +42,8 @@ const Main = () => {
             <div style={{ fontSize: "13px" }}>사과 팔아요 맛있는...</div>
             <div style={{ fontSize: "16px", fontWeight: "bold" }}>5,000원</div>
           </div>
-        </div>&nbsp;&nbsp;&nbsp;<div>
+        </div>&nbsp;&nbsp;&nbsp;
+          <div>
           <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
             width: "120px",
             height: "120px",
@@ -53,7 +54,7 @@ const Main = () => {
             <div style={{ fontSize: "13px" }}>사과 팔아요 맛있는...</div>
             <div style={{ fontSize: "16px", fontWeight: "bold" }}>5,000원</div>
           </div>
-        </div>
+         </div>
       </div>
       <div style={{ display: "flex" }}>
         <div>
@@ -101,26 +102,26 @@ const Main = () => {
       </div>
       <br />
       <div style={{ display: "flex", width: "385px" }}>
-        <Link style={{ color: "black", width: "33%" }}>
+        <Link to="/categorylist/{num}" style={{ color: "black", width: "33%" }}>
           <FaMobileAlt size="50" color="#E25D5D" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>모바일/태블릿</div>
         </Link>
-        <Link style={{ color: "black", width: "33%" }}>
+        <Link to="/categorylist" style={{ color: "black", width: "33%" }}>
           <IoShirt size="50" color="#F39238" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>의류</div>
         </Link>
-        <Link style={{ color: "black", width: "33%" }}>
+        <Link to="/categorylist" style={{ color: "black", width: "33%" }}>
           <BiSolidDonateHeart size="50" color="#F3E138" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>나눔</div>
         </Link>
       </div>
       <br />
       <div style={{ display: "flex", width: "385px", paddingBottom:"10px" }}>
-        <Link style={{ color: "black", width: "33%" }}>
+        <Link to="/categorylist" style={{ color: "black", width: "33%" }}>
           <IoTicketSharp size="50" color="#3FCC80" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>티켓/쿠폰</div>
         </Link>
-        <Link style={{ color: "black", width: "33%" }}>
+        <Link to="/categorylist" style={{ color: "black", width: "33%" }}>
           <GiLaptop size="50" color="#3FA2CC" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>노트북/PC</div>
         </Link>
