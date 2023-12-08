@@ -18,7 +18,7 @@ public class SaleServiceImpl implements SaleService{
 
 	@Override
 	public List<Sale> saleList(String category) throws Exception {
-		List<>
+		return saleRepository.findByCategory(category);
 	}
 
 	@Override
