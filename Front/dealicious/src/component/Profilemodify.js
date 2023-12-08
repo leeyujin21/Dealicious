@@ -82,8 +82,8 @@ const Profilemodify = () => {
                     <Label for="phonenum" style={{ fontSize: "20px" }}>{user.tel}</Label>
                 </FormGroup>
                 <FormGroup style={{ textAlign: "left", display: "flex", paddingBottom: "10px" }}>
-                    <Label for="accountid" style={{ fontSize: "20px", width: "100px" }}>계좌번호</Label>
-                    <Label for="accountid" style={{ fontSize: "20px" }}>{user.accountid}</Label>
+                    <Label for="accountid" style={{ fontSize: "20px", width: "100px", lineHeight:"44px" }}>계좌번호</Label>
+                    <Input type="text" for="accountid" name="accountid" id="accountid" style={{ fontSize: "16px", width: "224px", height:"44px", marginLeft:"-5px" }} value={user.accountid} />
                 </FormGroup>
             </div>
             <Link to="/profilemodify">
