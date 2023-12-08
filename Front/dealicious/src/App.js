@@ -56,6 +56,7 @@ import Logout from './component/Logout';
 import Oauth2 from './component/Oauth2';
 import StompChatting from './component/StompChatting';
 import { useEffect } from 'react';
+import MypageNl from './component/MypageNl';
 
 export const persistor = persistStore(store);
 function App() {
@@ -73,6 +74,7 @@ function App() {
         <div className='App'>
 
             <Provider store={store}>
+                
                 <PersistGate loading={null} persistor={persistor}>
 
                     <BrowserRouter>
@@ -101,6 +103,7 @@ function App() {
                             <Route exect path="/join3" element={<Join3 />} /> {/**/}
                             <Route exect path="/join4" element={<Join4 />} /> {/**/}
                             <Route exect path="/mypage" element={<Mypage />} /> {/**/}
+                            <Route exect path="/mypagenl" element={<MypageNl />} /> {/**/}
                             <Route exect path="/myzzim" element={<Mypage_zzim />} /> {/**/}
                             <Route exect path="/myreview" element={<Mypage_review />} /> {/**/}
                             <Route exect path="/profiledetail" element={<Profiledetail />} /> {/**/}

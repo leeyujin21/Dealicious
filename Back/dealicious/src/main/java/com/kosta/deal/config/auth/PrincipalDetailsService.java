@@ -19,8 +19,8 @@ public class PrincipalDetailsService implements UserDetailsService {
 	private UserRepository userRepository;
 	//Security Session(내부 Authentication(내부 UserDetails))
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User userEntity = userRepository.findByUsername(username);
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		User userEntity = userRepository.findByEmail(email).get();
 		System.out.println("loadUserByUsername:"+userEntity);
 		if(userEntity!=null) {
 			return new PrincipalDetails(userEntity);
