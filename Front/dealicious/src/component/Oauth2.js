@@ -10,7 +10,7 @@ const Oauth2 = () => {
     useEffect(()=> {
         console.log("token:"+token);
         dispatch({type:"token", payload:token})
-        window.location.href="/";
+        window.location.href="/"
     }, [])
 }
 

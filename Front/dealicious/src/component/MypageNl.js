@@ -1,35 +1,35 @@
 import Avvvatars from "avvvatars-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FaStar } from "react-icons/fa6";
 import { Link, Navigate } from "react-router-dom";
 import { Button, FormGroup, Label } from "reactstrap";
-import { useSelector } from "react-redux";
-import axios from "axios";
 
-const Mypage = () => {
+const MypageNl = () => {
     const [Image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
     const fileInput = useRef(null)
-    const [user, setUser] = useState({id:'', email:'', nickname:''})
-    const token = useSelector(state=>state.persistedReducer.token);
-    console.log("token:"+token);
-    useEffect(()=> {
-        axios.get("http://localhost:8090/user",{
-            headers : {
-                Authorization : token,
-            }
-        })
-        .then(res=> {            
-            console.log(res)
-            setUser(res.data);
-        })
-        .catch(err=> {
-            console.log(err)
-        })
-    }, [])
+    function goToLogin() {
+        window.location.replace("/login")
+    }
     return (
-        <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "50px" }}>
-            <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
+        <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "150px" }}>
+            <div style={{ marginLeft: "160px", marginBottom:"10px" }}>
+                <Avvvatars
+                    src={Image}
+                    style={{ margin: '20px' }}
+                    size={65}
+                    onClick={() => { fileInput.current.click() }}
+                />
+            </div>
+            <p>로그인 후 이용해주세요</p>
+            <div style={{ paddingBottom: "30px" , fontSize:"13px"}}>
+                <a>딜리셔스 서비스를 이용하기 위해
+                    로그인이 필요합니다</a>
+            </div>
+            <Button style={{ backgroundColor: "#14C38E", borderStyle: "none" }} onClick={goToLogin}>
+                로그인/회원가입
+            </Button>
+            {/* <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
                 <IoArrowBackOutline style={{ marginRight: "100px" }} size="30" color="#14C38E" />
                 <Label style={{ fontSize: "25px", fontWeight: "bold", color: "#14C38E" }}>마이페이지</Label>
             </FormGroup>
@@ -41,7 +41,7 @@ const Mypage = () => {
                     onClick={() => { fileInput.current.click() }}
                 />
                 <div style={{ fontSize: "20px", fontWeight: "bold", textAlign: "left", paddingLeft: "20px", width: "220px" }}>
-                    &nbsp;{user.nickname}
+                    &nbsp;홍길동
                     <br />
                     <div>
                         <FaStar size="25" color="#F2D43E" />
@@ -118,9 +118,9 @@ const Mypage = () => {
                         <a style={{ fontSize: "13px" }}>커피 디스펜서 팔아...</a>
                     </div>
                 </div>
-            </Link>
+            </Link> */}
         </div>
     )
 }
 
-export default Mypage;
+export default MypageNl;
