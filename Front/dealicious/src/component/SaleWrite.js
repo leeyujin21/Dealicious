@@ -2,17 +2,93 @@ import React, { useRef, useState } from 'react';
 import { IoArrowBackOutline } from "react-icons/io5";
 import './img.css';
 import './text.css';
-import { Input } from 'reactstrap';
+import {useNavigate} from 'react-router-dom';
+import { Input,Button } from 'reactstrap';
 import { FaCamera } from "react-icons/fa";
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
-function SaleWrite(){
-    const [Image, setImage] = useState()
-    const fileInput = useRef(null)
-    const [files, setFiles] = useState([]);
-    const fileChange = (e) => {
-        if(e.target.files.length>0){
-            setFiles([...files, e.target.files[0]]);
+const SaleWrite=()=>{
+    const [currentImage, setCurrentImage] = useState("./ggul2.png");
+    const navigate=useNavigate();
+    const [imageCount, setImageCount] = useState(0); // 상태 변수로 이미지 카운트를 관리.
+    const [selectedImage, setSelectedImage] = useState(null); // 상태 변수로 선택된 이미지를 관리.
+    const [files] = useState([]);
+    const fileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setSelectedImage(reader.result); // 이미지를 상태에 저장.
+            };
+            reader.readAsDataURL(file);
+            // 이미지 카운트를 증가시킴.
+            setImageCount(prevCount => (prevCount < 5 ? prevCount + 1 : prevCount));//5개까지
         }
+    };
+    // 사진 클릭 시 Input file 엘리먼트를 클릭하는 함수
+    const handleClick = () => {
+        document.getElementById('file').click();
+    };
+    const changeImage = () => {
+        if (currentImage === "./ggul2.png") {
+            setCurrentImage("./ggul.png"); // 다른 이미지로 변경.
+        } else {
+            setCurrentImage("./ggul2.png"); // 처음 이미지로 다시 변경.
+        }
+    };
+    const [sale, setSale] = useState({
+        subject: '',
+        category: '',
+        price: '',
+        place: '',
+        content: ''
+    });
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setSale({ ...sale, [name]: value });
+    };
+    const isFormValid = () => {
+        return (
+            sale.subject.trim() !== '' &&
+            sale.category.trim() !== '' &&
+            sale.price.trim() !== '' &&
+            sale.place.trim() !== '' &&
+            sale.content.trim() !== ''
+        );
+    };
+
+
+    const submit = (e) => {
+        if (!isFormValid()) {
+            Swal.fire({
+                icon: 'error',
+                title: '잠깐만요...',
+                text: '모든 항목을 작성해주세요!',
+            });
+            return; // 폼 제출을 막습니다.
+        }
+        const formData = new FormData();
+        formData.append("subject", sale.subject);
+        formData.append("category",sale.category);
+        formData.append("price", sale.price);
+        formData.append("place", sale.place);
+        formData.append("content", sale.content);
+        // formData.append("file", files);
+        for(let file of files) {
+            formData.append("file", file);
+        }
+        console.log(formData)
+        axios.post('http://localhost:8090/salewrite', formData)
+        .then(res=> {
+            console.log(res);
+            let saleNum = res.data;
+            navigate(`/salelist/${saleNum}`)
+        })
+        .catch(err=> {
+            console.log(err)
+        })
+
     }
     return(
         <div className='main' style={{textAlign:'left',overflow:"scroll", height:"732px", overflowX:"hidden"}}> 
@@ -22,14 +98,24 @@ function SaleWrite(){
          <br/><br/>
          <div style={{backgroundColor:"#E9E9E9", width:"48px", height:"63px", textAlign:"center", paddingTop:"5px", position:"relative", cursor:"pointer"}}
              onClick={()=>document.getElementById("file").click()}>
-        <FaCamera size="30" color='gray'/>
+        <div>
+            <FaCamera size="30" color='gray' onClick={handleClick} />
             <div style={{position:"absolute", textAlign:"center", width:"48px", paddingBottom:"5px", fontWeight:"bold"}}>
-                0/5
+                {imageCount}/5
             </div>
-            <Input name="file" type="file" id="file" accept="image/*" onChange={fileChange} hidden/>
+            <Input name="file" type="file" id="file" accept="image/*" onChange={fileChange} hidden />
+            {selectedImage && <img src={selectedImage} alt="Selected" />} {/* 이미지를 표시합니다. */}
+        </div>
         </div>
         <div style={{marginBottom:"5px", fontSize:"18px", marginTop:"20px"}}>제목</div>
-        <Input type="text" placeholder="제목을 입력해주세요" style={{width:"385px",height:"40px" ,borderColor:"lightgray"}}></Input>
+        <Input
+                type="text"
+                placeholder="제목을 입력해주세요"
+                style={{ width: "385px", height: "40px", borderColor: "lightgray" }}
+                name="subject"
+                value={sale.subject}
+                onChange={handleInputChange}
+        />
         
         <div style={{marginTop:"20px",display:"flex"}}>
             <div>
@@ -45,31 +131,49 @@ function SaleWrite(){
                 </select> 
             </div>
             <div style={{marginLeft:"25px"}}>
-                <div style={{marginBottom:"5px", fontSize:"18px"}}>꿀페이</div>
-                <img src="./ggul2.png" style={{width:"50px"}}/>
+            <div style={{marginBottom:"5px", fontSize:"18px"}} onClick={changeImage}>
+                꿀페이
+            </div>
+            <img src={currentImage} style={{width:"50px"}} onClick={changeImage} alt="Ggul Image" />
             </div>
         </div>
         <div style={{marginBottom:"20px"}}/>
         <div style={{display:"flex"}}>
             <div>
                 <div style={{marginBottom:"5px", fontSize:"18px"}}>가격</div>
-                <div><Input type="text" placeholder="10,000원" style={{borderRadius:"5px",height:"40px" ,width:"180px",float:"left"}}></Input></div>
+                <div><Input type="text" placeholder="10,000원" style={{borderRadius:"5px",height:"40px" ,width:"180px",float:"left"}}name="price" value={sale.price} onChange={handleInputChange}></Input></div>
             </div>
             <div>
                 <div style={{marginBottom:"5px", fontSize:"18px", marginLeft:"25px"}}>장소</div>
-                <div><Input type="text" placeholder="A동 1층" style={{borderRadius:"5px",height:"40px",width:"180px",marginLeft:"25px"}}></Input></div>
+                <div><Input type="text" placeholder="A동 1층" style={{borderRadius:"5px",height:"40px",width:"180px",marginLeft:"25px"}} name="place" value={sale.place} onChange={handleInputChange}></Input></div>
             </div>   
         </div>
         <div>
             <div style={{fontSize:"18px", marginBottom:"10px", marginTop:"20px"}}>상세설명</div>
             <Input type='textarea'
-             style={{width:"385px",height:"300px", resize:"none"}}
+             style={{width:"385px",height:"300px", resize:"none"}} name="content" value={sale.content} onChange={handleInputChange}
              placeholder='상세설명을 입력하세요
 구매날짜, 하자 등 자세하게 작성할수록
 구매자에게 편리합니다'></Input>
             
         </div>
-        <br/> <p style={{textAlign:"center"}}><input type="submit" value="등록하기" style={{fontWeight:"bold", fontSize:"18px" ,borderRadius:"10px",width:"385px", height:"50px",backgroundColor:'#14C38E',color:"white", borderStyle:"none"}}></input></p>
+        <br/> <p style={{textAlign:"center"}}><Button
+                type="button"
+                onClick={submit}
+                style={{
+                    fontWeight: "bold",
+                    fontSize: "18px",
+                    borderRadius: "10px",
+                    width: "385px",
+                    height: "50px",
+                    backgroundColor: '#14C38E',
+                    color: "white",
+                    borderStyle: "none"
+                }}
+                disabled={!isFormValid()} // 입력값이 유효하지 않을 때 버튼 비활성화
+            >
+                등록하기
+            </Button></p>
         
         </div>
 

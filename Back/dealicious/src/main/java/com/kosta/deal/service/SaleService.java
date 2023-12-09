@@ -6,10 +6,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import com.kosta.deal.entity.Sale;
+import com.kosta.deal.util.PageInfo;
 
 public interface SaleService {
 	
-	List<Sale> saleList(String category) throws Exception;
+	List<Sale> saleListByPage(PageInfo pageInfo) throws Exception;
+	List<Sale> SaleListByCategory(String category) throws Exception;
 	Sale saleDetail(Integer num) throws Exception;
 	Integer saleWrite(Sale sale, List<MultipartFile> file) throws Exception;
 	
@@ -19,6 +21,8 @@ public interface SaleService {
 	Boolean selHeartSale(String string, Integer num);
 
 	Integer saleModify(Sale sale, List<MultipartFile> file);
+	
+	
 
 	
 

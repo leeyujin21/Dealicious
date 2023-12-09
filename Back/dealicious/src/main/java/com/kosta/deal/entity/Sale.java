@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -37,11 +38,17 @@ public class Sale {
 	private String place;
 	private String fileurl;
 	private String status;
-	private Integer viewcnt;
-	private Integer zzimcnt;
 	private String buyeremail;
+	@ColumnDefault("0")
+	private Integer viewcnt;
+	@ColumnDefault("0")
+	private Integer zzimcnt;
+	
 	@CreationTimestamp
 	private Timestamp writedate;
+
+	
+	
 	
 	
 }

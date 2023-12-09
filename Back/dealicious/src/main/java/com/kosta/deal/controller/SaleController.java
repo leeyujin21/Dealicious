@@ -28,23 +28,33 @@ public class SaleController {
 	private SaleService saleService;
 	
 	
-	@GetMapping({"/salelist/{page}/{category}"})
-	public ResponseEntity<Map<String,Object>> saleList(@PathVariable(required=false) Integer page){
+	@GetMapping({"/salelist/{page}","/salelist"})
+	public ResponseEntity<Map<String,Object>> saleList(@PathVariable(required=false) Integer page) {
 		try {
-			PageInfo pageInfo=new PageInfo(page);
-			List<Sale> saleList=saleService.saleListByPage(pageInfo);
-			Map<String,Object> res= new HashMap<>();
-			res.put("saleList", saleList);
+			PageInfo pageInfo = PageInfo.builder().curPage(page).build();
+			List<Sale> saleList = saleService.saleListByPage(pageInfo);
+			Map<String,Object> res = new HashMap<>();
 			res.put("pageInfo", pageInfo);
-			return new ResponseEntity<Map<String,Object>> (res,HttpStatus.OK);
-
-		}catch(Exception e){
+			res.put("saleList", saleList);
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		} catch(Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
-		
 	}
+	
+	@GetMapping("/salelist/{category}")
+	public ResponseEntity<List<Sale>> saleListByCategory(@PathVariable String category) {
+	     try {
+	    	 List<Sale> saleList= saleService.SaleListByCategory(category);
+	    	 return new ResponseEntity<List<Sale>>(saleList,HttpStatus.OK);
+			} catch(Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<List<Sale>>(HttpStatus.BAD_REQUEST);
+			}
+	}
+	
+	
 	@GetMapping("/saledetail/{sect}/{num}")
 	public ResponseEntity<Map<String,Object>> saleDetail(@PathVariable String sect,@PathVariable Integer num){
 		try {
@@ -107,7 +117,7 @@ public class SaleController {
 			Map<String,Object> res= new HashMap<>();
 			Boolean selectSale=saleService.selHeartSale("lubby", num);
 			res.put("isSelect", selectSale);
-			Integer likeCount = saleService.saleDetail(num).getLikecount();
+			Integer likeCount = saleService.saleDetail(num).getZzimcnt();
 			res.put("likeCount", likeCount);
 			return new ResponseEntity<Map<String,Object>>(res,HttpStatus.OK);
 		}catch(Exception e) {

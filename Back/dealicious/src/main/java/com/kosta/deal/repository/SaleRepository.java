@@ -8,6 +8,6 @@ import com.kosta.deal.entity.Sale;
 
 public interface SaleRepository extends JpaRepository<Sale, Integer> {
 
-	List<Sale> findByCategory(String category);
+	
 
 }
