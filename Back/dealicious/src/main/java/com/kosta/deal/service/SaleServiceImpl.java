@@ -11,9 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kosta.board.entity.Board;
-import com.kosta.board.entity.FileVo;
+
 import com.kosta.deal.entity.Sale;
+import com.kosta.deal.repository.FileVoRepository;
 import com.kosta.deal.repository.SaleDslRepository;
 import com.kosta.deal.repository.SaleRepository;
 import com.kosta.deal.util.PageInfo;
@@ -26,6 +26,8 @@ public class SaleServiceImpl implements SaleService{
 	
 	@Autowired
 	private SaleDslRepository saleDslRepository;
+	@Autowired
+	private FileVoRepository fileVoRepository;
 	
 	//salelist 무한 스크롤 페이지 처리
 	@Override
@@ -79,7 +81,7 @@ public class SaleServiceImpl implements SaleService{
 					.size(file.getSize())
 					.contenttype(file.getContentType())
 					.data(file.getBytes()).build();
-			fileVoRepository.save(fileVo);
+			FileVoRepository.save(fileVo);
 			
 			
 			//upload 폴더에 upload
@@ -91,12 +93,12 @@ public class SaleServiceImpl implements SaleService{
 			fileNums+= fileVo.getNum();
 			
 			}
-			boardDto.setFileurl(fileNums);
+			sale.setFileurl(fileNums);
 		}
-		//board insert
-		Board board= boardDto.toEntity();
-		boardRepository.save(board);
-		return board.getNum();
+		
+		Sale sale1= sale1;
+		saleRepository.save(sale1);
+		return sale1.getNum();
 	}
 
 	@Override

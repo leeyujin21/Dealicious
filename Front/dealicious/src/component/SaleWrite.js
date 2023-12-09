@@ -12,18 +12,21 @@ const SaleWrite=()=>{
     const [currentImage, setCurrentImage] = useState("./ggul2.png");
     const navigate=useNavigate();
     const [imageCount, setImageCount] = useState(0); // 상태 변수로 이미지 카운트를 관리.
-    const [selectedImage, setSelectedImage] = useState(null); // 상태 변수로 선택된 이미지를 관리.
     const [files] = useState([]);
+    const [selectedImages, setSelectedImages] = useState([]); // 여러 이미지를 저장하는 배열
+    const fileInputRef = useRef(null);
+    const removeImage = (indexToRemove) => {
+        const updatedImages = selectedImages.filter((_, index) => index !== indexToRemove);
+        setSelectedImages(updatedImages);
+        setImageCount(updatedImages.length);
+    };
     const fileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setSelectedImage(reader.result); // 이미지를 상태에 저장.
-            };
-            reader.readAsDataURL(file);
-            // 이미지 카운트를 증가시킴.
-            setImageCount(prevCount => (prevCount < 5 ? prevCount + 1 : prevCount));//5개까지
+            if (selectedImages.length < 5) { // 이미지가 5개 미만일 때만 추가
+                setSelectedImages([...selectedImages, file]);
+                setImageCount(selectedImages.length + 1);
+            }
         }
     };
     // 사진 클릭 시 Input file 엘리먼트를 클릭하는 함수
@@ -75,9 +78,10 @@ const SaleWrite=()=>{
         formData.append("place", sale.place);
         formData.append("content", sale.content);
         // formData.append("file", files);
-        for(let file of files) {
-            formData.append("file", file);
+        for (let image of selectedImages) {
+            formData.append("file", image);
         }
+
         console.log(formData)
         axios.post('http://localhost:8090/salewrite', formData)
         .then(res=> {
@@ -100,11 +104,42 @@ const SaleWrite=()=>{
              onClick={()=>document.getElementById("file").click()}>
         <div>
             <FaCamera size="30" color='gray' onClick={handleClick} />
-            <div style={{position:"absolute", textAlign:"center", width:"48px", paddingBottom:"5px", fontWeight:"bold"}}>
+            <div style={{ position: "absolute", textAlign: "center", width: "48px", paddingBottom: "5px", fontWeight: "bold" }}>
                 {imageCount}/5
             </div>
-            <Input name="file" type="file" id="file" accept="image/*" onChange={fileChange} hidden />
-            {selectedImage && <img src={selectedImage} alt="Selected" />} {/* 이미지를 표시합니다. */}
+            <Input name="file" type="file" id="file" accept="image/*" onChange={fileChange} hidden ref={fileInputRef} />
+            <span style={{ display: 'flex', flexWrap:"wrap", justifyContent: 'flex-end'}}>
+                {selectedImages.map((image, index) => (
+                    <div key={index} style={{ position: 'relative', marginLeft: '500px', marginBottom: '10px' }}>
+                    <img
+                        src={URL.createObjectURL(image)}
+                        alt={`Selected ${index + 1}`}
+                        style={{marginLeft:"100px" ,marginTop:"-30px",width: '55px', height: '55px' }}
+                    />
+                    <button
+                        onClick={() => removeImage(index)}
+                        style={{
+                            position: 'absolute',
+                            top: '-20px',
+                            right: '-5px',
+                            backgroundColor: '#14C38E',
+                            borderRadius: '50%',
+                            cursor: 'pointer',
+                            padding: '0',
+                            width: '20px',
+                            height: '20px',
+                            display: 'flex',
+                            justifyContent: 'center',                   
+                            alignItems: 'center',
+                            fontSize: '12px',
+                            color: 'white',
+                        }}
+                         >
+                        X
+                    </button>
+                </div>
+                ))}
+            </span>
         </div>
         </div>
         <div style={{marginBottom:"5px", fontSize:"18px", marginTop:"20px"}}>제목</div>
@@ -120,9 +155,14 @@ const SaleWrite=()=>{
         <div style={{marginTop:"20px",display:"flex"}}>
             <div>
                 <div style={{marginBottom:"5px", fontSize:"18px"}}>카테고리</div>
-                <select style={{width:"180px",height:"40px",textAlign:"center",borderRadius:"5px",float:"left", borderColor:"lightgray"}}>
-                    <option value="" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;선택</option>   
-                    <option value="mobile" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;모바일/태블릿</option>
+                <select
+    style={{ width: "180px", height: "40px", textAlign: "center", borderRadius: "5px", float: "left", borderColor: "lightgray" }}
+    name="category"
+    value={sale.category}
+    onChange={handleInputChange}
+>
+    <option value="" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;선택</option>
+    <option value="mobile" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;모바일/태블릿</option>
                     <option value="pc" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;노트북/PC</option>
                     <option value="ticket" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;티켓/쿠폰</option>
                     <option value="clothes" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;의류</option>
@@ -170,7 +210,7 @@ const SaleWrite=()=>{
                     color: "white",
                     borderStyle: "none"
                 }}
-                disabled={!isFormValid()} // 입력값이 유효하지 않을 때 버튼 비활성화
+               
             >
                 등록하기
             </Button></p>
