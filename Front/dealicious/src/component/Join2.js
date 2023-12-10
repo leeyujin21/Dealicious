@@ -9,17 +9,13 @@ const Join2 = () => {
     const [typename, setTypename] = useState('');
     const location = useLocation(); // useLocation 훅 사용
     const type = location.state?.type; // join.js에서 전달받은 type
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const handleClick = () => {
         // typename이 비어 있는지 확인
         if (!typename) {
-            // SweetAlert2로 경고창 표시
-            Swal.fire({
-                icon: 'warning',
-                title: '경고',
-                text: '키워드를 입력하세요.',
-            });
+            setErrorMessage("키워드를 입력하세요")
         } else {
             // navigate 함수를 호출하여 Join3.js로 이동하면서 필요한 데이터를 전달
             navigate('/join3', { state: { type: type, typename: typename } });
@@ -27,6 +23,8 @@ const Join2 = () => {
             console.log(typename);
         }
     };
+
+    
 
     return (
         <div className='main' style={{ overflow: "scroll", height: "832px", overflowX: "hidden", paddingTop: "130px", paddingRight: "50px", paddingLeft: "50px" }}>
@@ -37,20 +35,23 @@ const Join2 = () => {
             <div style={{ paddingBottom: "50px" }}></div>
             <FormGroup>
                 <br /><br /><br />
-                <Label for="select" style={{ fontSize: "25px", fontWeight: "bold" }}>{type=="univ"?"학생":"직장인"}</Label>
+                <Label for="select" style={{ fontSize: "25px", fontWeight: "bold" }}>{type == "univ" ? "학생" : "직장인"}</Label>
                 <br />
             </FormGroup>
-            <FormGroup style={{ display: "flex", paddingBottom: "162px" }}>
-                <Input
-                    type="text"
-                    name="typename"
-                    id="typename"
-                    style={{ width: "300px", height: "55px", backgroundColor: "#F9F9F9", border: "1px solid #EDEDED" }}
-                    placeholder="키워드를 입력하세요"
-                    onChange={(e) => setTypename(e.target.value)}
-                    value={typename}
-                />&nbsp;
-                <IoIosSearch size='35' style={{ marginTop: "10px" }} />
+            <FormGroup style={{ paddingBottom: "162px" }}>
+                <div style={{display: "flex"}}>
+                    <Input
+                        type="text"
+                        name="typename"
+                        id="typename"
+                        style={{ width: "300px", height: "55px", backgroundColor: "#F9F9F9", border: "1px solid #EDEDED" }}
+                        placeholder="키워드를 입력하세요"
+                        onChange={(e) => setTypename(e.target.value)}
+                        value={typename}
+                    />&nbsp;
+                    <IoIosSearch size='35' style={{ marginTop: "10px" }} />
+                </div>
+                <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height: "10px", textAlign:"left" }}>{!typename ? errorMessage : ""}</div>
             </FormGroup>
             <Button style={{ width: "325px", height: "55px", fontSize: "20px", backgroundColor: "#14C38E", borderStyle: "none" }}
                 onClick={handleClick}>다음(2/4)</Button>

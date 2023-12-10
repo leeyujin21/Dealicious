@@ -26,16 +26,16 @@ public class PayServiceImpl implements PayService {
 	@Override
 	public void insertPay(Pay pay) throws Exception {
 		
-		Optional<AdminAccount> adminAccount = adminAccountRepository.findById("dealadmin1");
-		//어드민 계좌 만드는 과정
-		//어드민 계좌 등록 페이지도 따로 만들어서 미리 추가하는 기능 넣어야함
-		if(adminAccount.isEmpty()) {
-			AdminAccount adminAccount1 = new AdminAccount("dealadmin1","12345-12345",0,"dealicious");
-			adminAccountRepository.save(adminAccount1);
-		}
-		payRepository.save(pay);
-		AdminAccount adminAccount2 = adminAccountRepository.findById("dealadmin1").get();
-		adminAccount2.setBalance(adminAccount2.getBalance()+pay.getAmount());
-		adminAccountRepository.save(adminAccount2);
+//		Optional<AdminAccount> adminAccount = adminAccountRepository.findById("dealadmin1");
+//		//어드민 계좌 만드는 과정
+//		//어드민 계좌 등록 페이지도 따로 만들어서 미리 추가하는 기능 넣어야함
+//		if(adminAccount.isEmpty()) {
+//			AdminAccount adminAccount1 = new AdminAccount("dealadmin1","1234512345",0,"dealicious");
+//			adminAccountRepository.save(adminAccount1);
+//		}
+//		payRepository.save(pay);
+//		AdminAccount adminAccount2 = adminAccountRepository.findById("dealadmin1").get();
+//		adminAccount2.setBalance(adminAccount2.getBalance()+pay.getAmount());
+//		adminAccountRepository.save(adminAccount2);
 	}
 }

@@ -1,13 +1,15 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, FormGroup, Input, Label } from "reactstrap";
 import { CgClose } from "react-icons/cg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 const Join4 = () => {
     const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [telError, setTelError] = useState('');
     const [tel, setTel] = useState('');
     const location = useLocation(); // useLocation 훅 사용
     const type = location.state?.type; // join.js에서 전달받은 type
@@ -17,28 +19,23 @@ const Join4 = () => {
     const password = location.state?.password;
     const token = useSelector(state => state.persistedReducer.token);
 
+    useEffect(() => {
+        setEmailError('');
+        setTelError('');
+    }, [email, tel]);
+
     const join = (e) => {
         e.preventDefault();
 
         // 이메일과 전화번호 유효성 검사
         if (!validateEmail(email)) {
-            // 이메일이 유효하지 않으면 SweetAlert2로 경고창 표시
-            Swal.fire({
-                icon: 'warning',
-                title: '경고',
-                text: '이메일 형식이 올바르지 않습니다.',
-            });
-            return; // 함수 종료
+            setEmailError("이메일 형식이 올바르지 않습니다");
+            return; // 중단
         }
 
         if (!validatePhoneNumber(tel)) {
-            // 전화번호가 유효하지 않으면 SweetAlert2로 경고창 표시
-            Swal.fire({
-                icon: 'warning',
-                title: '경고',
-                text: '전화번호 형식이 올바르지 않습니다.',
-            });
-            return; // 함수 종료
+            setTelError("전화번호 형식이 올바르지 않습니다");
+            return; // 중단
         }
 
         // 입력값이 유효하면 회원가입 요청
@@ -51,8 +48,6 @@ const Join4 = () => {
             name: name,
             nickname: nickname
         };
-
-        console.log(userData);
 
         axios.post("http://localhost:8090/join", userData, {
             headers: {
@@ -74,11 +69,28 @@ const Join4 = () => {
         return emailRegex.test(email);
     };
 
-    // 전화번호 유효성 검사 함수
     const validatePhoneNumber = (tel) => {
-        // 전화번호는 필요에 따라 추가적인 유효성 검사를 수행할 수 있습니다.
-        return true; // 임시로 true를 반환하도록 설정
+        // 13자리이고, 숫자와 '-'로 이루어져 있는지 확인
+        const telRegex = /^\d{3}-\d{4}-\d{4}$/;
+        return telRegex.test(tel);
     };
+
+    const handleTelChange = (e) => {
+        // 숫자만 남기고 나머지 문자 제거
+        const numericValue = e.target.value.replace(/\D/g, '');
+
+        // 세 번째와 일곱 번째 숫자 뒤에 하이픈 추가
+        let formattedValue = '';
+        for (let i = 0; i < numericValue.length; i++) {
+            if (i === 3 || i === 7) {
+                formattedValue += '-';
+            }
+            formattedValue += numericValue[i];
+        }
+
+        // 직접 setTel 함수 호출
+        setTel(formattedValue);
+    }
 
     return (
         <div className='main' style={{ overflow: "scroll", height: "832px", overflowX: "hidden", paddingTop: "130px", paddingRight: "50px", paddingLeft: "50px" }}>
@@ -94,6 +106,7 @@ const Join4 = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
                 />
+                <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height: "10px", textAlign: "left" }}>{validateEmail ? emailError : ""}</div>
             </FormGroup>
             <FormGroup style={{ textAlign: "left", display: "flex" }}>
                 <Input type="text" name="nickname" id="nickname" style={{ height: "55px", width: "210px" }}
@@ -104,12 +117,18 @@ const Join4 = () => {
                 </Button>
             </FormGroup>
             <FormGroup style={{ textAlign: "left", paddingBottom: "78px" }}>
-                <Label for="tel" style={{ fontSize: "20px" }}>전화번호</Label>
-                <Input type="text" name="tel" id="tel" style={{ height: "55px", width: "325px" }}
+                <Label for="tel" style={{ fontSize: "20px" }}>전화번호<a style={{ fontSize: "12px", marginLeft: "10px" }}>'-'는 필수입니다</a></Label>
+                <Input
+                    type="text"
+                    name="tel"
+                    id="tel"
+                    style={{ height: "55px", width: "325px" }}
                     placeholder="010-XXXX-XXXX"
-                    onChange={(e) => setTel(e.target.value)}
+                    onChange={handleTelChange}
                     value={tel}
+                    inputMode="numeric"  // 숫자만 입력 가능하도록 설정
                 />
+                <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height: "10px", textAlign: "left" }}>{validatePhoneNumber ? telError : ""}</div>
             </FormGroup>
             <Button style={{ width: "325px", height: "55px", fontSize: "20px", backgroundColor: "#14C38E", borderStyle: "none" }} onClick={join}>가입하기</Button>
         </div>

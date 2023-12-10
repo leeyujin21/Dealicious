@@ -2,12 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, FormGroup, Input, Label } from "reactstrap";
 import { CgClose } from "react-icons/cg";
 import { useState } from "react";
-import Swal from 'sweetalert2';
 
 const Join = () => {
     const [type, setType] = useState(); // 사용자가 선택한 값 저장
     const navigate = useNavigate();
-
+    const [errorMessage, setErrorMessage] = useState('');
     const handleTypeChange = (e) => {
         setType(e.target.value);
     };
@@ -15,12 +14,7 @@ const Join = () => {
     const handleClick = () => {
         // 체크 여부 확인
         if (!type) {
-            // sweetalert2로 경고창 표시
-            Swal.fire({
-                icon: 'warning',
-                title: '경고',
-                text: '학교 또는 회사를 선택해주세요.',
-            });
+            setErrorMessage("학교 또는 회사를 선택해주세요");
         } else {
             // navigate 함수를 호출하여 Join2.js로 이동하면서 필요한 데이터를 전달
             navigate('/join2', { state: { type: type } });
@@ -63,6 +57,7 @@ const Join = () => {
                     />
                     직장인
                 </Label>
+                <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height:"10px" }}>{!type?errorMessage:""}</div>
             </FormGroup>
             <Button style={{
                 width: "325px", height: "55px", fontSize: "20px",

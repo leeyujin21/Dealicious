@@ -25,7 +25,6 @@ function SaleDetail_S() {
                         <select  style={{border:"1px solid lightgray", marginTop:"12.5px", borderRadius: "10px", width: "133px", height: "45px", textAlign: "left" }}>
                             <option value="category">&nbsp;&nbsp;&nbsp;판매중</option>
                             <option value="mobile">&nbsp;&nbsp;&nbsp;예약중</option>
-                            <option value="others">&nbsp;&nbsp;&nbsp;판매완료</option>
                         </select>
                     </div>
                 </div>
