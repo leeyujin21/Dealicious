@@ -4,24 +4,28 @@ import { Link } from "react-router-dom";
 import { Button, Input, Table } from 'reactstrap';
 import axios from "axios";
 import { useSelector} from "react-redux";
+import {useNavigate} from 'react-router-dom';
 
 const AdminMyModi = () => {
   const [admin, setAdmin] = useState({ adminid: '', accountid: '', bank: '', balance: '' })
   const admin1 = useSelector(state => state.persistedReducer.admin);
+
+  const navigate = useNavigate();
 
   useEffect(()=> {
     setAdmin({ adminid: admin1.adminid, accountid: admin1.accountid, bank: admin1.bank, balance: admin1.balance });
 }, [])
 
 
-  const [password,setPassword] = useState({currentpassword:'', changepassword1:'', changepassword2:''});
+  const [data,setData] = useState({adminid:admin1.adminid, currentpassword:'', changepassword1:'', changepassword2:''});
   const changePassword = (e) => {
-    setPassword({ ...password, [e.target.name]: e.target.value });
+    setData({ ...data, [e.target.name]: e.target.value });
   }
   const changeadminpassword = () => {
-    axios.post("http://localhost:8090/changeadminpassword", password)
+    axios.post("http://localhost:8090/changeadminpassword", data)
             .then(res => {
-                console.log(res)
+                alert(res.data);
+                navigate(`/adminmy`);
             })
             .catch(err => {
                 console.log(err)
@@ -52,13 +56,13 @@ const AdminMyModi = () => {
           </thead>
           <tbody>
             <tr>
-              <td><Input type='text' name='currentpassword' value={password.currentpassword} onChange={changePassword} style={{ width: "371px", height: "45px", borderRadius: "10px", border: "1px solid gray" }} placeholder='현재 비밀번호를 입력하세요'></Input></td>
+              <td><Input type='text' name='currentpassword' value={data.currentpassword} onChange={changePassword} style={{ width: "371px", height: "45px", borderRadius: "10px", border: "1px solid gray" }} placeholder='현재 비밀번호를 입력하세요'></Input></td>
             </tr>
             <tr>
-              <td><Input type='text' name='changepassword1' style={{ width: "371px", height: "45px", borderRadius: "10px", border: "1px solid gray" }} onChange={changePassword} value={password.changepassword1} placeholder='변경할 비밀번호를 입력하세요'></Input></td>
+              <td><Input type='text' name='changepassword1' style={{ width: "371px", height: "45px", borderRadius: "10px", border: "1px solid gray" }} onChange={changePassword} value={data.changepassword1} placeholder='변경할 비밀번호를 입력하세요'></Input></td>
             </tr>
             <tr>
-              <td><Input type='text' name='changepassword2' style={{ width: "371px", height: "45px", borderRadius: "10px", border: "1px solid gray" }} onChange={changePassword} value={password.changepassword2} placeholder='변경할 비밀번호를 한번 더 입력하세요'></Input></td>
+              <td><Input type='text' name='changepassword2' style={{ width: "371px", height: "45px", borderRadius: "10px", border: "1px solid gray" }} onChange={changePassword} value={data.changepassword2} placeholder='변경할 비밀번호를 한번 더 입력하세요'></Input></td>
             </tr>
           </tbody>
         </Table>
