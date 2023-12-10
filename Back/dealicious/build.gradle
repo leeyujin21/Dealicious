@@ -67,6 +67,10 @@ tasks.named('bootBuildImage') {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+// WAR 태스크에 중복 처리 전략 설정
+tasks.war {
+    duplicatesStrategy = 'exclude'
+}
 
 def querydslDir = "$buildDir/generated/querydsl"
 querydsl {

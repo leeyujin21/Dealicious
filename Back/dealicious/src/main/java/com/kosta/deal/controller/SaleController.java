@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-
-
 import com.kosta.deal.entity.Sale;
 import com.kosta.deal.service.SaleService;
+import com.kosta.deal.util.PageInfo;
 
 
 
@@ -29,18 +28,33 @@ public class SaleController {
 	private SaleService saleService;
 	
 	
-	@GetMapping("/salelist/{category}")
-	public ResponseEntity<Sale> saleList(@PathVariable(required=false) String category){
+	@GetMapping({"/salelist/{page}","/salelist"})
+	public ResponseEntity<Map<String,Object>> saleList(@PathVariable(required=false) Integer page) {
 		try {
-			List<Sale> saleList= saleService.saleList(category);
-			return new ResponseEntity<Sale> (HttpStatus.OK);
-		}catch(Exception e) {
+			PageInfo pageInfo = PageInfo.builder().curPage(page).build();
+			List<Sale> saleList = saleService.saleListByPage(pageInfo);
+			Map<String,Object> res = new HashMap<>();
+			res.put("pageInfo", pageInfo);
+			res.put("saleList", saleList);
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		} catch(Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<Sale>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
-		
 	}
+	
+	@GetMapping("/salelist/{category}")
+	public ResponseEntity<List<Sale>> saleListByCategory(@PathVariable String category) {
+	     try {
+	    	 List<Sale> saleList= saleService.SaleListByCategory(category);
+	    	 return new ResponseEntity<List<Sale>>(saleList,HttpStatus.OK);
+			} catch(Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<List<Sale>>(HttpStatus.BAD_REQUEST);
+			}
+	}
+	
+	
 	@GetMapping("/saledetail/{sect}/{num}")
 	public ResponseEntity<Map<String,Object>> saleDetail(@PathVariable String sect,@PathVariable Integer num){
 		try {
@@ -65,6 +79,7 @@ public class SaleController {
 	public ResponseEntity<Integer> saleWrite(@ModelAttribute Sale sale,List<MultipartFile> file) {
 		
 		try {
+			System.out.println(sale);
 			Integer num=saleService.saleWrite(sale, file);
 			return new ResponseEntity<Integer>(num,HttpStatus.OK);
 		}catch(Exception e) {
@@ -103,7 +118,7 @@ public class SaleController {
 			Map<String,Object> res= new HashMap<>();
 			Boolean selectSale=saleService.selHeartSale("lubby", num);
 			res.put("isSelect", selectSale);
-			Integer likeCount = saleService.saleDetail(num).getLikecount();
+			Integer likeCount = saleService.saleDetail(num).getZzimcnt();
 			res.put("likeCount", likeCount);
 			return new ResponseEntity<Map<String,Object>>(res,HttpStatus.OK);
 		}catch(Exception e) {
