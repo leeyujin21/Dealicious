@@ -108,38 +108,40 @@ const SaleWrite=()=>{
                 {imageCount}/5
             </div>
             <Input name="file" type="file" id="file" accept="image/*" onChange={fileChange} hidden ref={fileInputRef} />
-            <span style={{ display: 'flex', flexWrap:"wrap", justifyContent: 'flex-end'}}>
-                {selectedImages.map((image, index) => (
-                    <div key={index} style={{ position: 'relative', marginLeft: '500px', marginBottom: '10px' }}>
-                    <img
-                        src={URL.createObjectURL(image)}
-                        alt={`Selected ${index + 1}`}
-                        style={{marginLeft:"100px" ,marginTop:"-30px",width: '55px', height: '55px' }}
-                    />
-                    <button
-                        onClick={() => removeImage(index)}
-                        style={{
-                            position: 'absolute',
-                            top: '-20px',
-                            right: '-5px',
-                            backgroundColor: '#14C38E',
-                            borderRadius: '50%',
-                            cursor: 'pointer',
-                            padding: '0',
-                            width: '20px',
-                            height: '20px',
-                            display: 'flex',
-                            justifyContent: 'center',                   
-                            alignItems: 'center',
-                            fontSize: '12px',
-                            color: 'white',
-                        }}
-                         >
-                        X
-                    </button>
-                </div>
-                ))}
-            </span>
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start',marginLeft:"20px"}}>
+    {selectedImages.map((image, index) => (
+        <div key={index} style={{ margin: '5px', position: 'relative',marginTop:"-30px" }}>
+            <a>
+            <img
+                src={URL.createObjectURL(image)}
+                alt={`Selected ${index + 1}`}
+                style={{ width: '55px', height: '55px',marginLeft:"50px",display:"inline-block"}}
+            />
+            </a>
+            <button
+                onClick={() => removeImage(index)}
+                style={{
+                    position: 'absolute',
+                    top: '-10px',
+                    right: '-10px',
+                    backgroundColor: '#14C38E',
+                    borderRadius: '50%',
+                    cursor: 'pointer',
+                    padding: '0',
+                    width: '20px',
+                    height: '20px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    fontSize: '12px',
+                    color: 'white',
+                }}
+            >
+                X
+            </button>
+        </div>
+    ))}
+</div>
         </div>
         </div>
         <div style={{marginBottom:"5px", fontSize:"18px", marginTop:"20px"}}>제목</div>
