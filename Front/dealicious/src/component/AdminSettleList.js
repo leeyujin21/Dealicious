@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useState ,useEffect} from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Button, Col, FormGroup, Modal, Table } from 'reactstrap';
@@ -8,6 +9,34 @@ const AdminSettleList = () => {
   const [endDate, setEndDate] = useState(new Date());
 
   const minEndDate = startDate; // 두 번째 DatePicker의 최소 날짜를 첫 번째 DatePicker의 선택된 날짜로 설정
+  const [settleList,setSettleList] = useState([]);
+  const [totAmount, setTotAmount] = useState(0);
+
+  const search = () => {
+    const date = {sdate:startDate, edate:endDate};
+    axios.post(`http://localhost:8090/settlelist`,date)
+    .then(res => {
+      console.log(res);
+      setSettleList([]);
+      setSettleList((_settle_list) => [
+          ..._settle_list, ...res.data
+        ]);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+  useEffect(() => {
+    setTotAmount(0);
+    var temp = 0;
+    for(const e of settleList) {
+      console.log(e.amount);
+      temp+=parseInt(e.amount);
+    }
+    setTotAmount(temp);
+    console.log(totAmount);
+  }, [settleList]);
+
   return (
     <div className='admin' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "10px" }}>
       <div style={{ width: "395px", textAlign: "left", fontSize: "20px", fontWeight: "bold", paddingLeft: "15px", paddingTop: "20px", paddingBottom: "20px" }}>
@@ -45,7 +74,7 @@ const AdminSettleList = () => {
             </div>
           </div>
           <div style={{ textAlign: "center", marginLeft:"5px", lineHeight:"75px" }}>
-            <Button style={{ backgroundColor: "#14C38E", borderStyle: "none" }}>검색</Button>
+            <Button style={{ backgroundColor: "#14C38E", borderStyle: "none" }} onClick={search}>검색</Button>
           </div>
         </div>
       </div>
@@ -57,45 +86,25 @@ const AdminSettleList = () => {
           <td>수수료</td>
           <td>결제금액</td>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>홍길동</td>
-            <td style={{ textAlign: "right" }}>150,000</td>
-            <td style={{ textAlign: "right" }}>7,500</td>
-            <td style={{ textAlign: "right" }}>157,500</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>홍길동</td>
-            <td style={{ textAlign: "right" }}>50,000</td>
-            <td style={{ textAlign: "right" }}>2,500</td>
-            <td style={{ textAlign: "right" }}>52,500</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>어깡이</td>
-            <td style={{ textAlign: "right" }}>60,000</td>
-            <td style={{ textAlign: "right" }}>3,000</td>
-            <td style={{ textAlign: "right" }}>63,000</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>어좁이</td>
-            <td style={{ textAlign: "right" }}>150,000</td>
-            <td style={{ textAlign: "right" }}>7,500</td>
-            <td style={{ textAlign: "right" }}>157,500</td>
-          </tr>
-        </tbody>
+        {settleList.map((item, index) =>
+          <tbody>
+          <tr key={index}>
+          <td style={{ textAlign: "center" }}>{item.paynum}</td>
+          <td style={{ textAlign: "center" }}>{item.status}</td>
+          <td style={{ textAlign: "right" }}>{item.amount}</td>
+          <td style={{ textAlign: "right" }}>{item.amount*0.05}</td>
+          <td style={{ textAlign: "right" }}>{item.amount*1.05}</td>
+        </tr>
+        </tbody>)}
       </Table>
       <div>
         <tr>
           <td style={{ textAlign: "right", width: "300px", fontWeight: "bold" }}>총 정산액 : </td>
-          <td style={{ textAlign: "right", width: "100px" }}>410,000 원</td>
+          <td style={{ textAlign: "right", width: "100px" }}>{totAmount} 원</td>
         </tr>
         <tr>
           <td style={{ textAlign: "right", width: "300px", fontWeight: "bold" }}>총 수수료 : </td>
-          <td style={{ textAlign: "right", width: "100px" }}>20,500 원</td>
+          <td style={{ textAlign: "right", width: "100px" }}>{totAmount*0.05} 원</td>
         </tr>
       </div>
     </div>

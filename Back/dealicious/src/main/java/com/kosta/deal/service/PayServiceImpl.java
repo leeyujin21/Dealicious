@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import com.kosta.deal.entity.Admin;
 import com.kosta.deal.entity.Pay;
 import com.kosta.deal.repository.AdminRepository;
-import com.kosta.deal.repository.PayDslRepository;
+import com.kosta.deal.repository.DslRepository;
 import com.kosta.deal.repository.PayRepository;
 
 @Service
 public class PayServiceImpl implements PayService {
 	
 	@Autowired
-	private PayDslRepository payDslRepository;
+	private DslRepository payDslRepository;
 	
 	@Autowired
 	private PayRepository payRepository;
