@@ -1,7 +1,7 @@
 package com.kosta.deal.service;
 
-import com.kosta.deal.entity.AdminAccount;
+import com.kosta.deal.entity.Admin;
 
 public interface AdminService {
-	AdminAccount login(String adminid, String password) throws Exception;
+	Admin login(String adminid, String password) throws Exception;
 }

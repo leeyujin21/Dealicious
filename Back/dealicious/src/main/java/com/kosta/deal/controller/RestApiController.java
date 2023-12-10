@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kosta.deal.config.auth.PrincipalDetails;
-import com.kosta.deal.entity.AdminAccount;
+import com.kosta.deal.entity.Admin;
 import com.kosta.deal.entity.User;
-import com.kosta.deal.repository.AdminAccountRepository;
+import com.kosta.deal.repository.AdminRepository;
 import com.kosta.deal.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RestApiController {
 	private final UserRepository userRepository;
-	private final AdminAccountRepository adminaccountRepository;
+	private final AdminRepository adminaccountRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@GetMapping("user")
@@ -82,13 +82,5 @@ public class RestApiController {
 		return "회원가입완료";
 	}
 	
-	@PostMapping("adminjoin")
-	public String join(@RequestBody AdminAccount adminuser) {
-		AdminAccount aadminuser = AdminAccount.builder()
-				.adminid(adminuser.getAdminid())
-				.admincode(adminuser.getAdmincode())
-				.password(adminuser.getPassword()).build();
-		adminaccountRepository.save(aadminuser);
-		return "회원가입완료";
-	}
+	
 }
