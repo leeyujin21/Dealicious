@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { FiPlusCircle } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
-function SaleList() {
+const SaleList=()=> {
+  const [timeAgo, setTimeAgo] = useState('');
+
+  useEffect(() => {
+    // 판매 정보가 등록된 시간
+    const saleSubmissionTime = new Date(); // 여기에 실제 서버에서 받은 판매 정보 제출 시간
+
+    // 현재 시간
+    const currentTime = new Date();
+
+    // 시간 차이 계산
+    const timeDiffInMs = currentTime.getTime() - saleSubmissionTime.getTime();
+    const minutesAgo = Math.floor(timeDiffInMs / (1000 * 60)); // 분 단위로 시간 차이 계산
+
+    setTimeAgo(`${minutesAgo}분 전`);
+}, []); // 페이지가 로드될 때 한 번만 실행되도록 빈 배열 전달
+
   return (
     <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px", paddingTop: "0px" }}>
       <Link to="/salewrite" style={{ marginLeft: "330px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor:"white", width:"45px", height:"45px",borderRadius:"50px" }}>
@@ -21,7 +37,7 @@ function SaleList() {
                 </div>
                 <div style={{ display: "flex" }}>
                   <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "170px" }}>42,000원</div>
-                  <div style={{ textAlign: "right", color: "gray" }}>12분 전</div>
+                  <div style={{ textAlign: "right", color: "gray" }}>{timeAgo}</div>
                 </div>
               </div>
             </div>

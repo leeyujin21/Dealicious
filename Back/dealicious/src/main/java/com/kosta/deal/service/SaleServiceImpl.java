@@ -3,15 +3,12 @@ package com.kosta.deal.service;
 import java.io.File;
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import com.kosta.deal.entity.FileVo;
 import com.kosta.deal.entity.Sale;
 import com.kosta.deal.repository.FileVoRepository;
 import com.kosta.deal.repository.SaleDslRepository;
@@ -81,7 +78,7 @@ public class SaleServiceImpl implements SaleService{
 					.size(file.getSize())
 					.contenttype(file.getContentType())
 					.data(file.getBytes()).build();
-			FileVoRepository.save(fileVo);
+			fileVoRepository.save(fileVo);
 			
 			
 			//upload 폴더에 upload
@@ -96,7 +93,7 @@ public class SaleServiceImpl implements SaleService{
 			sale.setFileurl(fileNums);
 		}
 		
-		Sale sale1= sale1;
+		Sale sale1= sale;
 		saleRepository.save(sale1);
 		return sale1.getNum();
 	}

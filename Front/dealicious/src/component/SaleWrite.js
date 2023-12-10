@@ -15,6 +15,23 @@ const SaleWrite=()=>{
     const [files] = useState([]);
     const [selectedImages, setSelectedImages] = useState([]); // 여러 이미지를 저장하는 배열
     const fileInputRef = useRef(null);
+    const [timeAgo, setTimeAgo] = useState('');
+
+    const calculateTimeAgo = (submissionTime) => {
+        const currentTime = new Date();
+        const timeDiffInMs = currentTime - submissionTime;
+        const minutesAgo = Math.floor(timeDiffInMs / (1000 * 60));
+
+        if (minutesAgo < 60) {
+            setTimeAgo(`${minutesAgo}분 전`);
+        } else {
+            const hoursAgo = Math.floor(minutesAgo / 60);
+            setTimeAgo(`${hoursAgo}시간 전`);
+        }
+    };
+
+
+
     const removeImage = (indexToRemove) => {
         const updatedImages = selectedImages.filter((_, index) => index !== indexToRemove);
         setSelectedImages(updatedImages);
@@ -87,13 +104,21 @@ const SaleWrite=()=>{
         .then(res=> {
             console.log(res);
             let saleNum = res.data;
-            navigate(`/salelist/${saleNum}`)
-        })
-        .catch(err=> {
-            console.log(err)
-        })
+            // 판매 정보가 성공적으로 제출되면 현재 시간과 비교하여 시간차를 계산
+            const submissionTime = new Date(); // 현재 시간
+            
 
-    }
+            const saleSubmissionTime = new Date(); // 실제 서버로부터 받은 시간으로 설정 필요
+
+            calculateTimeAgo(saleSubmissionTime);
+
+            console.log(`판매 정보가 ${timeAgo}에 등록되었습니다.`);
+            navigate(`/salelist/${saleNum}`); // 등록된 판매 정보 페이지로 이동
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
     return(
         <div className='main' style={{textAlign:'left',overflow:"scroll", height:"732px", overflowX:"hidden"}}> 
         <br/>

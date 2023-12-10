@@ -79,6 +79,7 @@ public class SaleController {
 	public ResponseEntity<Integer> saleWrite(@ModelAttribute Sale sale,List<MultipartFile> file) {
 		
 		try {
+			System.out.println(sale);
 			Integer num=saleService.saleWrite(sale, file);
 			return new ResponseEntity<Integer>(num,HttpStatus.OK);
 		}catch(Exception e) {
