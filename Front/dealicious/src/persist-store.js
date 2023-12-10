@@ -9,6 +9,7 @@ import storage from "redux-persist/lib/storage";  //localStorage에 저장
 export const initialState = {
     token:'',
     user:{email:'', nickname:'', password:'', type:'', typename:'', tel:'', accountbank:'', accountbank:'', admincode:''},
+    admin:{ adminid: '', accountid: '', bank: '', balance: '' }
 }
 
 const reducer = (currentState,action) => {
@@ -20,6 +21,7 @@ const reducer = (currentState,action) => {
     switch(action.type) {
         case "token":  newState.token=action.payload; break;
         case "user": newState.user=action.payload; break;
+        case "admin": newState.admin=action.payload; break;
         default: 
     }
     return newState;

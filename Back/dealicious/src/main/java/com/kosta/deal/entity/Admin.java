@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminAccount {
+public class Admin {
 	@Id
 	private String adminid;
 	
@@ -25,4 +25,13 @@ public class AdminAccount {
 
 	@Column
 	private String password;
+	
+	@Column
+	private String accountid;
+	
+	@Column
+	private String bank;
+	
+	@Column
+	private Integer balance;
 }

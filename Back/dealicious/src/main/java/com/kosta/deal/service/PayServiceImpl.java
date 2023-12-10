@@ -5,9 +5,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kosta.deal.entity.AdminAccount;
+import com.kosta.deal.entity.Admin;
 import com.kosta.deal.entity.Pay;
-import com.kosta.deal.repository.AdminAccountRepository;
+import com.kosta.deal.repository.AdminRepository;
 import com.kosta.deal.repository.PayDslRepository;
 import com.kosta.deal.repository.PayRepository;
 
@@ -21,7 +21,7 @@ public class PayServiceImpl implements PayService {
 	private PayRepository payRepository;
 	
 	@Autowired
-	private AdminAccountRepository adminAccountRepository;
+	private AdminRepository adminAccountRepository;
 	
 	@Override
 	public void insertPay(Pay pay) throws Exception {
