@@ -15,8 +15,8 @@ const AdminLogin = () => {
             {/* <a className="logo" style={{ fontSize: "50px", fontWeight: "bold", color: "#14C38E", textDecoration: "none" }}>DEALicious</a> */}
             <br /><br />
             <FormGroup style={{ textAlign: "left" }}>
-                <Label for="email" style={{ fontSize: "20px" }}>이메일</Label>
-                <Input type="text" name="email" id="email" style={{ height: "55px", width: "325px" }} />
+                <Label for="id" style={{ fontSize: "20px" }}>아이디</Label>
+                <Input type="text" name="id" id="id" style={{ height: "55px", width: "325px" }} />
             </FormGroup>
             <br />
             <FormGroup style={{ textAlign: "left" }}>

@@ -2,51 +2,81 @@ import { useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, FormGroup, Input, Label } from "reactstrap";
-import Swal from "sweetalert2";
 
 const Join3 = () => {
     const [name, setName] = useState('');
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [nicknameError, setNicknameError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [isNicknameAvailable, setIsNicknameAvailable] = useState(true);
     const location = useLocation(); // useLocation 훅 사용
     const type = location.state?.type; // join.js에서 전달받은 type
-    const typename = location.state?.typename; // join.js에서 전달받은 type
+    const typename = location.state?.typename;
     const navigate = useNavigate();
 
-    const handleClick = () => {
-        if (!name || !nickname || !password) {
-            // SweetAlert2로 경고창 표시
-            Swal.fire({
-                icon: 'warning',
-                title: '경고',
-                text: '빈 칸 없이 입력해주세요',
-            });
-        } else if (nickname.length < 2) {
-            // SweetAlert2로 경고창 표시
-            Swal.fire({
-                icon: 'warning',
-                title: '경고',
-                text: '닉네임은 2글자 이상 입력하세요',
-            });
-        } else if (password.length < 8) {
-            // SweetAlert2로 경고창 표시
-            Swal.fire({
-                icon: 'warning',
-                title: '경고',
-                text: '비밀번호는 8자 이상 입력하세요',
-            });
-        } else {
-            // navigate 함수를 호출하여 Join3.js로 이동하면서 필요한 데이터를 전달
-            navigate('/join4', { state: { type, typename, name, nickname, password } });
-            console.log(type);
-            console.log(typename);
-            console.log(name);
-            console.log(nickname);
-            console.log(password);
+    const handleNicknameCheck = async () => {
+        try {
+            const response = await fetch(`http://localhost:8090/join/checkNickname/{nickname}`);
+            const data = await response.json();
+
+            const isAvailable = data.available;
+            setIsNicknameAvailable(isAvailable);
+
+            if (isAvailable) {
+                alert('사용 가능한 닉네임입니다');
+            } else {
+                alert('이미 사용 중인 닉네임입니다');
+            }
+
+            setErrorMessage(isAvailable ? '' : '이미 사용 중인 닉네임입니다');
+        } catch (error) {
+            console.error('닉네임 가용성 확인 오류:', error);
+            // 에러 처리, 예를 들어 일반적인 오류 메시지 표시
         }
     };
-    
-    
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        // 입력값이 변경될 때 해당 에러 메시지를 초기화
+        if (name === 'name') {
+            // 이름에 한글 외의 문자가 있는지 확인
+            const hasNonKorean = /[^\uAC00-\uD7A3xfe0-9a-zA-Z\s]/.test(value);
+            if (hasNonKorean) {
+                setErrorMessage("한글 이외의 문자는 사용할 수 없습니다");
+            } else {
+                setErrorMessage('');
+            }
+        } else if (name === 'nickname') {
+            setNicknameError('');
+        } else if (name === 'password') {
+            setPasswordError('');
+        }
+
+        // 입력값 업데이트
+        if (name === 'name') {
+            setName(value);
+        } else if (name === 'nickname') {
+            setNickname(value);
+        } else if (name === 'password') {
+            setPassword(value);
+        }
+    };
+
+    const handleClick = () => {
+        if (!name) {
+            setErrorMessage("빈 칸 없이 입력해주세요");
+        } else if (nickname.length < 2) {
+            setNicknameError("2글자 이상 입력해주세요");
+        } else if (password.length < 8) {
+            setPasswordError("8자 이상 입력해주세요");
+        } else {
+            navigate('/join4', { state: { type: type, typename: typename, name, nickname, password } });
+        }
+    };
+
     return (
         <div className='main' style={{ overflow: "scroll", height: "832px", overflowX: "hidden", paddingTop: "130px", paddingRight: "50px", paddingLeft: "50px" }}>
             <div style={{ width: "330px", textAlign: "right", paddingBottom: "20px" }}>
@@ -58,29 +88,37 @@ const Join3 = () => {
                 <Label for="name" style={{ fontSize: "20px" }}>이름</Label>
                 <Input type="name" name="name" id="name" style={{ height: "55px", width: "325px" }}
                     placeholder="이름(실명을 입력하세요)"
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={handleChange}
                     value={name}
                 />
+                <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height: "10px", textAlign: "left" }}>{errorMessage}</div>
             </FormGroup>
             <FormGroup style={{ textAlign: "left", paddingBottom: "20px" }}>
                 <Label for="nickname" style={{ fontSize: "20px" }}>닉네임</Label>
-                <Input type="text" name="nickname" id="nickname" style={{ height: "55px", width: "325px" }}
-                    placeholder="2글자 이상 입력하세요"
-                    onChange={(e) => setNickname(e.target.value)}
-                    value={nickname}
-                />
+                <div style={{display:"flex"}}>
+                    <Input type="text" name="nickname" id="nickname" style={{ height: "55px", width: "220px" }}
+                        placeholder="2글자 이상 입력하세요"
+                        onChange={handleChange}
+                        value={nickname}
+                    />&nbsp;&nbsp;
+                    <Button style={{
+                        width: "100px", fontSize: "17px",
+                        backgroundColor: "#14C38E", borderStyle: "none", height: "55px"
+                    }} onClick={handleNicknameCheck}>중복확인</Button>
+                </div>
+                <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height: "10px", textAlign: "left" }}>{nickname.length < 2 ? nicknameError : ""}</div>
             </FormGroup>
             <FormGroup style={{ textAlign: "left", paddingBottom: "20px" }}>
                 <Label for="password" style={{ fontSize: "20px" }}>비밀번호</Label>
                 <Input type="password" name="password" id="password" style={{ height: "55px", width: "325px" }}
                     placeholder="8자리 이상 입력하세요"
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={handleChange}
                     value={password}
                 />
+                <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height: "10px", textAlign: "left" }}>{password.length < 8 ? passwordError : ""}</div>
             </FormGroup>
             <Button style={{ width: "325px", height: "55px", fontSize: "20px", backgroundColor: "#14C38E", borderStyle: "none" }}
                 onClick={handleClick}>다음(3/4)</Button>
-
         </div>
     )
 }

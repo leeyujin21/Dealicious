@@ -81,9 +81,20 @@ const Profilemodify = () => {
                     <Label for="phonenum" style={{ fontSize: "20px", width: "100px" }}>전화번호</Label>
                     <Label for="phonenum" style={{ fontSize: "20px" }}>{user.tel}</Label>
                 </FormGroup>
-                <FormGroup style={{ textAlign: "left", display: "flex", paddingBottom: "10px" }}>
-                    <Label for="accountid" style={{ fontSize: "20px", width: "100px", lineHeight:"44px" }}>계좌번호</Label>
-                    <Input type="text" for="accountid" name="accountid" id="accountid" style={{ fontSize: "16px", width: "224px", height:"44px", marginLeft:"-5px" }} value={user.accountid} />
+                <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
+                    <Label for="accountid" style={{ fontSize: "20px", lineHeight: "44px" }}>계좌번호<a style={{fontSize:"12px", marginLeft:"10px"}}>'-' 없이 숫자만 작성해주세요</a></Label>
+                    <div style={{ display: "flex" }}>
+                        <select style={{ border: "1px solid lightgray", borderRadius: "5px", width: "100px", height: "45px", textAlign: "left" }}>
+                            <option value="국민">국민은행</option>
+                            <option value="신한">신한은행</option>
+                            <option value="농협">농협은행</option>
+                            <option value="우리">우리은행</option>
+                            <option value="하나">하나은행</option>
+                            <option value="기업">기업은행</option>
+                            <option value="카카오">카카오뱅크</option>
+                        </select>
+                        <Input type="text" for="accountid" name="accountid" id="accountid" style={{ fontSize: "16px", width: "214px", height: "44px", marginLeft: "5px" }} value={user.accountid} />
+                    </div>
                 </FormGroup>
             </div>
             <Link to="/profilemodify">

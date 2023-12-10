@@ -18,14 +18,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AdminAccount {
 	@Id
-	private String adminId;
+	private String adminid;
 	
 	@Column
-	private String accountId;
+	private String admincode;
 
 	@Column
-	private Integer balance;
-	
-	@Column
-	private String bank;
+	private String password;
 }
