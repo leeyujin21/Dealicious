@@ -1,5 +1,6 @@
 package com.kosta.deal.entity;
 
+import java.io.File;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -36,9 +37,12 @@ public class Sale {
 	private String category;
 	private String content;
 	private String place;
+	private String price;
 	private String fileurl;
 	private String status;
 	private String buyeremail;
+	private String ggull;
+	private File image;
 	@ColumnDefault("0")
 	private Integer viewcnt;
 	@ColumnDefault("0")

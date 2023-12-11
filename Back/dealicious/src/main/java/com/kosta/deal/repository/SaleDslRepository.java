@@ -18,10 +18,10 @@ public class SaleDslRepository {
 	
 	//salelist 페이지 쿼리문
 	public List<Sale> findSaleListByPaging(PageRequest pageRequest) throws Exception {
-		
-		return jpaQueryFactory.selectFrom(QSale.sale)
-                .offset(pageRequest.getPageNumber() * pageRequest.getPageSize())
-                .limit(pageRequest.getPageSize())
+		QSale sale= QSale.sale;
+		return jpaQueryFactory.selectFrom(sale)
+//                .offset(pageRequest.getPageNumber() * pageRequest.getPageSize())
+//                .limit(pageRequest.getPageSize())
                 .fetch();
 	}
 	
@@ -41,5 +41,11 @@ public class SaleDslRepository {
 	                .from(QSale.sale).fetchOne();
 	                
 	    }
-	
+
+	public Sale findSaleBySaleNum(Integer num) {
+		QSale sale=QSale.sale;
+		return jpaQueryFactory.selectFrom(sale)
+				.where(sale.num.eq(num)).fetchOne();
+	}
+
 }
