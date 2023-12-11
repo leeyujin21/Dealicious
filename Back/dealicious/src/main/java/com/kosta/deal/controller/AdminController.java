@@ -1,5 +1,8 @@
 package com.kosta.deal.controller;
 
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,11 +14,10 @@ import com.kosta.deal.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor
 public class AdminController {
 	
 	@Autowired
-	private final AdminRepository adminaccountRepository;
+	private AdminRepository adminRepository;
 
 	@PostMapping("adminjoin")
 	public String join(@RequestBody Admin adminuser) {
@@ -23,7 +25,21 @@ public class AdminController {
 				.adminid(adminuser.getAdminid())
 				.admincode(adminuser.getAdmincode())
 				.password(adminuser.getPassword()).build();
-		adminaccountRepository.save(aadminuser);
+		adminRepository.save(aadminuser);
 		return "회원가입완료";
+	}
+	
+	@PostMapping("adminlogin")
+	public String login(@RequestBody Map<String, String> param) {
+	    String adminid = param.get("adminid");
+	    String password = param.get("password");
+
+	    Optional<Admin> oadminUser = adminRepository.findByAdminidAndPassword(adminid, password);
+
+	    if (oadminUser != null) {
+	        return "로그인 성공";
+	    } else {
+	        return "로그인 실패";
+	    }
 	}
 }
