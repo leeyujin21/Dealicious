@@ -2,35 +2,41 @@ package com.kosta.deal.entity;
 
 import java.sql.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.DynamicInsert;
+import org.springframework.data.relational.core.mapping.Column;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
-@Builder
-@Data
+@Entity(name="FILE")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@DynamicInsert
-public class Pay {
+@Builder
+public class FileVo {
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer paynum;
+	private Integer num;
+	
 	@Column
-	private String imp_uid;
+	private String directory;
 	@Column
-	private Integer salenum;
+	private String name;
 	@Column
-	@CreationTimestamp
-	private Date paydate;
+	private Long size;
+	@Column
+	private String contenttype;
+	@Column
+	private Date uploaddate;
+	@Column
+	private byte[] data;
+	
 }

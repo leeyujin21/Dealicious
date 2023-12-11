@@ -1,15 +1,58 @@
 import { Table } from "reactstrap";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const AdminMain = () => {
+  const selectList = [
+    { value: "all", name: "전체" },
+    { value: "결제완료", name: "결제완료" },
+    { value: "수령완료", name: "수령완료" },
+    { value: "정산완료", name: "정산완료" }
+  ];
+  const [payList,setPayList] = useState([]);
+
+  const [selected, setSelected] = useState("토픽 선택");
+
+  const handleSelect  = (e) => {
+    console.log(e.target.value);
+    setSelected(e.target.value);
+    axios.get(`http://localhost:8090/adminmain/`+e.target.value)
+      .then(res => {
+        console.log(res);
+        setPayList([]);
+        setPayList((_pay_list) => [
+          ..._pay_list, ...res.data
+        ]);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  useEffect(() => {
+
+    axios.get(`http://localhost:8090/adminmain/`+"all")
+      .then(res => {
+        console.log(res);
+        setPayList([]);
+        setPayList((_pay_list) => [
+          ..._pay_list, ...res.data
+        ]);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+}, []);
 
   return (
     <div className='admin' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
       <div style={{textAlign:"left", marginBottom:"10px"}}>
-        <select style={{ border: "1px solid lightgray", marginTop: "12.5px", borderRadius: "10px", width: "133px", height: "45px", textAlign: "left" }}>
-          <option value="all">&nbsp;&nbsp;&nbsp;전체</option>
-          <option value="pay">&nbsp;&nbsp;&nbsp;결제완료</option>
-          <option value="receive">&nbsp;&nbsp;&nbsp;수령완료</option>
-          <option value="calculation">&nbsp;&nbsp;&nbsp;정산완료</option>
+        <select value={selected} style={{ border: "1px solid lightgray", marginTop: "12.5px", borderRadius: "10px", width: "133px", height: "45px", textAlign: "left" }} onChange={handleSelect}>
+        {selectList.map((item) => {
+            return <option value={item.value} key={item.value}>
+              &nbsp;&nbsp;{item.name}
+            </option>;
+          })}
         </select>
       </div>
       <Table className="table" style={{ margin: "0 auto", width: "395px" }}>
@@ -18,32 +61,16 @@ const AdminMain = () => {
             <td>번호</td><td>상태</td><td>제목</td><td>가격</td>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>결제완료</td>
-            <td>에어팟 프로 팔아요..</td>
-            <td>150,000</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>수령완료</td>
-            <td>커피 디스펜서 팔아..</td>
-            <td>60,000</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>정산완료</td>
-            <td>사과 팔아요 맛있는..</td>
-            <td>50,000</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>정산완료</td>
-            <td>커피 디스펜서 팔아..</td>
-            <td>150,000</td>
-          </tr>
-        </tbody>
+          {payList.map((item, index) =>
+          <tbody>
+          <tr key={index}>
+          <td>{item.paynum}</td>
+          <td>{item.status}</td>
+          <td>{item.title}</td>
+          <td>{item.amount}</td>
+        </tr>
+        </tbody>)}
+       
       </Table>
     </div>
   );
