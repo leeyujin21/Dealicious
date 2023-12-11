@@ -27,13 +27,9 @@ public class Pay {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer paynum;
 	@Column
-	private String saletitle;
-	@Column
-	private Integer amount;
-	@Column
-	private String buyeremail;
-	@Column
 	private String imp_uid;
+	@Column
+	private Integer salenum;
 	@Column
 	@CreationTimestamp
 	private Date paydate;
