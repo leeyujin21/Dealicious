@@ -1,9 +1,7 @@
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { Button, FormGroup, Input, Label } from "reactstrap";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useState } from "react";
 import axios from "axios";
-import Swal from 'sweetalert2/src/sweetalert2.js'
 import { useDispatch } from "react-redux";
 
 const Login = () => {
@@ -43,7 +41,20 @@ const Login = () => {
             .then(res => {
                 console.log(res.headers.authorization);
                 dispatch({ type: "token", payload: res.headers.authorization });
-                window.location.replace("/");
+                axios.get("http://localhost:8090/user", {
+                    headers: {
+                        Authorization: res.headers.authorization,
+                    }
+                })
+                    .then(res => {
+                        console.log(res)
+                        dispatch({ type: "user", payload: res.data });
+                        window.location.replace("/");
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                
             })
             .catch(error => {
                 if (error.response) {

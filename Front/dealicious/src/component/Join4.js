@@ -1,10 +1,9 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button, FormGroup, Input, Label } from "reactstrap";
 import { CgClose } from "react-icons/cg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Swal from "sweetalert2";
 
 const Join4 = () => {
     const [email, setEmail] = useState('');

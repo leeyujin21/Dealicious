@@ -7,7 +7,7 @@ const Logout = () => {
     useEffect(()=> {
         dispatch({type:"token", payload:''})
         persistor.purge();
-        window.location.href="/login";
+        window.location.href="/mypagenl";
     }, [])
 }
 

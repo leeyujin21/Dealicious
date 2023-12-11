@@ -20,7 +20,6 @@ import com.kosta.deal.service.AdminService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequiredArgsConstructor
 public class AdminController {
 	
 	@Autowired
@@ -39,6 +38,18 @@ public class AdminController {
 		return "회원가입완료";
 	}
 	
+	@PostMapping("adminlogin")
+	public String login(@RequestBody Map<String, String> param) {
+	    String adminid = param.get("adminid");
+	    String password = param.get("password");
+
+	    Optional<Admin> oadminUser = adminRepository.findByAdminidAndPassword(adminid, password);
+
+	    if (oadminUser != null) {
+	        return "로그인 성공";
+	    } else {
+	        return "로그인 실패";
+	    }
 	@PostMapping("/changeadminpassword")
 	public ResponseEntity<String> changeadminpassword(@RequestBody Map<String,Object> param) {
 		try { 
