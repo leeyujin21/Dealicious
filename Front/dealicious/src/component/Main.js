@@ -6,9 +6,28 @@ import { IoTicketSharp } from "react-icons/io5";
 import { GiLaptop } from "react-icons/gi";
 import { MdOutlineMoreHoriz } from "react-icons/md";
 import { MdArrowForward } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link,useParams  } from "react-router-dom";
+import React, { useState,useEffect} from 'react';
+import axios from 'axios';
 
 const Main = () => {
+  const {category} =useParams();
+  const [saleList,setSaleList] = useState([]);    
+  // useEffect(()=>{
+  //   axios.get(`http://localhost:8090/salelist/${category}`)
+  //   .then(res => {
+  //     console.log(res);
+  //     setSaleList([]);
+  //     setSaleList((_sale_list) => [
+  //       ..._sale_list, ...res.data.saleList
+  //     ]);
+  //   })
+  //         .catch(err=>{
+  //           console.log(err)
+  //       })
+        
+
+  //   },[])
   return (
     <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
       <Link><img src="..\dealmain.png" style={{width:"385px"}}></img></Link>
@@ -94,43 +113,55 @@ const Main = () => {
         </div>
       </div>
       <br /><br/>
+    
+      
       <div style={{ textAlign: "left", fontSize: "20px", fontWeight: "bold", display: "flex" }}>
         <div style={{ height: "30px" }}>카테고리&nbsp;&nbsp;</div>
-        <Link to="/salelist" style={{ fontSize: "15px", color: "gray", height: "30px", marginTop: "3px" }}>전체보기
-          <MdArrowForward size="15" style={{ height: "30px", marginBottom: "2.5px" }} />
-        </Link>
+        
+          <Link to="/salelist" style={{ fontSize: "15px", color: "gray", height: "30px", marginTop: "3px" }}>전체보기
+            <MdArrowForward size="15" style={{ height: "30px", marginBottom: "2.5px" }} />
+          </Link>
+       
       </div>
       <br />
       <div style={{ display: "flex", width: "385px" }}>
-        <Link to="/categorylist/{num}" style={{ color: "black", width: "33%" }}>
+       {saleList.map((item, index) =>
+        <Link to={item.category} style={{ color: "black", width: "33%" }} key={index}>
           <FaMobileAlt size="50" color="#E25D5D" style={{ marginBottom: "5px" }} /><br />
-          <div style={{ color: "gray" }}>모바일/태블릿</div>
+          <div style={{ color: "gray" }}>{item.category}</div>
         </Link>
-        <Link to="/categorylist" style={{ color: "black", width: "33%" }}>
+        )}
+     
+        <Link to="/salelist/{category}" style={{ color: "black", width: "33%" }}>
           <IoShirt size="50" color="#F39238" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>의류</div>
         </Link>
-        <Link to="/categorylist" style={{ color: "black", width: "33%" }}>
+
+        <Link to="/salelist/{category}" style={{ color: "black", width: "33%" }}>
           <BiSolidDonateHeart size="50" color="#F3E138" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>나눔</div>
         </Link>
+      
       </div>
       <br />
       <div style={{ display: "flex", width: "385px", paddingBottom:"10px" }}>
-        <Link to="/categorylist" style={{ color: "black", width: "33%" }}>
-          <IoTicketSharp size="50" color="#3FCC80" style={{ marginBottom: "5px" }} /><br />
-          <div style={{ color: "gray" }}>티켓/쿠폰</div>
-        </Link>
-        <Link to="/categorylist" style={{ color: "black", width: "33%" }}>
-          <GiLaptop size="50" color="#3FA2CC" style={{ marginBottom: "5px" }} /><br />
-          <div style={{ color: "gray" }}>노트북/PC</div>
-        </Link>
-        <Link to="/categorylist" style={{ color: "black", width: "33%" }}>
-          <MdOutlineMoreHoriz size="50" color="gray" style={{ marginBottom: "5px" }} /><br />
-          <div style={{ color: "gray" }}>기타</div>
-        </Link>
+          <Link to="/salelist/ticket" style={{ color: "black", width: "33%" }}>
+            <IoTicketSharp size="50" color="#3FCC80" style={{ marginBottom: "5px" }} /><br />
+            <div style={{ color: "gray" }}>티켓/쿠폰</div>
+          </Link>
+          <Link to="/salelist/{category}" style={{ color: "black", width: "33%" }}>
+            <GiLaptop size="50" color="#3FA2CC" style={{ marginBottom: "5px" }} /><br />
+            <div style={{ color: "gray" }}>노트북/PC</div>
+          </Link>
+          <Link to="/salelist/{category}" style={{ color: "black", width: "33%" }}>
+            <MdOutlineMoreHoriz size="50" color="gray" style={{ marginBottom: "5px" }} /><br />
+            <div style={{ color: "gray" }}>기타</div>
+          </Link>
+          
       </div>
     </div>
+   
+      
   );
 }
 
