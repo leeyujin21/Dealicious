@@ -2,11 +2,22 @@ import axios from 'axios';
 import {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 const User = () => {
-    const [user, setUser] = useState({})
-    const temp = useSelector(state=>state.persistedReducer.user);
-    console.log(temp);
+    const [user, setUser] = useState({id:'', email:'', username:'', roles:''})
+    const token = useSelector(state=>state.persistedReducer.token);
+    console.log("token:"+token);
     useEffect(()=> {
-        setUser(temp);
+        axios.get("http://localhost:8090/user",{
+            headers : {
+                Authorization : token,
+            }
+        })
+        .then(res=> {            
+            console.log(res)
+            setUser(res.data);
+        })
+        .catch(err=> {
+            console.log(err)
+        })
     }, [])
 
     return(

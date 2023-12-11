@@ -1,12 +1,13 @@
 import { Button, FormGroup, Input, Label } from "reactstrap";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Avvvatars from 'avvvatars-react';
 import axios from "axios";
 import { useSelector } from "react-redux";
 
 const Profilemodify = () => {
+    const navigate = useNavigate();
     const [Image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
     const fileInput = useRef(null)
     const [files, setFiles] = useState([]);
@@ -32,6 +33,20 @@ const Profilemodify = () => {
                 console.log(err)
             })
     }, [])
+    const handleModifyClick = () => {
+        axios.put("http://localhost:8090/user", { nickname: user.nickname }, {
+            headers: {
+                Authorization: token,
+            },
+        })
+            .then(res => {
+                console.log(res);
+                navigate("/profiledetail");
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    };
     return (
         <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "50px", paddingLeft: "50px", paddingRight: "50px" }}>
             <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
@@ -62,7 +77,15 @@ const Profilemodify = () => {
                 </FormGroup>
                 <FormGroup style={{ textAlign: "left", display: "flex" }}>
                     <Label for="nickname" style={{ fontSize: "20px", width: "100px", lineHeight: "44px" }}>닉네임</Label>
-                    <Input type="text" for="nickname" name="nickname" id="nickname" style={{ fontSize: "20px", width: "120px" }} value={user.nickname} />
+                    <Input
+                        type="text"
+                        for="nickname"
+                        name="nickname"
+                        id="nickname"
+                        style={{ fontSize: "20px", width: "120px" }}
+                        value={user.nickname}
+                        onChange={(e) => setUser({ ...user, nickname: e.target.value })}
+                    />
                     &nbsp;&nbsp;
                     <Button style={{
                         width: "100px", fontSize: "17px",
@@ -82,7 +105,7 @@ const Profilemodify = () => {
                     <Label for="phonenum" style={{ fontSize: "20px" }}>{user.tel}</Label>
                 </FormGroup>
                 <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
-                    <Label for="accountid" style={{ fontSize: "20px", lineHeight: "44px" }}>계좌번호<a style={{fontSize:"12px", marginLeft:"10px"}}>'-' 없이 숫자만 작성해주세요</a></Label>
+                    <Label for="accountid" style={{ fontSize: "20px", lineHeight: "44px" }}>계좌번호<a style={{ fontSize: "12px", marginLeft: "10px" }}>'-' 없이 숫자만 작성해주세요</a></Label>
                     <div style={{ display: "flex" }}>
                         <select style={{ border: "1px solid lightgray", borderRadius: "5px", width: "100px", height: "45px", textAlign: "left" }}>
                             <option value="국민">국민은행</option>
@@ -97,12 +120,18 @@ const Profilemodify = () => {
                     </div>
                 </FormGroup>
             </div>
-            <Link to="/profilemodify">
-                <Button style={{
-                    width: "325px", height: "55px", fontSize: "20px",
-                    backgroundColor: "#14C38E", borderStyle: "none"
-                }}>수정하기</Button>
-            </Link>
+            <Button
+                style={{
+                    width: "325px",
+                    height: "55px",
+                    fontSize: "20px",
+                    backgroundColor: "#14C38E",
+                    borderStyle: "none",
+                }}
+                onClick={handleModifyClick}
+            >
+                수정하기
+            </Button>
             <div style={{ paddingTop: "5px" }}>
                 <Link to="/changepassword" style={{ textDecoration: "none", color: "#999999" }}>비밀번호 변경하기</Link>
             </div>

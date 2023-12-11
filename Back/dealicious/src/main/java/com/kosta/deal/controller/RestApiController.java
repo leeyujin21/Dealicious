@@ -1,6 +1,7 @@
 package com.kosta.deal.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,13 +9,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kosta.deal.config.auth.PrincipalDetails;
-import com.kosta.deal.entity.Admin;
 import com.kosta.deal.entity.User;
-import com.kosta.deal.repository.AdminRepository;
 import com.kosta.deal.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RestApiController {
 	private final UserRepository userRepository;
-	private final AdminRepository adminaccountRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@GetMapping("user")
@@ -34,6 +33,22 @@ public class RestApiController {
 		System.out.println(principalDetails.getUser().getPassword());
 		System.out.println(principalDetails.getUser().getRoles());
 		return new ResponseEntity<User>(principalDetails.getUser(), HttpStatus.OK);
+	}
+
+	@PutMapping("user")
+	public ResponseEntity<String> updateUser(@RequestBody User updatedUser, Authentication authentication) {
+		if (authentication == null) {
+			return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
+		}
+
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		User currentUser = principalDetails.getUser();
+
+		currentUser.setNickname(updatedUser.getNickname());
+
+		userRepository.save(currentUser);
+
+		return new ResponseEntity<>("회원 정보가 수정되었습니다.", HttpStatus.OK);
 	}
 
 	@GetMapping("manager/reports")
@@ -66,21 +81,42 @@ public class RestApiController {
 					.provider(principalDetails.getUser().getProvider())
 					.providerId(principalDetails.getUser().getProviderId())
 					.socialemail(principalDetails.getUser().getSocialemail())
-					.createDate(principalDetails.getUser().getCreateDate())
-					.roles(principalDetails.getUser().getRoles())
-					.username(principalDetails.getUser().getUsername())
-					.name(user.getName())
-					.email(user.getEmail())
-					.nickname(user.getNickname())
-					.password(bCryptPasswordEncoder.encode(user.getPassword()))
-					.tel(user.getTel())
-					.type(user.getType())
-					.typename(user.getTypename())
-					.build();
+					.createDate(principalDetails.getUser().getCreateDate()).roles(principalDetails.getUser().getRoles())
+					.username(principalDetails.getUser().getUsername()).name(user.getName()).email(user.getEmail())
+					.nickname(user.getNickname()).password(bCryptPasswordEncoder.encode(user.getPassword()))
+					.tel(user.getTel()).type(user.getType()).typename(user.getTypename()).build();
 			userRepository.save(auser);
 		}
 		return "회원가입완료";
 	}
 	
-	
+	// 비밀번호 변경 엔드포인트
+    @PutMapping("changepassword")
+    public ResponseEntity<String> changePassword(@RequestBody Map<String, Object> request, Authentication authentication) {
+    	if (authentication == null) {
+            return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
+        }
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        User currentUser = principalDetails.getUser();
+        String currentPassword = (String)request.get("currentPassword");
+        System.out.println(currentPassword);
+        String newPassword = (String)request.get("newPassword");
+        System.out.println(newPassword);
+        String confirmNewPassword = (String)request.get("confirmNewPassword"); 
+        System.out.println(confirmNewPassword);
+
+        if (!bCryptPasswordEncoder.matches(currentPassword, currentUser.getPassword())) {
+            return new ResponseEntity<>("현재 비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (!newPassword.equals(confirmNewPassword)) {
+            return new ResponseEntity<>("새 비밀번호와 확인 비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        currentUser.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        userRepository.save(currentUser);
+
+        return new ResponseEntity<>("비밀번호가 성공적으로 변경되었습니다.", HttpStatus.OK);
+    }
+
 }
