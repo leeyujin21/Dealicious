@@ -8,24 +8,25 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 const Mypage = () => {
+    const [files, setFiles] = useState(null);
     const [Image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
     const fileInput = useRef(null)
-    const [user, setUser] = useState({id:'', email:'', nickname:''})
-    const token = useSelector(state=>state.persistedReducer.token);
-    console.log("token:"+token);
-    useEffect(()=> {
-        axios.get("http://localhost:8090/user",{
-            headers : {
-                Authorization : token,
+    const [user, setUser] = useState({ id: '', email: '', nickname: '' })
+    const token = useSelector(state => state.persistedReducer.token);
+    console.log("token:" + token);
+    useEffect(() => {
+        axios.get("http://localhost:8090/user", {
+            headers: {
+                Authorization: token,
             }
         })
-        .then(res=> {            
-            console.log(res)
-            setUser(res.data);
-        })
-        .catch(err=> {
-            console.log(err)
-        })
+            .then(res => {
+                console.log(res)
+                setUser(res.data);
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }, [])
     return (
         <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "50px" }}>
@@ -34,12 +35,9 @@ const Mypage = () => {
                 <Label style={{ fontSize: "25px", fontWeight: "bold", color: "#14C38E" }}>마이페이지</Label>
             </FormGroup>
             <div style={{ paddingBottom: "30px", display: "flex", paddingBottom: "30px" }}>
-                <Avvvatars
-                    src={Image}
-                    style={{ margin: '20px' }}
-                    size={65}
-                    onClick={() => { fileInput.current.click() }}
-                />
+                <div style={{ paddingBottom: "20px", textAlign: "left" }}>
+                    <img src={files ? URL.createObjectURL(files) : Image} width="100px" height="100px" alt='' style={{ borderRadius: "50px", width: "65px", height: "65px" }} />
+                </div>
                 <div style={{ fontSize: "20px", fontWeight: "bold", textAlign: "left", paddingLeft: "20px", width: "220px" }}>
                     &nbsp;{user.nickname}
                     <br />
@@ -51,15 +49,15 @@ const Mypage = () => {
                     </div>
                 </div>
 
-                <div style={{textAlign:"right"}}>
+                <div style={{ textAlign: "right" }}>
                     <Link to="/profiledetail">
                         <Button style={{
                             width: "100px", height: "35px", fontSize: "15px",
                             backgroundColor: "#D9D9D9", borderStyle: "none", borderRadius: "20px"
                         }}>내 정보 수정
                         </Button>
-                    </Link><br/>
-                    <a href="/logout" style={{fontSize:"13px", color:"gray", textDecoration:"none", marginRight:"10px"}}>로그아웃</a>
+                    </Link><br />
+                    <a href="/logout" style={{ fontSize: "13px", color: "gray", textDecoration: "none", marginRight: "10px" }}>로그아웃</a>
                 </div>
             </div>
             <div style={{ display: "flex", textAlign: "left", marginBottom: "3px" }}>

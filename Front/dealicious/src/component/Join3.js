@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -10,31 +11,27 @@ const Join3 = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [nicknameError, setNicknameError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const [isNicknameAvailable, setIsNicknameAvailable] = useState(true);
+    const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
     const location = useLocation(); // useLocation 훅 사용
     const type = location.state?.type; // join.js에서 전달받은 type
     const typename = location.state?.typename;
     const navigate = useNavigate();
 
-    const handleNicknameCheck = async () => {
-        try {
-            const response = await fetch(`http://localhost:8090/join/checkNickname/{nickname}`);
-            const data = await response.json();
-
-            const isAvailable = data.available;
-            setIsNicknameAvailable(isAvailable);
-
-            if (isAvailable) {
-                alert('사용 가능한 닉네임입니다');
-            } else {
-                alert('이미 사용 중인 닉네임입니다');
-            }
-
-            setErrorMessage(isAvailable ? '' : '이미 사용 중인 닉네임입니다');
-        } catch (error) {
-            console.error('닉네임 가용성 확인 오류:', error);
-            // 에러 처리, 예를 들어 일반적인 오류 메시지 표시
-        }
+    const handleNicknameCheck = () => {
+        console.log(nickname);
+        axios.get("http://localhost:8090/nicknamecheck/" + nickname)
+            .then(res => {
+                console.log(res.data);
+                setIsNicknameAvailable(res.data);
+                if (res.data) {
+                    setNicknameError('사용 가능한 닉네임입니다');
+                } else {
+                    setNicknameError('이미 사용 중인 닉네임입니다');
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
     };
 
     const handleChange = (e) => {
@@ -60,6 +57,7 @@ const Join3 = () => {
             setName(value);
         } else if (name === 'nickname') {
             setNickname(value);
+            setIsNicknameAvailable(false);
         } else if (name === 'password') {
             setPassword(value);
         }
@@ -68,12 +66,14 @@ const Join3 = () => {
     const handleClick = () => {
         if (!name) {
             setErrorMessage("빈 칸 없이 입력해주세요");
-        } else if (nickname.length < 2) {
-            setNicknameError("2글자 이상 입력해주세요");
+        } else if (nickname.length < 2 || !isNicknameAvailable) {
+            setNicknameError("닉네임을 확인해주세요");
         } else if (password.length < 8) {
             setPasswordError("8자 이상 입력해주세요");
         } else {
-            navigate('/join4', { state: { type: type, typename: typename, name, nickname, password } });
+            if (isNicknameAvailable) {
+                navigate('/join4', { state: { type: type, typename: typename, name, nickname, password } });
+            }
         }
     };
 
@@ -95,7 +95,7 @@ const Join3 = () => {
             </FormGroup>
             <FormGroup style={{ textAlign: "left", paddingBottom: "20px" }}>
                 <Label for="nickname" style={{ fontSize: "20px" }}>닉네임</Label>
-                <div style={{display:"flex"}}>
+                <div style={{ display: "flex" }}>
                     <Input type="text" name="nickname" id="nickname" style={{ height: "55px", width: "220px" }}
                         placeholder="2글자 이상 입력하세요"
                         onChange={handleChange}
@@ -106,7 +106,7 @@ const Join3 = () => {
                         backgroundColor: "#14C38E", borderStyle: "none", height: "55px"
                     }} onClick={handleNicknameCheck}>중복확인</Button>
                 </div>
-                <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height: "10px", textAlign: "left" }}>{nickname.length < 2 ? nicknameError : ""}</div>
+                <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height: "10px", textAlign: "left" }}>{nicknameError}</div>
             </FormGroup>
             <FormGroup style={{ textAlign: "left", paddingBottom: "20px" }}>
                 <Label for="password" style={{ fontSize: "20px" }}>비밀번호</Label>

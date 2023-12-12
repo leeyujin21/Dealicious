@@ -123,4 +123,12 @@ public class AdminServiceImpl implements AdminService{
 		return res;
 	}
 
+	@Override
+	public boolean checkadminid(String adminid) throws Exception {
+		boolean checkadminid = adminRepository.existsByAdminid(adminid);
+		if(checkadminid) {
+			return false;
+		} return true;
+	}
+
 }

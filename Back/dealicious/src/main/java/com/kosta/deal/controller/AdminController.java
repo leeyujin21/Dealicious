@@ -116,4 +116,15 @@ public class AdminController {
 			return new ResponseEntity<List<Map<String, Object>>>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping("/adminidcheck/{adminid}")
+    public ResponseEntity<Boolean> adminidcheck(@PathVariable String adminid) {
+    	try {
+    		Boolean res = adminService.checkadminid(adminid);
+			return new ResponseEntity<Boolean>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+		}
+    }
 }

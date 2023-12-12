@@ -47,7 +47,7 @@ const Join4 = () => {
             name: name,
             nickname: nickname
         };
-
+        //headers로 토큰 넘긴 이유는 소셜로그인했을때 가입되면서 추가정보 등록 이어나가기 위해서.
         axios.post("http://localhost:8090/join", userData, {
             headers: {
                 Authorization: token,
@@ -55,7 +55,7 @@ const Join4 = () => {
         })
             .then(res => {
                 console.log(res.data);
-                window.location.href = "/";
+                window.location.href = "/logout";
             })
             .catch(err => {
                 console.log(err);
