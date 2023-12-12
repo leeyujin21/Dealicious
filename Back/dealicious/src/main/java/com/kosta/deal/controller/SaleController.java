@@ -63,21 +63,20 @@ public class SaleController {
 	}
 	
 	
+	
 	@GetMapping("/saledetail/{num}")
-	public ResponseEntity<Map<String,Object>> saleDetail(@PathVariable String sect,@PathVariable Integer num){
+	public ResponseEntity<Map<String,Object>> saleDetail(@PathVariable Integer num){
 		try {
 			Map<String,Object> res= new HashMap<>();
-			Sale sale = saleService.saleDetail(num);
-			res.put("sale", sale);
-			if(sect.equals("only-detail")) {
-				saleService.plusViewCount(num);
-				Boolean heart= saleService.isHeartSale("user",num);
-				res.put("heart", heart);
-			}else if(sect.equals("after-modify")) {
-				Boolean heart=saleService.isHeartSale("user",num);
-				res.put("heart", heart);
-			}
-			System.out.println(sale);
+			res = saleService.saleDetail2(num);
+//			if(sect.equals("only-detail")) {
+//				saleService.plusViewCount(num);
+//				Boolean heart= saleService.isHeartSale("user",num);
+//				res.put("heart", heart);
+//			}else if(sect.equals("after-modify")) {
+//				Boolean heart=saleService.isHeartSale("user",num);
+//				res.put("heart", heart);
+//			}
 			return new ResponseEntity<Map<String,Object>> (res,HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();

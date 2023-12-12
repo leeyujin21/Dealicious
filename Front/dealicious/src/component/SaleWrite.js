@@ -55,10 +55,10 @@ const SaleWrite=()=>{
     const changeImage = () => {
         if (currentImage === "./ggul2.png") {
             setCurrentImage("./ggul.png");
-             // 다른 이미지로 변경.
+            return 1;
         } else {
             setCurrentImage("./ggul2.png"); // 처음 이미지로 다시 변경.
-           
+           return 0;
         }
     };
     const [sale, setSale] = useState({      //상품 정보 초기화
@@ -83,9 +83,8 @@ const SaleWrite=()=>{
             sale.amount.trim() !== '' &&
             sale.place.trim() !== '' &&
             sale.category.trim() !==''&&
-            sale.content.trim() !== ''&&
-            sale.fileurl.trim()!==''&&
-            sale.ggull.trim()!==''
+            sale.content.trim() !== ''
+            
             
             
         );
@@ -142,48 +141,47 @@ const SaleWrite=()=>{
          <span style={{color:"#14C38E",fontSize:"25px",marginLeft:"105px"}}><b>판매글작성</b></span> 
          <br/><br/>
          <div style={{backgroundColor:"#E9E9E9", width:"48px", height:"63px", textAlign:"center", paddingTop:"5px", position:"relative", cursor:"pointer"}}
-             onClick={()=>document.getElementById("file").click()}>
+             >
         <div>
-            <FaCamera size="30" color='gray' onClick={handleClick} />
-            <div style={{ position: "absolute", textAlign: "center", width: "48px", paddingBottom: "5px", fontWeight: "bold" }}>
-                {imageCount}/5
+            <div onClick={()=>document.getElementById("file").click()}>
+                <FaCamera size="30" color='gray'  />
+                <div style={{ position: "absolute", textAlign: "center", width: "48px", paddingBottom: "5px", fontWeight: "bold" }}>
+                    {imageCount}/5
+                </div>
             </div>
             <Input name="file" type="file" id="file" accept="image/*" onChange={fileChange} hidden ref={fileInputRef} />
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start',marginLeft:"20px"}}>
-        
-        {selectedImages.map((image, index) => (
-            <div key={index} style={{ margin: '5px', position: 'relative',marginTop:"-30px" }}>
-                <a>
-                <img
-                    src={URL.createObjectURL(image)}
-                    alt={`Selected ${index + 1}`}
-                    style={{ width: '55px', height: '55px',marginLeft:"50px",display:"inline-block"}}
-                
-                />
-                </a>
-            <button
-                onClick={() => removeImage(index)}
-                style={{
-                    position: 'absolute',
-                    top: '-10px',
-                    right: '-10px',
-                    backgroundColor: '#14C38E',
-                    borderRadius: '50%',
-                    cursor: 'pointer',
-                    padding: '0',
-                    width: '20px',
-                    height: '20px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    fontSize: '12px',
-                    color: 'white',
-                }}
-            >
-                X
-            </button>
-        </div>
-    ))}
+            
+            <div style={{ display: 'flex', marginLeft: '20px', marginTop: '-30px' }}>
+  {selectedImages.map((image, index) => (
+    <div key={index} style={{ marginLeft:'10px', position: 'relative' }}>
+      <img
+        src={URL.createObjectURL(image)}
+        alt={`Selected ${index + 1}`}
+        style={{ width: '45px', height: '45px',marginLeft:"20px" }}
+      />
+      <button
+        onClick={() => removeImage(index)}
+        style={{
+          position: 'absolute',
+          top: '-10px',
+          right: '-10px',
+          backgroundColor: '#14C38E',
+          borderRadius: '50%',
+          cursor: 'pointer',
+          padding: '0',
+          width: '20px',
+          height: '20px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontSize: '12px',
+          color: 'white',
+        }}
+      >
+        X
+      </button>
+    </div>
+  ))}
 </div>
         </div>
         </div>
