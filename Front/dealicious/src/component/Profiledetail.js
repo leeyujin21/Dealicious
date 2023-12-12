@@ -35,7 +35,7 @@ const Profiledetail = () => {
                 <Label style={{ fontSize: "25px", fontWeight: "bold", color: "#14C38E" }}>마이페이지</Label>
             </FormGroup>
             <div style={{  paddingBottom: "20px", textAlign:"left" }}>
-                <img src={files ? Image : user.profileimgurl} width="100px" height="100px" alt='' style={{ marginRight: "10px", borderRadius: "50px", width: "55px", height: "55px" }} />
+                <img src={files ? Image : `http://localhost:8090/img/${user.profileimgurl}`} width="100px" height="100px" alt='' style={{ marginRight: "10px", borderRadius: "50px", width: "55px", height: "55px" }} />
             </div>
             <div style={{ marginLeft: "5px" }}>
                 <FormGroup style={{ textAlign: "left", display: "flex" }}>
