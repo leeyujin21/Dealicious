@@ -41,14 +41,17 @@ const SaleList=()=> {
       .then(res => {
         console.log(res);
         setSaleList([]);
-        // setSaleList((_sale_list) => [
-        //   ..._sale_list, ...res.data.saleList
-        // ]);
+        console.log(res.data);
+        setSaleList((_sale_list) => [
+          ..._sale_list, ...res.data
+        ]);
       })
       .catch(err => {
         console.log(err);
       })
     }
+    
+        
     const loadMoreData = async () => {
       setLoading(true);
       try {
@@ -89,7 +92,7 @@ const SaleList=()=> {
             <div style={{ height: "35px", display: "flex" }} >
               <div style={{ width: "130px", height: "87px" }}>   
               
-              <img src={`http://localhost:8090/img/${item.fileurl}`} width="80px" height="70px" alt='' style={{marginRight:"10px"}}/>
+              {item.fileurl==null ?<img src='./profile.png' width="80px" height="70px" alt='' style={{marginRight:"10px"}}/> :<img src={`http://localhost:8090/img/${item.fileurl}`} width="80px" height="70px" alt='' style={{marginRight:"10px"}}/>}
                                     
                                 
         </div>
@@ -101,7 +104,7 @@ const SaleList=()=> {
                 </div>
                 <div style={{ display: "flex" }}>
                   <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "170px" }}>{item.price}</div>
-                  <div style={{ textAlign: "right", color: "gray" }}>{item.date}</div>
+                  <div style={{ textAlign: "right", color: "gray" }}>{timeAgo}</div>
                 </div>
               </div>
             </div>

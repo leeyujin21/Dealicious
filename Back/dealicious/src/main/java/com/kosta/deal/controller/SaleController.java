@@ -54,8 +54,8 @@ public class SaleController {
 		System.out.println(category);
 		
 	     try {
-	    	 //List<Sale> saleList= saleService.SaleListByCategory(category);
-	    	 return new ResponseEntity<List<Sale>>(HttpStatus.OK);
+	    	 List<Sale> saleList= saleService.SaleListByCategory(category);
+	    	 return new ResponseEntity<List<Sale>>(saleList,HttpStatus.OK);
 			} catch(Exception e) {
 				e.printStackTrace();
 				return new ResponseEntity<List<Sale>>(HttpStatus.BAD_REQUEST);

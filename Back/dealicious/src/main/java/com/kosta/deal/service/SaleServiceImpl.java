@@ -74,10 +74,13 @@ public class SaleServiceImpl implements SaleService{
 		Sale sale = tuple.get(0,Sale.class);
 		String nickname=tuple.get(1,String.class);
 		String typename=tuple.get(2,String.class);
+		String profileimgurl=tuple.get(3,String.class);
+		System.out.println(profileimgurl);
 		Map<String,Object> res=new HashMap<>();
 		res.put("sale",sale);
 		res.put("nickname", nickname);
 		res.put("typename", typename);
+		res.put("profileimgurl",profileimgurl);
 		return res;
 	}
 	@Override
@@ -138,7 +141,7 @@ public class SaleServiceImpl implements SaleService{
 
 	@Override
 	public void readImage(Integer num, OutputStream out) throws Exception {
-		String dir="c:/lyj/upload/";
+		String dir="c:/pch/upload/";
 		FileInputStream fis= new FileInputStream(dir+num);
 		FileCopyUtils.copy(fis, out);
 		fis.close();

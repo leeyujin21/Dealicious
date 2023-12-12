@@ -8,9 +8,6 @@ import axios from "axios";
 
 function SaleDetail() {
   const { num } = useParams();
-  const [selectedImages, setSelectedImages] = useState([]); // 여러 이미지를 저장하는 배열
-  const [user, setUser] = useState({
-    id: "",email:"",roles:""  });
   const [sale, setSale] = useState({
     num: "",
     email: "",
@@ -33,16 +30,15 @@ function SaleDetail() {
   const navigate = useNavigate();
 
   const [writer, setwriter] = useState({nickname:'',typename:'',fileurl:''});
-  const [imges, setImages] = useState([]);
   
   
   useEffect(() => {
     axios
       .get(`http://localhost:8090/saledetail/${num}`)
       .then((res) => {
-        console.log(res.data.sale);
+        console.log(res.data);
         setSale(res.data.sale);
-        setwriter({nickname:res.data.nickname,typename:res.data.typename,fileurl:res.data.fileurl})
+        setwriter({nickname:res.data.nickname,typename:res.data.typename,fileurl:res.data.profileimgurl})
         console.log(sale);
         setHeart(res.data.heart);
       })
@@ -105,7 +101,7 @@ function SaleDetail() {
         <div style={{ marginTop: "15px" }}>
           <div style={{ display: "flex" }}>
             <div rowSpan={2}>
-              {writer.fileurl==null ? <img src='./profile'/> :<img src={`http://localhost:8090/img/${writer.fileurl}`} />}
+            {writer.fileurl==null ?<img src='/profile.png' alt='' style={{width: "60px", height: "60px",marginRight:"10px"}}/> : <img src={`http://localhost:8090/img/${writer.fileurl}`} alt='' style={{width: "60px", height: "60px",marginRight:"10px"}}/>}
             </div>
             <div
               style={{
