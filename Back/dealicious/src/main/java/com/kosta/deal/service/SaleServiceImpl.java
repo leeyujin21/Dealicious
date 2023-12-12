@@ -67,7 +67,7 @@ public class SaleServiceImpl implements SaleService{
 
 	@Override
 	public Integer saleWrite(Sale sale, List<MultipartFile> files) throws Exception {
-		String dir="d:/pch/upload/";
+		String dir=".../upload/";
 		if(files!=null && !files.isEmpty()) {
 			String fileNums="";
 			for(MultipartFile file:files) {

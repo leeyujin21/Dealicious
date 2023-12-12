@@ -42,19 +42,26 @@ const Profilemodify = () => {
         setSelected(e.target.value);
     }
     const handleModifyClick = () => {
+        const formData = new FormData();
+        formData.append("file", files);
+        formData.append("nickname", user.nickname);
+        formData.append("accountid", user.accountid);
+        formData.append("accountbank", user.accountbank);
+
         if (isNicknameAvailable) {
-            axios.put("http://localhost:8090/profilemodify", { nickname: user.nickname, accountid: user.accountid, accountbank: selected }, {
+            console.log("중복체크")
+            axios.put("http://localhost:8090/profilemodify", formData, {
                 headers: {
                     Authorization: token,
                 },
             })
-                .then(res => {
-                    console.log(res);
-                    navigate("/profiledetail");
-                })
-                .catch(err => {
-                    console.error(err);
-                });
+            .then(res => {
+                console.log(res);
+                navigate("/profiledetail");
+            })
+            .catch(err => {
+                console.error(err);
+            });
         } else {
             console.log("에휴");
             setNicknameMessage("중복확인 버튼을 눌러주세요");
@@ -82,29 +89,29 @@ const Profilemodify = () => {
             });
     }
 
-    const handleProfileImageChange = (e) => {
-        const file = e.target.files[0];
+    // const handleProfileImageChange = (e) => {
+    //     const file = e.target.files[0];
 
-        if (file) {
-            const formData = new FormData();
-            formData.append("file", file);
+    //     if (file) {
+    //         const formData = new FormData();
+    //         formData.append("file", file);
 
-            axios.post("http://localhost:8090/upload-profile-image", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    Authorization: token,
-                },
-            })
-                .then(response => {
-                    console.log("Profile Image Upload Success:", response);
-                    // 업로드 성공 시 이미지 경로 업데이트
-                    setImage(response.data.imageUrl);
-                })
-                .catch(error => {
-                    console.error("Profile Image Upload Error:", error);
-                });
-        }
-    };
+    //         axios.post("http://localhost:8090/upload-profile-image", formData, {
+    //             headers: {
+    //                 "Content-Type": "multipart/form-data",
+    //                 Authorization: token,
+    //             },
+    //         })
+    //             .then(response => {
+    //                 console.log("Profile Image Upload Success:", response);
+    //                 // 업로드 성공 시 이미지 경로 업데이트
+    //                 setImage(response.data.imageUrl);
+    //             })
+    //             .catch(error => {
+    //                 console.error("Profile Image Upload Error:", error);
+    //             });
+    //     }
+    // };
     return (
         <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "50px", paddingLeft: "50px", paddingRight: "50px" }}>
             <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
