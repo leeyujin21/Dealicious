@@ -19,6 +19,11 @@ public interface SaleService {
 
 	
 	Integer saleModify(Sale sale, List<MultipartFile> file);
+	Boolean selectSaleLike(String id, Integer num)throws Exception;
+	Sale saleInfo(Integer num) throws Exception;
+	Map<String, Object> saleDetail2(Integer num) throws Exception;
+	Boolean isHeartSale(String string, Integer num) throws Exception;
+	void readImage(Integer num, OutputStream out) throws Exception;
 	
 	void readImage(Integer num,OutputStream out)throws Exception;
 	
