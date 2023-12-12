@@ -24,6 +24,7 @@ const SaleList=()=> {
     const minutesAgo = Math.floor(timeDiffInMs / (1000 * 60)); // 분 단위로 시간 차이 계산
     
     setTimeAgo(`${minutesAgo}분 전`);
+
     if(category==null) {
     axios.get(`http://localhost:8090/salelist`)
       .then(res => {
@@ -82,35 +83,40 @@ const SaleList=()=> {
 
   return (
     <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px", paddingTop: "0px" }}>
-      <Link to="/salewrite" style={{ marginLeft: "330px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor:"white", width:"45px", height:"45px",borderRadius:"50px" }}>
+      
+      <Link to="/salewrite" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor:"white", width:"45px", height:"45px"}}>
         <FiPlusCircle size="50" color="#14C38E"/>
-      </Link>
+      </Link>       
+      
       {saleList.map((item, index) =>
+      
       <Link to={"/saledetail/"+item.num} key={index} style={{textDecoration: "none", color: "black" }}>
         <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "124px" }}>
           <div style={{ marginTop: "15px" }}>
             <div style={{ height: "35px", display: "flex" }} >
-              <div style={{ width: "130px", height: "87px" }}>   
-              
-              {item.fileurl==null ?<img src='./profile.png' width="80px" height="70px" alt='' style={{marginRight:"10px"}}/> :<img src={`http://localhost:8090/img/${item.fileurl}`} width="80px" height="70px" alt='' style={{marginRight:"10px"}}/>}
-                                    
-                                
-        </div>
+
+              {item.fileurl==null ?<img src='./profile.png' width="130px" height="87px"/> 
+              :<img src={`http://localhost:8090/img/${item.fileurl}`} width="130px" height="87px" />}
+  
               <div style={{ textAlign: "left", marginLeft: "20px" }}>
-                <a style={{ fontSize: "18px" }}>{item.title}</a><br />
+                <a style={{ fontSize: "18px" }}>{item.title}</a>
                 <div style={{display:"flex" }}>
-                  <div style={{ fontSize: "15px", width:"180px" }}>{item.place}</div>
-                  <div style={{textAlign:"right"}}><img src={item.ggull} style={{width:"34px", height:"19px"}}/></div><br />
+                  <div style={{ fontSize: "15px", width:"150px" }}>{item.place}</div>
+                  <div style={{textAlign:"right"}}>
+                    {item.ggull==0 ?<img src=''/>:<img src='/ggul.png' style={{width:"50px",height:"30px"}} />}
+                  </div>
                 </div>
                 <div style={{ display: "flex" }}>
-                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "170px" }}>{item.price}</div>
-                  <div style={{ textAlign: "right", color: "gray" }}>{timeAgo}</div>
+                  <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "150px" }}>{item.amount}</div>
+                  <div style={{ textAlign: "right", color: "gray", marginRight:"20px"}}>{timeAgo}</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </Link>)}
+      </Link>
+      
+      )}
 
     </div>
 

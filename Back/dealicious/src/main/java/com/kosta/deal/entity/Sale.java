@@ -37,7 +37,6 @@ public class Sale {
 	private String category;
 	private String content;
 	private String place;
-	private String price;
 	private String fileurl;
 	private String status;
 	private String buyeremail;
