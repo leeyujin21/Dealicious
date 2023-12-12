@@ -8,6 +8,7 @@ import axios from "axios";
 
 function SaleDetail() {
   const { num } = useParams();
+  const [currentImage, setCurrentImage] = useState("/noheart.png");
   const [sale, setSale] = useState({
     num: "",
     email: "",
@@ -20,6 +21,7 @@ function SaleDetail() {
     fileurl: "",
     status: "",
     image: "",
+    ggull:"",
     viewcount: null,
     zzimcnt: null,
     buyeremail: "",
@@ -29,7 +31,7 @@ function SaleDetail() {
   const [heart, setHeart] = useState(false);
   const navigate = useNavigate();
 
-  const [writer, setwriter] = useState({nickname:'',typename:'',fileurl:''});
+  const [writer, setwriter] = useState({nickname:'',typename:'',fileurl:'',ggull:''});
   
   
   useEffect(() => {
@@ -65,6 +67,15 @@ function SaleDetail() {
         return category;
     }
   };
+  const changeImage = () => {
+    if (currentImage === "/noheart.png") {
+        setCurrentImage("/zzimheart.png");
+        setSale({ ...sale, zzimcnt: 1 });
+    } else if(currentImage==='/zzimheart.png') {
+        setCurrentImage("/noheart.png"); // 처음 이미지로 다시 변경.
+        setSale({ ...sale, zzimcnt: 0 });
+    }
+};
 
   return (
     <div
@@ -128,17 +139,17 @@ function SaleDetail() {
               <div style={{ marginTop: "8.5px" }}>{sale.status}</div>
             </div>
           </div>
-          &nbsp;&nbsp;&nbsp;
         </div>
+        <br/>
         <div style={{ textAlign: "left" }}>
           <b>{convertCategoryToKorean(sale.category)}</b>
         </div>
-        <tr>
+        <tr >
           <td style={{ textAlign: "left", width: "200px" }}>{sale.place}</td>
           <td
             style={{ width: "250px", fontWeight: "bold", textAlign: "right" }}
           >
-            {sale.price}
+            {sale.amount}
           </td>
         </tr>
         <Input
@@ -158,7 +169,7 @@ function SaleDetail() {
         ></Input>
         <div style={{ display: "flex" }}>
           <div style={{ position: "relative", marginTop: "2px" }}>
-            <img src="./zzimheart.png" style={{ verticalAlign: "middle" }} />
+            <img src={currentImage} style={{ verticalAlign: "middle" }}onClick={changeImage} />
             <div
               style={{
                 width: "20px",
@@ -170,16 +181,15 @@ function SaleDetail() {
                 fontWeight: "bold",
               }}
             >
-              12
+            
             </div>
           </div>
           <div>
-            <img
-              src="ggul2.png"
-              style={{ width: "50px", marginLeft: "176px" }}
-            />
+            <div style={{marginLeft:"150px"}}>
+            {sale.ggull==1?<img src="/ggul.png" style={{width:"50px",height:"50px"}}/> :<img src="/ggul2.png"  style={{width:"50px",height:"50px"}}/>}
+          
             <Link to="/chat/1">
-              <span style={{ textAlign: "right" }}>
+              <span style={{ textAlign: "right", marginLeft:"25px" }}>
                 <input
                   type="submit"
                   value="채팅하기"
@@ -196,6 +206,7 @@ function SaleDetail() {
               </span>
             </Link>
           </div>
+        </div>
         </div>
       </div>
     </div>

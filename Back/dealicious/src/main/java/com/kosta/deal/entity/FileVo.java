@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 import org.springframework.data.relational.core.mapping.Column;
 
@@ -21,6 +22,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+
 public class FileVo {
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -37,6 +39,7 @@ public class FileVo {
 	@Column
 	private Date uploaddate;
 	@Column
+	@Lob
 	private byte[] data;
 	
 }

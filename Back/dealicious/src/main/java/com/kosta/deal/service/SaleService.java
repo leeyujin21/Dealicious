@@ -24,13 +24,9 @@ public interface SaleService {
 	Map<String, Object> saleDetail2(Integer num) throws Exception;
 	Boolean isHeartSale(String string, Integer num) throws Exception;
 	void readImage(Integer num, OutputStream out) throws Exception;
-	
-	void readImage(Integer num,OutputStream out)throws Exception;
-	
-	Boolean isHeartSale(String string, Integer num) throws Exception;
 	Boolean selHeartSale(String string, Integer num)throws Exception;
 	
-	Map<String, Object> saleDetail2(Integer num) throws Exception;
+	
 	
 	
 

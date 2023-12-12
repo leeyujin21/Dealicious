@@ -148,10 +148,8 @@ public class SaleController {
 			e.printStackTrace();
 		}
 	}
-<<<<<<< Updated upstream
 	
-=======
->>>>>>> Stashed changes
+
 	
 	
 	

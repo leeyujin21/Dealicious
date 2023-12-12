@@ -68,8 +68,8 @@ const SaleWrite=()=>{
     };
     
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setSale({ ...sale, [name]: value });
+        const { name, value } = e.target;//e.target은 이벤트가 발생한 HTML 엘리먼트
+        setSale({ ...sale, [name]: value });//name 속성은 해당 입력 필드의 이름을 나타내며, value는 그 입력 필드의 값
     };
    
     const isFormValid = () => { //유효성검사
@@ -79,6 +79,7 @@ const SaleWrite=()=>{
             sale.place.trim() !== '' &&
             sale.category.trim() !==''&&
             sale.content.trim() !== ''
+            
         );
     };
 
@@ -153,6 +154,7 @@ const SaleWrite=()=>{
           right: '-10px',
           backgroundColor: '#14C38E',
           borderRadius: '50%',
+          border:"none",
           cursor: 'pointer',
           padding: '0',
           width: '20px',
@@ -188,8 +190,7 @@ const SaleWrite=()=>{
     style={{ width: "180px", height: "40px", textAlign: "center", borderRadius: "5px", float: "left", borderColor: "lightgray" }}
     name="category"
     value={sale.category}
-    onChange={handleInputChange}
->
+    onChange={handleInputChange}>
     <option value="" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;선택</option>
     <option value="mobile" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;모바일/태블릿</option>
                     <option value="pc" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;노트북/PC</option>
@@ -200,7 +201,7 @@ const SaleWrite=()=>{
                 </select> 
             </div>
             <div style={{marginLeft:"25px"}}>
-            <div style={{marginBottom:"5px", fontSize:"18px"}} name="ggull" value={sale.ggull}>
+            <div style={{marginBottom:"10px", fontSize:"18px"}} name="ggull" value={sale.ggull}>
                 꿀페이
             </div>
             <img src={currentImage} style={{width:"50px"}} onClick={changeImage} alt="Ggul Image" />
