@@ -2,11 +2,13 @@ import React, { useRef, useState } from 'react';
 import { IoArrowBackOutline } from "react-icons/io5";
 import './img.css';
 import './text.css';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { Input,Button } from 'reactstrap';
 import { FaCamera } from "react-icons/fa";
 import axios from 'axios';
 import Swal from 'sweetalert2';
+
+
 
 const SaleWrite=()=>{
     const [currentImage, setCurrentImage] = useState("./ggul2.png");
@@ -17,10 +19,10 @@ const SaleWrite=()=>{
     const fileInputRef = useRef(null);
     const [timeAgo, setTimeAgo] = useState('');
 
-    const calculateTimeAgo = (submissionTime) => {
-        const currentTime = new Date();
-        const timeDiffInMs = currentTime - submissionTime;
-        const minutesAgo = Math.floor(timeDiffInMs / (1000 * 60));
+    const calculateTimeAgo = (submissionTime) => {  
+        const currentTime = new Date();  //현재시간
+        const timeDiffInMs = currentTime - submissionTime;  //현재시간 - 상품등록시간
+        const minutesAgo = Math.floor(timeDiffInMs / (1000 * 60));  
 
         if (minutesAgo < 60) {
             setTimeAgo(`${minutesAgo}분 전`);
@@ -29,8 +31,8 @@ const SaleWrite=()=>{
             setTimeAgo(`${hoursAgo}시간 전`);
         }
     };
-
-
+      
+    
 
     const removeImage = (indexToRemove) => {
         const updatedImages = selectedImages.filter((_, index) => index !== indexToRemove);
@@ -52,29 +54,40 @@ const SaleWrite=()=>{
     };
     const changeImage = () => {
         if (currentImage === "./ggul2.png") {
-            setCurrentImage("./ggul.png"); // 다른 이미지로 변경.
+            setCurrentImage("./ggul.png");
+             // 다른 이미지로 변경.
         } else {
             setCurrentImage("./ggul2.png"); // 처음 이미지로 다시 변경.
+           
         }
     };
-    const [sale, setSale] = useState({
-        subject: '',
+    const [sale, setSale] = useState({      //상품 정보 초기화
+        title: '',
         category: '',
-        price: '',
+        amount: '',
         place: '',
-        content: ''
+        content: '',
+        ggull:'',
+        fileurl:''
+       
+
     });
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setSale({ ...sale, [name]: value });
     };
-    const isFormValid = () => {
+   
+    const isFormValid = () => { //유효성검사
         return (
-            sale.subject.trim() !== '' &&
-            sale.category.trim() !== '' &&
-            sale.price.trim() !== '' &&
+            sale.title.trim() !== '' &&   //공백제거해서 비어있지 않으면
+            sale.amount.trim() !== '' &&
             sale.place.trim() !== '' &&
-            sale.content.trim() !== ''
+            sale.category.trim() !==''&&
+            sale.content.trim() !== ''&&
+            sale.fileurl.trim()!==''&&
+            sale.ggull.trim()!==''
+            
+            
         );
     };
 
@@ -87,23 +100,24 @@ const SaleWrite=()=>{
                 text: '모든 항목을 작성해주세요!',
             });
             return; // 폼 제출을 막습니다.
-        }
+        } 
         const formData = new FormData();
-        formData.append("subject", sale.subject);
+        formData.append("title", sale.title);
         formData.append("category",sale.category);
-        formData.append("price", sale.price);
+        formData.append("amount", sale.amount);
         formData.append("place", sale.place);
         formData.append("content", sale.content);
+        formData.append("ggull", sale.ggull);
+        formData.append("file",sale.fileurl);
         // formData.append("file", files);
         for (let image of selectedImages) {
-            formData.append("file", image);
+            formData.append("file",image);
         }
 
         console.log(formData)
         axios.post('http://localhost:8090/salewrite', formData)
         .then(res=> {
             console.log(res);
-            let saleNum = res.data;
             // 판매 정보가 성공적으로 제출되면 현재 시간과 비교하여 시간차를 계산
             const submissionTime = new Date(); // 현재 시간
             
@@ -113,7 +127,7 @@ const SaleWrite=()=>{
             calculateTimeAgo(saleSubmissionTime);
 
             console.log(`판매 정보가 ${timeAgo}에 등록되었습니다.`);
-            navigate(`/salelist/${saleNum}`); // 등록된 판매 정보 페이지로 이동
+            navigate(`/salelist`); // 이미지 URL 전달 // 등록된 판매 정보 페이지로 이동
         })
         .catch(err => {
             console.log(err);
@@ -122,7 +136,9 @@ const SaleWrite=()=>{
     return(
         <div className='main' style={{textAlign:'left',overflow:"scroll", height:"732px", overflowX:"hidden"}}> 
         <br/>
-         <IoArrowBackOutline size="30" color="14C38E"/>
+         <Link to="/salelist">
+         <IoArrowBackOutline size="30" color="14C38E" />
+         </Link>
          <span style={{color:"#14C38E",fontSize:"25px",marginLeft:"105px"}}><b>판매글작성</b></span> 
          <br/><br/>
          <div style={{backgroundColor:"#E9E9E9", width:"48px", height:"63px", textAlign:"center", paddingTop:"5px", position:"relative", cursor:"pointer"}}
@@ -134,15 +150,17 @@ const SaleWrite=()=>{
             </div>
             <Input name="file" type="file" id="file" accept="image/*" onChange={fileChange} hidden ref={fileInputRef} />
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start',marginLeft:"20px"}}>
-    {selectedImages.map((image, index) => (
-        <div key={index} style={{ margin: '5px', position: 'relative',marginTop:"-30px" }}>
-            <a>
-            <img
-                src={URL.createObjectURL(image)}
-                alt={`Selected ${index + 1}`}
-                style={{ width: '55px', height: '55px',marginLeft:"50px",display:"inline-block"}}
-            />
-            </a>
+        
+        {selectedImages.map((image, index) => (
+            <div key={index} style={{ margin: '5px', position: 'relative',marginTop:"-30px" }}>
+                <a>
+                <img
+                    src={URL.createObjectURL(image)}
+                    alt={`Selected ${index + 1}`}
+                    style={{ width: '55px', height: '55px',marginLeft:"50px",display:"inline-block"}}
+                
+                />
+                </a>
             <button
                 onClick={() => removeImage(index)}
                 style={{
@@ -170,14 +188,14 @@ const SaleWrite=()=>{
         </div>
         </div>
         <div style={{marginBottom:"5px", fontSize:"18px", marginTop:"20px"}}>제목</div>
-        <Input
-                type="text"
-                placeholder="제목을 입력해주세요"
-                style={{ width: "385px", height: "40px", borderColor: "lightgray" }}
-                name="subject"
-                value={sale.subject}
-                onChange={handleInputChange}
-        />
+            <Input
+                    type="text"
+                    placeholder="제목을 입력해주세요"
+                    style={{ width: "385px", height: "40px", borderColor: "lightgray" }}
+                    name="title"
+                    value={sale.title}
+                    onChange={handleInputChange}
+            />
         
         <div style={{marginTop:"20px",display:"flex"}}>
             <div>
@@ -198,7 +216,7 @@ const SaleWrite=()=>{
                 </select> 
             </div>
             <div style={{marginLeft:"25px"}}>
-            <div style={{marginBottom:"5px", fontSize:"18px"}} onClick={changeImage}>
+            <div style={{marginBottom:"5px", fontSize:"18px"}} onClick={changeImage} name="ggull" value={sale.ggull}>
                 꿀페이
             </div>
             <img src={currentImage} style={{width:"50px"}} onClick={changeImage} alt="Ggul Image" />
@@ -208,7 +226,7 @@ const SaleWrite=()=>{
         <div style={{display:"flex"}}>
             <div>
                 <div style={{marginBottom:"5px", fontSize:"18px"}}>가격</div>
-                <div><Input type="text" placeholder="10,000원" style={{borderRadius:"5px",height:"40px" ,width:"180px",float:"left"}}name="price" value={sale.price} onChange={handleInputChange}></Input></div>
+                <div><Input type="text" placeholder="10,000원" style={{borderRadius:"5px",height:"40px" ,width:"180px",float:"left"}}name="amount" value={sale.amount} onChange={handleInputChange}></Input></div>
             </div>
             <div>
                 <div style={{marginBottom:"5px", fontSize:"18px", marginLeft:"25px"}}>장소</div>
