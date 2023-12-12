@@ -40,7 +40,7 @@ const Mypage_review = () => {
             </FormGroup>
             <div style={{ paddingBottom: "30px", display: "flex", paddingBottom: "30px" }}>
                 <div style={{ paddingBottom: "20px", textAlign: "left" }}>
-                    <img src={files ? URL.createObjectURL(files) : Image} width="100px" height="100px" alt='' style={{ borderRadius: "50px", width: "65px", height: "65px" }} />
+                    <img src={files ? Image : `http://localhost:8090/img/${user.profileimgurl}`} width="100px" height="100px" alt='' style={{ borderRadius: "50px", width: "65px", height: "65px" }} />
                 </div>
                 <div style={{ fontSize: "20px", fontWeight: "bold", textAlign: "left", paddingLeft: "20px", width: "220px" }}>
                     &nbsp;{user.nickname}

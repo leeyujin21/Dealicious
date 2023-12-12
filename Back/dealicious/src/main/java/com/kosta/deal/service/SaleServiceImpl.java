@@ -126,7 +126,7 @@ public class SaleServiceImpl implements SaleService{
 
 	@Override
 	public void readImage(Integer num, OutputStream out) throws Exception {
-		String dir="c:/pch/upload/";
+		String dir="c:/lyj/upload/";
 		FileInputStream fis= new FileInputStream(dir+num);
 		FileCopyUtils.copy(fis, out);
 		fis.close();
