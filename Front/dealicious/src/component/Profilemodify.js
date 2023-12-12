@@ -7,14 +7,16 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 const Profilemodify = () => {
+    const [nicknameMessage, setNicknameMessage] = useState('');
+    const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
     const navigate = useNavigate();
     const [Image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
-    const fileInput = useRef(null)
-    const [files, setFiles] = useState([]);
+    const imgBoxRef = useRef();
+    const [files, setFiles] = useState(null);
+    const [selected, setSelected] = useState();
     const fileChange = (e) => {
-        if (e.target.files.length > 0) {
-            setFiles([...files, e.target.files[0]]);
-        }
+        const selectedFile = e.target.files[0];
+        setFiles(selectedFile);
     }
     const [user, setUser] = useState({ name: '', email: '', nickname: '', typename: '', tel: '', accountid: '' })
     const token = useSelector(state => state.persistedReducer.token);
@@ -28,17 +30,31 @@ const Profilemodify = () => {
             .then(res => {
                 console.log(res)
                 setUser(res.data);
+                setSelected(res.data.accountbank);
             })
             .catch(err => {
                 console.log(err)
             })
     }, [])
+
+    const selectbank = (e) => {
+        console.log(e.target.value);
+        setSelected(e.target.value);
+    }
     const handleModifyClick = () => {
-        axios.put("http://localhost:8090/user", { nickname: user.nickname }, {
-            headers: {
-                Authorization: token,
-            },
-        })
+        const formData = new FormData();
+        formData.append("file", files);
+        formData.append("nickname", user.nickname);
+        formData.append("accountid", user.accountid);
+        formData.append("accountbank", user.accountbank);
+
+        if (isNicknameAvailable) {
+            console.log("중복체크")
+            axios.put("http://localhost:8090/profilemodify", formData, {
+                headers: {
+                    Authorization: token,
+                },
+            })
             .then(res => {
                 console.log(res);
                 navigate("/profiledetail");
@@ -46,22 +62,66 @@ const Profilemodify = () => {
             .catch(err => {
                 console.error(err);
             });
+        } else {
+            console.log("에휴");
+            setNicknameMessage("중복확인 버튼을 눌러주세요");
+        }
     };
+    const nicknameInput = (e) => {
+        setUser({ ...user, nickname: e.target.value })
+        setIsNicknameAvailable(false)
+    }
+    const handleNicknameCheck = () => {
+
+        console.log(user.nickname);
+        axios.get("http://localhost:8090/nicknamecheck/" + user.nickname)
+            .then(res => {
+                console.log(res.data);
+                setIsNicknameAvailable(res.data);
+                if (res.data) {
+                    setNicknameMessage("사용가능한 닉네임입니다");
+                } else {
+                    setNicknameMessage("사용중인 닉네임입니다");
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    // const handleProfileImageChange = (e) => {
+    //     const file = e.target.files[0];
+
+    //     if (file) {
+    //         const formData = new FormData();
+    //         formData.append("file", file);
+
+    //         axios.post("http://localhost:8090/upload-profile-image", formData, {
+    //             headers: {
+    //                 "Content-Type": "multipart/form-data",
+    //                 Authorization: token,
+    //             },
+    //         })
+    //             .then(response => {
+    //                 console.log("Profile Image Upload Success:", response);
+    //                 // 업로드 성공 시 이미지 경로 업데이트
+    //                 setImage(response.data.imageUrl);
+    //             })
+    //             .catch(error => {
+    //                 console.error("Profile Image Upload Error:", error);
+    //             });
+    //     }
+    // };
     return (
         <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "50px", paddingLeft: "50px", paddingRight: "50px" }}>
             <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
                 <Link to="/profiledetail"><IoArrowBackOutline style={{ marginRight: "80px" }} size="30" color="#14C38E" /></Link>
                 <Label style={{ fontSize: "25px", fontWeight: "bold", color: "#14C38E" }}>마이페이지</Label>
             </FormGroup>
-            <div style={{ paddingBottom: "30px", display: "flex" }}>
-                <Avvvatars
-                    src={Image}
-                    style={{ margin: '20px' }}
-                    size={65}
-                    onClick={() => { fileInput.current.click() }}
-                />
+            <div style={{ display: "flex", paddingBottom: "20px" }}>
+                <img src={files ? URL.createObjectURL(files) : Image} width="100px" height="100px" alt='' style={{ marginRight: "10px", borderRadius: "50px", width: "55px", height: "55px" }} />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <div style={{ lineHeight: "65px" }}>
+                <div style={{ lineHeight: "55px" }}>
                     <Button style={{
                         width: "130px", height: "35px", fontSize: "15px",
                         backgroundColor: "#14C38E", borderStyle: "none", borderRadius: "20px"
@@ -75,23 +135,27 @@ const Profilemodify = () => {
                     <Label for="name" style={{ fontSize: "20px", width: "100px" }}>이름</Label>
                     <Label for="name" style={{ fontSize: "20px" }}>{user.name}</Label>
                 </FormGroup>
-                <FormGroup style={{ textAlign: "left", display: "flex" }}>
-                    <Label for="nickname" style={{ fontSize: "20px", width: "100px", lineHeight: "44px" }}>닉네임</Label>
-                    <Input
-                        type="text"
-                        for="nickname"
-                        name="nickname"
-                        id="nickname"
-                        style={{ fontSize: "20px", width: "120px" }}
-                        value={user.nickname}
-                        onChange={(e) => setUser({ ...user, nickname: e.target.value })}
-                    />
-                    &nbsp;&nbsp;
-                    <Button style={{
-                        width: "100px", fontSize: "17px",
-                        backgroundColor: "#14C38E", borderStyle: "none", height: "44px"
-                    }}>중복확인</Button>
+                <FormGroup style={{ textAlign: "left" }}>
+                    <div style={{ display: "flex" }}>
+                        <Label for="nickname" style={{ fontSize: "20px", width: "100px", lineHeight: "44px" }}>닉네임</Label>
+                        <Input
+                            type="text"
+                            for="nickname"
+                            name="nickname"
+                            id="nickname"
+                            style={{ fontSize: "20px", width: "120px" }}
+                            value={user.nickname}
+                            onChange={nicknameInput}
+                        />
+                        &nbsp;&nbsp;
+                        <Button style={{
+                            width: "100px", fontSize: "17px",
+                            backgroundColor: "#14C38E", borderStyle: "none", height: "44px"
+                        }} onClick={handleNicknameCheck}>중복확인</Button>
+                    </div>
+                    <div style={{ color: 'red', fontSize: '14px', height: "10px", textAlign: "left", marginLeft: "100px" }}>{nicknameMessage}</div>
                 </FormGroup>
+
                 <FormGroup style={{ textAlign: "left", display: "flex" }}>
                     <Label for="email" style={{ fontSize: "20px", width: "100px" }}>이메일</Label>
                     <Label for="email" style={{ fontSize: "20px" }}>{user.email}</Label>
@@ -107,7 +171,8 @@ const Profilemodify = () => {
                 <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
                     <Label for="accountid" style={{ fontSize: "20px", lineHeight: "44px" }}>계좌번호<a style={{ fontSize: "12px", marginLeft: "10px" }}>'-' 없이 숫자만 작성해주세요</a></Label>
                     <div style={{ display: "flex" }}>
-                        <select style={{ border: "1px solid lightgray", borderRadius: "5px", width: "100px", height: "45px", textAlign: "left" }}>
+                        <select style={{ border: "1px solid lightgray", borderRadius: "5px", width: "100px", height: "45px", textAlign: "left" }}
+                            name="accountbank" id="accountbank" value={selected} onChange={selectbank}>
                             <option value="국민">국민은행</option>
                             <option value="신한">신한은행</option>
                             <option value="농협">농협은행</option>
@@ -116,7 +181,8 @@ const Profilemodify = () => {
                             <option value="기업">기업은행</option>
                             <option value="카카오">카카오뱅크</option>
                         </select>
-                        <Input type="text" for="accountid" name="accountid" id="accountid" style={{ fontSize: "16px", width: "214px", height: "44px", marginLeft: "5px" }} value={user.accountid} />
+                        <Input type="text" for="accountid" name="accountid" id="accountid" style={{ fontSize: "16px", width: "214px", height: "44px", marginLeft: "5px" }}
+                            onChange={(e) => setUser({ ...user, accountid: e.target.value })} value={user.accountid} />
                     </div>
                 </FormGroup>
             </div>

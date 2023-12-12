@@ -11,4 +11,5 @@ public interface AdminService {
 	List<Map<String,Object>> payList(String status) throws Exception;
 	void settle(List<String> settlenum) throws Exception;
 	List<Map<String,Object>> settleList(String startDate,String endDate) throws Exception;
+	boolean checkadminid(String adminid) throws Exception;
 }

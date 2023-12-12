@@ -10,6 +10,8 @@ const AdminJoin = () => {
     const [password, setPassword] = useState('');
     const [admincodeError, setAdmincodeError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [idError, setIdError] = useState('');
+    const [isAdminidAvailable, setIsAdminidAvailable] = useState(false);
     const token = useSelector(state => state.persistedReducer.token);
     const handleAdmincodeChange = (e) => {
         const value = e.target.value;
@@ -22,11 +24,27 @@ const AdminJoin = () => {
             setAdmincodeError('');
         }
     };
+    const handleIdCheck = () => {
+        axios.get("http://localhost:8090/adminidcheck/" + adminid)
+            .then(res => {
+                console.log(res.data);
+                setIsAdminidAvailable(res.data);
+                if (res.data) {
+                    setIsAdminidAvailable(true)
+                    setIdError('사용 가능한 아이디입니다');
+                } else {
+                    setIsAdminidAvailable(false)
+                    setIdError('이미 사용 중인 아이디입니다');
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
 
     const handlePasswordChange = (e) => {
         const value = e.target.value;
         setPassword(e.target.value);
-        // Check if password is not at least 8 characters
         if (value.length < 8) {
             setPasswordError('비밀번호는 8자리 이상이어야 합니다');
         } else {
@@ -34,31 +52,40 @@ const AdminJoin = () => {
         }
     };
 
+    const adminidInput = (e) => {
+        setAdminId(e.target.value)
+        setIsAdminidAvailable(false)
+    }
+
     const join = (e) => {
         e.preventDefault();
 
-        // 입력값이 유효하면 회원가입 요청
-        const userData = {
-            adminid: adminid,
-            admincode: admincode,
-            password: password
-        };
-
-        axios.post("http://localhost:8090/adminjoin", userData, {
-            headers: {
-                Authorization: token,
-            }
-        })
-            .then(res => {
-                console.log(res.data);
-                console.log(adminid);
-                console.log(admincode);
-                console.log(password);
-                window.location.href = "/adminlogin";
+        if (isAdminidAvailable && password.length >= 8 && admincode.length == 10) {
+            // 입력값이 유효하면 회원가입 요청
+            const userData = {
+                adminid: adminid,
+                admincode: admincode,
+                password: password
+            };
+            axios.post("http://localhost:8090/adminjoin", userData, {
+                headers: {
+                    Authorization: token,
+                }
             })
-            .catch(err => {
-                console.error("Error response from server:", err.response);
-            });
+                .then(res => {
+                    console.log(res.data);
+                    console.log(adminid);
+                    console.log(admincode);
+                    console.log(password);
+                    window.location.href = "/adminlogin";
+                })
+                .catch(err => {
+                    console.error("Error response from server:", err.response);
+                });
+        } else if (!isAdminidAvailable) {
+            console.log("에휴");
+            setIdError("중복확인 버튼을 눌러주세요");
+        }
     }
 
     return (
@@ -73,10 +100,17 @@ const AdminJoin = () => {
             </div>
             <FormGroup style={{ textAlign: "left", paddingBottom: "20px" }}>
                 <Label for="id" style={{ fontSize: "20px" }}>아이디</Label>
-                <Input type="text" name="id" id="id" style={{ height: "55px", width: "325px" }}
-                    onChange={(e) => setAdminId(e.target.value)}
-                    value={adminid}
-                    placeholder="사용하실 아이디를 입력해주세요" />
+                <div style={{ display: "flex" }}>
+                    <Input type="text" name="id" id="id" style={{ height: "55px", width: "225px" }}
+                        onChange={adminidInput}
+                        value={adminid}
+                        placeholder="사용할 아이디를 입력해주세요" />
+                    <Button style={{
+                        width: "90px", fontSize: "17px",
+                        backgroundColor: "#14C38E", borderStyle: "none", height: "55px", marginLeft: "10px"
+                    }} onClick={handleIdCheck}>중복확인</Button>
+                </div>
+                <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height: "10px", textAlign: "left" }}>{idError}</div>
             </FormGroup>
             <FormGroup style={{ textAlign: "left", paddingBottom: "20px" }}>
                 <Label for="admincode" style={{ fontSize: "20px" }}>관리자코드</Label>

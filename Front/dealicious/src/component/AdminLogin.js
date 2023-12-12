@@ -16,7 +16,7 @@ const AdminLogin = () => {
         .then(res=> {
             console.log(res.data);
             dispatch({type:"admin",payload:res.data});
-            window.location.href="/adminmain";
+            //window.location.href="/adminmain";
         })
         .catch(err=> {
             console.log(err);

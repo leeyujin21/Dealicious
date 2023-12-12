@@ -3,7 +3,10 @@ package com.kosta.deal.service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +20,7 @@ import com.kosta.deal.repository.FileVoRepository;
 import com.kosta.deal.repository.SaleDslRepository;
 import com.kosta.deal.repository.SaleRepository;
 import com.kosta.deal.util.PageInfo;
+import com.querydsl.core.Tuple;
 
 @Service
 public class SaleServiceImpl implements SaleService{
@@ -62,12 +66,23 @@ public class SaleServiceImpl implements SaleService{
 		return saleDslRepository.findByCategory(category);
 	}
 
-
+	
 	@Override
-	public Sale saleDetail(Integer num) throws Exception {
-		return saleDslRepository.findSaleBySaleNum(num);
+	public Map<String,Object> saleDetail2(Integer num) throws Exception {
+		System.out.println(num);
+		Tuple tuple=saleDslRepository.findUserEmailAndRolesBySaleNum(num);
+		Sale sale = tuple.get(0,Sale.class);
+		String nickname=tuple.get(1,String.class);
+		String typename=tuple.get(2,String.class);
+		String profileimgurl=tuple.get(3,String.class);
+		System.out.println(profileimgurl);
+		Map<String,Object> res=new HashMap<>();
+		res.put("sale",sale);
+		res.put("nickname", nickname);
+		res.put("typename", typename);
+		res.put("profileimgurl",profileimgurl);
+		return res;
 	}
-
 	@Override
 	public Integer saleWrite(Sale sale, List<MultipartFile> files) throws Exception {
 		String dir="c:/pch/upload/";
@@ -136,6 +151,12 @@ public class SaleServiceImpl implements SaleService{
 	public Boolean isHeartSale(String string, Integer num) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Sale saleDetail(Integer num) throws Exception {
+		
+		return saleDslRepository.findSaleBySaleNum(num);
 	}
 
 	
