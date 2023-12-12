@@ -9,7 +9,8 @@ import { useSelector } from "react-redux";
 const Profiledetail = () => {
     const [Image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
     const fileInput = useRef(null)
-    const [user, setUser] = useState({ name: '', email: '', nickname: '', typename:'', tel:'', accountid:'', accountbank:'' })
+    const [files, setFiles] = useState(null);
+    const [user, setUser] = useState({ name: '', email: '', nickname: '', typename: '', tel: '', accountid: '', accountbank: '' })
     const token = useSelector(state => state.persistedReducer.token);
     console.log("token:" + token);
     useEffect(() => {
@@ -32,12 +33,8 @@ const Profiledetail = () => {
                 <Link to="/mypage"><IoArrowBackOutline style={{ marginRight: "80px" }} size="30" color="#14C38E" /></Link>
                 <Label style={{ fontSize: "25px", fontWeight: "bold", color: "#14C38E" }}>마이페이지</Label>
             </FormGroup>
-            <div style={{ paddingBottom: "30px" }}>
-                <Avvvatars
-                    src={Image}
-                    style={{ margin: '20px' }}
-                    size={65}
-                    onClick={() => { fileInput.current.click() }} />
+            <div style={{  paddingBottom: "20px", textAlign:"left" }}>
+                <img src={files ? URL.createObjectURL(files) : Image} width="100px" height="100px" alt='' style={{ marginRight: "10px", borderRadius: "50px", width: "55px", height: "55px" }} />
             </div>
             <div style={{ marginLeft: "5px" }}>
                 <FormGroup style={{ textAlign: "left", display: "flex" }}>
@@ -62,8 +59,8 @@ const Profiledetail = () => {
                 </FormGroup>
                 <FormGroup style={{ textAlign: "left", display: "flex", paddingBottom: "24px" }}>
                     <Label for="accountid" style={{ fontSize: "20px", width: "100px" }}>계좌번호</Label>
-                    <Label for="accountbank" style={{fontSize:"16px", lineHeight:"30px"}}>{user.accountbank==null?"":user.accountbank}</Label>&nbsp;
-                    <Label for="accountid" style={{ fontSize: "16px", lineHeight:"30px" }}>{user.accountid==null?"등록된 계좌번호가 없습니다":user.accountid}</Label>
+                    <Label for="accountbank" style={{ fontSize: "16px", lineHeight: "30px" }}>{user.accountbank == null ? "" : user.accountbank}</Label>&nbsp;
+                    <Label for="accountid" style={{ fontSize: "16px", lineHeight: "30px" }}>{user.accountid == null ? "등록된 계좌번호가 없습니다" : user.accountid}</Label>
                 </FormGroup>
             </div>
             <Link to="/profilemodify">

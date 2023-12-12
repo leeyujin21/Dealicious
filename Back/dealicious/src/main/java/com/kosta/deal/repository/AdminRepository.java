@@ -11,4 +11,5 @@ import com.kosta.deal.entity.Admin;
 public interface AdminRepository extends JpaRepository<Admin, String>{
     Optional<Admin> findByAdminid(String adminid);
     Optional<Admin> findByAdminidAndPassword(String adminid, String password);
+    boolean existsByAdminid(String adminid) throws Exception;
 }

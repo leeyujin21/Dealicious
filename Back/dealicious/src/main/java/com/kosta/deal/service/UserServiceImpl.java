@@ -22,4 +22,12 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
+	@Override
+	public boolean checkNickname(String nickname) throws Exception {
+		boolean checknickname = userRepository.existsByNickname(nickname);
+		if(checknickname) {
+			return false;
+		} return true;
+	}
+
 }

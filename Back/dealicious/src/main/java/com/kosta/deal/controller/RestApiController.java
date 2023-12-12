@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kosta.deal.config.auth.PrincipalDetails;
 import com.kosta.deal.entity.User;
 import com.kosta.deal.repository.UserRepository;
+import com.kosta.deal.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class RestApiController {
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final UserService userService;
 
 	@GetMapping("user")
 	public ResponseEntity<User> user(Authentication authentication) {
@@ -35,7 +38,7 @@ public class RestApiController {
 		return new ResponseEntity<User>(principalDetails.getUser(), HttpStatus.OK);
 	}
 
-	@PutMapping("user")
+	@PutMapping("profilemodify")
 	public ResponseEntity<String> updateUser(@RequestBody User updatedUser, Authentication authentication) {
 		if (authentication == null) {
 			return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
@@ -45,6 +48,10 @@ public class RestApiController {
 		User currentUser = principalDetails.getUser();
 
 		currentUser.setNickname(updatedUser.getNickname());
+		System.out.println("---------------");
+		System.out.println(updatedUser.getAccountbank());
+		currentUser.setAccountbank(updatedUser.getAccountbank());
+		currentUser.setAccountid(updatedUser.getAccountid());
 
 		userRepository.save(currentUser);
 
@@ -117,6 +124,17 @@ public class RestApiController {
         userRepository.save(currentUser);
 
         return new ResponseEntity<>("비밀번호가 성공적으로 변경되었습니다.", HttpStatus.OK);
+    }
+    
+    @GetMapping("/nicknamecheck/{nickname}")
+    public ResponseEntity<Boolean> nicknamecheck(@PathVariable String nickname) {
+    	try {
+    		Boolean res = userService.checkNickname(nickname);
+			return new ResponseEntity<Boolean>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+		}
     }
 
 }
