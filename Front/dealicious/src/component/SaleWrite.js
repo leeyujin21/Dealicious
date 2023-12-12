@@ -64,7 +64,7 @@ const SaleWrite=()=>{
     const [sale, setSale] = useState({      //상품 정보 초기화
         title: '',
         category: '',
-        price: '',
+        amount: '',
         place: '',
         content: '',
         ggull:'',
@@ -80,7 +80,7 @@ const SaleWrite=()=>{
     const isFormValid = () => { //유효성검사
         return (
             sale.title.trim() !== '' &&   //공백제거해서 비어있지 않으면
-            sale.price.trim() !== '' &&
+            sale.amount.trim() !== '' &&
             sale.place.trim() !== '' &&
             sale.category.trim() !==''&&
             sale.content.trim() !== ''&&
@@ -104,7 +104,7 @@ const SaleWrite=()=>{
         const formData = new FormData();
         formData.append("title", sale.title);
         formData.append("category",sale.category);
-        formData.append("price", sale.price);
+        formData.append("amount", sale.amount);
         formData.append("place", sale.place);
         formData.append("content", sale.content);
         formData.append("ggull", sale.ggull);
@@ -226,7 +226,7 @@ const SaleWrite=()=>{
         <div style={{display:"flex"}}>
             <div>
                 <div style={{marginBottom:"5px", fontSize:"18px"}}>가격</div>
-                <div><Input type="text" placeholder="10,000원" style={{borderRadius:"5px",height:"40px" ,width:"180px",float:"left"}}name="price" value={sale.price} onChange={handleInputChange}></Input></div>
+                <div><Input type="text" placeholder="10,000원" style={{borderRadius:"5px",height:"40px" ,width:"180px",float:"left"}}name="amount" value={sale.amount} onChange={handleInputChange}></Input></div>
             </div>
             <div>
                 <div style={{marginBottom:"5px", fontSize:"18px", marginLeft:"25px"}}>장소</div>

@@ -10,7 +10,7 @@ import axios from 'axios';
 function SaleDetail() {
     const {num} =useParams();
     const [sale,setSale] = useState({
-        num:'',email:'',title:'',type:'',amount:'',category:'',content:'',price:'',place:'',fileurl:'',status:'',image:'',viewcount:null,zzimcnt:null,
+        num:'',email:'',title:'',type:'',amount:'',category:'',content:'',place:'',fileurl:'',status:'',image:'',viewcount:null,zzimcnt:null,
         buyeremail:'',writerdate:''})
         const [heart, setHeart] = useState(false);
         const navigate = useNavigate();
