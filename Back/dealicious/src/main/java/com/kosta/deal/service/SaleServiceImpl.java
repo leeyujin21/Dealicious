@@ -141,7 +141,7 @@ public class SaleServiceImpl implements SaleService{
 
 	@Override
 	public void readImage(Integer num, OutputStream out) throws Exception {
-		String dir="c:/pch/upload/";
+		String dir="c:/upload/";
 		FileInputStream fis= new FileInputStream(dir+num);
 		FileCopyUtils.copy(fis, out);
 		fis.close();
@@ -157,6 +157,18 @@ public class SaleServiceImpl implements SaleService{
 	public Sale saleDetail(Integer num) throws Exception {
 		
 		return saleDslRepository.findSaleBySaleNum(num);
+	}
+
+	@Override
+	public Boolean selectSaleLike(String id, Integer num) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Sale saleInfo(Integer num) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
