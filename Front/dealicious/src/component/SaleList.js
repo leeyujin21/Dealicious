@@ -28,16 +28,16 @@ const SaleList=()=> {
     
     setTimeAgo(`${minutesAgo}분 전`);
     
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && saleList.length > 0) {
+    const observer = new IntersectionObserver((entries) => {//IntersectionObserver를 생성하여 관찰 대상 요소(observerRef.current)의 교차점을 감시
+      if (entries[0].isIntersecting && saleList.length > 0) {//관찰 대상 요소가 뷰포트와 교차되고 데이터가 있을 때(saleList.length > 0), Axios를 사용하여 서버에서 데이터를 가져오는 GET 요청
           axios.get(`http://localhost:8090/salelist/${page + 1}`)
               .then(res => {
-                  const newSaleList = res.data.saleList;
+                  const newSaleList = res.data.saleList;//새로운 데이터가 수신되면(newSaleList.length > 0), setSaleList 함수를 사용하여 새 데이터를 기존 saleList에 추가하고 페이지 번호를 업데이트
                   if (newSaleList.length > 0) {
                       setSaleList(prevSaleList => [...prevSaleList, ...newSaleList]);
                       setPage(page + 1);
-                  } else {
-                      observer.disconnect(); // 새로운 데이터가 없으면 Intersection Observer를 중지합니다.
+                  } else {    //새로운 데이터가 없으면 Intersection Observer를 중지하여 추가 요청을 방지
+                      observer.disconnect(); 
                   }
               })
               .catch(err => {
@@ -50,7 +50,7 @@ const SaleList=()=> {
       observer.observe(observerRef.current);
   }
 
-  return () => {
+  return () => {//컴포넌트가 언마운트되거나 의존성인 page 또는 saleList.length가 변경될 때 옵저버를 해제
       if (observerRef.current) {
           observer.disconnect(); // 컴포넌트가 언마운트될 때 Observer를 해제합니다.
       }
