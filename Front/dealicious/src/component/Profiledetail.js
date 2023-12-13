@@ -8,25 +8,10 @@ import { useSelector } from "react-redux";
 
 const Profiledetail = () => {
     const [Image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
-    const fileInput = useRef(null)
-    const dir = "C:\\lyj\\upload\\";
-    const [files, setFiles] = useState(null);
     const [user, setUser] = useState({ name: '', email: '', nickname: '', typename: '', tel: '', accountid: '', accountbank: '', profileimgurl:'' })
-    const token = useSelector(state => state.persistedReducer.token);
-    console.log("token:" + token);
+    const temp = useSelector(state => state.persistedReducer.user);
     useEffect(() => {
-        axios.get("http://localhost:8090/user", {
-            headers: {
-                Authorization: token,
-            }
-        })
-            .then(res => {
-                console.log(res)
-                setUser(res.data);
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        setUser(temp);
     }, [])
     return (
         <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "50px", paddingLeft: "50px", paddingRight: "50px" }}>
@@ -35,7 +20,7 @@ const Profiledetail = () => {
                 <Label style={{ fontSize: "25px", fontWeight: "bold", color: "#14C38E" }}>마이페이지</Label>
             </FormGroup>
             <div style={{  paddingBottom: "20px", textAlign:"left" }}>
-                <img src={files ? Image : `http://localhost:8090/img/${user.profileimgurl}`} width="100px" height="100px" alt='' style={{ marginRight: "10px", borderRadius: "50px", width: "55px", height: "55px" }} />
+                <img src={user.profileimgurl ? `http://localhost:8090/img/${user.profileimgurl}` : Image} width="100px" height="100px" alt='' style={{ marginRight: "10px", borderRadius: "50px", width: "55px", height: "55px" }} />
             </div>
             <div style={{ marginLeft: "5px" }}>
                 <FormGroup style={{ textAlign: "left", display: "flex" }}>

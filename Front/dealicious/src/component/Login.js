@@ -54,7 +54,7 @@ const Login = () => {
                     .catch(err => {
                         console.log(err)
                     })
-                
+
             })
             .catch(error => {
                 if (error.response) {
@@ -68,6 +68,10 @@ const Login = () => {
 
     function goToNaver() {
         window.location.href = "http://localhost:8090/oauth2/authorization/naver"
+    }
+
+    function goToKakao() {
+        window.location.href = "http://localhost:8090/oauth2/authorization/kakao"
     }
 
     return (
@@ -93,7 +97,7 @@ const Login = () => {
                 <br />
                 <Button style={{ width: "325px", height: "55px", fontSize: "20px", backgroundColor: "#14C38E", borderStyle: "none", marginBottom: "10px" }} onClick={submit}>이메일로 로그인</Button>
                 <a href="/join" style={{ color: "#999999", textDecoration: "none" }}>회원가입</a>
-                <Button style={{ width: "325px", height: "55px", fontSize: "20px", backgroundColor: "#FEE500", color: "#000000", borderStyle: "none", marginTop: "20px" }}>카카오로 시작</Button>
+                <Button style={{ width: "325px", height: "55px", fontSize: "20px", backgroundColor: "#FEE500", color: "#000000", borderStyle: "none", marginTop: "20px" }} onClick={goToKakao}>카카오로 시작</Button>
                 <div style={{ height: "10px" }}></div>
                 <Button style={{ width: "325px", height: "55px", fontSize: "20px", backgroundColor: "#03C75A", borderStyle: "none" }} onClick={goToNaver}>
                     <a style={{ color: "white", textDecoration: "none" }}>네이버로 시작</a>

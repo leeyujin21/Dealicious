@@ -196,6 +196,18 @@ public class SaleServiceImpl implements SaleService{
 
 	
 
+	@Override
+	public Boolean selectSaleLike(String id, Integer num) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Sale saleInfo(Integer num) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 

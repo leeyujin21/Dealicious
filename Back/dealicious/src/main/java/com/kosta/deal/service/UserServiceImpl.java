@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void uploadProfileimg(User user, MultipartFile file) throws Exception {
-		String dir = "C:\\lyj\\upload\\";
+		String dir="c:/upload/";
 		if (file != null && !file.isEmpty()) {
             try {
                 // file table에 insert
@@ -65,5 +65,11 @@ public class UserServiceImpl implements UserService {
                 throw new Exception("프로필 이미지를 업로드하는 중 오류가 발생했습니다.");
             }
         }
+	}
+
+	@Override
+	public User findUserByEmail(String email) throws Exception {
+		
+		return userRepository.findByEmail(email).get();
 	}
 }
