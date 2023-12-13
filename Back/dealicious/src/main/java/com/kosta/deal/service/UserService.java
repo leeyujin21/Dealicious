@@ -8,4 +8,5 @@ public interface UserService {
 	User login(String email, String password) throws Exception;
 	boolean checkNickname(String nickname) throws Exception;
 	void uploadProfileimg(User user, MultipartFile file) throws Exception;
+	User findUserByEmail(String email) throws Exception;
 }

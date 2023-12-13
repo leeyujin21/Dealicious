@@ -41,14 +41,8 @@ public class RestApiController {
 	}
 
 	@PutMapping("profilemodify")
-	public ResponseEntity<String> updateUser(@ModelAttribute User updatedUser, Authentication authentication, MultipartFile file) throws Exception {
-		if (authentication == null) {
-			return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
-		}
-
-		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-		User currentUser = principalDetails.getUser();
-		
+	public ResponseEntity<User> updateUser(@ModelAttribute User updatedUser, MultipartFile file) throws Exception {
+		User currentUser = userService.findUserByEmail(updatedUser.getEmail());
 		currentUser.setNickname(updatedUser.getNickname());
 		System.out.println("---------------");
 		System.out.println(updatedUser.getAccountbank());
@@ -58,7 +52,7 @@ public class RestApiController {
 		System.out.println(currentUser);
 		userRepository.save(currentUser);
 
-		return new ResponseEntity<>("회원 정보가 수정되었습니다.", HttpStatus.OK);
+		return new ResponseEntity<>(currentUser, HttpStatus.OK);
 	}
 
 	@GetMapping("manager/reports")

@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button, FormGroup, Input, Label } from "reactstrap";
 import { CgClose } from "react-icons/cg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Join = () => {
     const [type, setType] = useState(); // 사용자가 선택한 값 저장
@@ -10,7 +11,6 @@ const Join = () => {
     const handleTypeChange = (e) => {
         setType(e.target.value);
     };
-
     const handleClick = () => {
         // 체크 여부 확인
         if (!type) {
@@ -57,7 +57,7 @@ const Join = () => {
                     />
                     직장인
                 </Label>
-                <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height:"10px" }}>{!type?errorMessage:""}</div>
+                <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height: "10px" }}>{!type ? errorMessage : ""}</div>
             </FormGroup>
             <Button style={{
                 width: "325px", height: "55px", fontSize: "20px",

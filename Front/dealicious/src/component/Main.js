@@ -11,22 +11,8 @@ import React, { useState,useEffect} from 'react';
 import axios from 'axios';
 
 const Main = () => {
-  const [saleList,setSaleList] = useState([]);    
-  // useEffect(()=>{
-  //   axios.get(`http://localhost:8090/salelist/${category}`)
-  //   .then(res => {
-  //     console.log(res);
-  //     setSaleList([]);
-  //     setSaleList((_sale_list) => [
-  //       ..._sale_list, ...res.data.saleList
-  //     ]);
-  //   })
-  //         .catch(err=>{
-  //           console.log(err)
-  //       })
-        
-
-  //   },[])
+  const {category} =useParams();
+  const [saleList,setSaleList] = useState([]);
   return (
     <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
       <Link><img src="..\dealmain.png" style={{width:"385px"}}></img></Link>
@@ -126,7 +112,7 @@ const Main = () => {
       <div style={{ display: "flex", width: "385px" }}>
         <Link to="/salelist/mobile" style={{ color: "black", width: "33%" }}>
           <FaMobileAlt size="50" color="#E25D5D" style={{ marginBottom: "5px" }} /><br />
-          <div style={{ color: "gray" }}>모바일</div>
+          <div style={{ color: "gray" }}>모바일/태블릿</div>
         </Link>
         <Link to="/salelist/clothes" style={{ color: "black", width: "33%" }}>
           <IoShirt size="50" color="#F39238" style={{ marginBottom: "5px" }} /><br />
