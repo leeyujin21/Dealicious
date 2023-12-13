@@ -9,6 +9,33 @@ import { Button } from 'reactstrap';
 const Chat = () => {
   const [modal1IsOpen, setModal1IsOpen] = useState(false);
   const [modal2IsOpen, setModal2IsOpen] = useState(false);
+  const [rating, setRating] = useState(0); // 사용자가 선택한 별점을 저장
+  const [fixedRating, setFixedRating] = useState(0);
+
+  const handleClick = (starValue) => {
+    setRating(starValue);
+    setFixedRating(starValue); // 사용자가 선택한 별을 고정
+  };
+
+  const handleHover = (starValue) => {
+    if (fixedRating === 0) {
+      setRating(starValue);
+    }
+  };
+
+  const handleHoverLeave = () => {
+    if (fixedRating === 0) {
+      setRating(0);
+    }
+  };
+  const handleRegister = () => {
+    // 여기서 실제로 등록하는 로직을 구현.
+    // 예시로 console에 선택한 별점을 출력
+    console.log(`등록된 별점: ${rating}`);
+
+    // 등록 후 모달을 닫을 수 있도록 처리
+    setModal1IsOpen(false);
+  };
   return (
     <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
       <div style={{ textAlign: "left", color: "#14C38E", display: "flex", verticalAlign: "middle" }}>
@@ -67,14 +94,25 @@ const Chat = () => {
             <div><img src="./1.png" /></div>
             <div style={{ textAlign: "center", marginTop: "5px" }}>디스펜서</div>
             <div style={{ textAlign: "center" }}><b>60,000원</b></div>
-            <div style={{ marginTop: "5px" }}>
-              <FaStar size="25" color="#F2D43E" />
-              <FaStar size="25" color="#F2D43E" />
-              <FaStar size="25" color="#F2D43E" />
-              <FaStar size="25" color="#F2D43E" />
-              <FaStar size="25" color="#F2D43E" />
-            </div>
-            <button style={{ width: "60px", height: "35px", borderRadius: "8px", backgroundColor: "#14C38E", border: "white", fontWeight: "bold", color: "white", marginTop: "20px" }} onClick={() => setModal1IsOpen(false)}>등록</button>
+            <div>
+      {[...Array(5)].map((star, i) => {
+        const starValue = i + 1;
+
+        return (
+          <FaStar
+            key={i}
+            size={30}
+            color={starValue <= (fixedRating !== 0 ? fixedRating : rating) ? '#ffc107' : '#e4e5e9'}
+            style={{ cursor: 'pointer' }}
+            onClick={() => handleClick(starValue)}
+            onMouseEnter={() => handleHover(starValue)}
+            onMouseLeave={handleHoverLeave}
+          />
+        );
+      })}
+     
+    </div>
+            <Button style={{ width: "60px", height: "35px", borderRadius: "8px", backgroundColor: "#14C38E", border: "white", fontWeight: "bold", color: "white", marginTop: "20px" }} onClick={handleRegister}>등록</Button>
           </div>
         </Modal>
       </div>

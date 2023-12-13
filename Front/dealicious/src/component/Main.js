@@ -13,22 +13,6 @@ import axios from 'axios';
 const Main = () => {
   const {category} =useParams();
   const [saleList,setSaleList] = useState([]);
-  
-  // useEffect(()=>{
-  //   axios.get(`http://localhost:8090/salelist/${category}`)
-  //   .then(res => {
-  //     console.log(res);
-  //     setSaleList([]);
-  //     setSaleList((_sale_list) => [
-  //       ..._sale_list, ...res.data.saleList
-  //     ]);
-  //   })
-  //         .catch(err=>{
-  //           console.log(err)
-  //       })
-        
-
-  //   },[])
   return (
     <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
       <Link><img src="..\dealmain.png" style={{width:"385px"}}></img></Link>
@@ -126,19 +110,16 @@ const Main = () => {
       </div>
       <br />
       <div style={{ display: "flex", width: "385px" }}>
-       {saleList.map((item, index) =>
-        <Link to={item.category} style={{ color: "black", width: "33%" }} key={index}>
+        <Link to="/salelist/mobile" style={{ color: "black", width: "33%" }}>
           <FaMobileAlt size="50" color="#E25D5D" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>모바일/태블릿</div>
         </Link>
-        )}
-     
-        <Link to="/salelist/{category}" style={{ color: "black", width: "33%" }}>
+        <Link to="/salelist/clothes" style={{ color: "black", width: "33%" }}>
           <IoShirt size="50" color="#F39238" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>의류</div>
         </Link>
 
-        <Link to="/salelist/{category}" style={{ color: "black", width: "33%" }}>
+        <Link to="/salelist/free" style={{ color: "black", width: "33%" }}>
           <BiSolidDonateHeart size="50" color="#F3E138" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray" }}>나눔</div>
         </Link>
@@ -150,11 +131,11 @@ const Main = () => {
             <IoTicketSharp size="50" color="#3FCC80" style={{ marginBottom: "5px" }} /><br />
             <div style={{ color: "gray" }}>티켓/쿠폰</div>
           </Link>
-          <Link to="/salelist/{category}" style={{ color: "black", width: "33%" }}>
+          <Link to="/salelist/pc" style={{ color: "black", width: "33%" }}>
             <GiLaptop size="50" color="#3FA2CC" style={{ marginBottom: "5px" }} /><br />
             <div style={{ color: "gray" }}>노트북/PC</div>
           </Link>
-          <Link to="/salelist/{category}" style={{ color: "black", width: "33%" }}>
+          <Link to="/salelist/others" style={{ color: "black", width: "33%" }}>
             <MdOutlineMoreHoriz size="50" color="gray" style={{ marginBottom: "5px" }} /><br />
             <div style={{ color: "gray" }}>기타</div>
           </Link>

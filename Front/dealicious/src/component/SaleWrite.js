@@ -7,6 +7,7 @@ import { Input,Button } from 'reactstrap';
 import { FaCamera } from "react-icons/fa";
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { current } from '@reduxjs/toolkit';
 
 
 
@@ -18,22 +19,29 @@ const SaleWrite=()=>{
     const [selectedImages, setSelectedImages] = useState([]); // 여러 이미지를 저장하는 배열
     const fileInputRef = useRef(null);
     const [timeAgo, setTimeAgo] = useState('');
+    const [sale, setSale] = useState({      //상품 정보 초기화
+        title: '',
+        category: '',
+        amount: '',
+        place: '',
+        content: '',
+        ggull:'0',
+        fileurl:''
+    });
 
     const calculateTimeAgo = (submissionTime) => {  
-        const currentTime = new Date();  //현재시간
-        const timeDiffInMs = currentTime - submissionTime;  //현재시간 - 상품등록시간
-        const minutesAgo = Math.floor(timeDiffInMs / (1000 * 60));  
+        const currentTime = new Date(); // 현재 시간
+        const timeDiffInMs = currentTime - submissionTime; // 현재 시간 - 등록 시간
+        const minutesAgo = Math.floor(timeDiffInMs / (1000 * 60)); // 분 단위로 시간 차이 계산
 
         if (minutesAgo < 60) {
-            setTimeAgo(`${minutesAgo}분 전`);
+            setTimeAgo(`${minutesAgo}분 전`); // 현재 시간과 등록 시간의 차이를 분으로 표시
         } else {
             const hoursAgo = Math.floor(minutesAgo / 60);
-            setTimeAgo(`${hoursAgo}시간 전`);
+            setTimeAgo(`${hoursAgo}시간 전`); // 1시간 이상인 경우 'n시간 전'으로 표시
         }
     };
       
-    
-
     const removeImage = (indexToRemove) => {
         const updatedImages = selectedImages.filter((_, index) => index !== indexToRemove);
         setSelectedImages(updatedImages);
@@ -48,33 +56,20 @@ const SaleWrite=()=>{
             }
         }
     };
-    // 사진 클릭 시 Input file 엘리먼트를 클릭하는 함수
-    const handleClick = () => {
-        document.getElementById('file').click();
-    };
+    
     const changeImage = () => {
         if (currentImage === "./ggul2.png") {
             setCurrentImage("./ggul.png");
-             // 다른 이미지로 변경.
-        } else {
+            setSale({ ...sale, ggull: 1 });
+        } else if(currentImage==='./ggul.png') {
             setCurrentImage("./ggul2.png"); // 처음 이미지로 다시 변경.
-           
+            setSale({ ...sale, ggull: 0 });
         }
     };
-    const [sale, setSale] = useState({      //상품 정보 초기화
-        title: '',
-        category: '',
-        amount: '',
-        place: '',
-        content: '',
-        ggull:'',
-        fileurl:''
-       
-
-    });
+    
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setSale({ ...sale, [name]: value });
+        const { name, value } = e.target;//e.target은 이벤트가 발생한 HTML 엘리먼트
+        setSale({ ...sale, [name]: value });//name 속성은 해당 입력 필드의 이름을 나타내며, value는 그 입력 필드의 값
     };
    
     const isFormValid = () => { //유효성검사
@@ -83,14 +78,10 @@ const SaleWrite=()=>{
             sale.amount.trim() !== '' &&
             sale.place.trim() !== '' &&
             sale.category.trim() !==''&&
-            sale.content.trim() !== ''&&
-            sale.fileurl.trim()!==''&&
-            sale.ggull.trim()!==''
-            
+            sale.content.trim() !== ''
             
         );
     };
-
 
     const submit = (e) => {
         if (!isFormValid()) {
@@ -115,24 +106,19 @@ const SaleWrite=()=>{
         }
 
         console.log(formData)
+        
         axios.post('http://localhost:8090/salewrite', formData)
-        .then(res=> {
-            console.log(res);
-            // 판매 정보가 성공적으로 제출되면 현재 시간과 비교하여 시간차를 계산
-            const submissionTime = new Date(); // 현재 시간
-            
-
-            const saleSubmissionTime = new Date(); // 실제 서버로부터 받은 시간으로 설정 필요
-
-            calculateTimeAgo(saleSubmissionTime);
-
-            console.log(`판매 정보가 ${timeAgo}에 등록되었습니다.`);
-            navigate(`/salelist`); // 이미지 URL 전달 // 등록된 판매 정보 페이지로 이동
-        })
-        .catch(err => {
-            console.log(err);
-        });
-};
+    .then(res=> {
+        console.log(res);
+        console.log(`판매 정보가 ${timeAgo}에 등록되었습니다.`);
+        navigate(`/salelist`);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+    const submissionTime = new Date(); // 등록 시간
+    calculateTimeAgo(submissionTime); // 함수 호출하여 시간 차이 계산
+    }
     return(
         <div className='main' style={{textAlign:'left',overflow:"scroll", height:"732px", overflowX:"hidden"}}> 
         <br/>
@@ -142,48 +128,48 @@ const SaleWrite=()=>{
          <span style={{color:"#14C38E",fontSize:"25px",marginLeft:"105px"}}><b>판매글작성</b></span> 
          <br/><br/>
          <div style={{backgroundColor:"#E9E9E9", width:"48px", height:"63px", textAlign:"center", paddingTop:"5px", position:"relative", cursor:"pointer"}}
-             onClick={()=>document.getElementById("file").click()}>
+             >
         <div>
-            <FaCamera size="30" color='gray' onClick={handleClick} />
-            <div style={{ position: "absolute", textAlign: "center", width: "48px", paddingBottom: "5px", fontWeight: "bold" }}>
-                {imageCount}/5
+            <div onClick={()=>document.getElementById("file").click()}>
+                <FaCamera size="30" color='gray'  />
+                <div style={{ position: "absolute", textAlign: "center", width: "48px", paddingBottom: "5px", fontWeight: "bold" }}>
+                    {imageCount}/5
+                </div>
             </div>
             <Input name="file" type="file" id="file" accept="image/*" onChange={fileChange} hidden ref={fileInputRef} />
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start',marginLeft:"20px"}}>
-        
-        {selectedImages.map((image, index) => (
-            <div key={index} style={{ margin: '5px', position: 'relative',marginTop:"-30px" }}>
-                <a>
-                <img
-                    src={URL.createObjectURL(image)}
-                    alt={`Selected ${index + 1}`}
-                    style={{ width: '55px', height: '55px',marginLeft:"50px",display:"inline-block"}}
-                
-                />
-                </a>
-            <button
-                onClick={() => removeImage(index)}
-                style={{
-                    position: 'absolute',
-                    top: '-10px',
-                    right: '-10px',
-                    backgroundColor: '#14C38E',
-                    borderRadius: '50%',
-                    cursor: 'pointer',
-                    padding: '0',
-                    width: '20px',
-                    height: '20px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    fontSize: '12px',
-                    color: 'white',
-                }}
-            >
-                X
-            </button>
-        </div>
-    ))}
+            
+            <div style={{ display: 'flex', marginLeft: '20px', marginTop: '-30px' }}>
+  {selectedImages.map((image, index) => (
+    <div key={index} style={{ marginLeft:'10px', position: 'relative' }}>
+      <img
+        src={URL.createObjectURL(image)}
+        alt={`Selected ${index + 1}`}
+        style={{ width: '45px', height: '45px',marginLeft:"20px" }}
+      />
+      <button
+        onClick={() => removeImage(index)}
+        style={{
+          position: 'absolute',
+          top: '-10px',
+          right: '-10px',
+          backgroundColor: '#14C38E',
+          borderRadius: '50%',
+          border:"none",
+          cursor: 'pointer',
+          padding: '0',
+          width: '20px',
+          height: '20px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontSize: '12px',
+          color: 'white',
+        }}
+      >
+        X
+      </button>
+    </div>
+  ))}
 </div>
         </div>
         </div>
@@ -204,8 +190,7 @@ const SaleWrite=()=>{
     style={{ width: "180px", height: "40px", textAlign: "center", borderRadius: "5px", float: "left", borderColor: "lightgray" }}
     name="category"
     value={sale.category}
-    onChange={handleInputChange}
->
+    onChange={handleInputChange}>
     <option value="" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;선택</option>
     <option value="mobile" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;모바일/태블릿</option>
                     <option value="pc" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;노트북/PC</option>
@@ -216,7 +201,7 @@ const SaleWrite=()=>{
                 </select> 
             </div>
             <div style={{marginLeft:"25px"}}>
-            <div style={{marginBottom:"5px", fontSize:"18px"}} onClick={changeImage} name="ggull" value={sale.ggull}>
+            <div style={{marginBottom:"10px", fontSize:"18px"}} name="ggull" value={sale.ggull}>
                 꿀페이
             </div>
             <img src={currentImage} style={{width:"50px"}} onClick={changeImage} alt="Ggul Image" />
@@ -265,5 +250,5 @@ const SaleWrite=()=>{
 
 
     )
-}
+};
 export default SaleWrite;
