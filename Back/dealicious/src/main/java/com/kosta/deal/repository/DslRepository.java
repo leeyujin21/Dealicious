@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kosta.deal.entity.QPay;
 import com.kosta.deal.entity.QSale;
+import com.kosta.deal.entity.QUnivData;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -47,6 +48,14 @@ public class DslRepository {
 				.join(sale)
 				.on(pay.salenum.eq(sale.num))
 				.where(pay.paydate.loe(eDate).and(pay.paydate.goe(sDate)).and(sale.status.eq("정산완료")))
+				.fetch();
+	}
+	
+	public List<String> findUnivNameList(String typename) {
+		QUnivData univData = QUnivData.univData;
+		return jpaQueryFactory.select(univData.schoolName)
+				.from(univData)
+				.where(univData.schoolName.like("%" + typename + "%"))
 				.fetch();
 	}
 }

@@ -1,63 +1,83 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Button, Col, FormGroup, Input, Label } from "reactstrap";
+import { Button, FormGroup, Input, Label } from "reactstrap";
 import { IoIosSearch } from "react-icons/io";
 import { CgClose } from "react-icons/cg";
 import { useState } from "react";
-import Swal from "sweetalert2";
+import axios from "axios";
 
 const Join2 = () => {
-    const [typename, setTypename] = useState('');
-    const location = useLocation(); // useLocation 훅 사용
-    const type = location.state?.type; // join.js에서 전달받은 type
-    const [errorMessage, setErrorMessage] = useState('');
-    const navigate = useNavigate();
+  const [typename, setTypename] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
+  const location = useLocation();
+  const type = location.state?.type;
+  const navigate = useNavigate();
 
-    const handleClick = () => {
-        // typename이 비어 있는지 확인
-        if (!typename) {
-            setErrorMessage("키워드를 입력하세요")
-        } else {
-            // navigate 함수를 호출하여 Join3.js로 이동하면서 필요한 데이터를 전달
-            navigate('/join3', { state: { type: type, typename: typename } });
-            console.log(type);
-            console.log(typename);
-        }
-    };
+  const handleSearch = () => {
+    if (!typename) {
+      setErrorMessage("키워드를 입력하세요");
+    } else {
+      axios.post('http://localhost:8090/univ/getSchoolName', { typename: typename })
+        .then(response => {
+          setSearchResults(response.data);
+        })
+        .catch(error => {
+          console.error('Error making AJAX request:', error);
+        });
+    }
+  };
 
-    
+  const handleClick = () => {
+    if (!typename) {
+      setErrorMessage("키워드를 입력하세요");
+    } else {
+      handleSearch();
+      navigate('/join3', { state: { type: type, typename: typename } });
+      console.log(typename);
+    }
+  };
 
-    return (
-        <div className='main' style={{ overflow: "scroll", height: "832px", overflowX: "hidden", paddingTop: "130px", paddingRight: "50px", paddingLeft: "50px" }}>
-            <div style={{ width: "330px", textAlign: "right", paddingBottom: "20px" }}>
-                <Link to={"/login"}><CgClose size={30} color="darkgray" /></Link>
-            </div>
-            <a style={{ fontSize: "30px", fontWeight: "bold", textAlign: "center", color: "#14C38E" }}>회원가입</a>
-            <div style={{ paddingBottom: "50px" }}></div>
-            <FormGroup>
-                <br /><br /><br />
-                <Label for="select" style={{ fontSize: "25px", fontWeight: "bold" }}>{type == "univ" ? "학생" : "직장인"}</Label>
-                <br />
-            </FormGroup>
-            <FormGroup style={{ paddingBottom: "162px" }}>
-                <div style={{display: "flex"}}>
-                    <Input
-                        type="text"
-                        name="typename"
-                        id="typename"
-                        style={{ width: "300px", height: "55px", backgroundColor: "#F9F9F9", border: "1px solid #EDEDED" }}
-                        placeholder="키워드를 입력하세요"
-                        onChange={(e) => setTypename(e.target.value)}
-                        value={typename}
-                    />&nbsp;
-                    <IoIosSearch size='35' style={{ marginTop: "10px" }} />
-                </div>
-                <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height: "10px", textAlign:"left" }}>{!typename ? errorMessage : ""}</div>
-            </FormGroup>
-            <Button style={{ width: "325px", height: "55px", fontSize: "20px", backgroundColor: "#14C38E", borderStyle: "none" }}
-                onClick={handleClick}>다음(2/4)</Button>
+  const handleResultClick = (value) => {
+    setTypename(value);
+  };
 
+  return (
+    <div className='main' style={{ overflow: "scroll", height: "832px", overflowX: "hidden", paddingTop: "130px", paddingRight: "50px", paddingLeft: "50px" }}>
+      <div style={{ width: "330px", textAlign: "right", paddingBottom: "20px" }}>
+        <Link to={"/login"}><CgClose size={30} color="darkgray" /></Link>
+      </div>
+      <a style={{ fontSize: "30px", fontWeight: "bold", textAlign: "center", color: "#14C38E" }}>회원가입</a>
+      <div style={{ paddingBottom: "50px" }}></div>
+      <FormGroup>
+        <br /><br /><br />
+        <Label for="select" style={{ fontSize: "25px", fontWeight: "bold" }}>{type === "univ" ? "학생" : "직장인"}</Label>
+        <br />
+      </FormGroup>
+      <FormGroup style={{ paddingBottom: "12px" }}>
+        <div style={{ display: "flex" }}>
+          <Input
+            type="text"
+            name="typename"
+            id="typename"
+            style={{ width: "300px", height: "55px", backgroundColor: "#F9F9F9", border: "1px solid #EDEDED" }}
+            placeholder="키워드를 입력하세요"
+            onChange={(e) => setTypename(e.target.value)}
+            value={typename}
+          />&nbsp;
+          <IoIosSearch size='35' style={{ marginTop: "10px", cursor: "pointer" }} onClick={handleSearch} />
         </div>
-    )
+        <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height: "10px", textAlign: "left" }}>{!typename ? errorMessage : ""}</div>
+        {/* 검색 결과 출력 */}
+        <div style={{ textAlign: "left", height: "180px", cursor: "pointer",maxHeight: "180px", overflowY: "auto" }}>
+          {searchResults.length === 0 ? "검색결과가 없습니다" : searchResults.map((result, index) => (
+            <div key={index} value={result} onClick={() => handleResultClick(result)}>{result}</div>
+          ))}
+        </div>
+      </FormGroup>
+      <Button style={{ width: "325px", height: "55px", fontSize: "20px", backgroundColor: "#14C38E", borderStyle: "none", lineHeight:"35px" }}
+        onClick={handleClick}>다음(2/4)</Button>
+    </div>
+  );
 }
 
 export default Join2;

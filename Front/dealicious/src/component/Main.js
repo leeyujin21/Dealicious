@@ -12,7 +12,8 @@ import axios from 'axios';
 
 const Main = () => {
   const {category} =useParams();
-  const [saleList,setSaleList] = useState([]);    
+  const [saleList,setSaleList] = useState([]);
+  
   // useEffect(()=>{
   //   axios.get(`http://localhost:8090/salelist/${category}`)
   //   .then(res => {
@@ -128,7 +129,7 @@ const Main = () => {
        {saleList.map((item, index) =>
         <Link to={item.category} style={{ color: "black", width: "33%" }} key={index}>
           <FaMobileAlt size="50" color="#E25D5D" style={{ marginBottom: "5px" }} /><br />
-          <div style={{ color: "gray" }}>{item.category}</div>
+          <div style={{ color: "gray" }}>모바일/태블릿</div>
         </Link>
         )}
      

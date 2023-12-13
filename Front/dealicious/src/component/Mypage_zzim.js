@@ -1,4 +1,3 @@
-import Avvvatars from "avvvatars-react";
 import { useEffect, useRef, useState } from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FaStar } from "react-icons/fa6";
