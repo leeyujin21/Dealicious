@@ -11,7 +11,6 @@ const Profilemodify = () => {
     const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
     const navigate = useNavigate();
     const [Image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
-    const imgBoxRef = useRef();
     const [files, setFiles] = useState(null);
     const [selected, setSelected] = useState();
     const dispatch = useDispatch();
@@ -73,29 +72,6 @@ const Profilemodify = () => {
             });
     }
 
-    // const handleProfileImageChange = (e) => {
-    //     const file = e.target.files[0];
-
-    //     if (file) {
-    //         const formData = new FormData();
-    //         formData.append("file", file);
-
-    //         axios.post("http://localhost:8090/upload-profile-image", formData, {
-    //             headers: {
-    //                 "Content-Type": "multipart/form-data",
-    //                 Authorization: token,
-    //             },
-    //         })
-    //             .then(response => {
-    //                 console.log("Profile Image Upload Success:", response);
-    //                 // 업로드 성공 시 이미지 경로 업데이트
-    //                 setImage(response.data.imageUrl);
-    //             })
-    //             .catch(error => {
-    //                 console.error("Profile Image Upload Error:", error);
-    //             });
-    //     }
-    // };
     return (
         <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "50px", paddingLeft: "50px", paddingRight: "50px" }}>
             <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>

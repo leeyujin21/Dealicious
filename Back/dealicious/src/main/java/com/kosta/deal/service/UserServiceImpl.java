@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void uploadProfileimg(User user, MultipartFile file) throws Exception {
-		String dir = "C:\\lyj\\upload\\";
+		String dir="c:/upload/";
 		if (file != null && !file.isEmpty()) {
             try {
                 // file table에 insert
