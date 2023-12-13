@@ -64,8 +64,8 @@ public class SaleController {
 	
 	
 	
-	@GetMapping("/saledetail/{num}")
-	public ResponseEntity<Map<String,Object>> saleDetail(@PathVariable Integer num){
+	@GetMapping("/saledetail/{sect}/{num}")
+	public ResponseEntity<Map<String,Object>> saleDetail(@PathVariable String sect,@PathVariable Integer num){
 		try {
 			Map<String,Object> res= new HashMap<>();
 			res = saleService.saleDetail2(num);

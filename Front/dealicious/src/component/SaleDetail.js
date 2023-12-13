@@ -186,7 +186,8 @@ function SaleDetail() {
           </div>
           <div>
             <div style={{marginLeft:"150px"}}>
-            {sale.ggull==1?<img src="/ggul.png" style={{width:"50px",height:"50px"}}/> :<img src="/ggul2.png"  style={{width:"50px",height:"50px"}}/>}
+            {sale.ggull==1?<img src="/ggul.png" style={{width:"40px",height:"40px"}}/> 
+            :<img src="/ggul2.png"  style={{width:"40px",height:"40px"}}/>}
           
             <Link to="/chat/1">
               <span style={{ textAlign: "right", marginLeft:"25px" }}>

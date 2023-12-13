@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,28 +38,18 @@ public class SaleServiceImpl implements SaleService{
 	//salelist 무한 스크롤 페이지 처리
 	@Override
 	public List<Sale> saleListByPage(PageInfo pageInfo) throws Exception {
-	    int pageSize = 10; // 페이지당 아이템 수
-	    pageInfo.setCurPage(1);
-	    int requestedPage = pageInfo.getCurPage();
-
-	    PageRequest pageRequest = PageRequest.of(requestedPage - 1, pageSize);
-	    List<Sale> saleList = saleDslRepository.findSaleListByPaging(pageRequest);
-
-	    // 현재 페이지에서의 전체 아이템 수 계산
-	    Long itemCount = saleDslRepository.findSaleCount();
-	    
-	    // 클라이언트에 전달할 총 페이지 수 계산
-	    int totalPages = (int) Math.ceil(itemCount.doubleValue() / pageSize);
-
-	    // 클라이언트에 전달할 다음 페이지의 번호 계산
-	    int nextPage = requestedPage + 1;
-
-	    pageInfo.setAllPage(totalPages);
-
-	    // 클라이언트에 전달할 다음 페이지 번호 설정
-	    pageInfo.setNextPage(nextPage);
-
-	    return saleList;
+		PageRequest pageRequest=PageRequest.of(pageInfo.getCurPage()-1,10,Sort.by(Sort.Direction.DESC,"num"));//PageRequest 페이징 처리 위한 API
+		Page<Sale> pages=saleRepository.findAll(pageRequest);
+		pageInfo.setAllPage(pages.getTotalPages());
+		int startPage=(pageInfo.getCurPage()-1)/10*10+1;
+		int endPage=Math.min(startPage+10-1, pageInfo.getAllPage());
+		pageInfo.setStartPage(startPage);
+		pageInfo.setEndPage(endPage);
+		List<Sale> saleList = new ArrayList<>();
+		for(Sale sale : pages.getContent()) {
+			saleList.add(sale);
+		}
+		return saleList;
 	}
 	
 	//salelist 별 카테고리  
@@ -133,11 +125,6 @@ public class SaleServiceImpl implements SaleService{
 		return null;
 	}
 
-	@Override
-	public Integer saleModify(Sale sale, List<MultipartFile> file) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void readImage(Integer num, OutputStream out) throws Exception {
@@ -158,6 +145,56 @@ public class SaleServiceImpl implements SaleService{
 		
 		return saleDslRepository.findSaleBySaleNum(num);
 	}
+	@Override
+	public Integer saleModify(Sale sale,List<MultipartFile> files) throws Exception {
+		Sale sale1=saleRepository.findById(sale.getNum()).get();
+		sale1.setContent(sale.getContent());
+		sale1.setTitle(sale.getTitle());
+
+		if(files!=null && files.size()!=0) {
+			String dir="c:/upload/";
+			String fileNums="";
+			for(MultipartFile file:files) {
+			//file table에 insert
+				if(file.isEmpty()) {
+					fileNums+=(fileNums.equals("")? "":",")+file.getOriginalFilename();
+				}else {
+				FileVo fileVo =FileVo.builder()
+					.directory(dir)
+					.name(file.getOriginalFilename())
+					.size(file.getSize())
+					.contenttype(file.getContentType())
+					.data(file.getBytes()).build();	
+				fileVoRepository.save(fileVo);
+			
+			
+				//upload 폴더에 upload
+				File uploadFile=new File(dir+fileVo.getNum());
+				file.transferTo(uploadFile);
+				fileNums+=(fileNums.equals("")? "":",")+fileVo.getNum();
+				}
+			}
+			sale1.setFileurl(fileNums);
+		}else {
+			sale1.setFileurl(null);
+		}
+			saleRepository.save(sale1);
+			return sale1.getNum();
+		}
+	
+
+	@Override
+	public Boolean selectSaleLike(String id, Integer num) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Sale saleInfo(Integer num) throws Exception {
+		return saleDslRepository.findSaleBySaleNum(num);
+	}
+
+	
 
 	@Override
 	public Boolean selectSaleLike(String id, Integer num) throws Exception {

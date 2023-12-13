@@ -1,18 +1,21 @@
 import axios from 'axios';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect} from 'react';
 import { FiPlusCircle } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
 import {useParams} from 'react-router-dom';
+
 
 const SaleList=()=> {
   const [timeAgo, setTimeAgo] = useState('');
   const [saleList,setSaleList] = useState([]);
   const {category} =useParams();
-  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1); // 페이지 번호
+ 
+  
+  const observerRef = useRef(null);
 
   useEffect(() => {
+   
     // 판매 정보가 등록된 시간
     const saleSubmissionTime = new Date(); // 여기에 실제 서버에서 받은 판매 정보 제출 시간
 
@@ -24,9 +27,39 @@ const SaleList=()=> {
     const minutesAgo = Math.floor(timeDiffInMs / (1000 * 60)); // 분 단위로 시간 차이 계산
     
     setTimeAgo(`${minutesAgo}분 전`);
+    
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && saleList.length > 0) {
+          axios.get(`http://localhost:8090/salelist/${page + 1}`)
+              .then(res => {
+                  const newSaleList = res.data.saleList;
+                  if (newSaleList.length > 0) {
+                      setSaleList(prevSaleList => [...prevSaleList, ...newSaleList]);
+                      setPage(page + 1);
+                  } else {
+                      observer.disconnect(); // 새로운 데이터가 없으면 Intersection Observer를 중지합니다.
+                  }
+              })
+              .catch(err => {
+                  console.log(err);
+              });
+      }
+  }, { threshold: 1 });
+
+  if (observerRef.current) {
+      observer.observe(observerRef.current);
+  }
+
+  return () => {
+      if (observerRef.current) {
+          observer.disconnect(); // 컴포넌트가 언마운트될 때 Observer를 해제합니다.
+      }
+  };
+}, [page, saleList.length]);
+  useEffect(() => {
 
     if(category==null) {
-    axios.get(`http://localhost:8090/salelist`)
+    axios.get(`http://localhost:8090/salelist/${page}`)
       .then(res => {
         console.log(res);
         setSaleList([]);
@@ -52,32 +85,7 @@ const SaleList=()=> {
       })
     }
     
-        
-    const loadMoreData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`http://localhost:8090/salelist?page=${page}`);
-        const newData = response.data.saleList;
-        setSaleList((prevData) => [...prevData, ...newData]);
-        setPage((prevPage) => prevPage + 1);
-      } catch (error) {
-        console.error('Error fetching data: ', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight
-      ) {
-        loadMoreData();
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [page]); // 페이지가 로드될 때 한 번만 실행되도록 빈 배열 전달
+  }, []); // 페이지가 로드될 때 한 번만 실행되도록 빈 배열 전달
      
       
 
@@ -90,7 +98,8 @@ const SaleList=()=> {
       
       {saleList.map((item, index) =>
       
-      <Link to={"/saledetail/"+item.num} key={index} style={{textDecoration: "none", color: "black" }}>
+      <Link to={"/saledetail/"+item.num} key={index}  style={{textDecoration: "none", color: "black" }}>
+      
         <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "124px" }}>
           <div style={{ marginTop: "15px" }}>
             <div style={{ height: "35px", display: "flex" }} >
@@ -114,10 +123,11 @@ const SaleList=()=> {
             </div>
           </div>
         </div>
+       
       </Link>
       
       )}
-
+     <div ref={observerRef} style={{ height: '10px' }} />
     </div>
 
   )

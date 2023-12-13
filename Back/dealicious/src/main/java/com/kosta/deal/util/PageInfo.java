@@ -16,10 +16,9 @@ public class PageInfo {
 	private Integer endPage;
 	private Integer PageNumber;
 	private Integer PageSize;
-	public void setNextPage(int nextPage) {
-		// TODO Auto-generated method stub
-		
-	}
+	private Integer nextPage;
+	
+	
 	
 	
 	
