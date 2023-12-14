@@ -22,6 +22,7 @@ public class CorsConfig {
 		config.addExposedHeader(JwtProperties.HEADER_STRING); //클라이언트(리액트 등)가 응답에 접근할 수 있는 Header들을 추가한다.
 		source.registerCorsConfiguration("/*", config);
 		source.registerCorsConfiguration("/*/*", config);
+		source.registerCorsConfiguration("/*/*/*", config);
 		return new CorsFilter(source);
 	}
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IoArrowBackOutline } from "react-icons/io5";
 import './img.css';
 import './text.css';
@@ -7,7 +7,8 @@ import { Input,Button } from 'reactstrap';
 import { FaCamera } from "react-icons/fa";
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { current } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
+
 
 
 
@@ -15,10 +16,9 @@ const SaleWrite=()=>{
     const [currentImage, setCurrentImage] = useState("./ggul2.png");
     const navigate=useNavigate();
     const [imageCount, setImageCount] = useState(0); // 상태 변수로 이미지 카운트를 관리.
-    const [files] = useState([]);
     const [selectedImages, setSelectedImages] = useState([]); // 여러 이미지를 저장하는 배열
     const fileInputRef = useRef(null);
-    const [timeAgo, setTimeAgo] = useState('');
+ 
     const [sale, setSale] = useState({      //상품 정보 초기화
         title: '',
         category: '',
@@ -28,19 +28,13 @@ const SaleWrite=()=>{
         ggull:'0',
         fileurl:''
     });
+    const [user, setUser] = useState({ id: '', email: '', nickname: '' });
+    const temp = useSelector(state => state.persistedReducer.user);
+    useEffect(() => {
+        setUser(temp);
+    }, [])
 
-    const calculateTimeAgo = (submissionTime) => {  
-        const currentTime = new Date(); // 현재 시간
-        const timeDiffInMs = currentTime - submissionTime; // 현재 시간 - 등록 시간
-        const minutesAgo = Math.floor(timeDiffInMs / (1000 * 60)); // 분 단위로 시간 차이 계산
-
-        if (minutesAgo < 60) {
-            setTimeAgo(`${minutesAgo}분 전`); // 현재 시간과 등록 시간의 차이를 분으로 표시
-        } else {
-            const hoursAgo = Math.floor(minutesAgo / 60);
-            setTimeAgo(`${hoursAgo}시간 전`); // 1시간 이상인 경우 'n시간 전'으로 표시
-        }
-    };
+    
       
     const removeImage = (indexToRemove) => {
         const updatedImages = selectedImages.filter((_, index) => index !== indexToRemove);
@@ -100,6 +94,8 @@ const SaleWrite=()=>{
         formData.append("content", sale.content);
         formData.append("ggull", sale.ggull);
         formData.append("file",sale.fileurl);
+        formData.append("email",user.email);
+        
         // formData.append("file", files);
         for (let image of selectedImages) {
             formData.append("file",image);
@@ -110,14 +106,13 @@ const SaleWrite=()=>{
         axios.post('http://localhost:8090/salewrite', formData)
     .then(res=> {
         console.log(res);
-        console.log(`판매 정보가 ${timeAgo}에 등록되었습니다.`);
+        
         navigate(`/salelist`);
     })
     .catch(err => {
         console.log(err);
     });
-    const submissionTime = new Date(); // 등록 시간
-    calculateTimeAgo(submissionTime); // 함수 호출하여 시간 차이 계산
+    
     }
     return(
         <div className='main' style={{textAlign:'left',overflow:"scroll", height:"732px", overflowX:"hidden"}}> 
@@ -145,6 +140,7 @@ const SaleWrite=()=>{
         src={URL.createObjectURL(image)}
         alt={`Selected ${index + 1}`}
         style={{ width: '45px', height: '45px',marginLeft:"20px" }}
+        
       />
       <button
         onClick={() => removeImage(index)}

@@ -5,9 +5,12 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -41,11 +44,13 @@ public class Sale {
 	private String status;
 	private String buyeremail;
 	private String ggull;
-	private File image;
+
 	@ColumnDefault("0")
 	private Integer viewcnt;
 	@ColumnDefault("0")
 	private Integer zzimcnt;
+	
+	
 	
 	@CreationTimestamp
 	private Timestamp writedate;
