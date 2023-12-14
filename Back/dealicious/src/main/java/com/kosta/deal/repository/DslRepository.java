@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.kosta.deal.entity.Admin;
+import com.kosta.deal.entity.QAdmin;
 import com.kosta.deal.entity.QPay;
 import com.kosta.deal.entity.QSale;
 import com.kosta.deal.entity.QUnivData;
@@ -57,5 +59,12 @@ public class DslRepository {
 				.from(univData)
 				.where(univData.schoolName.like("%" + typename + "%"))
 				.fetch();
+	}
+	
+	public Admin findAdminById(String adminid) {
+		QAdmin admin = QAdmin.admin;
+		return jpaQueryFactory.selectFrom(admin)
+				.where(admin.adminid.eq(adminid))
+				.fetchOne();
 	}
 }

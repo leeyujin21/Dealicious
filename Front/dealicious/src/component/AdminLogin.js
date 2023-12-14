@@ -12,15 +12,27 @@ const AdminLogin = () => {
 
     const submit = (e) => {
         e.preventDefault();
-        axios.post(`http://localhost:8090/adminlogin`,{adminid:adminid,password:password})
+        axios.post(`http://localhost:8090/login`,{email:adminid,password:password})
         .then(res=> {
-            console.log(res.data);
-            dispatch({type:"admin",payload:res.data});
-            //window.location.href="/adminmain";
+            console.log(res.headers.authorization);
+            dispatch({ type: "token", payload: res.headers.authorization });
+            axios.get("http://localhost:8090/adminlogin", {
+                    headers: {
+                        Authorization: res.headers.authorization,
+                    }
+                })
+                    .then(res => {
+                        console.log(res.data)
+                        dispatch({ type: "admin", payload: res.data });
+                        window.location.replace("/adminmain");
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
         })
         .catch(err=> {
             console.log(err);
-            Swal.fire(err.response.data);
+            //Swal.fire(err.response.data);
         })
 
     }

@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+import com.kosta.deal.entity.Admin;
 import com.kosta.deal.entity.User;
 
 import lombok.Data;
@@ -20,14 +21,24 @@ import lombok.Data;
 @Data
 public class PrincipalDetails implements UserDetails, OAuth2User {
 	private User user;
+	private Admin admin;
 	private Map<String, Object> attributes;
 	
 	public PrincipalDetails(User user) {
 		this.user=user;
 	}
+	
+	public PrincipalDetails(Admin admin) {
+		this.admin=admin;
+	}
 
 	public PrincipalDetails(User user, Map<String, Object> attributes) {
 		this.user=user;
+		this.attributes=attributes;
+	}
+	
+	public PrincipalDetails(Admin admin, Map<String, Object> attributes) {
+		this.admin=admin;
 		this.attributes=attributes;
 	}
 
@@ -37,7 +48,11 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 		collect.add(new GrantedAuthority() {
 			@Override
 			public String getAuthority() {
-				return user.getRoles();
+				if(user==null) {
+					return admin.getRoles();
+				} else {
+					return user.getRoles();
+				}
 			}
 		});
 		return collect;
@@ -45,12 +60,20 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
 	@Override
 	public String getPassword() {
-		return user.getPassword();
+		if(user==null) {
+			return admin.getPassword();
+		} else {
+			return user.getPassword();
+		}
 	}
 
 	@Override
 	public String getUsername() {
-		return user.getUsername();
+		if(user==null) {
+			return admin.getAdminid();
+		} else {
+			return user.getUsername();
+		}
 	}
 
 	@Override
