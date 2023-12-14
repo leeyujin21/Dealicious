@@ -16,10 +16,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import com.kosta.deal.entity.FileVo;
 import com.kosta.deal.entity.Sale;
+import com.kosta.deal.entity.SaleLike;
 import com.kosta.deal.repository.FileVoRepository;
 import com.kosta.deal.repository.SaleDslRepository;
+import com.kosta.deal.repository.SaleLikeRepository;
 import com.kosta.deal.repository.SaleRepository;
 import com.kosta.deal.util.PageInfo;
 import com.querydsl.core.Tuple;
@@ -34,6 +37,10 @@ public class SaleServiceImpl implements SaleService{
 	private SaleDslRepository saleDslRepository;
 	@Autowired
 	private FileVoRepository fileVoRepository;
+	
+	@Autowired
+	private SaleLikeRepository salelikeRepository;
+	
 	
 	//salelist 무한 스크롤 페이지 처리
 	@Override
@@ -60,24 +67,29 @@ public class SaleServiceImpl implements SaleService{
 
 	
 	@Override
-	public Map<String,Object> saleDetail2(Integer num) throws Exception {
+	public Map<String,Object> saleInfo(Integer num) throws Exception {
 		System.out.println(num);
 		Tuple tuple=saleDslRepository.findUserEmailAndRolesBySaleNum(num);
+	
 		Sale sale = tuple.get(0,Sale.class);
+		System.out.println(sale);
 		String nickname=tuple.get(1,String.class);
+		
 		String typename=tuple.get(2,String.class);
 		String profileimgurl=tuple.get(3,String.class);
-		System.out.println(profileimgurl);
+		
 		Map<String,Object> res=new HashMap<>();
 		res.put("sale",sale);
 		res.put("nickname", nickname);
 		res.put("typename", typename);
 		res.put("profileimgurl",profileimgurl);
+		System.out.println(res);
 		return res;
+		
 	}
 	@Override
 	public Integer saleWrite(Sale sale, List<MultipartFile> files) throws Exception {
-		String dir="c:/pch/upload/";
+		String dir="c:/upload/";
 		if(files!=null && !files.isEmpty()) {
 			String fileNums="";
 			for(MultipartFile file:files) {
@@ -111,7 +123,7 @@ public class SaleServiceImpl implements SaleService{
 	}
 
 	@Override
-	public void plusViewCount(Integer num) {
+	public void plusViewCount(Integer num)throws Exception {
 		Sale sale= saleRepository.findById(num).get();
 		sale.setViewcnt(sale.getViewcnt()+1);
 		saleRepository.save(sale);
@@ -120,9 +132,22 @@ public class SaleServiceImpl implements SaleService{
 
 	
 	@Override
-	public Boolean selHeartSale(String string, Integer num) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean selHeartSale(String email, Integer num) throws Exception {
+		Sale sale= saleRepository.findById(num).get();
+		SaleLike salelike= saleDslRepository.findSalelike(email, num);
+		if(salelike==null) {
+			salelikeRepository.save(SaleLike.builder()
+					.userEmail(email)
+					.saleNum(num).build());
+			sale.setZzimcnt(sale.getZzimcnt()+1);
+			saleRepository.save(sale);
+			return true;
+		}else {
+			salelikeRepository.deleteById(salelike.getNum());
+			sale.setZzimcnt(sale.getZzimcnt()-1);
+			saleRepository.save(sale);
+			return false;
+		}
 	}
 
 
@@ -135,15 +160,16 @@ public class SaleServiceImpl implements SaleService{
 	}
 
 	@Override
-	public Boolean isHeartSale(String string, Integer num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean isHeartSale(String email, Integer num) throws Exception {
+		Long cnt=saleDslRepository.findIsSalelike(email,num);
+		if(cnt<1) return false;
+		return true;
 	}
 
 	@Override
 	public Sale saleDetail(Integer num) throws Exception {
-		
 		return saleDslRepository.findSaleBySaleNum(num);
+		
 	}
 	@Override
 	public Integer saleModify(Sale sale,List<MultipartFile> files) throws Exception {
@@ -183,15 +209,10 @@ public class SaleServiceImpl implements SaleService{
 		}
 	
 
-	@Override
-	public Boolean selectSaleLike(String id, Integer num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
-	@Override
-	public Sale saleInfo(Integer num) throws Exception {
-		return saleDslRepository.findSaleBySaleNum(num);
-	}
+	
+
+	
 
 }

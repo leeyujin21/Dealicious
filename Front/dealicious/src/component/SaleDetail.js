@@ -7,8 +7,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function SaleDetail() {
-  const { num } = useParams();
-  const [currentImage, setCurrentImage] = useState("/noheart.png");
+  const { sect,num } = useParams();
   const [sale, setSale] = useState({
     num: "",
     email: "",
@@ -20,7 +19,6 @@ function SaleDetail() {
     place: "",
     fileurl: "",
     status: "",
-    image: "",
     ggull:"",
     viewcount: null,
     zzimcnt: null,
@@ -30,25 +28,29 @@ function SaleDetail() {
   
   const [heart, setHeart] = useState(false);
   const navigate = useNavigate();
+ 
 
-  const [writer, setwriter] = useState({nickname:'',typename:'',fileurl:'',ggull:''});
+  const [writer, setwriter] = useState({nickname:'',typename:'',fileurl:'',ggull:'',email:''});
   
   
   useEffect(() => {
+  
+
     axios
-      .get(`http://localhost:8090/saledetail/${num}`)
-      .then((res) => {
+      .get(`http://localhost:8090/saledetail/${sect}/${num}`)
+      .then(res => {
         console.log(res.data);
         setSale(res.data.sale);
-        setwriter({nickname:res.data.nickname,typename:res.data.typename,fileurl:res.data.profileimgurl})
+        setwriter({nickname:res.data.nickname,typename:res.data.typename,fileurl:res.data.profileimgurl,email:res.data.email})
         console.log(sale);
-        setHeart(res.data.heart);
+        
       })
       .catch((err) => {
         console.log(err);
       });
     
   }, []);
+
   const convertCategoryToKorean = (category) => {
     switch (category) {
       case "mobile":
@@ -67,15 +69,16 @@ function SaleDetail() {
         return category;
     }
   };
-  const changeImage = () => {
-    if (currentImage === "/noheart.png") {
-        setCurrentImage("/zzimheart.png");
-        setSale({ ...sale, zzimcnt: 1 });
-    } else if(currentImage==='/zzimheart.png') {
-        setCurrentImage("/noheart.png"); // 처음 이미지로 다시 변경.
-        setSale({ ...sale, zzimcnt: 0 });
-    }
-};
+  const selectGood = () => {
+   
+    axios.get(`http://localhost:8090/salelike/${num}`)
+    .then(res=>{
+        console.log(res.data)
+        setSale({...sale,likeCount:res.data.likeCount});
+        setHeart(res.data.isSelect);
+    })
+  };
+ 
 
   return (
     <div
@@ -136,7 +139,14 @@ function SaleDetail() {
                 textAlign: "center",
               }}
             >
-              <div style={{ marginTop: "8.5px" }}>{sale.status}</div>
+              
+              {writer.email!==null?
+               <select style={{border:"none",font:"20px"}}>
+                      <option value="category">&nbsp;&nbsp;&nbsp;판매중</option>
+                      <option value="mobile">&nbsp;&nbsp;&nbsp;예약중</option>
+                </select>:<div>{sale.status}</div>}
+              
+              
             </div>
           </div>
         </div>
@@ -169,7 +179,8 @@ function SaleDetail() {
         ></Input>
         <div style={{ display: "flex" }}>
           <div style={{ position: "relative", marginTop: "2px" }}>
-            <img src={currentImage} style={{ verticalAlign: "middle" }}onClick={changeImage} />
+            <img src={heart?"/zzimheart.png":"/noheart.png"} style={{ verticalAlign: "middle" ,width:"40px" }}onClick={selectGood} />
+            <div>{sale.likecount}</div>
             <div
               style={{
                 width: "20px",
@@ -186,8 +197,8 @@ function SaleDetail() {
           </div>
           <div>
             <div style={{marginLeft:"150px"}}>
-            {sale.ggull==1?<img src="/ggul.png" style={{width:"40px",height:"40px"}}/> 
-            :<img src="/ggul2.png"  style={{width:"40px",height:"40px"}}/>}
+            {sale.ggull==1?<img src="/ggul.png" style={{width:"60px",height:"40px"}}/> 
+            :<img src="/ggul2.png"  style={{width:"60px",height:"40px"}}/>}
           
             <Link to="/chat/1">
               <span style={{ textAlign: "right", marginLeft:"25px" }}>

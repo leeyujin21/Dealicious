@@ -3,41 +3,28 @@ import React, { useRef, useState, useEffect} from 'react';
 import { FiPlusCircle } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import {useParams} from 'react-router-dom';
-
+import { useLocation } from 'react-router-dom';
 
 const SaleList=()=> {
-  const [timeAgo, setTimeAgo] = useState('');
   const [saleList,setSaleList] = useState([]);
   const {category} =useParams();
   const [page, setPage] = useState(1); // 페이지 번호
- 
   
   const observerRef = useRef(null);
 
   useEffect(() => {
    
-    // 판매 정보가 등록된 시간
-    const saleSubmissionTime = new Date(); // 여기에 실제 서버에서 받은 판매 정보 제출 시간
-
-    // 현재 시간
-    const currentTime = new Date();
-
-    // 시간 차이 계산
-    const timeDiffInMs = currentTime.getTime() - saleSubmissionTime.getTime();
-    const minutesAgo = Math.floor(timeDiffInMs / (1000 * 60)); // 분 단위로 시간 차이 계산
-    
-    setTimeAgo(`${minutesAgo}분 전`);
-    
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && saleList.length > 0) {
+   
+    const observer = new IntersectionObserver((entries) => {//IntersectionObserver를 생성하여 관찰 대상 요소(observerRef.current)의 교차점을 감시
+      if (entries[0].isIntersecting && saleList.length > 0) {//관찰 대상 요소가 뷰포트와 교차되고 데이터가 있을 때(saleList.length > 0), Axios를 사용하여 서버에서 데이터를 가져오는 GET 요청
           axios.get(`http://localhost:8090/salelist/${page + 1}`)
               .then(res => {
-                  const newSaleList = res.data.saleList;
+                  const newSaleList = res.data.saleList;//새로운 데이터가 수신되면(newSaleList.length > 0), setSaleList 함수를 사용하여 새 데이터를 기존 saleList에 추가하고 페이지 번호를 업데이트
                   if (newSaleList.length > 0) {
                       setSaleList(prevSaleList => [...prevSaleList, ...newSaleList]);
                       setPage(page + 1);
-                  } else {
-                      observer.disconnect(); // 새로운 데이터가 없으면 Intersection Observer를 중지합니다.
+                  } else {    //새로운 데이터가 없으면 Intersection Observer를 중지하여 추가 요청을 방지
+                      observer.disconnect(); 
                   }
               })
               .catch(err => {
@@ -50,12 +37,14 @@ const SaleList=()=> {
       observer.observe(observerRef.current);
   }
 
-  return () => {
+  return () => {//컴포넌트가 언마운트되거나 의존성인 page 또는 saleList.length가 변경될 때 옵저버를 해제
       if (observerRef.current) {
           observer.disconnect(); // 컴포넌트가 언마운트될 때 Observer를 해제합니다.
       }
   };
+
 }, [page, saleList.length]);
+
   useEffect(() => {
 
     if(category==null) {
@@ -117,7 +106,7 @@ const SaleList=()=> {
                 </div>
                 <div style={{ display: "flex" }}>
                   <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "150px" }}>{item.amount}</div>
-                  <div style={{ textAlign: "right", color: "gray", marginRight:"20px"}}>{timeAgo}</div>
+                  <div style={{ textAlign: "right", color: "gray", marginRight:"20px"}}></div>
                 </div>
               </div>
             </div>

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kosta.deal.entity.Sale;
+import com.kosta.deal.entity.User;
 import com.kosta.deal.service.SaleService;
 import com.kosta.deal.util.PageInfo;
 
@@ -68,15 +69,15 @@ public class SaleController {
 	public ResponseEntity<Map<String,Object>> saleDetail(@PathVariable String sect,@PathVariable Integer num){
 		try {
 			Map<String,Object> res= new HashMap<>();
-			res = saleService.saleDetail2(num);
-//			if(sect.equals("only-detail")) {
-//				saleService.plusViewCount(num);
-//				Boolean heart= saleService.isHeartSale("user",num);
-//				res.put("heart", heart);
-//			}else if(sect.equals("after-modify")) {
-//				Boolean heart=saleService.isHeartSale("user",num);
-//				res.put("heart", heart);
-//			}
+			res = saleService.saleInfo(num);
+			if(sect.equals("only-detail")) {
+				saleService.plusViewCount(num);
+				Boolean heart= saleService.isHeartSale("k@kosta.com",num);
+				res.put("heart", heart);
+			}else if(sect.equals("after-modify")) {
+				Boolean heart=saleService.isHeartSale("k@kosta.com",num);
+				res.put("heart", heart);
+			}
 			return new ResponseEntity<Map<String,Object>> (res,HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -125,7 +126,7 @@ public class SaleController {
 	public ResponseEntity<Map<String,Object>> saleLike(@PathVariable Integer num){
 		try {
 			Map<String,Object> res= new HashMap<>();
-			Boolean selectSale=saleService.selHeartSale("lubby", num);
+			Boolean selectSale=saleService.selHeartSale("k@kosta.com", num);
 			res.put("isSelect", selectSale);
 			Integer likeCount = saleService.saleDetail(num).getZzimcnt();
 			res.put("likeCount", likeCount);

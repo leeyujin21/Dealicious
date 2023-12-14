@@ -7,8 +7,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function SaleDetail() {
-  const { num } = useParams();
-  const [currentImage, setCurrentImage] = useState("/noheart.png");
+  const { sect,num } = useParams();
+  const [imges, setImages] = useState([]);
+
   const [sale, setSale] = useState({
     num: "",
     email: "",
@@ -36,13 +37,18 @@ function SaleDetail() {
   
   useEffect(() => {
     axios
-      .get(`http://localhost:8090/saledetail/${num}`)
+      .get(`http://localhost:8090/saledetail/${sect}/${num}`)
       .then((res) => {
         console.log(res.data);
         setSale(res.data.sale);
         setwriter({nickname:res.data.nickname,typename:res.data.typename,fileurl:res.data.profileimgurl})
         console.log(sale);
         setHeart(res.data.heart);
+        let fileurl = res.data.board.fileurl;
+            if(fileurl!=null&&fileurl!==''){
+                let filenums = fileurl.split(',');
+                setImages([...filenums]);
+            }
       })
       .catch((err) => {
         console.log(err);
@@ -67,24 +73,17 @@ function SaleDetail() {
         return category;
     }
   };
-  const changeImage = () => {
-    if (currentImage === "/noheart.png") {
-        setCurrentImage("/zzimheart.png");
-        setSale({ ...sale, zzimcnt: 1 });
-    } else if(currentImage==='/zzimheart.png') {
-        setCurrentImage("/noheart.png"); // 처음 이미지로 다시 변경.
-        setSale({ ...sale, zzimcnt: 0 });
-    }
+  const selectGood = () => {
+    axios.get(`http://localhost:8090/salelike/${num}`)
+    .then(res=>{
+        console.log(res.data)
+        setSale({...sale,likeCount:res.data.likeCount});
+        setHeart(res.data.isSelect);
+    })
 };
 
-    const submit=(e)=>{
-        const formData= new FormData();
-        formData.append("title",sale.title);
-        formData.append("category",sale.category);
-        formData.append("amount",sale.amount);
-        formData.append("place",sale.place);
-        formData.append("content",sale.content);
-       
+    const saleModify=(saleNum)=>{
+      navigate(`/saledetail/${saleNum}`);
     }
   return (
     <div
@@ -113,10 +112,12 @@ function SaleDetail() {
       </div>
 
       <div>
-        <img
-          src={`http://localhost:8090/img/${sale.fileurl}`}
-          style={{ width: "385px", height: "210px", borderRadius: "10px" }}
-        />
+        {imges.length!==0&&
+          imges.map(num=>
+              <img key={num} src={`http://localhost:8090/img/${sale.fileurl}`}/>
+            )
+        }
+        
 
         <div style={{ marginTop: "15px" }}>
           <div style={{ display: "flex" }}>
@@ -176,7 +177,7 @@ function SaleDetail() {
         ></Input>
         <div style={{ display: "flex" }}>
           <div style={{ position: "relative", marginTop: "2px" }}>
-            <img src={currentImage} style={{ verticalAlign: "middle" }}onClick={changeImage} />
+            <img src={heart? "/ggul.png":"/ggul2.png"} style={{ verticalAlign: "middle" }}onClick={selectGood} />
             <div
               style={{
                 width: "20px",
@@ -199,7 +200,7 @@ function SaleDetail() {
               <span style={{ textAlign: "right", marginLeft:"25px" }}>
                 <Button
                   type="button"
-                  onClick={submit}
+                  onClick={()=>saleModify(sale.num)}
                   
                   style={{
                     borderRadius: "5px",
