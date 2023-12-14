@@ -21,9 +21,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CorpData {
-   @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Id
    private Integer num;
-   
    @Column
    private String corp_code;
    @Column
