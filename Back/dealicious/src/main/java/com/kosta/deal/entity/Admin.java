@@ -34,4 +34,7 @@ public class Admin {
 	
 	@Column
 	private Integer balance;
+	
+	@Column
+	private String roles;
 }

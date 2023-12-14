@@ -44,13 +44,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		UsernamePasswordAuthenticationToken authenticationToken =
 				new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(), loginRequestDto.getPassword());
 		System.out.println("JwtAuthenticationFilter : 토큰생성완료");
+		System.out.println(authenticationToken);
 		// authenticate함수가 호출되면 인증 프로바이더가 유저 디테일 서비스의
 		// loadUserByUsername(토큰의 첫번째 파라미터) 를 호출하고
 		// UserDetails를 리턴받아 토큰의 두번째 파라미터(credential)과
 		// UserDetails(DB값)의 getPassword() 함수로 비교해서 동일하면
 		// Authentication 객체를 만들어서 필터체인으로 리턴해준다.
+		System.out.println("0");
 		Authentication authentication = authenticationManager.authenticate(authenticationToken);
+		System.out.println("1");
 		PrincipalDetails principalDetails= (PrincipalDetails)authentication.getPrincipal();
+		System.out.println("authentication:");
 		System.out.println(authentication);
 		return authentication;
 	}
@@ -58,17 +62,28 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
+		System.out.println("2");
 		PrincipalDetails principalDetails= (PrincipalDetails)authResult.getPrincipal();
-		
-		String jwtToken = JWT.create()
-							.withSubject(principalDetails.getUsername())
-							.withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
-							.withClaim("id", principalDetails.getUser().getId())
-							.withClaim("username", principalDetails.getUser().getUsername())
-							.sign(Algorithm.HMAC512(JwtProperties.SECRET));
+		System.out.println("3");
+		String jwtToken = null;
+		if(principalDetails.getUser()==null) {
+			jwtToken = JWT.create()
+					.withSubject(principalDetails.getAdmin().getAdminid())
+					.withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
+					.withClaim("id", principalDetails.getAdmin().getAdminid())
+					.sign(Algorithm.HMAC512(JwtProperties.SECRET));
+		} else {
+			jwtToken = JWT.create()
+					.withSubject(principalDetails.getUsername())
+					.withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
+					.withClaim("id", principalDetails.getUser().getId())
+					.withClaim("username", principalDetails.getUser().getUsername())
+					.sign(Algorithm.HMAC512(JwtProperties.SECRET));
+		}
 		
 //		response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
 //		response.setStatus(HttpServletResponse.SC_OK);
+		System.out.println("successfulAuthentication함수");
 		System.out.println(jwtToken);
 		response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
 		response.setContentType("application/json; charset=utf-8");

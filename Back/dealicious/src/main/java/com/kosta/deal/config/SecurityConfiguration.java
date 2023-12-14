@@ -8,13 +8,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
 import com.kosta.deal.config.jwt.JwtAuthenticationFilter;
 import com.kosta.deal.config.jwt.JwtAuthorizationFilter;
 import com.kosta.deal.config.oauth2.OAuth2LoginSuccessHandler;
 import com.kosta.deal.config.oauth2.PrincipalOauth2UserService;
+import com.kosta.deal.repository.AdminRepository;
 import com.kosta.deal.repository.UserRepository;
 
 @Configuration
@@ -26,6 +26,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private AdminRepository adminRepository;
 	
 	@Autowired
 	private PrincipalOauth2UserService principalOauth2UserService;
@@ -63,7 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .successHandler(oAuth2LoginSuccessHandler);
 
         http
-			.addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository)) //BasicAuthenticationFilter
+			.addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository, adminRepository)) //BasicAuthenticationFilter
 			.authorizeRequests()
 			.antMatchers("/user/**").access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
 			.antMatchers("/manager/**").access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
