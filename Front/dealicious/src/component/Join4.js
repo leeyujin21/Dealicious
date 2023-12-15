@@ -23,9 +23,12 @@ const Join4 = () => {
 
     useEffect(() => {
         setEmailError('');
-        setTelError('');
         setSuccessEmail(false);
-    }, [email, tel]);
+    }, [email]);
+
+    useEffect(() => {
+        setTelError('');
+    }, [tel]);
 
     const join = (e) => {
         e.preventDefault();

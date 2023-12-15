@@ -64,8 +64,7 @@ dependencies {
 	implementation 'com.google.code.gson:gson:2.8.5'
 	
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-	
-<<<<<<< Updated upstream
+
 	// 이메일인증
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'javax.mail:javax.mail-api:1.6.2'
@@ -74,11 +73,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.threeten:threetenbp:1.5.1'
-	
-=======
+
 	implementation 'commons-io:commons-io:2.11.0'
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.0'
->>>>>>> Stashed changes
 	
 }
 
