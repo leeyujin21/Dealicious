@@ -4,9 +4,11 @@ import { CgClose } from "react-icons/cg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { Swal } from 'sweetalert2';
 
 const Join4 = () => {
     const [email, setEmail] = useState('');
+    const [code, setCode] = useState('');
     const [emailError, setEmailError] = useState('');
     const [telError, setTelError] = useState('');
     const [tel, setTel] = useState('');
@@ -17,10 +19,12 @@ const Join4 = () => {
     const nickname = location.state?.nickname;
     const password = location.state?.password;
     const token = useSelector(state => state.persistedReducer.token);
+    const [successEmail, setSuccessEmail] = useState(false);
 
     useEffect(() => {
         setEmailError('');
         setTelError('');
+        setSuccessEmail(false);
     }, [email, tel]);
 
     const join = (e) => {
@@ -48,18 +52,22 @@ const Join4 = () => {
             nickname: nickname
         };
         //headers로 토큰 넘긴 이유는 소셜로그인했을때 가입되면서 추가정보 등록 이어나가기 위해서.
-        axios.post("http://localhost:8090/join", userData, {
-            headers: {
-                Authorization: token,
-            }
-        })
-            .then(res => {
-                console.log(res.data);
-                window.location.href = "/logout";
+        if (successEmail) {
+            axios.post("http://localhost:8090/join", userData, {
+                headers: {
+                    Authorization: token,
+                }
             })
-            .catch(err => {
-                console.log(err);
-            });
+                .then(res => {
+                    console.log(res.data);
+                    window.location.href = "/logout";
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        } else {
+            alert("이메일 인증을 다시 해주세요")
+        }
     }
 
     // 이메일 유효성 검사 함수
@@ -91,6 +99,29 @@ const Join4 = () => {
         setTel(formattedValue);
     }
 
+    const verificationEmail = () => {
+        axios.post("http://localhost:8090/emails/verification-requests", { email: email })
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+    const verificationEmailCode = () => {
+        axios.post("http://localhost:8090/emails/verifications", { email: email, code: code })
+            .then(res => {
+                console.log(res.data);
+                console.log("되냐?")
+                alert("인증되었습니다.")
+                setSuccessEmail(true);
+            })
+            .catch(err => {
+                console.log(err);
+                console.log("앙ㄴ되냐?")
+            });
+    }
+
     return (
         <div className='main' style={{ overflow: "scroll", height: "832px", overflowX: "hidden", paddingTop: "130px", paddingRight: "50px", paddingLeft: "50px" }}>
             <div style={{ width: "330px", textAlign: "right", paddingBottom: "20px" }}>
@@ -98,20 +129,27 @@ const Join4 = () => {
             </div>
             <a style={{ fontSize: "30px", fontWeight: "bold", textAlign: "center", color: "#14C38E" }}>회원가입</a>
             <div style={{ paddingBottom: "30px" }}></div>
-            <FormGroup style={{ textAlign: "left", paddingBottom: "20px" }}>
+            <FormGroup style={{ textAlign: "left" }}>
                 <Label for="email" style={{ fontSize: "20px" }}>이메일</Label>
-                <Input type="email" name="email" id="email" style={{ height: "55px", width: "325px" }}
-                    placeholder="형식에 맞게 입력하세요"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                />
+                <div style={{ display: "flex" }}>
+                    <Input type="email" name="email" id="email" style={{ height: "55px", width: "210px" }}
+                        placeholder="형식에 맞게 입력하세요"
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                    />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Button style={{ backgroundColor: "#14C38E", color: "white", borderStyle: "none", fontSize: "16px", width: "100px" }} onClick={verificationEmail}>
+                        인증받기
+                    </Button>
+                </div>
                 <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height: "10px", textAlign: "left" }}>{validateEmail ? emailError : ""}</div>
             </FormGroup>
             <FormGroup style={{ textAlign: "left", display: "flex" }}>
-                <Input type="text" name="nickname" id="nickname" style={{ height: "55px", width: "210px" }}
+                <Input type="text" name="code" id="code" style={{ height: "55px", width: "210px" }}
                     placeholder="인증번호 6자리"
+                    onChange={(e) => setCode(e.target.value)}
+                    value={code}
                 />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Button style={{ backgroundColor: "#14C38E", color: "white", borderStyle: "none", fontSize: "18px", width: "100px" }}>
+                <Button style={{ backgroundColor: "#14C38E", color: "white", borderStyle: "none", fontSize: "16px", width: "100px" }} onClick={verificationEmailCode}>
                     인증하기
                 </Button>
             </FormGroup>

@@ -65,6 +65,15 @@ dependencies {
 	
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 	
+	// 이메일인증
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'javax.mail:javax.mail-api:1.6.2'
+	implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.threeten:threetenbp:1.5.1'
+	
 	
 }
 
