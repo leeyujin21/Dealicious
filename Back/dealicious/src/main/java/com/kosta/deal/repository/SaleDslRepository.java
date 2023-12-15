@@ -1,13 +1,9 @@
 package com.kosta.deal.repository;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Order;
-import org.springframework.data.util.Streamable;
+
 import org.springframework.stereotype.Repository;
 
 import com.kosta.deal.entity.QSale;
@@ -80,18 +76,23 @@ public class SaleDslRepository {
 	}
 
 
-	public SaleLike findSalelike(String email, Integer num) {
+	public SaleLike findSalelike(String email, Integer num) throws Exception{
 		QSaleLike salelike= QSaleLike.saleLike;
 		return jpaQueryFactory.select(salelike)
 				.from(salelike)
 				.where(salelike.userEmail.eq(email).and(salelike.saleNum.eq(num)))
 				.fetchOne();
 	}
-
-	public Sale findByemail(String email, Integer num) {
-		// TODO Auto-generated method stub
-		return null;
+	//글 번호로 이메일 가져오기
+	public Sale findByemail(Integer num) throws Exception{
+		QSale sale=QSale.sale;
+		return jpaQueryFactory.selectFrom(sale)
+				.where(sale.num.eq(num)).fetchOne();
+				
+			
 	}
+
+	
 
 
 	

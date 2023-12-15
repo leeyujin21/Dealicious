@@ -3,7 +3,6 @@ import React, { useRef, useState, useEffect} from 'react';
 import { FiPlusCircle } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import {useParams} from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 
 const SaleList=()=> {
   const [saleList,setSaleList] = useState([]);
@@ -12,6 +11,25 @@ const SaleList=()=> {
   
   const observerRef = useRef(null);
 
+  const [elapsedTime, setElapsedTime] = useState('');
+
+  useEffect(() => {
+      // 로컬 스토리지에서 저장된 시간 가져오기
+      const registrationTime = localStorage.getItem('registrationTime');
+      
+      if (registrationTime) {
+          const currentTime = Date.now();
+          const difference = currentTime - parseInt(registrationTime, 10);
+
+          // 시간 차이 계산 및 포맷팅 (더 좋은 포맷팅을 위해 'moment'와 같은 라이브러리 사용 가능)
+          const elapsedSeconds = Math.floor(difference / 1000);
+          const elapsedMinutes = Math.floor(elapsedSeconds / 60);
+
+          // 경과된 시간을 표시할 문자열 생성
+          const formattedTime = ` ${elapsedMinutes % 60} 분`;
+          setElapsedTime(formattedTime);
+      }
+    })
   useEffect(() => {
    
    
@@ -95,7 +113,7 @@ const SaleList=()=> {
 
               {item.fileurl==null ?<img src='./profile.png' width="130px" height="87px"/> 
               :<img src={`http://localhost:8090/img/${item.fileurl}`} width="130px" height="87px" />}
-  
+
               <div style={{ textAlign: "left", marginLeft: "20px" }}>
                 <a style={{ fontSize: "18px" }}>{item.title}</a>
                 <div style={{display:"flex" }}>
@@ -104,6 +122,8 @@ const SaleList=()=> {
                     {item.ggull==0 ?<img src=''/>:<img src='/ggul.png' style={{width:"50px",height:"30px"}} />}
                   </div>
                 </div>
+                <div style={{float:"right",marginRight:"50px"}}>{elapsedTime} 전</div>
+
                 <div style={{ display: "flex" }}>
                   <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "150px" }}>{item.amount}</div>
                   <div style={{ textAlign: "right", color: "gray", marginRight:"20px"}}></div>

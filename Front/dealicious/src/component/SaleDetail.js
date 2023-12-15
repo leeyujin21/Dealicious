@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,Button} from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 import "./img.css";
 import { Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Gpay from "./Gpay";
+
+
 
 function SaleDetail() {
+ 
   const { sect,num } = useParams();
   const [sale, setSale] = useState({
     num: "",
@@ -25,6 +29,9 @@ function SaleDetail() {
     buyeremail: "",
     writerdate: "",
   });
+  const Gpay =()=>{
+    navigate('/gpay')
+  }
   
   const [heart, setHeart] = useState(false);
   const navigate = useNavigate();
@@ -50,6 +57,7 @@ function SaleDetail() {
       });
     
   }, []);
+   
 
   const convertCategoryToKorean = (category) => {
     switch (category) {
@@ -78,7 +86,7 @@ function SaleDetail() {
         setHeart(res.data.isSelect);
     })
   };
- 
+  
 
   return (
     <div
@@ -140,28 +148,32 @@ function SaleDetail() {
               }}
             >
               
-              {writer.email!==null?
-               <select style={{border:"none",font:"20px"}}>
-                      <option value="category">&nbsp;&nbsp;&nbsp;판매중</option>
-                      <option value="mobile">&nbsp;&nbsp;&nbsp;예약중</option>
+              {writer.email==null?
+               <select style={{border:"none",fontSize:"20px"}}>
+                      <option value="category">판매중</option>
+                      <option value="mobile">예약중</option>
                 </select>:<div>{sale.status}</div>}
+                
+              
               
               
             </div>
           </div>
         </div>
         <br/>
+        
         <div style={{ textAlign: "left" }}>
           <b>{convertCategoryToKorean(sale.category)}</b>
         </div>
-        <tr >
-          <td style={{ textAlign: "left", width: "200px" }}>{sale.place}</td>
-          <td
-            style={{ width: "250px", fontWeight: "bold", textAlign: "right" }}
-          >
-            {sale.amount}
-          </td>
+        
+        <tr>
+            <td style={{ textAlign: "left", width: "200px" }}>{sale.place}</td>
+          
+            <td style={{ width: "250px", fontWeight: "bold", textAlign: "right" }}>
+              {sale.amount}
+            </td>
         </tr>
+
         <Input
           type="textarea"
           style={{
@@ -177,6 +189,7 @@ function SaleDetail() {
                         산지는 3개월 됐는데 거의 안 써서 미개봉 제품이랑 별 차이없습니다!
                         A동 8층까지 오시면 5천원 깎아드려요."
         ></Input>
+
         <div style={{ display: "flex" }}>
           <div style={{ position: "relative", marginTop: "2px" }}>
             <img src={heart?"/zzimheart.png":"/noheart.png"} style={{ verticalAlign: "middle" ,width:"40px" }}onClick={selectGood} />
@@ -191,17 +204,17 @@ function SaleDetail() {
                 color: "white",
                 fontWeight: "bold",
               }}
-            >
-            
+            >            
             </div>
           </div>
           <div>
             <div style={{marginLeft:"150px"}}>
-            {sale.ggull==1?<img src="/ggul.png" style={{width:"60px",height:"40px"}}/> 
+            {sale.ggull==1?<img src="/ggul.png" style={{width:"60px",height:"40px",cursor:"pointer"}}onClick={Gpay}></img>
             :<img src="/ggul2.png"  style={{width:"60px",height:"40px"}}/>}
           
             <Link to="/chat/1">
-              <span style={{ textAlign: "right", marginLeft:"25px" }}>
+
+               <span style={{ textAlign: "right", marginLeft:"25px" }}>
                 <input
                   type="submit"
                   value="채팅하기"
@@ -216,6 +229,7 @@ function SaleDetail() {
                   }}
                 ></input>
               </span>
+
             </Link>
           </div>
         </div>

@@ -1,17 +1,13 @@
 package com.kosta.deal.entity;
 
-import java.io.File;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumn;
-
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
@@ -35,7 +31,6 @@ public class Sale {
 	@Column
 	private String email;
 	private String title;
-	private String type;
 	private String amount;
 	private String category;
 	private String content;
@@ -44,6 +39,7 @@ public class Sale {
 	private String status;
 	private String buyeremail;
 	private String ggull;
+	private String zzim;
 
 	@ColumnDefault("0")
 	private Integer viewcnt;

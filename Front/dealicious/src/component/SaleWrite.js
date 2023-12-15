@@ -8,9 +8,7 @@ import { FaCamera } from "react-icons/fa";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
-
-
-
+import 'moment/locale/ko';
 
 const SaleWrite=()=>{
     const [currentImage, setCurrentImage] = useState("./ggul2.png");
@@ -18,7 +16,10 @@ const SaleWrite=()=>{
     const [imageCount, setImageCount] = useState(0); // 상태 변수로 이미지 카운트를 관리.
     const [selectedImages, setSelectedImages] = useState([]); // 여러 이미지를 저장하는 배열
     const fileInputRef = useRef(null);
- 
+    
+
+   
+    
     const [sale, setSale] = useState({      //상품 정보 초기화
         title: '',
         category: '',
@@ -86,6 +87,7 @@ const SaleWrite=()=>{
             });
             return; // 폼 제출을 막습니다.
         } 
+       
         const formData = new FormData();
         formData.append("title", sale.title);
         formData.append("category",sale.category);
@@ -102,7 +104,8 @@ const SaleWrite=()=>{
         }
 
         console.log(formData)
-        
+        const currentTime = Date.now();
+    localStorage.setItem('registrationTime', currentTime);
         axios.post('http://localhost:8090/salewrite', formData)
     .then(res=> {
         console.log(res);
@@ -115,16 +118,18 @@ const SaleWrite=()=>{
     
     }
     return(
+        
         <div className='main' style={{textAlign:'left',overflow:"scroll", height:"732px", overflowX:"hidden"}}> 
         <br/>
+        
          <Link to="/salelist">
          <IoArrowBackOutline size="30" color="14C38E" />
          </Link>
+        
          <span style={{color:"#14C38E",fontSize:"25px",marginLeft:"105px"}}><b>판매글작성</b></span> 
          <br/><br/>
-         <div style={{backgroundColor:"#E9E9E9", width:"48px", height:"63px", textAlign:"center", paddingTop:"5px", position:"relative", cursor:"pointer"}}
-             >
-        <div>
+         <div style={{backgroundColor:"#E9E9E9", width:"48px", height:"63px", textAlign:"center", paddingTop:"5px", position:"relative", cursor:"pointer"}}>
+            <div>
             <div onClick={()=>document.getElementById("file").click()}>
                 <FaCamera size="30" color='gray'  />
                 <div style={{ position: "absolute", textAlign: "center", width: "48px", paddingBottom: "5px", fontWeight: "bold" }}>
@@ -139,9 +144,7 @@ const SaleWrite=()=>{
       <img
         src={URL.createObjectURL(image)}
         alt={`Selected ${index + 1}`}
-        style={{ width: '45px', height: '45px',marginLeft:"20px" }}
-        
-      />
+        style={{ width: '45px', height: '45px',marginLeft:"20px" }}/>
       <button
         onClick={() => removeImage(index)}
         style={{

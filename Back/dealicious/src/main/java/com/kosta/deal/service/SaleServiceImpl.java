@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 
 import com.kosta.deal.entity.FileVo;
 import com.kosta.deal.entity.Sale;
@@ -168,14 +168,22 @@ public class SaleServiceImpl implements SaleService{
 
 	@Override
 	public Sale saleDetail(Integer num) throws Exception {
-		return saleDslRepository.findSaleBySaleNum(num);
+		Optional<Sale> osale= saleRepository.findById(num);
+		if(osale.isEmpty()) throw new Exception("번호 오류");
+		return osale.get();
 		
 	}
 	@Override
 	public Integer saleModify(Sale sale,List<MultipartFile> files) throws Exception {
-		Sale sale1=saleRepository.findById(sale.getNum()).get();
+		Sale sale1=saleDslRepository.findByemail(sale.getNum());
 		sale1.setContent(sale.getContent());
 		sale1.setTitle(sale.getTitle());
+		sale1.setAmount(sale.getAmount());
+		sale1.setCategory(sale.getCategory());
+		sale1.setGgull(sale.getGgull());
+		sale1.setPlace(sale.getPlace());
+		sale1.setFileurl(sale.getFileurl());
+		
 
 		if(files!=null && files.size()!=0) {
 			String dir="c:/upload/";
@@ -207,6 +215,17 @@ public class SaleServiceImpl implements SaleService{
 			saleRepository.save(sale1);
 			return sale1.getNum();
 		}
+
+	@Override
+	public void saleDelete(Integer num) throws Exception {
+		saleRepository.deleteById(num);
+		
+	}
+
+	
+
+
+
 	
 
 	
