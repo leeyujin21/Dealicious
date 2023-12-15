@@ -36,7 +36,7 @@ const Profiledetail = () => {
                     <Label for="email" style={{ fontSize: "20px" }}>{user.email}</Label>
                 </FormGroup>
                 <FormGroup style={{ textAlign: "left", display: "flex" }}>
-                    <Label for="univ" style={{ fontSize: "20px", width: "100px" }}>학교</Label>
+                    <Label for="univ" style={{ fontSize: "20px", width: "100px" }}>{user.typename==="univ"? "학교" : "회사"}</Label>
                     <Label for="univ" style={{ fontSize: "20px" }}>{user.typename}</Label>
                 </FormGroup>
                 <FormGroup style={{ textAlign: "left", display: "flex" }}>

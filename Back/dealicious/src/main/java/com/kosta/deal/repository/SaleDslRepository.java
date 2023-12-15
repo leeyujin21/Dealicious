@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kosta.deal.entity.QSale;
 import com.kosta.deal.entity.QUser;
 import com.kosta.deal.entity.Sale;
+import com.kosta.deal.entity.SaleLike;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -63,6 +64,16 @@ public class SaleDslRepository {
 				.on(sale.email.eq(user.email))
 				.where(sale.num.eq(num))
 				.fetchOne();
+	}
+
+	public SaleLike findSalelike(String email, Integer num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Long findIsSalelike(String email, Integer num) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
