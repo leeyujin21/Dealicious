@@ -17,13 +17,23 @@ const Join2 = () => {
     if (!typename) {
       setErrorMessage("키워드를 입력하세요");
     } else {
-      axios.post('http://localhost:8090/univ/getSchoolName', { typename: typename })
-        .then(response => {
-          setSearchResults(response.data);
-        })
-        .catch(error => {
-          console.error('Error making AJAX request:', error);
-        });
+      if (type === "univ") {
+        axios.post('http://localhost:8090/univ/getSchoolName', { typename: typename })
+          .then(response => {
+            setSearchResults(response.data);
+          })
+          .catch(error => {
+            console.error('Error making AJAX request:', error);
+          });
+      } else if (type === "com") {
+        axios.post('http://localhost:8090/corp/getCorpName', { typename: typename })
+          .then(response => {
+            setSearchResults(response.data);
+          })
+          .catch(error => {
+            console.error('Error making AJAX request:', error);
+          });
+      }
     }
   };
 
@@ -68,13 +78,13 @@ const Join2 = () => {
         </div>
         <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', height: "10px", textAlign: "left" }}>{!typename ? errorMessage : ""}</div>
         {/* 검색 결과 출력 */}
-        <div style={{ textAlign: "left", height: "180px", cursor: "pointer",maxHeight: "180px", overflowY: "auto" }}>
+        <div style={{ textAlign: "left", height: "180px", cursor: "pointer", maxHeight: "180px", overflowY: "auto" }}>
           {searchResults.length === 0 ? "검색결과가 없습니다" : searchResults.map((result, index) => (
             <div key={index} value={result} onClick={() => handleResultClick(result)}>{result}</div>
           ))}
         </div>
       </FormGroup>
-      <Button style={{ width: "325px", height: "55px", fontSize: "20px", backgroundColor: "#14C38E", borderStyle: "none", lineHeight:"35px" }}
+      <Button style={{ width: "325px", height: "55px", fontSize: "20px", backgroundColor: "#14C38E", borderStyle: "none", lineHeight: "35px" }}
         onClick={handleClick}>다음(2/4)</Button>
     </div>
   );

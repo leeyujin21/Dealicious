@@ -9,4 +9,8 @@ public interface UserService {
 	boolean checkNickname(String nickname) throws Exception;
 	void uploadProfileimg(User user, MultipartFile file) throws Exception;
 	User findUserByEmail(String email) throws Exception;
+	void sendCodeToEmail(String toEmail) throws Exception;
+	void verifiedCode(String email, String authCode) throws Exception;
+	String createCode() throws Exception;
+	void checkDuplicatedEmail(String email) throws Exception;
 }

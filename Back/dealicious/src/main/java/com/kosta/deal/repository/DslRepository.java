@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kosta.deal.entity.Admin;
 import com.kosta.deal.entity.QAdmin;
+import com.kosta.deal.entity.QCorpData;
 import com.kosta.deal.entity.QPay;
 import com.kosta.deal.entity.QSale;
 import com.kosta.deal.entity.QUnivData;
@@ -67,4 +68,14 @@ public class DslRepository {
 				.where(admin.adminid.eq(adminid))
 				.fetchOne();
 	}
+
+	public List<String> findCorpNameList(String typename) {
+		QCorpData corpData = QCorpData.corpData;
+		return jpaQueryFactory.select(corpData.corp_name)
+				.from(corpData)
+				.where(corpData.corp_name.like("%" + typename + "%"))
+				.fetch();
+	}
+	
+	
 }
