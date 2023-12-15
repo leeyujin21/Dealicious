@@ -21,6 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CorpData {
+<<<<<<< Updated upstream
    @Id
    private Integer num;
    @Column
@@ -32,3 +33,17 @@ public class CorpData {
    @Column
    private String modify_date;
 }
+=======
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer num;
+	
+	@Column
+	private String corp_code;
+	@Column
+	private String corp_name;
+	@Column
+	private String stock_code;
+	@Column
+	private String modify_date;
+}
+>>>>>>> Stashed changes

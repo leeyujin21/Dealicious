@@ -1,5 +1,6 @@
 package com.kosta.deal.service;
 
+<<<<<<< Updated upstream
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,4 +15,18 @@ public class CorpDataService {
 	public List<String> processUserInput(String typename) {
 		return dslRepository.findCorpNameList(typename);
 	}
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.kosta.deal.repository.CorpDataRepository;
+
+@Service
+public class CorpDataService {
+    @Autowired
+    CorpDataRepository corpDataRepository;
+
+    
+
+>>>>>>> Stashed changes
 }
