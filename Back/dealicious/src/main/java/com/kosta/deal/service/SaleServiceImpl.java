@@ -222,6 +222,17 @@ public class SaleServiceImpl implements SaleService{
 		
 	}
 
+	@Override
+	public Sale saleGpay(Integer num) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
+	
+
+
 	
 
 
