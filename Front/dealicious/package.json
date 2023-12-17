@@ -29,6 +29,7 @@
     "redux-persist": "^6.0.0",
     "sockjs-client": "^1.6.1",
     "sweetalert2": "^11.10.1",
+    "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

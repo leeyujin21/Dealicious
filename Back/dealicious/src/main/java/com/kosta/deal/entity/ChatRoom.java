@@ -16,14 +16,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+public class ChatRoom {
 
-public class Chat {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	 private Integer num;
-	 @Column
-	 private String channelId;
-	 private String writerId;
-	 private String receiverId;
-	 private String chat;
-	 private String data;
+	private Integer num;
+	@Column
+	private String channelId;
+	private String creator;
+	private String partner;
+
 }

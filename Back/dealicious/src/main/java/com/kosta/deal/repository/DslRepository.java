@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.kosta.deal.entity.Admin;
+import com.kosta.deal.entity.Hot;
 import com.kosta.deal.entity.QAdmin;
 import com.kosta.deal.entity.QCorpData;
+import com.kosta.deal.entity.QHot;
 import com.kosta.deal.entity.QPay;
 import com.kosta.deal.entity.QSale;
 import com.kosta.deal.entity.QUnivData;
@@ -75,6 +77,14 @@ public class DslRepository {
 				.from(corpData)
 				.where(corpData.corp_name.like("%" + typename + "%"))
 				.fetch();
+	}
+	
+	public List<Hot> findHotList() {
+		QHot hot = QHot.hot;
+		return jpaQueryFactory.selectFrom(hot)
+				.orderBy(hot.searchcnt.desc())
+                .limit(10)
+                .fetch();
 	}
 	
 	

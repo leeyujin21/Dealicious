@@ -5,6 +5,8 @@ import { Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { v4 as uuidv4 } from 'uuid';
 
 function SaleDetail() {
   const { sect,num } = useParams();
@@ -25,6 +27,7 @@ function SaleDetail() {
     buyeremail: "",
     writerdate: "",
   });
+  const user = useSelector(state => state.persistedReducer.user);
   
   const [heart, setHeart] = useState(false);
   const navigate = useNavigate();
@@ -78,6 +81,15 @@ function SaleDetail() {
         setHeart(res.data.isSelect);
     })
   };
+
+  const gochat = () => {
+    if(user.nickname===writer.nickname) {
+      alert("자신과는 채팅할 수 없습니다.") 
+    } else {
+      const uniqueString = uuidv4();
+      navigate(`/chat/${uniqueString}/${num}`);
+    }
+  }
  
 
   return (
@@ -200,8 +212,8 @@ function SaleDetail() {
             {sale.ggull==1?<img src="/ggul.png" style={{width:"60px",height:"40px"}}/> 
             :<img src="/ggul2.png"  style={{width:"60px",height:"40px"}}/>}
           
-            <Link to="/chat/1">
-              <span style={{ textAlign: "right", marginLeft:"25px" }}>
+            
+              <span style={{ textAlign: "right", marginLeft:"25px" }} onClick={gochat}>
                 <input
                   type="submit"
                   value="채팅하기"
@@ -216,7 +228,7 @@ function SaleDetail() {
                   }}
                 ></input>
               </span>
-            </Link>
+            
           </div>
         </div>
         </div>
