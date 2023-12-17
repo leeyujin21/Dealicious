@@ -95,23 +95,23 @@ const Chat = () => {
             <div style={{ textAlign: "center", marginTop: "5px" }}>디스펜서</div>
             <div style={{ textAlign: "center" }}><b>60,000원</b></div>
             <div>
-      {[...Array(5)].map((star, i) => {
-        const starValue = i + 1;
+              {[...Array(5)].map((star, i) => {
+                const starValue = i + 1;
 
-        return (
-          <FaStar
-            key={i}
-            size={30}
-            color={starValue <= (fixedRating !== 0 ? fixedRating : rating) ? '#ffc107' : '#e4e5e9'}
-            style={{ cursor: 'pointer' }}
-            onClick={() => handleClick(starValue)}
-            onMouseEnter={() => handleHover(starValue)}
-            onMouseLeave={handleHoverLeave}
-          />
-        );
-      })}
-     
-    </div>
+                return (
+                  <FaStar
+                    key={i}
+                    size={30}
+                    color={starValue <= (fixedRating !== 0 ? fixedRating : rating) ? '#ffc107' : '#e4e5e9'}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => handleClick(starValue)}
+                    onMouseEnter={() => handleHover(starValue)}
+                    onMouseLeave={handleHoverLeave}
+                  />
+                );
+              })}
+
+            </div>
             <Button style={{ width: "60px", height: "35px", borderRadius: "8px", backgroundColor: "#14C38E", border: "white", fontWeight: "bold", color: "white", marginTop: "20px" }} onClick={handleRegister}>등록</Button>
           </div>
         </Modal>
@@ -121,7 +121,7 @@ const Chat = () => {
         <img src='dealicious1.png' style={{ marginBottom: "10px", width: "100px" }}></img>
         <p style={{ fontWeight: "bold" }}>디스펜서 팔아요!  의 결제가 완료되었어요.</p>
         <a style={{ color: "gray" }}>수령 후 수령완료 버튼을 눌러주세요:)</a>
-        <p style={{color:"gray", fontSize:"12px"}}>수령완료 버튼을 누르면 판매자에게 정산액이 입금됩니다.</p>
+        <p style={{ color: "gray", fontSize: "12px" }}>수령완료 버튼을 누르면 판매자에게 정산액이 입금됩니다.</p>
         <button style={{ width: "310px", backgroundColor: "#C7FBEB", border: "white", padding: "5px", borderRadius: "10px", color: "#14C38E", fontWeight: "bold" }} onClick={() => setModal2IsOpen(true)}>수령완료</button>
         <Modal className='main' style={{
           content: {
@@ -131,12 +131,12 @@ const Chat = () => {
         }} isOpen={modal2IsOpen} onRequestClose={() => setModal2IsOpen(false)}>
           <div style={{ textAlign: "center" }}>
             <br />
-            <div style={{marginBottom:"20px"}}>
+            <div style={{ marginBottom: "20px" }}>
               <a>수령완료 상태가 되면 판매자에게 정산됩니다.</a>
               <a>수령완료 상태로 변경하시겠습니까?</a>
             </div>
             <Button style={{ backgroundColor: "gray", border: "white", color: "white" }} onClick={() => setModal2IsOpen(false)}>취소하기</Button>
-            <Button style={{ backgroundColor: "#14C38E", border: "white", color: "white", marginLeft:"10px" }} onClick={() => setModal2IsOpen(false)}>수령하기</Button>
+            <Button style={{ backgroundColor: "#14C38E", border: "white", color: "white", marginLeft: "10px" }} onClick={() => setModal2IsOpen(false)}>수령하기</Button>
           </div>
         </Modal>
       </div>
