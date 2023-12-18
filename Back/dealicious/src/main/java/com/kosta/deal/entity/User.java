@@ -44,6 +44,7 @@ public class User {
 	private String accountbank;
 	private String name;
 	private String profileimgurl;
+	
 	@CreationTimestamp
 	private Timestamp createDate;
 	//OAuth를 위해 구성한 추가 필드 2개

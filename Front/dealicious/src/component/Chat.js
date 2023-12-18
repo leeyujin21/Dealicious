@@ -3,14 +3,33 @@ import { GoArrowLeft } from "react-icons/go";
 import { FaImage, FaStar } from "react-icons/fa6";
 import { IoMdSend } from "react-icons/io";
 import Modal from 'react-modal';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Button } from 'reactstrap';
+import axios from 'axios';
+
 
 const Chat = () => {
+  const{num}=useParams;
   const [modal1IsOpen, setModal1IsOpen] = useState(false);
   const [modal2IsOpen, setModal2IsOpen] = useState(false);
   const [rating, setRating] = useState(0); // 사용자가 선택한 별점을 저장
   const [fixedRating, setFixedRating] = useState(0);
+  const [review,setReview]=useState(0);
+  const [sale,setSale]=useState({num: "",
+        email: "",
+        title: "",
+        type: "",
+        amount: "",
+        category: "",
+        content: "",
+        place: "",
+        fileurl: "",
+        status: "",
+        ggull: "",
+        viewcount: null,
+        zzimcnt: null,
+        buyeremail: "",
+        writerdate: "",});
 
   const handleClick = (starValue) => {
     setRating(starValue);
@@ -28,11 +47,18 @@ const Chat = () => {
       setRating(0);
     }
   };
-  const handleRegister = () => {
+  const handleRegister = (e) => {
     // 여기서 실제로 등록하는 로직을 구현.
     // 예시로 console에 선택한 별점을 출력
-    console.log(`등록된 별점: ${rating}`);
-
+    
+    axios.get(`http://localhost:8090/salelike/${num}`)
+    .then(res=>{
+      console.log(`등록된 별점: ${rating}`);
+        console.log(res.data)
+        setSale({...sale,likeCount:res.data.likeCount});
+        
+    })
+    setReview()
     // 등록 후 모달을 닫을 수 있도록 처리
     setModal1IsOpen(false);
   };
