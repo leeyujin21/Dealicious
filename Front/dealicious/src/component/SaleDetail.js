@@ -13,7 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 function SaleDetail() {
   const user = useSelector(state => state.persistedReducer.user);
-  const [writer, setwriter] = useState({ nickname: '', typename: '', fileurl: '', ggull: '', email: '' });
+  const [writer, setwriter] = useState({ nickname: '', typename: '', fileurl: '', ggull: '', email: '',id:'' });
   const selectList = [
     { value: "판매중", name: "판매중" },
     { value: "예약", name: "예약중" },
@@ -48,6 +48,7 @@ function SaleDetail() {
 
 
 
+
   useEffect(() => {
     axios
       .get(`http://localhost:8090/saledetail/${sect}/${num}`)
@@ -59,6 +60,7 @@ function SaleDetail() {
           typename: res.data.typename,
           fileurl: res.data.profileimgurl,
           email: res.data.email,
+          id:res.data.id
         });
 
         setSale(res.data.sale);
@@ -127,8 +129,11 @@ function SaleDetail() {
         height: "732px",
         overflowX: "hidden",
       }}
+
     >
       <div style={{ marginTop: "10px", marginBottom: "20px", display: "flex" }}>
+
+
         <Link to="/salelist">
           <IoArrowBackOutline size="30" color="14C38E" />
         </Link>
@@ -245,6 +250,7 @@ function SaleDetail() {
 
             </div>
           </div>
+
           <div style={{ marginLeft: "165px", lineHeight: "45px" }}>
             {sale.ggull == 1 ? <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px" }} />
               : <img src="/ggul2.png" style={{ height: "35px" }} />}

@@ -137,61 +137,75 @@ const SaleWrite = () => {
         const submissionTime = new Date(); // 등록 시간
         calculateTimeAgo(submissionTime); // 함수 호출하여 시간 차이 계산
     }
-    return (
-        <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden" }}>
-            <br />
-            <Link to="/salelist">
-                <IoArrowBackOutline size="30" color="14C38E" />
-            </Link>
-            <span style={{ color: "#14C38E", fontSize: "25px", marginLeft: "105px" }}><b>판매글수정</b></span>
-            <br /><br />
-            <div style={{ backgroundColor: "#E9E9E9", width: "48px", height: "63px", textAlign: "center", paddingTop: "5px", position: "relative", cursor: "pointer" }}
-            >
-                <div>
-                    <div onClick={() => document.getElementById("file").click()}>
-                        <FaCamera size="30" color='gray' />
-                        <div style={{ position: "absolute", textAlign: "center", width: "48px", paddingBottom: "5px", fontWeight: "bold" }}>
-                            {imageCount}/5
-                        </div>
-                    </div>
-                    <Input name="file" type="file" id="file" accept="image/*" onChange={fileChange} hidden ref={fileInputRef} />
+    const deleteSale =(e) =>{
+        let saleNum = e.target.id;
+        axios.delete(`http://localhost:8090/saledelete/${saleNum}`)
+        .then(res => {
+            let num = res.data;
+            let resale = sale.filter(sale=> sale.num!==num);
+            setSale([...resale]);
+            
+        })
+        .catch(err=> {
+            console.log(err);
+        })
 
-                    <div style={{ display: 'flex', marginLeft: '20px', marginTop: '-30px' }}>
-                        {selectedImages.map((image, index) => (
-                            <div key={index} style={{ marginLeft: '10px', position: 'relative' }}>
-                                <img
-                                    src={URL.createObjectURL(image)}
-                                    alt={`Selected ${index + 1}`}
-                                    style={{ width: '45px', height: '45px', marginLeft: "20px" }}
-                                />
-                                <button
-                                    onClick={() => removeImage(index)}
-                                    style={{
-                                        position: 'absolute',
-                                        top: '-10px',
-                                        right: '-10px',
-                                        backgroundColor: '#14C38E',
-                                        borderRadius: '50%',
-                                        border: "none",
-                                        cursor: 'pointer',
-                                        padding: '0',
-                                        width: '20px',
-                                        height: '20px',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        fontSize: '12px',
-                                        color: 'white',
-                                    }}
-                                >
-                                    X
-                                </button>
-                            </div>
-                        ))}
-                    </div>
+    }
+    return(
+        <div className='main' style={{textAlign:'left',overflow:"scroll", height:"732px", overflowX:"hidden"}}> 
+        <br/>
+         <Link to="/salelist">
+         <IoArrowBackOutline size="30" color="14C38E" />
+         </Link>
+         <span style={{color:"#14C38E",fontSize:"25px",marginLeft:"105px"}}><b>판매글수정</b></span> 
+         <br/><br/>
+         <div style={{backgroundColor:"#E9E9E9", width:"48px", height:"63px", textAlign:"center", paddingTop:"5px", position:"relative", cursor:"pointer"}}
+             >
+        <div>
+            <div onClick={()=>document.getElementById("file").click()}>
+                <FaCamera size="30" color='gray'  />
+                <div style={{ position: "absolute", textAlign: "center", width: "48px", paddingBottom: "5px", fontWeight: "bold" }}>
+                    {imageCount}/5
                 </div>
             </div>
-            <div style={{ marginBottom: "5px", fontSize: "18px", marginTop: "20px" }}>제목</div>
+            <Input name="file" type="file" id="file" accept="image/*" onChange={fileChange} hidden ref={fileInputRef} />
+            
+            <div style={{ display: 'flex', marginLeft: '20px', marginTop: '-30px' }}>
+  {selectedImages.map((image, index) => (
+    <div key={index} style={{ marginLeft:'10px', position: 'relative' }}>
+      <img
+        src={URL.createObjectURL(image)}
+        alt={`Selected ${index + 1}`}
+        style={{ width: '45px', height: '45px',marginLeft:"20px" }}
+      />
+      <Button
+        onClick={() => removeImage(index)}
+        style={{
+          position: 'absolute',
+          top: '-10px',
+          right: '-10px',
+          backgroundColor: '#14C38E',
+          borderRadius: '50%',
+          border:"none",
+          cursor: 'pointer',
+          padding: '0',
+          width: '20px',
+          height: '20px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontSize: '12px',
+          color: 'white',
+        }}
+      >
+        X
+      </Button>
+    </div>
+  ))}
+</div>
+        </div>
+        </div>
+        <div style={{marginBottom:"5px", fontSize:"18px", marginTop:"20px"}}>제목</div>
             <Input
                 type="text"
                 placeholder="제목을 입력해주세요"
@@ -200,30 +214,29 @@ const SaleWrite = () => {
                 value={sale.title}
                 onChange={handleInputChange}
             />
-
-            <div style={{ marginTop: "20px", display: "flex" }}>
-                <div>
-                    <div style={{ marginBottom: "5px", fontSize: "18px" }}>카테고리</div>
-                    <select
-                        style={{ width: "180px", height: "40px", textAlign: "center", borderRadius: "5px", float: "left", borderColor: "lightgray" }}
-                        name="category"
-                        value={sale.category}
-                        onChange={handleInputChange}>
-                        <option value="" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;선택</option>
-                        <option value="mobile" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;모바일/태블릿</option>
-                        <option value="pc" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;노트북/PC</option>
-                        <option value="ticket" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;티켓/쿠폰</option>
-                        <option value="clothes" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;의류</option>
-                        <option value="free" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;나눔</option>
-                        <option value="others" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;기타</option>
-                    </select>
-                </div>
-                <div style={{ marginLeft: "25px" }}>
-                    <div style={{ marginBottom: "10px", fontSize: "18px" }} name="ggull" value={sale.ggull}>
-                        꿀페이
-                    </div>
-                    <img src={currentImage} style={{ width: "50px" }} onClick={changeImage} alt="Ggul Image" />
-                </div>
+        
+        <div style={{marginTop:"20px",display:"flex"}}>
+            <div>
+                <div style={{marginBottom:"5px", fontSize:"18px"}}>카테고리</div>
+                <select
+    style={{ width: "180px", height: "40px", textAlign: "center", borderRadius: "5px", float: "left", borderColor: "lightgray" }}
+    name="category"
+    value={sale.category}
+    onChange={handleInputChange}>
+                    <option value="" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;선택</option>
+                    <option value="mobile" style={{ textAlign: "left"}}>&nbsp;&nbsp;&nbsp;모바일/태블릿</option>
+                    <option value="pc" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;노트북/PC</option>
+                    <option value="ticket" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;티켓/쿠폰</option>
+                    <option value="clothes" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;의류</option>
+                    <option value="free" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;나눔</option>
+                    <option value="others" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;기타</option>
+                </select> 
+            </div>
+            <div style={{marginLeft:"25px"}}>
+            <div style={{marginBottom:"10px", fontSize:"18px"}} name="ggull" value={sale.ggull}>
+                꿀페이
+            </div>
+            <img src={currentImage} style={{width:"50px"}} onClick={changeImage} alt="Ggul Image" />
             </div>
             <div style={{ marginBottom: "20px" }} />
             <div style={{ display: "flex" }}>
@@ -243,27 +256,30 @@ const SaleWrite = () => {
                     placeholder='상세설명을 입력하세요
 구매날짜, 하자 등 자세하게 작성할수록
 구매자에게 편리합니다'></Input>
-
-            </div>
-            <br /> <p style={{ textAlign: "center" }}><Button
-                type="button"
+            
+        </div>
+        <br/> <Button
+                
                 onClick={submit}
                 style={{
-                    fontWeight: "bold",
-                    fontSize: "18px",
-                    borderRadius: "10px",
-                    width: "385px",
-                    height: "50px",
-                    backgroundColor: '#14C38E',
-                    color: "white",
-                    borderStyle: "none"
-                }}
-
-            >
-                수정하기
-            </Button></p>
-
-        </div>
+                textAlign:"center",
+                fontSize: "18px",
+                borderRadius: "10px",
+                width: "180px",
+                height: "50px",
+                backgroundColor: '#14C38E',
+                color: "white",
+                borderStyle: "none"
+                }}>
+                수정하기</Button>
+                <Button id={sale.num} onclick={deleteSale} style={{marginLeft:"200px",marginTop:"-80px", fontWeight: "bold",fontSize:"18px",width: "180px",borderRadius: "10px",
+             height: "50px"}}>삭제하기</Button> 
+               
+            
+             
+                
+            
+           
 
 
 

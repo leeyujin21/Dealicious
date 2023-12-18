@@ -4,15 +4,32 @@ import { FaCheck } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
-import {useNavigate} from 'react-router-dom';
+import {useParams,useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
 const Gpay = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [pay, setPay] = useState({saletitle:'결제테스트', amount:'1004',buyeremail:'gudtjq444@naver.com',imp_uid:''});
-
+    const { sect,num } = useParams();
     const navigate = useNavigate();
-
+    const [writer, setwriter] = useState({nickname:'',typename:'',fileurl:'',ggull:'',email:''});
+    const [sale, setSale] = useState({
+        num: "",
+        email: "",
+        title: "",
+        type: "",
+        amount: "",
+        category: "",
+        content: "",
+        place: "",
+        fileurl: "",
+        status: "",
+        ggull:"",
+        viewcount: null,
+        zzimcnt: null,
+        buyeremail: "",
+        writerdate: "",
+      });
     useEffect(() => {
         const jquery = document.createElement("script");
         jquery.src = "http://code.jquery.com/jquery-1.12.4.min.js";
@@ -20,10 +37,24 @@ const Gpay = () => {
         iamport.src = "http://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
         document.head.appendChild(jquery);
         document.head.appendChild(iamport);
+        axios
+        .get(`http://localhost:8090/gpay/${sect}/${num}`)
+        .then(res => {
+          console.log(res.data);
+          setSale(res.data.sale);
+          setwriter({nickname:res.data.nickname,typename:res.data.typename,fileurl:res.data.profileimgurl,email:res.data.email})
+          console.log(sale);
+          
+        })
+        .catch((err) => {
+          console.log(err);
+        });
         return () => {
             document.head.removeChild(jquery);
             document.head.removeChild(iamport);
         };
+        
+    
     }, []);
 
     const requestPay = () => {
@@ -73,10 +104,10 @@ const Gpay = () => {
             </div>
             <div style={{textAlign:"left", paddingBottom:"20px", borderBottom:"1px solid lightgray", display:"flex"}}>
                 &nbsp;&nbsp;
-                <img src="..\1.png"></img>
+                <img src={writer.fileurl}></img>
                 <div style={{marginLeft:"10px"}}>
-                    디스펜서 팔아요<br/>
-                    60,000원
+                    {sale.title}<br/>
+                    {sale.price}
                 </div>
             </div>
             <div style={{textAlign:"left", borderBottom:"1px solid lightgray", paddingBottom:"20px"}}>
