@@ -12,16 +12,20 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 function SaleDetail() {
+  const user = useSelector(state => state.persistedReducer.user);
+  const [writer, setwriter] = useState({ nickname: '', typename: '', fileurl: '', ggull: '', email: '' });
   const selectList = [
     { value: "판매중", name: "판매중" },
     { value: "예약", name: "예약중" },
   ];
   const [selected, setSelected] = useState("상태 선택");
-
   const handleSelect = (e) => {
     console.log(e.target.value);
     setSelected(e.target.value);
   }
+
+  const [showEditButton, setShowEditButton] = useState(true);
+
   const { sect, num } = useParams();
   const [sale, setSale] = useState({
     num: "",
@@ -40,13 +44,9 @@ function SaleDetail() {
     buyeremail: "",
     writerdate: "",
   });
-  const user = useSelector(state => state.persistedReducer.user);
-
   const [heart, setHeart] = useState(false);
   const navigate = useNavigate();
 
-
-  const [writer, setwriter] = useState({ nickname: '', typename: '', fileurl: '', ggull: '', email: '' });
 
 
   useEffect(() => {
@@ -65,6 +65,9 @@ function SaleDetail() {
         setSale(res.data.sale);
         const fileurlList = res.data.sale.fileurl.split(',').map(url => url.trim());
         setSale((prevSale) => ({ ...prevSale, fileurlList }));
+
+        // 작성자 정보를 가져온 이후에 상태 변경
+        setShowEditButton(user.email === res.data.email);
 
       })
       .catch((err) => {
@@ -101,13 +104,13 @@ function SaleDetail() {
   };
 
   const gochat = () => {
-    if (user.nickname === writer.nickname) {
-      alert("자신과는 채팅할 수 없습니다.")
-    } else {
-      const uniqueString = uuidv4();
-      navigate(`/chat/${uniqueString}/${num}`);
-    }
+    const uniqueString = uuidv4();
+    navigate(`/chat/${uniqueString}/${num}`);
   }
+  const goToEditPage = () => {
+    navigate(`/salemofity/${num}`);
+  }
+
   const fileurlList = sale.fileurl.split(',').map(url => url.trim());
   const settings = {
     dots: true,
@@ -127,20 +130,20 @@ function SaleDetail() {
         overflowX: "hidden",
       }}
     >
-      <div style={{ marginTop: "10px", marginBottom: "20px" }}>
+      <div style={{ marginTop: "10px", marginBottom: "20px", display: "flex" }}>
         <Link to="/salelist">
           <IoArrowBackOutline size="30" color="14C38E" />
         </Link>
-        <span
+        <div
           style={{
             color: "#14C38E",
-            fontSize: "25px",
+            fontSize: "20px",
             textAlign: "center",
-            marginLeft: "75px",
+            width: "360px"
           }}
         >
           <b>{sale.title}</b>
-        </span>
+        </div>
       </div>
 
       <div>
@@ -188,7 +191,7 @@ function SaleDetail() {
               }}
             >
               <div>
-                <select value={selected} style={{ borderStyle:"none", borderRadius: "10px", width: "130px", height: "42px", textAlign: "left" }} onChange={handleSelect}>
+                <select value={selected} style={{ borderStyle: "none", borderRadius: "10px", width: "130px", height: "42px", textAlign: "left" }} onChange={handleSelect}>
                   {selectList.map((item) => {
                     return <option value={item.value} key={item.value}>
                       &nbsp;&nbsp;{item.name}
@@ -219,7 +222,7 @@ function SaleDetail() {
             width: "385px",
             marginTop: "10px",
             marginBottom: "15px",
-            height: "300px",
+            height: "285px",
             resize: "none",
             backgroundColor: "white",
           }}
@@ -227,7 +230,7 @@ function SaleDetail() {
           value={sale.content}
         ></Input>
         <div style={{ display: "flex" }}>
-          <div style={{ position: "relative", marginTop: "2px" }}>
+          <div style={{ position: "relative", marginTop: "8px" }}>
             <img src={heart ? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px" }} onClick={selectGood} />
             <div>{sale.likecount}</div>
             <div
@@ -244,29 +247,23 @@ function SaleDetail() {
 
             </div>
           </div>
-          <div>
-            <div style={{ marginLeft: "150px" }}>
-              {sale.ggull == 1 ? <img src="/ggul.png" style={{ width: "60px", height: "40px" }} />
-                : <img src="/ggul2.png" style={{ width: "60px", height: "40px" }} />}
-
-
-              <span style={{ textAlign: "right", marginLeft: "25px" }} onClick={gochat}>
-                <input
-                  type="submit"
-                  value="채팅하기"
-                  style={{
-                    borderRadius: "5px",
-                    width: "100px",
-                    height: "45px",
-                    backgroundColor: "#14C38E",
-                    color: "white",
-                    borderStyle: "none",
-                    marginLeft: "10px",
-                  }}
-                ></input>
-              </span>
-
-            </div>
+          <div style={{ marginLeft: "165px", lineHeight: "45px" }}>
+            {sale.ggull == 1 ? <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px" }} />
+              : <img src="/ggul2.png" style={{ height: "35px" }} />}
+          </div>
+          <div style={{ marginLeft: "15px" }} onClick={user.email == writer.email ? goToEditPage : gochat}>
+            <input
+              type="submit"
+              value={user.email == writer.email ? "수정하기" : "채팅하기"}
+              style={{
+                borderRadius: "5px",
+                width: "100px",
+                height: "45px",
+                backgroundColor: "#14C38E",
+                color: "white",
+                borderStyle: "none",
+              }}
+            />
           </div>
         </div>
       </div>
