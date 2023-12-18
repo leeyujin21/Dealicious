@@ -6,7 +6,9 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+
 import com.kosta.deal.entity.Sale;
+import com.kosta.deal.entity.User;
 import com.kosta.deal.util.PageInfo;
 
 public interface SaleService {
@@ -29,6 +31,9 @@ public interface SaleService {
 	Boolean selHeartSale(String email, Integer num)throws Exception;
 	void saleDelete(Integer num) throws Exception;
 	Sale saleGpay(Integer num) throws Exception ;
+	Boolean login(String email, String password)throws Exception;
+	Map<String, Object> userInfo(Integer id) throws Exception;
+	
 	
 	
 	

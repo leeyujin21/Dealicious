@@ -5,7 +5,6 @@ import { Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Gpay from "./Gpay";
 
 
 
@@ -38,8 +37,25 @@ function SaleDetail() {
  
 
   const [writer, setwriter] = useState({nickname:'',typename:'',fileurl:'',ggull:'',email:''});
-  
-  
+  const [user,setUser]=useState({email:''});
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // 사용자 로그인 상태 추적
+  useEffect(() => {
+    // 사용자 로그인 상태 확인 (실제 인증 방법을 사용해야 합니다)
+    // 예를 들어, 로그인되어 있다면 사용자 정보를 반환하는 엔드포인트가 있을 수 있습니다
+    axios
+      .get("http://localhost:8090/userInfo")
+      .then((res) => {
+        console.log(res.data);
+        setSale(res.data.sale);
+        // 로그인되어 있다면 isLoggedIn을 true로 설정
+        setUser({email:res.data.email})
+        setIsLoggedIn(true);
+      })
+      .catch((err) => {
+        // 로그인되어 있지 않다면 해당 상황에 맞게 처리합니다 (로그인 페이지로 리디렉션할 수 있습니다)
+        setIsLoggedIn(false);
+      });
+  }, []);
   useEffect(() => {
   
 
@@ -48,7 +64,8 @@ function SaleDetail() {
       .then(res => {
         console.log(res.data);
         setSale(res.data.sale);
-        setwriter({nickname:res.data.nickname,typename:res.data.typename,fileurl:res.data.profileimgurl,email:res.data.email})
+        setwriter({nickname:res.data.nickname,typename:res.data.typename,fileurl:res.data.profileimgurl,buyeremail:res.data.email})
+        setUser({email:res.data.email,id:res.data.id});
         console.log(sale);
         
       })
@@ -148,7 +165,7 @@ function SaleDetail() {
               }}
             >
               
-              {writer.email==null?
+              {writer.email!==null?
                <select style={{border:"none",fontSize:"20px"}}>
                       <option value="category">판매중</option>
                       <option value="mobile">예약중</option>
@@ -212,25 +229,45 @@ function SaleDetail() {
             {sale.ggull==1?<img src="/ggul.png" style={{width:"60px",height:"40px",cursor:"pointer"}}onClick={Gpay}></img>
             :<img src="/ggul2.png"  style={{width:"60px",height:"40px"}}/>}
           
+
+            {isLoggedIn ? 
             <Link to="/chat/1">
 
-               <span style={{ textAlign: "right", marginLeft:"25px" }}>
-                <input
-                  type="submit"
-                  value="채팅하기"
-                  style={{
-                    borderRadius: "5px",
-                    width: "100px",
-                    height: "45px",
-                    backgroundColor: "#14C38E",
-                    color: "white",
-                    borderStyle: "none",
-                    marginLeft: "10px",
-                  }}
-                ></input>
-              </span>
+            <span style={{ textAlign: "right", marginLeft:"25px" }}>
+            <input
+              type="submit"
+              value="채팅하기"
+              style={{
+                borderRadius: "5px",
+                width: "100px",
+                height: "45px",
+                backgroundColor: "#14C38E",
+                color: "white",
+                borderStyle: "none",
+                marginLeft: "10px",
+              }}
+            ></input>
+            </span>
+            
+            </Link>:<Link to="/mypagenl">
 
-            </Link>
+            <span style={{ textAlign: "right", marginLeft:"25px" }}>
+             <input
+               type="submit"
+               value="채팅하기"
+               style={{
+                 borderRadius: "5px",
+                 width: "100px",
+                 height: "45px",
+                 backgroundColor: "#14C38E",
+                 color: "white",
+                 borderStyle: "none",
+                 marginLeft: "10px",
+               }}
+             ></input>
+           </span>
+
+         </Link>}
           </div>
         </div>
         </div>

@@ -8,7 +8,6 @@ import { FaCamera } from "react-icons/fa";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
-import 'moment/locale/ko';
 
 const SaleWrite=()=>{
     const [currentImage, setCurrentImage] = useState("./ggul2.png");
@@ -16,7 +15,8 @@ const SaleWrite=()=>{
     const [imageCount, setImageCount] = useState(0); // 상태 변수로 이미지 카운트를 관리.
     const [selectedImages, setSelectedImages] = useState([]); // 여러 이미지를 저장하는 배열
     const fileInputRef = useRef(null);
-    
+    const [elapsedTime, setElapsedTime] = useState('');
+    const [amount,setAmount]=useState('');
 
    
     
@@ -65,8 +65,15 @@ const SaleWrite=()=>{
     const handleInputChange = (e) => {
         const { name, value } = e.target;//e.target은 이벤트가 발생한 HTML 엘리먼트
         setSale({ ...sale, [name]: value });//name 속성은 해당 입력 필드의 이름을 나타내며, value는 그 입력 필드의 값
+        let amount = e.target.value;
+        sale.amount = Number(amount.replaceAll(',', ''));
+        if(isNaN(amount)) {
+            setAmount(0);
+        } else {
+            setAmount(amount.toLocaleString('ko-KR'));
+        }
     };
-   
+    
     const isFormValid = () => { //유효성검사
         return (
             sale.title.trim() !== '' &&   //공백제거해서 비어있지 않으면
@@ -96,7 +103,7 @@ const SaleWrite=()=>{
         formData.append("content", sale.content);
         formData.append("ggull", sale.ggull);
         formData.append("file",sale.fileurl);
-        formData.append("email",user.email);
+        
         
         // formData.append("file", files);
         for (let image of selectedImages) {
@@ -104,12 +111,12 @@ const SaleWrite=()=>{
         }
 
         console.log(formData)
-        const currentTime = Date.now();
-    localStorage.setItem('registrationTime', currentTime);
+        
         axios.post('http://localhost:8090/salewrite', formData)
     .then(res=> {
         console.log(res);
-        
+        const currentTime = Date.now();
+    localStorage.setItem('registrationTime', currentTime); // 제출 시간 저장
         navigate(`/salelist`);
     })
     .catch(err => {
@@ -117,6 +124,7 @@ const SaleWrite=()=>{
     });
     
     }
+   
     return(
         
         <div className='main' style={{textAlign:'left',overflow:"scroll", height:"732px", overflowX:"hidden"}}> 

@@ -17,9 +17,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import com.kosta.deal.entity.FileVo;
 import com.kosta.deal.entity.Sale;
 import com.kosta.deal.entity.SaleLike;
+import com.kosta.deal.entity.User;
 import com.kosta.deal.repository.FileVoRepository;
 import com.kosta.deal.repository.SaleDslRepository;
 import com.kosta.deal.repository.SaleLikeRepository;
@@ -69,20 +71,21 @@ public class SaleServiceImpl implements SaleService{
 	@Override
 	public Map<String,Object> saleInfo(Integer num) throws Exception {
 		System.out.println(num);
-		Tuple tuple=saleDslRepository.findUserEmailAndRolesBySaleNum(num);
+		Tuple tuple=saleDslRepository.findUserBySaleNum(num);
 	
 		Sale sale = tuple.get(0,Sale.class);
 		System.out.println(sale);
-		String nickname=tuple.get(1,String.class);
 		
+		String nickname=tuple.get(1,String.class);		
 		String typename=tuple.get(2,String.class);
 		String profileimgurl=tuple.get(3,String.class);
-		
+		String email=tuple.get(4,String.class);
 		Map<String,Object> res=new HashMap<>();
 		res.put("sale",sale);
 		res.put("nickname", nickname);
 		res.put("typename", typename);
 		res.put("profileimgurl",profileimgurl);
+		res.put("email", email);
 		System.out.println(res);
 		return res;
 		
@@ -226,6 +229,29 @@ public class SaleServiceImpl implements SaleService{
 	public Sale saleGpay(Integer num) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Boolean login(String email, String password) throws Exception {
+		User user= saleDslRepository.findUserByUserEmailAndPassword(email,password);
+		return user==null? false:true;
+	}
+
+	@Override
+	public Map<String,Object> userInfo(Integer id) throws Exception {
+		
+		Tuple tuple=saleDslRepository.findUserBySaleNum(id);
+		Sale sale = tuple.get(0,Sale.class);
+		String email = tuple.get(1,String.class);
+		
+
+		
+		Map<String,Object> res=new HashMap<>();
+		res.put("sale",sale);
+	
+		res.put("email", email);
+		return res;
+		
 	}
 
 	

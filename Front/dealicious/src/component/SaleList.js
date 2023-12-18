@@ -8,28 +8,29 @@ const SaleList=()=> {
   const [saleList,setSaleList] = useState([]);
   const {category} =useParams();
   const [page, setPage] = useState(1); // 페이지 번호
-  
+  const [writer, setwriter] = useState({nickname:'',typename:'',fileurl:'',ggull:'',email:'',writedate:''});
   const observerRef = useRef(null);
 
   const [elapsedTime, setElapsedTime] = useState('');
-
+  const [user, setUser] = useState({ id: '', email: '', nickname: '' });
   useEffect(() => {
-      // 로컬 스토리지에서 저장된 시간 가져오기
-      const registrationTime = localStorage.getItem('registrationTime');
-      
-      if (registrationTime) {
-          const currentTime = Date.now();
-          const difference = currentTime - parseInt(registrationTime, 10);
+    const submissionTime = localStorage.getItem('registrationTime');
+    
+    if (submissionTime) {
+        const currentTime = Date.now();
+        const difference = currentTime - parseInt(submissionTime, 10);
 
-          // 시간 차이 계산 및 포맷팅 (더 좋은 포맷팅을 위해 'moment'와 같은 라이브러리 사용 가능)
-          const elapsedSeconds = Math.floor(difference / 1000);
-          const elapsedMinutes = Math.floor(elapsedSeconds / 60);
+        const elapsedDays = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const elapsedHours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+        const elapsedMinutes = Math.floor((difference / 1000 / 60) % 60);
+        const elapsedSeconds = Math.floor((difference / 1000) % 60);
 
-          // 경과된 시간을 표시할 문자열 생성
-          const formattedTime = ` ${elapsedMinutes % 60} 분`;
-          setElapsedTime(formattedTime);
-      }
-    })
+        const formattedTime = ` ${elapsedMinutes}분 `;
+        setElapsedTime(formattedTime);
+    }
+}, []);
+
+  
   useEffect(() => {
    
    
@@ -40,6 +41,8 @@ const SaleList=()=> {
                   const newSaleList = res.data.saleList;//새로운 데이터가 수신되면(newSaleList.length > 0), setSaleList 함수를 사용하여 새 데이터를 기존 saleList에 추가하고 페이지 번호를 업데이트
                   if (newSaleList.length > 0) {
                       setSaleList(prevSaleList => [...prevSaleList, ...newSaleList]);
+                     
+
                       setPage(page + 1);
                   } else {    //새로운 데이터가 없으면 Intersection Observer를 중지하여 추가 요청을 방지
                       observer.disconnect(); 
@@ -70,6 +73,7 @@ const SaleList=()=> {
       .then(res => {
         console.log(res);
         setSaleList([]);
+        
         setSaleList((_sale_list) => [
           ..._sale_list, ...res.data.saleList
         ]);
@@ -86,6 +90,8 @@ const SaleList=()=> {
         setSaleList((_sale_list) => [
           ..._sale_list, ...res.data
         ]);
+        setUser({email:res.data.email})
+        
       })
       .catch(err => {
         console.log(err);
@@ -98,10 +104,12 @@ const SaleList=()=> {
 
   return (
     <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px", paddingTop: "0px" }}>
-      
+      {user.id!==null?
       <Link to="/salewrite" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor:"white", width:"45px", height:"45px"}}>
         <FiPlusCircle size="50" color="#14C38E"/>
-      </Link>       
+      </Link>:<Link to="/mypagenl" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor:"white", width:"45px", height:"45px"}}>
+        <FiPlusCircle size="50" color="#14C38E"/>
+      </Link>}      
       
       {saleList.map((item, index) =>
       

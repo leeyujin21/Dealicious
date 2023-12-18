@@ -11,10 +11,10 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 @Configuration
 public class QuerydslConfig {
 	@Autowired
-	EntityManager entityManager;
+	EntityManager entityManager;//JPA에서 엔티티를 관리하고 영속성 컨텍스트를 제공하는 인터페이스
 	
 	@Bean
 	public JPAQueryFactory jpaQueryFactory() {
-		return new JPAQueryFactory(entityManager);
+		return new JPAQueryFactory(entityManager);//QueryDSL에서 사용되는 쿼리를 작성하고 실행하기 위한 팩토리 클래스. EntityManager를 주입받아 QueryDSL을 사용
 	}
 }

@@ -1,6 +1,7 @@
 package com.kosta.deal.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.PageRequest;
 
@@ -11,6 +12,7 @@ import com.kosta.deal.entity.QSaleLike;
 import com.kosta.deal.entity.QUser;
 import com.kosta.deal.entity.Sale;
 import com.kosta.deal.entity.SaleLike;
+import com.kosta.deal.entity.User;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -55,14 +57,24 @@ public class SaleDslRepository {
 
 	
 
-	public Tuple findUserEmailAndRolesBySaleNum(Integer num)throws Exception {
+	public Tuple findUserBySaleNum(Integer num)throws Exception {
 		QSale sale= QSale.sale;
 		QUser user= QUser.user;
-		return jpaQueryFactory.select(sale,user.nickname,user.typename,user.profileimgurl)
+		return jpaQueryFactory.select(sale,user.nickname,user.typename,user.profileimgurl,user.email)
 				.from(user)
 				.join(sale)
 				.on(sale.email.eq(user.email))
 				.where(sale.num.eq(num))
+				.fetchOne();
+	}
+	public Tuple findUserByUserId(Integer id) throws Exception {
+		QSale sale= QSale.sale;
+		QUser user= QUser.user;
+		return jpaQueryFactory.select(sale,user.id)
+				.from(user)
+				.join(sale)
+				.on(sale.email.eq(sale.email))
+				.where(user.id.eq(id))
 				.fetchOne();
 	}
 
@@ -90,6 +102,14 @@ public class SaleDslRepository {
 				.where(sale.num.eq(num)).fetchOne();
 				
 			
+	}
+
+	
+
+	public User findUserByUserEmailAndPassword(String email, String password) {
+		QUser user=QUser.user;
+		return jpaQueryFactory.selectFrom(user)
+				.where(user.email.eq(email).and(user.password.eq(password))).fetchOne();
 	}
 
 	
