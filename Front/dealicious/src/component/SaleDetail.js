@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 import "./img.css";
-import { Input } from "reactstrap";
+import { Button, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -23,8 +23,6 @@ function SaleDetail() {
     console.log(e.target.value);
     setSelected(e.target.value);
   }
-
-  const [showEditButton, setShowEditButton] = useState(true);
 
   const { sect, num } = useParams();
   const token = useSelector(state => state.persistedReducer.token);
@@ -69,15 +67,14 @@ function SaleDetail() {
         const fileurlList = res.data.sale.fileurl.split(',').map(url => url.trim());
         setSale((prevSale) => ({ ...prevSale, fileurlList }));
 
-        // 작성자 정보를 가져온 이후에 상태 변경
-        setShowEditButton(user.email === res.data.email);
-
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  console.log(writer.email)
+  console.log(user.email)
   const convertCategoryToKorean = (category) => {
     switch (category) {
       case "mobile":
@@ -111,7 +108,7 @@ function SaleDetail() {
     navigate(`/chat/${uniqueString}/${num}`);
   }
   const goToEditPage = () => {
-    navigate(`/salemofity/${num}`);
+    navigate(`/salemodify/${num}`);
   }
 
   const fileurlList = sale.fileurl.split(',').map(url => url.trim());
@@ -258,21 +255,26 @@ function SaleDetail() {
             {sale.ggull == 1 ? <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px" }} />
               : <img src="/ggul2.png" style={{ height: "35px" }} />}
           </div>
-          <div style={{ marginLeft: "15px" }} onClick={user.email == writer.email ? goToEditPage : gochat}>
-            <input
-              type="submit"
-              value={user.email == writer.email ? "수정하기" : "채팅하기"}
-              style={{
-                borderRadius: "5px",
-                width: "100px",
-                height: "45px",
-                backgroundColor: "#14C38E",
-                color: "white",
-                borderStyle: "none",
-              }}
-            />
+          {user.email === writer.email ? <Button style={{
+            marginLeft: "15px", borderRadius: "5px",
+            width: "100px",
+            height: "45px",
+            backgroundColor: "#14C38E",
+            color: "white",
+            borderStyle: "none",
+          }} onClick={goToEditPage}>
+            수정하기
+          </Button> : <Button style={{
+            marginLeft: "15px", borderRadius: "5px",
+            width: "100px",
+            height: "45px",
+            backgroundColor: "#14C38E",
+            color: "white",
+            borderStyle: "none",
+          }} onClick={gochat}>
+            채팅하기
+          </Button>}
 
-          </div>
         </div>
       </div>
     </div>

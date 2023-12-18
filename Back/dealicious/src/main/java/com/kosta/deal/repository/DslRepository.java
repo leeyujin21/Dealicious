@@ -56,7 +56,7 @@ public class DslRepository {
 				.from(pay)
 				.join(sale)
 				.on(pay.salenum.eq(sale.num))
-				.where(pay.paydate.loe(eDate).and(pay.paydate.goe(sDate)).and(sale.status.eq("정산완료")))
+				//.where(pay.paydate.loe(eDate).and(pay.paydate.goe(sDate)).and(sale.status.eq("정산완료")))
 				.fetch();
 	}
 	

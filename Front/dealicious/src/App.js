@@ -34,7 +34,6 @@ import SaleList from './component/SaleList';
 import SaleWrite from './component/SaleWrite';
 import SaleDetail from './component/SaleDetail';
 
-import SaleDetail_S from './component/SaleDetail_S';
 import SaleModify from './component/SaleModify';
 
 import Gpay from './component/Gpay';
@@ -52,7 +51,6 @@ import Oauth from './component/Oauth';
 import Logout from './component/Logout';
 import Oauth2 from './component/Oauth2';
 import StompChatting from './component/StompChatting';
-import { useEffect } from 'react';
 import MypageNl from './component/MypageNl';
 
 export const persistor = persistStore(store);
@@ -115,8 +113,7 @@ function App() {
                             <Route path="/salelist/:category" element={<SaleList />}></Route> {/**/}
                             <Route path="/salewrite" element={<SaleWrite />}></Route> {/**/}
                             <Route path="/saledetail/:num" element={<SaleDetail />}></Route> {/**/}
-                            <Route path="/saledetail_s" element={<SaleDetail_S />}></Route> {/**/}
-                            <Route path="/salemodify" element={<SaleModify />}></Route> {/**/}
+                            <Route path="/salemodify/:num" element={<SaleModify />}></Route> {/**/}
 
 
                             <Route exect path="/oauth/redirect/:token" element={<Oauth />} />
