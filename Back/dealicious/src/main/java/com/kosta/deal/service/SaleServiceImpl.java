@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 
 import com.kosta.deal.entity.FileVo;
 import com.kosta.deal.entity.Sale;
@@ -173,7 +173,9 @@ public class SaleServiceImpl implements SaleService{
 
 	@Override
 	public Sale saleDetail(Integer num) throws Exception {
-		return saleDslRepository.findSaleBySaleNum(num);
+		Optional<Sale> osale=saleRepository.findById(num);
+		if(osale.isEmpty()) throw new Exception ("상품번호 오류");
+		return osale.get();
 		
 	}
 	@Override
@@ -181,6 +183,12 @@ public class SaleServiceImpl implements SaleService{
 		Sale sale1=saleRepository.findById(sale.getNum()).get();
 		sale1.setContent(sale.getContent());
 		sale1.setTitle(sale.getTitle());
+		sale1.setCategory(sale.getCategory());
+		sale1.setAmount(sale.getAmount());
+		sale1.setPlace(sale.getPlace());
+		sale1.setGgull(sale.getGgull());
+		sale1.setFileurl(sale.getFileurl());
+		
 
 		if(files!=null && files.size()!=0) {
 			String dir="c:/upload/";
