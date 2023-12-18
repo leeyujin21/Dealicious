@@ -78,6 +78,8 @@ public class SaleServiceImpl implements SaleService{
 		String typename=tuple.get(2,String.class);
 		String profileimgurl=tuple.get(3,String.class);
 		String email=tuple.get(4,String.class);
+		Integer id= tuple.get(5,Integer.class);
+		
 		
 		Map<String,Object> res=new HashMap<>();
 		res.put("sale",sale);
@@ -85,6 +87,7 @@ public class SaleServiceImpl implements SaleService{
 		res.put("typename", typename);
 		res.put("profileimgurl",profileimgurl);
 		res.put("email",email);
+		res.put("id", id);
 		System.out.println(res);
 		return res;
 		
@@ -209,6 +212,30 @@ public class SaleServiceImpl implements SaleService{
 			saleRepository.save(sale1);
 			return sale1.getNum();
 		}
+
+	@Override
+	public void saleDelete(Integer num) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Sale saleGpay(Integer num) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean login(String email, String password) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> userInfo(Integer id) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 	

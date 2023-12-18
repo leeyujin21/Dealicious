@@ -48,7 +48,7 @@ function SaleDetail() {
   const navigate = useNavigate();
 
 
-  const [writer, setwriter] = useState({ nickname: '', typename: '', fileurl: '', ggull: '', email: '' });
+  const [writer, setwriter] = useState({ nickname: '', typename: '', fileurl: '', ggull: '', email: '' ,id:''});
 
 
   useEffect(() => {
@@ -62,6 +62,7 @@ function SaleDetail() {
           typename: res.data.typename,
           fileurl: res.data.profileimgurl,
           email: res.data.email,
+          id:res.data.id
         });
 
         setSale(res.data.sale);
@@ -142,7 +143,8 @@ function SaleDetail() {
         height: "732px",
         overflowX: "hidden",
       }}
-    >
+    > 
+      
       <div style={{ marginTop: "10px", marginBottom: "20px" }}>
         <Link to="/salelist">
           <IoArrowBackOutline size="30" color="14C38E" />
@@ -265,7 +267,7 @@ function SaleDetail() {
               {sale.ggull == 1 ? <img src="/ggul.png" style={{ width: "60px", height: "40px" }} />
                 : <img src="/ggul2.png" style={{ width: "60px", height: "40px" }} />}
 
-
+              {user.email!==null?
               <span style={{ textAlign: "right", marginLeft: "25px" }} onClick={gochat}>
                 <input
                   type="submit"
@@ -280,7 +282,7 @@ function SaleDetail() {
                     marginLeft: "10px",
                   }}
                 ></input>
-              </span>
+              </span>:alert("로그인하세요")}
 
             </div>
           </div>

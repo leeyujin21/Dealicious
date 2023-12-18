@@ -4,14 +4,16 @@ import { FiPlusCircle } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import {useParams} from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from "react-redux";
+
 
 const SaleList=()=> {
   const [saleList,setSaleList] = useState([]);
   const {category} =useParams();
   const [page, setPage] = useState(1); // 페이지 번호
-  
+  const user = useSelector(state => state.persistedReducer.user);
   const observerRef = useRef(null);
-
+ 
   useEffect(() => {
    
    
@@ -76,14 +78,14 @@ const SaleList=()=> {
     
   }, []); // 페이지가 로드될 때 한 번만 실행되도록 빈 배열 전달
      
-      
+  console.log(user.email);    
 
   return (
     <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px", paddingTop: "0px" }}>
-      
+      {user.email!==''?
       <Link to="/salewrite" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor:"white", width:"45px", height:"45px"}}>
         <FiPlusCircle size="50" color="#14C38E"/>
-      </Link>       
+      </Link>: <Link to="/mypagenl"style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor:"white", width:"45px", height:"45px"}}><FiPlusCircle size="50" color="#14C38E"/></Link> }   
       
       {saleList.map((item, index) =>
       

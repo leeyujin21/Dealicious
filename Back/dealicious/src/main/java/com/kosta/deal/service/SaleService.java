@@ -24,7 +24,6 @@ public interface SaleService {
 	Integer saleModify(Sale sale, List<MultipartFile> file) throws Exception;
 	
 	
-	
 	Map<String,Object> saleInfo(Integer num) throws Exception;
 	Boolean isHeartSale(String email, Integer num) throws Exception;
 	void readImage(Integer num, OutputStream out) throws Exception;
