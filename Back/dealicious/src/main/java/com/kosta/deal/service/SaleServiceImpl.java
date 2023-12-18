@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kosta.deal.entity.FileVo;
 import com.kosta.deal.entity.Sale;
 import com.kosta.deal.entity.SaleLike;
-import com.kosta.deal.entity.User;
 import com.kosta.deal.repository.FileVoRepository;
 import com.kosta.deal.repository.SaleDslRepository;
 import com.kosta.deal.repository.SaleLikeRepository;
@@ -71,21 +69,22 @@ public class SaleServiceImpl implements SaleService{
 	@Override
 	public Map<String,Object> saleInfo(Integer num) throws Exception {
 		System.out.println(num);
-		Tuple tuple=saleDslRepository.findUserBySaleNum(num);
+		Tuple tuple=saleDslRepository.findUserEmailAndRolesBySaleNum(num);
 	
 		Sale sale = tuple.get(0,Sale.class);
 		System.out.println(sale);
+		String nickname=tuple.get(1,String.class);
 		
-		String nickname=tuple.get(1,String.class);		
 		String typename=tuple.get(2,String.class);
 		String profileimgurl=tuple.get(3,String.class);
 		String email=tuple.get(4,String.class);
+		
 		Map<String,Object> res=new HashMap<>();
 		res.put("sale",sale);
 		res.put("nickname", nickname);
 		res.put("typename", typename);
 		res.put("profileimgurl",profileimgurl);
-		res.put("email", email);
+		res.put("email",email);
 		System.out.println(res);
 		return res;
 		
@@ -171,22 +170,14 @@ public class SaleServiceImpl implements SaleService{
 
 	@Override
 	public Sale saleDetail(Integer num) throws Exception {
-		Optional<Sale> osale= saleRepository.findById(num);
-		if(osale.isEmpty()) throw new Exception("번호 오류");
-		return osale.get();
+		return saleDslRepository.findSaleBySaleNum(num);
 		
 	}
 	@Override
 	public Integer saleModify(Sale sale,List<MultipartFile> files) throws Exception {
-		Sale sale1=saleDslRepository.findByemail(sale.getNum());
+		Sale sale1=saleRepository.findById(sale.getNum()).get();
 		sale1.setContent(sale.getContent());
 		sale1.setTitle(sale.getTitle());
-		sale1.setAmount(sale.getAmount());
-		sale1.setCategory(sale.getCategory());
-		sale1.setGgull(sale.getGgull());
-		sale1.setPlace(sale.getPlace());
-		sale1.setFileurl(sale.getFileurl());
-		
 
 		if(files!=null && files.size()!=0) {
 			String dir="c:/upload/";
@@ -218,51 +209,6 @@ public class SaleServiceImpl implements SaleService{
 			saleRepository.save(sale1);
 			return sale1.getNum();
 		}
-
-	@Override
-	public void saleDelete(Integer num) throws Exception {
-		saleRepository.deleteById(num);
-		
-	}
-
-	@Override
-	public Sale saleGpay(Integer num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Boolean login(String email, String password) throws Exception {
-		User user= saleDslRepository.findUserByUserEmailAndPassword(email,password);
-		return user==null? false:true;
-	}
-
-	@Override
-	public Map<String,Object> userInfo(Integer id) throws Exception {
-		
-		Tuple tuple=saleDslRepository.findUserBySaleNum(id);
-		Sale sale = tuple.get(0,Sale.class);
-		String email = tuple.get(1,String.class);
-		
-
-		
-		Map<String,Object> res=new HashMap<>();
-		res.put("sale",sale);
-	
-		res.put("email", email);
-		return res;
-		
-	}
-
-	
-	
-	
-
-
-	
-
-
-
 	
 
 	

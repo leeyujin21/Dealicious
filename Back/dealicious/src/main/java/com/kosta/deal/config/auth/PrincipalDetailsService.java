@@ -6,7 +6,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.kosta.deal.entity.Admin;
 import com.kosta.deal.entity.User;
+import com.kosta.deal.repository.AdminRepository;
 import com.kosta.deal.repository.UserRepository;
 
 // security 설정에서 loginProcessingUrl("/loginProc");
@@ -17,13 +19,25 @@ public class PrincipalDetailsService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
-	//Security Session(내부 Authentication(내부 UserDetails))
+	
+	@Autowired
+	private AdminRepository adminRepository;
+
+	// Security Session(내부 Authentication(내부 UserDetails))
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		User userEntity = userRepository.findByEmail(email).get();
-		System.out.println("loadUserByUsername:"+userEntity);
-		if(userEntity!=null) {
-			return new PrincipalDetails(userEntity);
+		if (email.contains("@")) {
+			User userEntity = userRepository.findByEmail(email).get();
+			System.out.println("loadUserByUsername:" + userEntity);
+			if (userEntity != null) {
+				return new PrincipalDetails(userEntity);
+			}
+		} else {
+			Admin admin = adminRepository.findByAdminid(email).get();
+			System.out.println("loadUserByUsername:" + admin);
+			if (admin != null) {
+				return new PrincipalDetails(admin);
+			}
 		}
 		return null;
 	}

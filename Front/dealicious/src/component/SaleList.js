@@ -3,34 +3,15 @@ import React, { useRef, useState, useEffect} from 'react';
 import { FiPlusCircle } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import {useParams} from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const SaleList=()=> {
   const [saleList,setSaleList] = useState([]);
   const {category} =useParams();
   const [page, setPage] = useState(1); // 페이지 번호
-  const [writer, setwriter] = useState({nickname:'',typename:'',fileurl:'',ggull:'',email:'',writedate:''});
+  
   const observerRef = useRef(null);
 
-  const [elapsedTime, setElapsedTime] = useState('');
-  const [user, setUser] = useState({ id: '', email: '', nickname: '' });
-  useEffect(() => {
-    const submissionTime = localStorage.getItem('registrationTime');
-    
-    if (submissionTime) {
-        const currentTime = Date.now();
-        const difference = currentTime - parseInt(submissionTime, 10);
-
-        const elapsedDays = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const elapsedHours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-        const elapsedMinutes = Math.floor((difference / 1000 / 60) % 60);
-        const elapsedSeconds = Math.floor((difference / 1000) % 60);
-
-        const formattedTime = ` ${elapsedMinutes}분 `;
-        setElapsedTime(formattedTime);
-    }
-}, []);
-
-  
   useEffect(() => {
    
    
@@ -41,8 +22,6 @@ const SaleList=()=> {
                   const newSaleList = res.data.saleList;//새로운 데이터가 수신되면(newSaleList.length > 0), setSaleList 함수를 사용하여 새 데이터를 기존 saleList에 추가하고 페이지 번호를 업데이트
                   if (newSaleList.length > 0) {
                       setSaleList(prevSaleList => [...prevSaleList, ...newSaleList]);
-                     
-
                       setPage(page + 1);
                   } else {    //새로운 데이터가 없으면 Intersection Observer를 중지하여 추가 요청을 방지
                       observer.disconnect(); 
@@ -73,7 +52,6 @@ const SaleList=()=> {
       .then(res => {
         console.log(res);
         setSaleList([]);
-        
         setSaleList((_sale_list) => [
           ..._sale_list, ...res.data.saleList
         ]);
@@ -90,8 +68,6 @@ const SaleList=()=> {
         setSaleList((_sale_list) => [
           ..._sale_list, ...res.data
         ]);
-        setUser({email:res.data.email})
-        
       })
       .catch(err => {
         console.log(err);
@@ -104,12 +80,10 @@ const SaleList=()=> {
 
   return (
     <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px", paddingTop: "0px" }}>
-      {user.id!==null?
+      
       <Link to="/salewrite" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor:"white", width:"45px", height:"45px"}}>
         <FiPlusCircle size="50" color="#14C38E"/>
-      </Link>:<Link to="/mypagenl" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor:"white", width:"45px", height:"45px"}}>
-        <FiPlusCircle size="50" color="#14C38E"/>
-      </Link>}      
+      </Link>       
       
       {saleList.map((item, index) =>
       
@@ -120,8 +94,8 @@ const SaleList=()=> {
             <div style={{ height: "35px", display: "flex" }} >
 
               {item.fileurl==null ?<img src='./profile.png' width="130px" height="87px"/> 
-              :<img src={`http://localhost:8090/img/${item.fileurl}`} width="130px" height="87px" />}
-
+              :<img src={`http://localhost:8090/img/${item.fileurl[0]}${item.fileurl[1]}`} width="130px" height="87px" />}
+  
               <div style={{ textAlign: "left", marginLeft: "20px" }}>
                 <a style={{ fontSize: "18px" }}>{item.title}</a>
                 <div style={{display:"flex" }}>
@@ -130,8 +104,6 @@ const SaleList=()=> {
                     {item.ggull==0 ?<img src=''/>:<img src='/ggul.png' style={{width:"50px",height:"30px"}} />}
                   </div>
                 </div>
-                <div style={{float:"right",marginRight:"50px"}}>{elapsedTime} 전</div>
-
                 <div style={{ display: "flex" }}>
                   <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "150px" }}>{item.amount}</div>
                   <div style={{ textAlign: "right", color: "gray", marginRight:"20px"}}></div>

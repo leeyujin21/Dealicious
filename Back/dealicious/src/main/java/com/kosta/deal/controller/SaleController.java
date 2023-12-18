@@ -108,6 +108,18 @@ public class SaleController {
 			return new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	//채팅창에서 사용
+	@GetMapping("/saledetail/{num}")
+	public ResponseEntity<Sale> saleDetail(@PathVariable Integer num){
+		try {
+			Sale sale = saleService.saleDetail(num);
+			return new ResponseEntity<Sale> (sale,HttpStatus.OK);
+		}catch(Exception e){
+			e.printStackTrace();
+			return new ResponseEntity<Sale>(HttpStatus.BAD_REQUEST);
+		}
+	}
 	@PostMapping("/salewrite")
 	public ResponseEntity<Integer> saleWrite(@ModelAttribute Sale sale,List<MultipartFile> file) {
 		

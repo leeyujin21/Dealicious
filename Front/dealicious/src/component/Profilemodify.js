@@ -79,7 +79,7 @@ const Profilemodify = () => {
                 <Label style={{ fontSize: "25px", fontWeight: "bold", color: "#14C38E" }}>마이페이지</Label>
             </FormGroup>
             <div style={{ display: "flex", paddingBottom: "20px" }}>
-                <img src={files ? URL.createObjectURL(files) : Image} width="100px" height="100px" alt='' style={{ marginRight: "10px", borderRadius: "50px", width: "55px", height: "55px" }} />
+                <img src={user.profileimgurl ? `http://localhost:8090/img/${user.profileimgurl}` : Image} width="100px" height="100px" alt='' style={{ marginRight: "10px", borderRadius: "50px", width: "55px", height: "55px" }} />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <div style={{ lineHeight: "55px" }}>
                     <Button style={{
@@ -121,7 +121,7 @@ const Profilemodify = () => {
                     <Label for="email" style={{ fontSize: "20px" }}>{user.email}</Label>
                 </FormGroup>
                 <FormGroup style={{ textAlign: "left", display: "flex" }}>
-                    <Label for="univ" style={{ fontSize: "20px", width: "100px" }}>학교</Label>
+                    <Label for="univ" style={{ fontSize: "20px", width: "100px" }}>{user.typename==="univ"? "학교" : "회사"}</Label>
                     <Label for="univ" style={{ fontSize: "20px" }}>{user.typename}</Label>
                 </FormGroup>
                 <FormGroup style={{ textAlign: "left", display: "flex" }}>
