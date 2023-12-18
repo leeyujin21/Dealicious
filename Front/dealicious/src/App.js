@@ -123,7 +123,7 @@ function App() {
                             <Route exect path="/oauth2/redirect/:token" element={<Oauth2 />} />
                             <Route path="/user" element={<User />}></Route> {/**/}
                             <Route path="/logout" element={<Logout />}></Route> {/**/}
-                            <Route exect path="/chat/:channelId/:num" element={<StompChatting />} />
+                            <Route exect path="/chat/:channelId" element={<StompChatting />} />
                         </Routes>
                         {isLoginJoinRoute ? '' : isAdminRoute ? <AdminBottom /> : <DEALBottom />}
                     </BrowserRouter>

@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 function SaleDetail() {
   const { sect,num } = useParams();
+  const token = useSelector(state => state.persistedReducer.token);
   const [sale, setSale] = useState({
     num: "",
     email: "",
@@ -83,11 +84,25 @@ function SaleDetail() {
   };
 
   const gochat = () => {
-    if(user.nickname===writer.nickname) {
+    if(user.email===writer.email) {
       alert("자신과는 채팅할 수 없습니다.") 
     } else {
       const uniqueString = uuidv4();
-      navigate(`/chat/${uniqueString}/${num}`);
+      const chatRoom = {channelId:uniqueString, creator:user.email, partner:writer.email,saleNum:num};
+      console.log(chatRoom);
+      axios.post(`http://localhost:8090/findchatroom`, chatRoom, {
+        headers: {
+          Authorization: token,
+        }
+      })
+      .then(res=>{
+        console.log(res.data);
+        navigate(`/chat/${res.data}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     }
   }
  

@@ -24,5 +24,6 @@ public class ChatRoom {
 	private String channelId;
 	private String creator;
 	private String partner;
+	private Integer saleNum;
 
 }

@@ -34,42 +34,36 @@ const StompChatting = () => {
   });
   const messagesRef = useRef(null);
   const client = useRef({});
-  const { channelId, num } = useParams();
+  const { channelId } = useParams();
   const user = useSelector(state => state.persistedReducer.user);
 
-  const chatBox = { border: "1px solid gray", borderRadius: "20%", width: "87px", height: "41px", textAlign: "center", float: "right", backgroundColor: "#14C38E", color: "white", marginTop: "-30px" };
-  const opponent = { backgroundColor: "#D9D9D9", borderRadius: "20%", width: "87px", height: "41px", textAlign: "center", paddingTop: "5px", marginLeft: "20px", marginTop: "20px" }
+  // const chatBox = { border: "1px solid gray", borderRadius: "20%", width: "87px", height: "41px", textAlign: "center", float: "right", backgroundColor: "#14C38E", color: "white", marginTop: "-30px" };
+  // const opponent = { backgroundColor: "#D9D9D9", borderRadius: "20%", width: "87px", height: "41px", textAlign: "center", paddingTop: "5px", marginLeft: "20px", marginTop: "20px" }
 
   console.log(token);
   useEffect(() => { //컴포넌트가 마운트될 때 connect() 함수를 호출하여 Stomp 클라이언트를 연결하고, 컴포넌트가 언마운트될때  disconnect() 함수를 호출하여 연결을 끊습니다.
     connect();
-    axios
-      .get(`http://localhost:8090/saledetail/${num}`)
-      .then(res => {
-        console.log(res.data);
-        setSale(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     axios.get(`http://localhost:8090/chatroom/` + channelId, {
       headers: {
         Authorization: token,
       }
     })
       .then(res => {
-        console.log(res);
+        console.log(res.data);
         setChatList((_chat_list) => [
-          ..._chat_list, ...res.data
+          ..._chat_list, ...res.data.chatlist
         ]);
+        setSale(res.data.sale);
       })
       .catch(err => {
         console.log(err);
       })
-      if (messagesRef.current) {
-        console.log("실행됨?")
-        messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
-      }
+
+
+    if (messagesRef.current) {
+      console.log("실행됨?")
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }
     return () => disconnect();
   }, [])
 
@@ -89,7 +83,7 @@ const StompChatting = () => {
       JSON.stringify({
         channelId: channelId,
         writerId: user.email,
-        receiverId:'', 
+        receiverId: '',
         chat: chat,
       }),
     );
@@ -163,7 +157,7 @@ const StompChatting = () => {
   };
 
   return (
-    <div  ref={messagesRef} className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
+    <div ref={messagesRef} className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
       <div style={{ paddingTop: "8px", position: "absolute", textAlign: "left", marginBottom: "20px", width: "390px", height: "100px", marginTop: "650px", backgroundColor: "white" }}>
         <FaImage size="30" style={{ color: "#D9D9D9" }} />
         <input style={{ marginLeft: "10px", border: "white", width: "300px", height: "40px", borderRadius: "10px", backgroundColor: "#D9D9D9" }} placeholder='  채팅하기' onChange={handleChange} value={chat}></input>
@@ -194,15 +188,15 @@ const StompChatting = () => {
       <div>
         <br />
         {chatList.map((item, index) => <div key={index}>{
-          
+
           item.writerId == user.email ? <div style={{ textAlign: "right", marginBottom: "15px" }}>
             <div style={{ display: "inline-block", width: "auto", maxWidth: "210px", borderRadius: "10px", backgroundColor: "#14C38E", padding: "10px", color: "white" }}>{item.chat}</div>
-            </div>
-          :
-          <div style={{ textAlign: "left", marginBottom: "15px" }}>
-            <div style={{ display: "inline-block", marginRight: "8px" }}><img src='/profile.png' style={{ width: "50px" }}></img></div>
-            <div style={{ display: "inline-block", width: "auto", maxWidth: "210px", borderRadius: "10px", backgroundColor: "#D9D9D9", padding: "10px" }}>{item.chat}</div>
           </div>
+            :
+            <div style={{ textAlign: "left", marginBottom: "15px" }}>
+              <div style={{ display: "inline-block", marginRight: "8px" }}><img src='/profile.png' style={{ width: "50px" }}></img></div>
+              <div style={{ display: "inline-block", width: "auto", maxWidth: "210px", borderRadius: "10px", backgroundColor: "#D9D9D9", padding: "10px" }}>{item.chat}</div>
+            </div>
         }
         </div>)}
       </div>
