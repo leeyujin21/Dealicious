@@ -35,7 +35,6 @@ public class Sale {
 	@Column
 	private String email;
 	private String title;
-	private String type;
 	private String amount;
 	private String category;
 	private String content;

@@ -102,6 +102,7 @@ public class SaleController {
 		try {
 			System.out.println(sale);
 			System.out.println(file);
+			sale.setStatus("판매중");
 			Integer num=saleService.saleWrite(sale, file);
 			return new ResponseEntity<Integer>(num,HttpStatus.OK);
 		}catch(Exception e) {
