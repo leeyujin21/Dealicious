@@ -48,7 +48,7 @@ function SaleDetail() {
         console.log(res.data);
         setSale(res.data.sale);
         // 로그인되어 있다면 isLoggedIn을 true로 설정
-        setUser({email:res.data.email})
+        setUser({id:res.data.id})
         setIsLoggedIn(true);
       })
       .catch((err) => {
