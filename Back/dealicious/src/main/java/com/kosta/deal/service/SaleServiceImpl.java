@@ -77,12 +77,14 @@ public class SaleServiceImpl implements SaleService{
 		
 		String typename=tuple.get(2,String.class);
 		String profileimgurl=tuple.get(3,String.class);
+		String email=tuple.get(4,String.class);
 		
 		Map<String,Object> res=new HashMap<>();
 		res.put("sale",sale);
 		res.put("nickname", nickname);
 		res.put("typename", typename);
 		res.put("profileimgurl",profileimgurl);
+		res.put("email",email);
 		System.out.println(res);
 		return res;
 		

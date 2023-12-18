@@ -12,6 +12,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 function SaleDetail() {
+
   const selectList = [
     { value: "판매중", name: "판매중" },
     { value: "예약", name: "예약중" },
@@ -23,6 +24,7 @@ function SaleDetail() {
     setSelected(e.target.value);
   }
   const { sect, num } = useParams();
+  const token = useSelector(state => state.persistedReducer.token);
   const [sale, setSale] = useState({
     num: "",
     email: "",
@@ -101,11 +103,25 @@ function SaleDetail() {
   };
 
   const gochat = () => {
-    if (user.nickname === writer.nickname) {
-      alert("자신과는 채팅할 수 없습니다.")
+    if(user.email===writer.email) {
+      alert("자신과는 채팅할 수 없습니다.") 
     } else {
       const uniqueString = uuidv4();
-      navigate(`/chat/${uniqueString}/${num}`);
+      const chatRoom = {channelId:uniqueString, creator:user.email, partner:writer.email,saleNum:num};
+      console.log(chatRoom);
+      axios.post(`http://localhost:8090/findchatroom`, chatRoom, {
+        headers: {
+          Authorization: token,
+        }
+      })
+      .then(res=>{
+        console.log(res.data);
+        navigate(`/chat/${res.data}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     }
   }
   const fileurlList = sale.fileurl.split(',').map(url => url.trim());
