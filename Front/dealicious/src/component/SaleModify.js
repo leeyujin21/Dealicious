@@ -135,6 +135,20 @@ const SaleWrite=()=>{
     const submissionTime = new Date(); // 등록 시간
     calculateTimeAgo(submissionTime); // 함수 호출하여 시간 차이 계산
     }
+    const deleteSale =(e) =>{
+        let saleNum = e.target.id;
+        axios.delete(`http://localhost:8090/saledelete/${saleNum}`)
+        .then(res => {
+            let num = res.data;
+            let resale = sale.filter(sale=> sale.num!==num);
+            setSale([...resale]);
+            
+        })
+        .catch(err=> {
+            console.log(err);
+        })
+
+    }
     return(
         <div className='main' style={{textAlign:'left',overflow:"scroll", height:"732px", overflowX:"hidden"}}> 
         <br/>
@@ -162,7 +176,7 @@ const SaleWrite=()=>{
         alt={`Selected ${index + 1}`}
         style={{ width: '45px', height: '45px',marginLeft:"20px" }}
       />
-      <button
+      <Button
         onClick={() => removeImage(index)}
         style={{
           position: 'absolute',
@@ -183,7 +197,7 @@ const SaleWrite=()=>{
         }}
       >
         X
-      </button>
+      </Button>
     </div>
   ))}
 </div>
@@ -207,8 +221,8 @@ const SaleWrite=()=>{
     name="category"
     value={sale.category}
     onChange={handleInputChange}>
-    <option value="" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;선택</option>
-    <option value="mobile" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;모바일/태블릿</option>
+                    <option value="" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;선택</option>
+                    <option value="mobile" style={{ textAlign: "left"}}>&nbsp;&nbsp;&nbsp;모바일/태블릿</option>
                     <option value="pc" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;노트북/PC</option>
                     <option value="ticket" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;티켓/쿠폰</option>
                     <option value="clothes" style={{textAlign:"left"}}>&nbsp;&nbsp;&nbsp;의류</option>
@@ -243,23 +257,28 @@ const SaleWrite=()=>{
 구매자에게 편리합니다'></Input>
             
         </div>
-        <br/> <p style={{textAlign:"center"}}><Button
-                type="button"
+        <br/> <Button
+                
                 onClick={submit}
                 style={{
-                    fontWeight: "bold",
-                    fontSize: "18px",
-                    borderRadius: "10px",
-                    width: "385px",
-                    height: "50px",
-                    backgroundColor: '#14C38E',
-                    color: "white",
-                    borderStyle: "none"
-                }}
+                textAlign:"center",
+                fontSize: "18px",
+                borderRadius: "10px",
+                width: "180px",
+                height: "50px",
+                backgroundColor: '#14C38E',
+                color: "white",
+                borderStyle: "none"
+                }}>
+                수정하기</Button>
+                <Button id={sale.num} onclick={deleteSale} style={{marginLeft:"200px",marginTop:"-80px", fontWeight: "bold",fontSize:"18px",width: "180px",borderRadius: "10px",
+             height: "50px"}}>삭제하기</Button> 
                
-            >
-                수정하기
-            </Button></p>
+            
+             
+                
+            
+           
         
         </div>
 

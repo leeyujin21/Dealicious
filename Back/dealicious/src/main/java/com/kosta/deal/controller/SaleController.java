@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import com.kosta.deal.entity.Sale;
 import com.kosta.deal.entity.User;
 import com.kosta.deal.service.SaleService;
+import com.kosta.deal.service.UserService;
 import com.kosta.deal.util.PageInfo;
 
 
@@ -32,11 +35,33 @@ public class SaleController {
 	private SaleService saleService;
 	
 	
+	
+	@GetMapping("/userInfo")
+	public ResponseEntity<Object> userInfo(@RequestParam("id") Integer id){
+		try {
+			Map<String,Object> res= new HashMap<>();
+			res= saleService.userInfo(id);
+			return new ResponseEntity<Object>(res,HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	@PostMapping("/login")
+	public ResponseEntity<Boolean> login(@RequestBody Map<String,String> param){
+		try {
+			Boolean isLogin= saleService.login(param.get("email"),param.get("password"));
+			return new ResponseEntity<Boolean>(isLogin,HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Boolean>(HttpStatus.BAD_REQUEST);
+		}
+	}
 	@GetMapping({"/salelist/{page}","/salelist"})  //salelist 페이지 처리
 	public ResponseEntity<Map<String,Object>> saleList(@PathVariable(required=false) Integer page) {
 		try {
 			PageInfo pageInfo = PageInfo.builder().curPage(page).build();
-			List<Sale> saleList = saleService.saleListByPage(pageInfo);
+			List<Sale> saleList = saleService.saleListByPage(pageInfo);		
 			Map<String,Object> res = new HashMap<>();
 			res.put("pageInfo", pageInfo);
 			res.put("saleList", saleList);
@@ -49,7 +74,6 @@ public class SaleController {
 	
 	@PostMapping("/salelist") //카테고리별 salelist 목록
 	public ResponseEntity<List<Sale>> saleListByCategory(@RequestBody Map<String,String> cat) {
-		System.out.println("-------------------------------------");
 		
 		String category = (String)cat.get("cat");
 		System.out.println(category);
@@ -151,6 +175,17 @@ public class SaleController {
 		
 		
 	}
+	@DeleteMapping("/saledelete/{num}")
+	public ResponseEntity<Integer>saleDelete(@PathVariable Integer num){
+		try {
+			saleService.saleDelete(num);
+			return new ResponseEntity<Integer>(num,HttpStatus.OK);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
+		}
+	}
 	
 	@GetMapping("/img/{num}")
 	public void imageView(@PathVariable Integer num,HttpServletResponse response){
@@ -159,6 +194,18 @@ public class SaleController {
 			
 		}catch(Exception e) {
 			e.printStackTrace();
+		}
+	}
+	@GetMapping("/gpay/{num}")
+	public ResponseEntity<Sale> Gpay(@PathVariable Integer num){
+		try {
+			Sale sale=saleService.saleGpay(num);
+			return new ResponseEntity<Sale>(sale,HttpStatus.OK);
+			
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Sale>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
