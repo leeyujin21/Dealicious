@@ -165,8 +165,8 @@ public class SaleController {
 			Map<String,Object> res= new HashMap<>();
 			Boolean selectSale=saleService.selHeartSale("k@kosta.com", num);
 			res.put("isSelect", selectSale);
-			Integer likeCount = saleService.saleDetail(num).getZzimcnt();
-			res.put("likeCount", likeCount);
+			Integer zzimCnt = saleService.saleDetail(num).getZzimcnt();
+			res.put("zzimCnt", zzimCnt);
 			return new ResponseEntity<Map<String,Object>>(res,HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();

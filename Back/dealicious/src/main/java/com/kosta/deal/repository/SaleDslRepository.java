@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import com.kosta.deal.entity.QSale;
+import com.kosta.deal.entity.QSaleLike;
 import com.kosta.deal.entity.QUser;
 import com.kosta.deal.entity.Sale;
 import com.kosta.deal.entity.SaleLike;
@@ -67,14 +68,20 @@ public class SaleDslRepository {
 	}
 
 	public SaleLike findSalelike(String email, Integer num) {
-		// TODO Auto-generated method stub
-		return null;
+		QSaleLike salelike= QSaleLike.saleLike;
+		return jpaQueryFactory.select(salelike)
+				.from(salelike)
+				.where(salelike.userEmail.eq(email).and(salelike.saleNum.eq(num)))
+				.fetchOne();
 	}
-
-	public Long findIsSalelike(String email, Integer num) {
-		// TODO Auto-generated method stub
-		return null;
+	public Long findIsSalelike(String email,Integer num) throws Exception{
+		QSaleLike salelike= QSaleLike.saleLike;
+		return jpaQueryFactory.select(salelike.count())
+				.from(salelike)
+				.where(salelike.userEmail.eq(email).and(salelike.saleNum.eq(num)))
+				.fetchOne();
 	}
+	
 
 	
 

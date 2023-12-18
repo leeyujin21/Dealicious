@@ -45,7 +45,7 @@ function SaleDetail() {
   });
   const [heart, setHeart] = useState(false);
   const navigate = useNavigate();
-
+  
 
 
 
@@ -93,13 +93,17 @@ function SaleDetail() {
         return category;
     }
   };
-  const selectGood = () => {
+  const pay=()=>{
+    navigate(`/gpay`);
+  }
+  const selectGood = (e) => {
 
     axios.get(`http://localhost:8090/salelike/${num}`)
       .then(res => {
         console.log(res.data)
         setSale({ ...sale, likeCount: res.data.likeCount });
         setHeart(res.data.isSelect);
+       
       })
   };
 
@@ -195,13 +199,14 @@ function SaleDetail() {
               }}
             >
               <div>
+                {user.email===writer.email?
                 <select value={selected} style={{ borderStyle: "none", borderRadius: "10px", width: "130px", height: "42px", textAlign: "left" }} onChange={handleSelect}>
                   {selectList.map((item) => {
                     return <option value={item.value} key={item.value}>
                       &nbsp;&nbsp;{item.name}
                     </option>;
                   })}
-                </select>
+                </select>:<option>{sale.status}</option>}
               </div>
 
 
@@ -235,7 +240,7 @@ function SaleDetail() {
         ></Input>
         <div style={{ display: "flex" }}>
           <div style={{ position: "relative", marginTop: "8px" }}>
-            <img src={heart ? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px" }} onClick={selectGood} />
+            <img src={heart? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px" }} onClick={selectGood} />
             <div>{sale.likecount}</div>
             <div
               style={{
@@ -253,7 +258,7 @@ function SaleDetail() {
           </div>
 
           <div style={{ marginLeft: "165px", lineHeight: "45px" }}>
-            {sale.ggull == 1 ? <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px" }} />
+            {sale.ggull == 1 && writer.email!==user.email ? <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px", cursor:"pointer"}} onClick={pay}/>
               : <img src="/ggul2.png" style={{ height: "35px" }} />}
           </div>
           {user.email === writer.email ? <Button style={{

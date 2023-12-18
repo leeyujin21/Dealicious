@@ -173,9 +173,7 @@ public class SaleServiceImpl implements SaleService{
 
 	@Override
 	public Sale saleDetail(Integer num) throws Exception {
-		Optional<Sale> osale=saleRepository.findById(num);
-		if(osale.isEmpty()) throw new Exception ("상품번호 오류");
-		return osale.get();
+		return saleDslRepository.findSaleBySaleNum(num);
 		
 	}
 	@Override
