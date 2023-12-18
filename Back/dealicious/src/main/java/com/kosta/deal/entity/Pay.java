@@ -1,6 +1,6 @@
 package com.kosta.deal.entity;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,5 +32,5 @@ public class Pay {
 	private Integer salenum;
 	@Column
 	@CreationTimestamp
-	private Date paydate;
+	private Timestamp paydate;
 }

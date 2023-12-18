@@ -27,6 +27,7 @@ function SaleDetail() {
   const [showEditButton, setShowEditButton] = useState(true);
 
   const { sect, num } = useParams();
+  const token = useSelector(state => state.persistedReducer.token);
   const [sale, setSale] = useState({
     num: "",
     email: "",
