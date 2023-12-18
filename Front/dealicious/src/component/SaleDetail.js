@@ -13,7 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 function SaleDetail() {
   const user = useSelector(state => state.persistedReducer.user);
-  const [writer, setwriter] = useState({ nickname: '', typename: '', fileurl: '', ggull: '', email: '',id:'' });
+  const [writer, setwriter] = useState({ nickname: '', typename: '', fileurl: '', ggull: '', email: '', id: '' });
   const selectList = [
     { value: "판매중", name: "판매중" },
     { value: "예약", name: "예약중" },
@@ -60,7 +60,7 @@ function SaleDetail() {
           typename: res.data.typename,
           fileurl: res.data.profileimgurl,
           email: res.data.email,
-          id:res.data.id
+          id: res.data.id
         });
 
         setSale(res.data.sale);
@@ -142,7 +142,8 @@ function SaleDetail() {
             color: "#14C38E",
             fontSize: "20px",
             textAlign: "center",
-            width: "360px"
+            width: "360px",
+            marginLeft: "-20px"
           }}
         >
           <b>{sale.title}</b>

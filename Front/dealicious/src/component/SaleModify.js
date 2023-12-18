@@ -12,12 +12,9 @@ import { useSelector } from 'react-redux';
 
 
 const SaleWrite = () => {
-    const wrtier = useSelector(state => state.persistedReducer.writer);
-    const { num } = useParams();
-    const [currentImage, setCurrentImage] = useState("");
+    const [writer, setwriter] = useState({ nickname: '', typename: '', fileurl: '', ggull: '', email: '', id: '' });
     const navigate = useNavigate();
     const [imageCount, setImageCount] = useState(0); // 상태 변수로 이미지 카운트를 관리.
-    const [files, setFiles] = useState([]);
     const [selectedImages, setSelectedImages] = useState([]); // 여러 이미지를 저장하는 배열
     const fileInputRef = useRef(null);
     const [timeAgo, setTimeAgo] = useState('');
@@ -30,23 +27,35 @@ const SaleWrite = () => {
         ggull: '0',
         fileurl: ''
     });
+    const [currentImage, setCurrentImage] = useState(sale.ggull === "1" ? "/ggul.png" : "/ggul2.png");
+    const [fileurlList, setFileurlList] = useState([]);
+    const { sect, num } = useParams();
     useEffect(() => {
-        axios.get(`http://localhost:8090/boarddetail/before-modify/${num}`)
+        axios.get(`http://localhost:8090/saledetail/${sect}/${num}`)
             .then(res => {
-                console.log(res)
+                console.log(res.data);
+
+                setwriter({
+                    nickname: res.data.nickname,
+                    typename: res.data.typename,
+                    fileurl: res.data.profileimgurl,
+                    email: res.data.email,
+                    id: res.data.id,
+                });
+
                 setSale(res.data.sale);
-                let fileurl = res.data.sale.fileurl; //1,2,3
-                let filenums = fileurl.split(',');//[1 2 3]
-                let filearr = []; //[{type:'i',data:1},{type:'i',data:2},{type:'i',dat:3}]
-                for (let filenum of filenums) {
-                    filearr.push({ type: 'i', data: filenum });
-                }
-                setFiles([...filearr]);
+                setFileurlList(res.data.sale.fileurl.split(',').map(url => url.trim()));
+                setImageCount(res.data.sale.fileurl.split(',').length);
+                console.log(fileurlList);
+                setSale((prevSale) => ({ ...prevSale, fileurlList }));
             })
-            .catch(err => {
-                console.log(err)
-            })
-    }, [])
+            .catch((err) => {
+                console.log(err);
+            });
+
+
+    }, []);
+
     const calculateTimeAgo = (submissionTime) => {
         const currentTime = new Date(); // 현재 시간
         const timeDiffInMs = currentTime - submissionTime; // 현재 시간 - 등록 시간
@@ -61,10 +70,17 @@ const SaleWrite = () => {
     };
 
     const removeImage = (indexToRemove) => {
-        const updatedImages = selectedImages.filter((_, index) => index !== indexToRemove);
-        setSelectedImages(updatedImages);
-        setImageCount(updatedImages.length);
+
+        // fileurlList를 업데이트
+        const updatedFileurlList = fileurlList.filter((_, index) => index !== indexToRemove);
+        setImageCount(updatedFileurlList.length);
+        setFileurlList(updatedFileurlList);
+        setSale((prevSale) => ({ ...prevSale, fileurlList: updatedFileurlList }));
+
+        console.log("지워줘")
+        console.log(updatedFileurlList);
     };
+
     const fileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -90,26 +106,7 @@ const SaleWrite = () => {
         setSale({ ...sale, [name]: value });//name 속성은 해당 입력 필드의 이름을 나타내며, value는 그 입력 필드의 값
     };
 
-    const isFormValid = () => { //유효성검사
-        return (
-            sale.title.trim() !== '' &&   //공백제거해서 비어있지 않으면
-            sale.amount.trim() !== '' &&
-            sale.place.trim() !== '' &&
-            sale.category.trim() !== '' &&
-            sale.content.trim() !== ''
-
-        );
-    };
-
     const submit = (e) => {
-        if (!isFormValid()) {
-            Swal.fire({
-                icon: 'error',
-                title: '잠깐만요...',
-                text: '모든 항목을 작성해주세요!',
-            });
-            return; // 폼 제출을 막습니다.
-        }
         const formData = new FormData();
         formData.append("title", sale.title);
         formData.append("category", sale.category);
@@ -118,7 +115,6 @@ const SaleWrite = () => {
         formData.append("content", sale.content);
         formData.append("ggull", sale.ggull);
         formData.append("file", sale.fileurl);
-        // formData.append("file", files);
         for (let image of selectedImages) {
             formData.append("file", image);
         }
@@ -151,32 +147,46 @@ const SaleWrite = () => {
             })
 
     }
+
     return (
         <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden" }}>
             <br />
-            <Link to="/salelist">
-                <IoArrowBackOutline size="30" color="14C38E" />
-            </Link>
-            <span style={{ color: "#14C38E", fontSize: "25px", marginLeft: "105px" }}><b>판매글수정</b></span>
-            <br /><br />
+            <div style={{ display: 'flex', marginBottom: "20px" }}>
+                <Link to="/salelist">
+                    <IoArrowBackOutline size="30" color="14C38E" />
+                </Link>
+                <div
+                    style={{
+                        color: "#14C38E",
+                        fontSize: "20px",
+                        textAlign: "center",
+                        width: "360px",
+                        marginLeft: "-20px"
+                    }}
+                >
+                    <b>판매글수정</b>
+                </div>
+            </div>
             <div style={{ backgroundColor: "#E9E9E9", width: "48px", height: "63px", textAlign: "center", paddingTop: "5px", position: "relative", cursor: "pointer" }}
             >
-                <div>
+                <div style={{ display: "flex" }}>
                     <div onClick={() => document.getElementById("file").click()}>
-                        <FaCamera size="30" color='gray' />
+                        <div style={{ width: "48px", textAlign: "center" }}>
+                            <FaCamera size="30" color='gray' />
+                        </div>
                         <div style={{ position: "absolute", textAlign: "center", width: "48px", paddingBottom: "5px", fontWeight: "bold" }}>
                             {imageCount}/5
                         </div>
                     </div>
                     <Input name="file" type="file" id="file" accept="image/*" onChange={fileChange} hidden ref={fileInputRef} />
 
-                    <div style={{ display: 'flex', marginLeft: '20px', marginTop: '-30px' }}>
-                        {selectedImages.map((image, index) => (
-                            <div key={index} style={{ marginLeft: '10px', position: 'relative' }}>
+                    <div style={{ display: "flex" }}>
+                        {fileurlList.map((url, index) => (
+                            <div key={index} style={{ position: "relative", marginRight: "10px" }}>
                                 <img
-                                    src={URL.createObjectURL(image)}
-                                    alt={`Selected ${index + 1}`}
-                                    style={{ width: '45px', height: '45px', marginLeft: "20px" }}
+                                    src={`http://localhost:8090/img/${url}`}
+                                    alt={`${index}`}
+                                    style={{ width: '45px', height: '45px', marginLeft: "10px" }}
                                 />
                                 <Button
                                     onClick={() => removeImage(index)}
@@ -185,7 +195,7 @@ const SaleWrite = () => {
                                         top: '-10px',
                                         right: '-10px',
                                         backgroundColor: '#14C38E',
-                                        borderRadius: '50%',
+                                        borderRadius: '50px',
                                         border: "none",
                                         cursor: 'pointer',
                                         padding: '0',
@@ -193,7 +203,6 @@ const SaleWrite = () => {
                                         height: '20px',
                                         display: 'flex',
                                         justifyContent: 'center',
-                                        alignItems: 'center',
                                         fontSize: '12px',
                                         color: 'white',
                                     }}
@@ -215,28 +224,30 @@ const SaleWrite = () => {
                 onChange={handleInputChange}
             />
 
-            <div style={{ marginTop: "20px", display: "flex" }}>
-                <div>
-                    <div style={{ marginBottom: "5px", fontSize: "18px" }}>카테고리</div>
-                    <select
-                        style={{ width: "180px", height: "40px", textAlign: "center", borderRadius: "5px", float: "left", borderColor: "lightgray" }}
-                        name="category"
-                        value={sale.category}
-                        onChange={handleInputChange}>
-                        <option value="" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;선택</option>
-                        <option value="mobile" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;모바일/태블릿</option>
-                        <option value="pc" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;노트북/PC</option>
-                        <option value="ticket" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;티켓/쿠폰</option>
-                        <option value="clothes" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;의류</option>
-                        <option value="free" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;나눔</option>
-                        <option value="others" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;기타</option>
-                    </select>
-                </div>
-                <div style={{ marginLeft: "25px" }}>
-                    <div style={{ marginBottom: "10px", fontSize: "18px" }} name="ggull" value={sale.ggull}>
-                        꿀페이
+            <div style={{ marginTop: "20px" }}>
+                <div style={{ display: 'flex' }}>
+                    <div>
+                        <div style={{ marginBottom: "5px", fontSize: "18px" }}>카테고리</div>
+                        <select
+                            style={{ width: "180px", height: "40px", textAlign: "center", borderRadius: "5px", float: "left", borderColor: "lightgray" }}
+                            name="category"
+                            value={sale.category}
+                            onChange={handleInputChange}>
+                            <option value="" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;선택</option>
+                            <option value="mobile" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;모바일/태블릿</option>
+                            <option value="pc" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;노트북/PC</option>
+                            <option value="ticket" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;티켓/쿠폰</option>
+                            <option value="clothes" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;의류</option>
+                            <option value="free" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;나눔</option>
+                            <option value="others" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;기타</option>
+                        </select>
                     </div>
-                    <img src={currentImage} style={{ width: "50px" }} onClick={changeImage} alt="Ggul Image" />
+                    <div style={{ marginLeft: "25px" }}>
+                        <div style={{ marginBottom: "10px", fontSize: "18px" }} name="ggull" value={sale.ggull}>
+                            꿀페이
+                        </div>
+                        <img src={currentImage} style={{ width: "50px" }} onClick={changeImage} alt="Ggul Image" />
+                    </div>
                 </div>
                 <div style={{ marginBottom: "20px" }} />
                 <div style={{ display: "flex" }}>
@@ -258,24 +269,29 @@ const SaleWrite = () => {
 구매자에게 편리합니다'></Input>
 
                 </div>
-                <br /> <Button
-
-                    onClick={submit}
-                    style={{
-                        textAlign: "center",
-                        fontSize: "18px",
-                        borderRadius: "10px",
-                        width: "180px",
-                        height: "50px",
-                        backgroundColor: '#14C38E',
-                        color: "white",
-                        borderStyle: "none"
-                    }}>
-                    수정하기</Button>
-                <Button id={sale.num} onclick={deleteSale} style={{
-                    marginLeft: "200px", marginTop: "-80px", fontWeight: "bold", fontSize: "18px", width: "180px", borderRadius: "10px",
-                    height: "50px"
-                }}>삭제하기</Button>
+                <br />
+                <div style={{ display: "flex", textAlign: 'center' }}>
+                    <div style={{ width: "180px", textAlign: "right" }}>
+                        <Button
+                            onClick={submit}
+                            style={{
+                                textAlign: "center",
+                                width: "120px",
+                                height: "45px",
+                                backgroundColor: '#14C38E',
+                                color: "white",
+                                borderStyle: "none"
+                            }}>
+                            수정하기
+                        </Button>
+                    </div>
+                    <div style={{ width: "180px", textAlign: "left" }}>
+                        <Button id={sale.num} onclick={deleteSale} style={{
+                            width: "120px", marginLeft: "5px",
+                            height: "45px"
+                        }}>삭제하기</Button>
+                    </div>
+                </div>
             </div>
         </div>
     )
