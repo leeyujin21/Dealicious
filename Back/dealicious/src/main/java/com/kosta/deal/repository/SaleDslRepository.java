@@ -58,7 +58,7 @@ public class SaleDslRepository {
 	public Tuple findUserEmailAndRolesBySaleNum(Integer num) {
 		QSale sale= QSale.sale;
 		QUser user= QUser.user;
-		return jpaQueryFactory.select(sale,user.nickname,user.typename,user.profileimgurl,user.email)
+		return jpaQueryFactory.select(sale,user.nickname,user.typename,user.profileimgurl,user.email, user.id)
 				.from(user)
 				.join(sale)
 				.on(sale.email.eq(user.email))
