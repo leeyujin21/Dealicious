@@ -13,14 +13,16 @@ const Mypage = () => {
     const [page, setPage] = useState(1);
     const temp = useSelector(state => state.persistedReducer.user);
     useEffect(() => {
-        axios.get(`http://localhost:8090/salelist`)
+        setUser(temp);
+    }, [])
+    useEffect(() => {
+        axios.get(`http://localhost:8090/mypagelist`)
             .then(res => {
                 console.log(res);
                 setSaleList([]);
                 setSaleList((_sale_list) => [
                     ..._sale_list, ...res.data.saleList
                 ]);
-                setUser(temp);
             })
             .catch(err => {
                 console.log(err);

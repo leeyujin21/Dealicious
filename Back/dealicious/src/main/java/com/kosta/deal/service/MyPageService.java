@@ -1,5 +1,10 @@
 package com.kosta.deal.service;
 
-public interface MyPageService {
+import java.util.List;
 
+
+import com.kosta.deal.entity.Sale;
+
+public interface MyPageService {
+	List<Sale> saleListByEmail(String email) throws Exception;
 }
