@@ -81,6 +81,7 @@ public class SaleDslRepository {
 				.where(salelike.userEmail.eq(email).and(salelike.saleNum.eq(num)))
 				.fetchOne();
 	}
+
 	
 
 	

@@ -122,8 +122,7 @@ public class SaleController {
 	public ResponseEntity<Integer> saleWrite(@ModelAttribute Sale sale,List<MultipartFile> file) {
 		
 		try {
-			System.out.println(sale);
-			System.out.println(file);
+			
 			sale.setStatus("판매중");
 			Integer num=saleService.saleWrite(sale, file);
 			return new ResponseEntity<Integer>(num,HttpStatus.OK);
@@ -209,6 +208,21 @@ public class SaleController {
 		}
 	}
 	
+	
+	@GetMapping("/changesalestatus/{num}/{status}")
+	public ResponseEntity<String> changesalestatus(@PathVariable Integer num, @PathVariable String status){
+		try {
+			
+			saleService.changesalestatus(num,status);
+			return new ResponseEntity<String>("상태변경 성공",HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		
+		
+		
+	}
 	
 	
 }

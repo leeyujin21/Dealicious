@@ -41,6 +41,9 @@ const StompChatting = () => {
   // const chatBox = { border: "1px solid gray", borderRadius: "20%", width: "87px", height: "41px", textAlign: "center", float: "right", backgroundColor: "#14C38E", color: "white", marginTop: "-30px" };
   // const opponent = { backgroundColor: "#D9D9D9", borderRadius: "20%", width: "87px", height: "41px", textAlign: "center", paddingTop: "5px", marginLeft: "20px", marginTop: "20px" }
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatList]);
   console.log(token);
   useEffect(() => { //컴포넌트가 마운트될 때 connect() 함수를 호출하여 Stomp 클라이언트를 연결하고, 컴포넌트가 언마운트될때  disconnect() 함수를 호출하여 연결을 끊습니다.
     connect();
@@ -61,13 +64,11 @@ const StompChatting = () => {
         console.log(err);
       })
 
-
-    if (messagesRef.current) {
-      console.log("실행됨?")
-      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
-    }
+      
     return () => disconnect();
   }, [])
+
+  
 
   const connect = () => {
     client.current = Stomp.over(() => {
@@ -85,7 +86,6 @@ const StompChatting = () => {
       JSON.stringify({
         channelId: channelId,
         writerId: user.email,
-        receiverId: '',
         chat: chat,
       }),
     );
@@ -158,36 +158,37 @@ const StompChatting = () => {
     publish(chat);
   };
 
-  return (
-    <div ref={messagesRef} className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
-      <div style={{ paddingTop: "8px", position: "absolute", textAlign: "left", marginBottom: "20px", width: "390px", height: "100px", marginTop: "650px", backgroundColor: "white" }}>
-        <FaImage size="30" style={{ color: "#D9D9D9" }} />
-        <input style={{ marginLeft: "10px", border: "white", width: "300px", height: "40px", borderRadius: "10px", backgroundColor: "#D9D9D9" }} placeholder='  채팅하기' onChange={handleChange} value={chat}></input>
-        <IoMdSend size="40" style={{ marginLeft: "10px", color: "#D9D9D9" }} onClick={publish} />
-      </div>
+  const fileurlList = sale.fileurl.split(',').map(url => url.trim());
+  const scrollToBottom = () => {
+    if (messagesRef.current) {
+      // 스크롤을 제일 아래로 이동
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }
+  };
 
+  return (
+    <div className='main' >
       <div style={{ textAlign: "left", color: "#14C38E", display: "flex", verticalAlign: "middle" }}>
         <Link to="/chatlist"><GoArrowLeft size={30} style={{ color: "#14C38E", height: "40px" }} /></Link>
         <div style={{ fontSize: "20px", fontWeight: "bold", marginLeft: "10px", height: "40px", lineHeight: "40px" }}>{chatpartner.nickname}</div>
       </div>
-
       <div style={{ marginTop: "20px", width: "385px", borderTop: "1px solid gray", borderBottom: "1px solid gray", height: "105px" }}>
         <div style={{ marginTop: "10px", marginBottom: "10px" }}>
           <div style={{ display: "flex" }}>
-            <div><img src={`http://localhost:8090/img/${sale.fileurl}`} style={{ width: "80px" }}></img></div>
+            <div><img src={`http://localhost:8090/img/${fileurlList[0]}`} style={{ width: "80px" }}></img></div>
             <div style={{ width: "230px", textAlign: "left", lineHeight: "40px" }}>
               <Link to={"/saledetail/"+sale.num} style={{ color: "black", textDecoration: "none" }}><div style={{ textAlign: "left" }}>{sale.title}</div></Link>
               <div style={{ textAlign: "left", fontSize: "18px" }}>{sale.amount}원</div>
             </div>
             <div style={{ lineHeight: "40px", width: "80px", textAlign: "right", marginRight: "10px" }}>
-              <div>{sale.status == 1 ? "판매중" : "예약중"}</div>
+              <div>{sale.status}</div>
               <div>{sale.ggull == 1 ? <Link to="/gpay"><img src='/ggul.png' style={{ width: "34px", height: "19px" }}></img></Link> : ""}</div>
             </div>
           </div>
         </div>
       </div>
-
-      <div>
+      <div ref={messagesRef} style={{ overflowY: 'auto', maxHeight: "477px", overflowX: "hidden" }}>
+      <div style={{paddingRight:"10px"}}>
         <br />
         {chatList.map((item, index) => <div key={index}>{
 
@@ -202,7 +203,12 @@ const StompChatting = () => {
         }
         </div>)}
       </div>
-      <div style={{ height: "50px" }}></div>
+      </div>
+      <div style={{ paddingTop: "8px", textAlign: "left", width: "390px", height: "50px", backgroundColor: "white" }}>
+        <FaImage size="30" style={{ color: "#D9D9D9" }} />
+        <input style={{ marginLeft: "10px", border: "white", width: "300px", height: "40px", borderRadius: "10px", backgroundColor: "#D9D9D9" }} placeholder='  채팅하기' onChange={handleChange} value={chat}></input>
+        <IoMdSend size="40" style={{ marginLeft: "10px", color: "#D9D9D9" }} onClick={publish} />
+      </div>  
     </div>
 
 
