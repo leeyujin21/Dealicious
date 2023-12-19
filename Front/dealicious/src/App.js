@@ -112,7 +112,7 @@ function App() {
                             <Route path="/salelist" element={<SaleList />}></Route> {/**/}
                             <Route path="/salelist/:category" element={<SaleList />}></Route> {/**/}
                             <Route path="/salewrite" element={<SaleWrite />}></Route> {/**/}
-                            <Route path="/saledetail/:num" element={<SaleDetail />}></Route> {/**/}
+                            <Route path="/saledetail/:sect/:num" element={<SaleDetail />}></Route> {/**/}
                             <Route path="/salemodify/:num" element={<SaleModify />}></Route> {/**/}
 
 

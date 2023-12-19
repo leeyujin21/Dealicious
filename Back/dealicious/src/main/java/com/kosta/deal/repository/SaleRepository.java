@@ -18,6 +18,7 @@ public interface SaleRepository extends JpaRepository<Sale, Integer> {
 	Page<Sale>findByPlaceContains(String place,PageRequest pageRequest);
 	Page<Sale>findByGgullContains(String ggull,PageRequest pageRequest);
 	Page<Sale>findByFileurlContains(String fileurl,PageRequest pageRequest);
+	Sale findByNum(Integer num) throws Exception;
 
 	
 	
