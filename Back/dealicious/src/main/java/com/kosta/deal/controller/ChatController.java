@@ -1,6 +1,5 @@
 package com.kosta.deal.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +29,7 @@ import com.kosta.deal.entity.Sale;
 import com.kosta.deal.entity.User;
 import com.kosta.deal.service.ChatService;
 import com.kosta.deal.service.SaleService;
+import com.kosta.deal.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,6 +41,7 @@ public class ChatController {
     private final SimpMessageSendingOperations sendingOperations;
     private final ChatService chatService;
     private final SaleService saleService;
+    private final UserService userService;
     // 새로운 사용자가 웹 소켓을 연결할 때 실행됨
     // @EventListener은 한개의 매개변수만 가질 수 있다.
     @EventListener
@@ -81,11 +82,18 @@ public class ChatController {
     	User user = principalDetails.getUser();
     	try {
 			ChatRoom chatRoom = chatService.findChatRoomByChannelid(channelid);
+			User chatpartner = new User();
+			if(chatRoom.getCreator().equals(user.getEmail())) {
+				chatpartner = userService.findUserByEmail(chatRoom.getCreator());
+			} else {
+				chatpartner = userService.findUserByEmail(chatRoom.getPartner());
+			}
 			Sale sale = saleService.saleDetail(chatRoom.getSaleNum());
 			List<Chat> chatlist = chatService.findChatListByChannelId(channelid);
 			Map<String,Object> res = new HashMap<>();
 			res.put("chatlist", chatlist);
 			res.put("sale", sale);
+			res.put("chatpartner", chatpartner);
 			return new ResponseEntity<Map<String,Object>>(res, HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -100,7 +108,7 @@ public class ChatController {
     	System.out.println(chatRoom);
     	User user = principalDetails.getUser();
     	try {
-			ChatRoom chatRoom2 = chatService.findChatRoomBySaleNum(chatRoom.getSaleNum());
+			ChatRoom chatRoom2 = chatService.findChatRoomBySaleNumAndEmail(chatRoom.getSaleNum(),user.getEmail());
 			if(chatRoom2==null) {
 	    		ChatRoom chatRoom1 = ChatRoom.builder().channelId(chatRoom.getChannelId()).creator(chatRoom.getCreator()).partner(chatRoom.getPartner()).saleNum(chatRoom.getSaleNum()).build();
 	    		chatService.addChatRoom(chatRoom1);
@@ -118,8 +126,11 @@ public class ChatController {
 	public ResponseEntity<List<Map<String,Object>>> chatroomlist(Authentication authentication) {    	
     	PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
     	User user = principalDetails.getUser();
+    	System.out.println("-------------------------");
+    	System.out.println(user);
     	try {
-    		List<Map<String,Object>> res = new ArrayList<>();
+    		List<Map<String,Object>> res = chatService.getChatListForm(user);
+    		System.out.println(res);
 			return new ResponseEntity<List<Map<String,Object>>>(res, HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();

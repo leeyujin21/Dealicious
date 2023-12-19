@@ -6,7 +6,7 @@ import * as SockJS from 'sockjs-client'; //npm install --save sockjs-client
 import { useSelector } from 'react-redux';
 
 function ChatList() {
-    const [chatRoomList, setChatRoomList] = useState([{}]);
+    const [chatRoomList, setChatRoomList] = useState([]);
     const token = useSelector(state => state.persistedReducer.token);
     const client = useRef({});
     const [channelIdList, setChannelIdList] = useState([]);
@@ -19,9 +19,9 @@ function ChatList() {
         })
             .then(res => {
                 console.log(res.data);
-                // setChatRoomList((_chat_room_list) => [
-                //     ..._chat_room_list, ...res.data.chatroomlist
-                // ]);
+                setChatRoomList((_chat_room_list) => [
+                    ..._chat_room_list, ...res.data
+                ]);
                 // setChannelIdList((channel_list) => [
                 //     ...channel_list, ...res.data.chatroomlist.channelId
                 // ])
@@ -65,23 +65,27 @@ function ChatList() {
     return (
         <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px" }}>
             <div style={{ borderBottom: "1px solid", fontSize: "20px", paddingBottom: "10px" }}><b>채팅</b></div>
-            <Link to="/chat" style={{ textDecoration: "none", color: "black" }}>
-                <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray" }}>
-                    <table>
-                        <tr>
-                            <td rowSpan={2}><img src="./profile.png" /></td>
-                            <td style={{ width: "120px", fontSize: "15px", paddingLeft: "10px" }}> 아이셔</td>
-                            <td style={{ width: "140px", color: "gray", fontSize: "12px" }}>전자제품</td>&nbsp;
-                            <td style={{ width: "120px", color: "gray", fontSize: "15px" }}>2023.11.15</td>&nbsp;
-                            <td rowSpan={2}><img src="./tablet.png" /></td>
-                        </tr>
-                        <tr>
-                            <td colSpan={5} style={{ width: "300px", fontSize: "13px", color: "gray", paddingLeft: "10px" }}>네 금방 도착합니다. 곧 뵙겠습니다~</td>
-                        </tr>
+            {chatRoomList.map((item, index) =>
+            <Link to={"/chat/"+item.channelId} key={index} style={{ textDecoration: "none", color: "black" }}>
+            <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray" }}>
+                <table>
+                    <tr>
+                        <td rowSpan={2}>{ item.profileimgurl==null?<img src='/profile.png' />:<img src={`http://localhost:8090/img/${item.profileimgurl}`} alt='' style={{ width: "20px", height: "20px"}}/>}</td>
+                        <td style={{ width: "120px", fontSize: "15px", paddingLeft: "10px" }}> {item.nickname}</td>
+                        <td style={{ width: "140px", color: "gray", fontSize: "12px" }}>{item.category}</td>&nbsp;
+                        <td style={{ width: "120px", color: "gray", fontSize: "15px" }}>{item.chatdate}</td>&nbsp;
+                        <td rowSpan={2}><img src={`http://localhost:8090/img/${item.fileurl}`} alt='' style={{ width: "20px", height: "20px"}} /></td>
+                    </tr>
+                    <tr>
+                        <td colSpan={5} style={{ width: "300px", fontSize: "13px", color: "gray", paddingLeft: "10px" }}>{item.chat}</td>
+                    </tr>
 
-                    </table>
-                </div>
-            </Link>
+                </table>
+            </div>
+        </Link>
+            )}
+            
+
         </div>
     )
 }

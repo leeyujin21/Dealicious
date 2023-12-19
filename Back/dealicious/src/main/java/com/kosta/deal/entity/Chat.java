@@ -1,6 +1,6 @@
 package com.kosta.deal.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,5 +32,5 @@ public class Chat {
 	 private String data;
 	 private String isRead;
 	 @CreationTimestamp
-	 private Timestamp chatdate;
+	 private Date chatdate;
 }
