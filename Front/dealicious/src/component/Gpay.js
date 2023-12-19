@@ -6,13 +6,14 @@ import React, { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import {useParams,useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import { useSelector } from "react-redux";
 
 const Gpay = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [pay, setPay] = useState({saletitle:'결제테스트', amount:'1004',buyeremail:'gudtjq444@naver.com',imp_uid:''});
-    const { sect,num } = useParams();
+    const user = useSelector(state => state.persistedReducer.user);
     const navigate = useNavigate();
-    const [writer, setwriter] = useState({nickname:'',typename:'',fileurl:'',ggull:'',email:''});
+    const { num } = useParams();
+    const [check,setCheck] = useState(false);
     const [sale, setSale] = useState({
         num: "",
         email: "",
@@ -37,13 +38,12 @@ const Gpay = () => {
         iamport.src = "http://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
         document.head.appendChild(jquery);
         document.head.appendChild(iamport);
+        
         axios
-        .get(`http://localhost:8090/gpay/${sect}/${num}`)
+        .get(`http://localhost:8090/gpay/${num}`)
         .then(res => {
           console.log(res.data);
-          setSale(res.data.sale);
-          setwriter({nickname:res.data.nickname,typename:res.data.typename,fileurl:res.data.profileimgurl,email:res.data.email})
-          console.log(sale);
+          setSale(res.data);
           
         })
         .catch((err) => {
@@ -58,19 +58,21 @@ const Gpay = () => {
     }, []);
 
     const requestPay = () => {
+        if(!check) {
+            alert("수수료 약관에 동의하여 주세요");
+            return;
+        }
         var IMP = window.IMP;
         IMP.init("imp23063576");
         IMP.request_pay({
             pg: 'html5_inicis.INIpayTest', //테스트 시 html5_inicis.INIpayTest 기재 
             pay_method: 'card',
             merchant_uid: new Date().getTime(), //상점에서 생성한 고유 주문번호
-            name: '결제테스트',
-            amount: 1004,
-            buyer_email: 'gudtjq444@naver.com',
-            buyer_name: '개꿀',
-            buyer_tel: '010-1234-5678',   //필수 파라미터 입니다.
-            buyer_addr: '서울특별시 금천구 독산동',
-            buyer_postcode: '123-456',
+            name: sale.title,
+            amount: Number(sale.amount) * 1.05,
+            buyer_email: user.email,
+            buyer_name: user.name,
+            buyer_tel: user.tell   //필수 파라미터 입니다.
         }, function (rsp) { // callback
             if (rsp.success) {
                 console.log(rsp.imp_uid);
@@ -93,6 +95,13 @@ const Gpay = () => {
             }
         });
     }
+    const checkUse = () => {
+        if(check) {
+            setCheck(false);
+        } else {
+            setCheck(true);
+        }
+    }
 
     return (
         <div className='main' style={{overflow:"scroll", height:"732px", overflowX:"hidden", padding:"20px 50px 0 50px"}}>
@@ -104,12 +113,14 @@ const Gpay = () => {
             </div>
             <div style={{textAlign:"left", paddingBottom:"20px", borderBottom:"1px solid lightgray", display:"flex"}}>
                 &nbsp;&nbsp;
-                <img src={writer.fileurl}></img>
+                <img src={`http://localhost:8090/img/${sale.fileurl.split(',')[0]}`} style={{width:"100px",height:"100px"}}></img>
                 <div style={{marginLeft:"10px"}}>
-                    {sale.title}<br/>
-                    {sale.price}
+                <div style={{marginLeft:"10px",fontSize:"25px",marginBottom:"5px"}}> {sale.title}</div>
+                    <div style={{marginLeft:"10px"}}> {sale.amount} 원</div>
                 </div>
+                
             </div>
+            
             <div style={{textAlign:"left", borderBottom:"1px solid lightgray", paddingBottom:"20px"}}>
                 &nbsp;&nbsp;
                 <div style={{marginBottom:"10px", paddingLeft:"5px"}}>
@@ -124,7 +135,7 @@ const Gpay = () => {
             <div style={{textAlign:"left", borderBottom:"1px solid lightgray", paddingBottom:"20px"}}>
                 &nbsp;&nbsp;
                 <div style={{paddingLeft:"5px"}}>
-                    <FaCheck size="20" color="gray"/>&nbsp;&nbsp;
+                    <FaCheck size="20" style={{cursor:"pointer"}}onClick={checkUse} color={check?"black":"gray"}/>&nbsp;&nbsp;
                     <Button style={{backgroundColor:"lightgray", borderStyle:"none"}}>
                         꿀페이 수수료 서비스 이용약관&nbsp;&nbsp;&nbsp;
                         <Link style={{color:"gray", fontWeight:"bold"}} onClick={()=>setModalIsOpen(true)}>자세히
@@ -172,10 +183,10 @@ const Gpay = () => {
             <div style={{textAlign:"right", marginRight:"10px"}}>
                 &nbsp;&nbsp;
                 <div>
-                    수수료: 3,000원
+                    수수료: {sale.amount*0.05}원
                 </div>
                 <div style={{fontWeight:"bold"}}>
-                    결제 예정 금액: 63,000원
+                    결제 예정 금액: {sale.amount*1.05}원
                 </div>
             </div>
             <br/>

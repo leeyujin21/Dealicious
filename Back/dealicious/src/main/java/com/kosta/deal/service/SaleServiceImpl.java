@@ -238,12 +238,6 @@ public class SaleServiceImpl implements SaleService {
 	}
 
 	@Override
-	public Sale saleGpay(Integer num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Boolean login(String email, String password) throws Exception {
 		// TODO Auto-generated method stub
 		return null;

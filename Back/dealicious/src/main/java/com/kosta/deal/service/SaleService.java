@@ -29,7 +29,9 @@ public interface SaleService {
 	void readImage(Integer num, OutputStream out) throws Exception;
 	Boolean selHeartSale(String email, Integer num)throws Exception;
 	void saleDelete(Integer num) throws Exception;
+
 	Sale saleGpay(Integer num) throws Exception ;
+
 	void changesalestatus(Integer num, String status) throws Exception;
 
 }
