@@ -76,6 +76,7 @@ public class ChatServiceImpl implements ChatService {
 				map.put("nickname", user1.getNickname());
 				map.put("category", sale.getCategory());
 				map.put("chatdate", chat.getChatdate());
+				System.out.println(chat.getChatdate());
 				if(!chat.getWriterId().equals(user.getEmail())) {
 					map.put("isRead", chat.getIsRead());
 				}
@@ -94,6 +95,7 @@ public class ChatServiceImpl implements ChatService {
 				map.put("nickname", user1.getNickname());
 				map.put("category", sale.getCategory());
 				map.put("chatdate", chat.getChatdate());
+				System.out.println(chat.getChatdate());
 				if(!chat.getWriterId().equals(user.getEmail())) {
 					map.put("isRead", chat.getIsRead());
 				}

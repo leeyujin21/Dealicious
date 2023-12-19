@@ -84,9 +84,9 @@ public class ChatController {
 			ChatRoom chatRoom = chatService.findChatRoomByChannelid(channelid);
 			User chatpartner = new User();
 			if(chatRoom.getCreator().equals(user.getEmail())) {
-				chatpartner = userService.findUserByEmail(chatRoom.getCreator());
-			} else {
 				chatpartner = userService.findUserByEmail(chatRoom.getPartner());
+			} else {
+				chatpartner = userService.findUserByEmail(chatRoom.getCreator());
 			}
 			Sale sale = saleService.saleDetail(chatRoom.getSaleNum());
 			List<Chat> chatlist = chatService.findChatListByChannelId(channelid);

@@ -109,23 +109,22 @@ function SaleDetail() {
       });
       navigate(`/mypagenl`)
     } else {
+    const uniqueString = uuidv4();
+    const chatRoom = {channelId:uniqueString, creator:user.email, partner:writer.email,saleNum:num};
+    console.log(chatRoom);
+    axios.post(`http://localhost:8090/findchatroom`, chatRoom, {
+      headers: {
+        Authorization: token,
+      }
+    })
+    .then(res=>{
+      console.log(res.data);
+      navigate(`/chat/${res.data}`);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
-
-      const uniqueString = uuidv4();
-      const chatRoom = { channelId: uniqueString, creator: user.email, partner: writer.email, saleNum: num };
-      console.log(chatRoom);
-      axios.post(`http://localhost:8090/findchatroom`, chatRoom, {
-        headers: {
-          Authorization: token,
-        }
-      })
-        .then(res => {
-          console.log(res.data);
-          navigate(`/chat/${res.data}`);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     }
   }
   const goToEditPage = () => {
