@@ -240,8 +240,7 @@ function SaleDetail() {
                       &nbsp;&nbsp;{item.name}
                     </option>;
                   })}
-                </select>:<option>{sale.status}</option>}
-
+                </select>:<option style={{lineHeight:"45px"}>{sale.status}</option>}
               </div>
 
 

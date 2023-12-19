@@ -21,9 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import com.kosta.deal.entity.Sale;
-import com.kosta.deal.entity.User;
 import com.kosta.deal.service.SaleService;
-import com.kosta.deal.service.UserService;
 import com.kosta.deal.util.PageInfo;
 
 

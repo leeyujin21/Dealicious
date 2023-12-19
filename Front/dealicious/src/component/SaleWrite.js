@@ -8,6 +8,7 @@ import { FaCamera } from "react-icons/fa";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
+import { GiCancel } from 'react-icons/gi';
 
 
 
@@ -126,7 +127,7 @@ const SaleWrite = () => {
                 <div>
                     <div onClick={() => document.getElementById("file").click()}>
                         <FaCamera size="30" color='gray' />
-                        <div style={{ position: "absolute", textAlign: "center", width: "48px", paddingBottom: "5px", fontWeight: "bold" }}>
+                        <div style={{ position: "absolute", textAlign: "center", width: "48px", paddingBottom: "5px", fontWeight: "bold", color:"gray" }}>
                             {imageCount}/5
                         </div>
                     </div>
@@ -141,28 +142,7 @@ const SaleWrite = () => {
                                     style={{ width: '45px', height: '45px' }}
 
                                 />
-                                <button
-                                    onClick={() => removeImage(index)}
-                                    style={{
-                                        position: 'absolute',
-                                        top: '-10px',
-                                        right: '-10px',
-                                        backgroundColor: '#14C38E',
-                                        borderRadius: '50%',
-                                        border: "none",
-                                        cursor: 'pointer',
-                                        padding: '0',
-                                        width: '20px',
-                                        height: '20px',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        fontSize: '12px',
-                                        color: 'white',
-                                    }}
-                                >
-                                    X
-                                </button>
+                                <button data-idx={index} onClick={() => removeImage(index)} style={{ position: "absolute", top: "-15px", right: "-15px", background: "none", border: "none", cursor: "pointer" }}><GiCancel/></button>
                             </div>
                         ))}
                     </div>
