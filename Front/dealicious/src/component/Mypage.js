@@ -1,8 +1,7 @@
-import Avvvatars from "avvvatars-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FaStar } from "react-icons/fa6";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button, FormGroup, Label } from "reactstrap";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -10,10 +9,23 @@ import axios from "axios";
 const Mypage = () => {
     const [Image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
     const [user, setUser] = useState({ id: '', email: '', nickname: '' })
+    const [saleList, setSaleList] = useState([]);
+    const [page, setPage] = useState(1);
     const temp = useSelector(state => state.persistedReducer.user);
     useEffect(() => {
-        setUser(temp);
-    }, [])
+        axios.get(`http://localhost:8090/salelist`)
+            .then(res => {
+                console.log(res);
+                setSaleList([]);
+                setSaleList((_sale_list) => [
+                    ..._sale_list, ...res.data.saleList
+                ]);
+                setUser(temp);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, []);
     return (
         <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "50px" }}>
             <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
@@ -47,19 +59,19 @@ const Mypage = () => {
                 </div>
             </div>
             <div style={{ display: "flex", textAlign: "left", marginBottom: "3px" }}>
-                <div style={{ width: "100px", marginLeft: "5px", marginRight: "15px" }}><Link to="/mypage" style={{ fontSize: "18px", fontWeight: "bold", color: "black", textDecoration: "none" }}>내가 쓴 글(9)</Link></div>
-                <div style={{ width: "80px", marginRight: "5px" }}><Link to="/myzzim" style={{ fontSize: "18px", color: "black", textDecoration: "none" }}>찜한 글(3)</Link></div>
-                <div style={{ width: "100px" }}><Link to="/myreview" style={{ fontSize: "18px", color: "black", textDecoration: "none" }}>받은 후기(2)</Link>   </div>
+                <div style={{ width: "80px", marginLeft: "5px", marginRight: "15px" }}><Link to="/mypage" style={{ fontSize: "18px", fontWeight: "bold", color: "black", textDecoration: "none" }}>내가 쓴 글</Link></div>
+                <div style={{ width: "60px", marginRight: "5px" }}><Link to="/myzzim" style={{ fontSize: "18px", color: "black", textDecoration: "none" }}>찜한 글</Link></div>
+                <div style={{ width: "80px" }}><Link to="/myreview" style={{ fontSize: "18px", color: "black", textDecoration: "none" }}>받은 후기</Link>   </div>
             </div>
             <div style={{ height: "2px", backgroundColor: "#D9D9D9", width: "385px", position: "relative" }}>
-                <div style={{ position: "absolute", height: "3px", width: "110px", backgroundColor: "#14C38E" }} />
+                <div style={{ position: "absolute", height: "3px", width: "90px", backgroundColor: "#14C38E" }} />
             </div>
             <div style={{ height: "10px" }} />
-            <div style={{ textAlign: "left" }}>
-                &nbsp;
-                <Label style={{ fontSize: "14px" }}>판매중(5)</Label>&nbsp;&nbsp;
-                <Label style={{ fontSize: "14px", fontWeight: "bold" }}>예약중(3)</Label>&nbsp;&nbsp;
-                <Label style={{ fontSize: "14px" }}>판매완료(1)</Label>
+            <div style={{ textAlign: "left", marginBottom: "10px", marginLeft: "5px" }}>
+                <select style={{ border: "1px solid lightgray", borderRadius: "10px", width: "83px", height: "30px", textAlign: "center", fontSize: "14px" }}>
+                    <option>판매중</option>
+                    <option>판매완료</option>
+                </select>
             </div>
             <Link to="/saledetail" style={{ textDecoration: "none", color: "black" }}>
                 <div style={{ display: "inline-block", paddingRight: "10px" }}>
