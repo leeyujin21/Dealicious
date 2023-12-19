@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import { Button, Input } from "reactstrap";
-
 
 
 const SaleList = () => {
@@ -19,10 +17,9 @@ const SaleList = () => {
   const user = useSelector(state => state.persistedReducer.user);
 
   const observerRef = useRef(null);
- 
+
   useEffect(() => {
-    
-   
+
 
     const observer = new IntersectionObserver((entries) => {//IntersectionObserver를 생성하여 관찰 대상 요소(observerRef.current)의 교차점을 감시
       if (entries[0].isIntersecting && saleList.length > 0) {//관찰 대상 요소가 뷰포트와 교차되고 데이터가 있을 때(saleList.length > 0), Axios를 사용하여 서버에서 데이터를 가져오는 GET 요청
@@ -82,36 +79,26 @@ const SaleList = () => {
           console.log(err);
         })
     }
-  
 
   }, []); // 페이지가 로드될 때 한 번만 실행되도록 빈 배열 전달
 
-     
-  console.log(user.email);    
+
+  console.log(user.email);
 
   return (
     <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px", paddingTop: "0px" }}>
       {user.email !== '' ?
         <Link to="/salewrite" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px" }}>
           <FiPlusCircle size="50" color="#14C38E" />
-        </Link> :
-        <Link to="/mypagenl" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px" }} >
-          <FiPlusCircle size="50" color="#14C38E" />
-        </Link>
-      }
-   
-      
+        </Link> : <Link to="/mypagenl" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px" }}><FiPlusCircle size="50" color="#14C38E" /></Link>}
+
       {saleList.map((item, index) =>
-      
-      <Link to={"/saledetail/only-detail/"+item.num} key={index}  style={{textDecoration: "none", color: "black" }}>
-      
-        <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "124px" }}>
-          <div style={{ marginTop: "15px" }}>
-            <div style={{ height: "35px", display: "flex" }} >
 
+        <Link to={"/saledetail/only-detail/" + item.num} key={index} style={{ textDecoration: "none", color: "black" }}>
 
-    
-
+          <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "124px" }}>
+            <div style={{ marginTop: "15px" }}>
+              <div style={{ height: "35px", display: "flex" }} >
                 {item.fileurl == null ? <img src='./profile.png' width="130px" height="87px" />
                   : <img src={`http://localhost:8090/img/${item.fileurl[0]}${item.fileurl[1]}`} width="130px" height="87px" />}
 
@@ -122,7 +109,7 @@ const SaleList = () => {
                   <div style={{ display: "flex" }}>
                     <div style={{ fontSize: "15px", width: "180px" }}>{item.place}</div>
                     <div style={{ textAlign: "right" }}>
-                      {item.ggull == 0 ? <img src='' /> : <img src='/ggul.png' style={{ width: "35px" }}  />}
+                      {item.ggull == 0 ? <img src='' /> : <img src='/ggul.png' style={{ width: "35px" }} onClick={"뭐라도 하셈"} />}
                     </div>
                   </div>
                   <div style={{ display: "flex" }}>
