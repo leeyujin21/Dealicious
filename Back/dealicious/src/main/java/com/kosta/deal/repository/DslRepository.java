@@ -17,6 +17,9 @@ import com.kosta.deal.entity.QHot;
 import com.kosta.deal.entity.QPay;
 import com.kosta.deal.entity.QSale;
 import com.kosta.deal.entity.QUnivData;
+import com.kosta.deal.entity.QUser;
+import com.kosta.deal.entity.Sale;
+import com.kosta.deal.entity.User;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -56,7 +59,7 @@ public class DslRepository {
 				.from(pay)
 				.join(sale)
 				.on(pay.salenum.eq(sale.num))
-				.where(pay.paydate.loe(eDate).and(pay.paydate.goe(sDate)).and(sale.status.eq("정산완료")))
+				//.where(pay.paydate.loe(eDate).and(pay.paydate.goe(sDate)).and(sale.status.eq("정산완료")))
 				.fetch();
 	}
 	
@@ -98,10 +101,10 @@ public class DslRepository {
 				.fetchOne();
 	}
 	
-	public ChatRoom findChatRoomBySaleNum(Integer num) {
+	public ChatRoom findChatRoomBySaleNumAndEmail(Integer num, String email) {
 		QChatRoom chatRoom = QChatRoom.chatRoom;
 		return jpaQueryFactory.selectFrom(chatRoom)
-				.where(chatRoom.saleNum.eq(num))
+				.where(chatRoom.saleNum.eq(num).and(chatRoom.creator.eq(email)))
 				.fetchOne();
 
 	}
@@ -112,5 +115,83 @@ public class DslRepository {
 				.where(chat.channelId.eq(channelId))
 				.fetch();
 	}
+//	public Tuple getChatListFormFromWriter(String channelId) {
+//		QChatRoom chatRoom = QChatRoom.chatRoom;
+//		QChat chat = QChat.chat1;
+//		QSale sale = QSale.sale;
+//		QUser user = QUser.user;
+//
+//		return jpaQueryFactory.select(user.profileimgurl,user.nickname,sale.category,chat.chatdate,chat.chat,sale.fileurl)
+//				.from(chatRoom)
+//				.join(chat)
+//				.on(chatRoom.channelId.eq(chat.channelId))
+//				.join(sale)
+//				.on(chatRoom.saleNum.eq(sale.num))
+//				.join(user)
+//				.on(user.email.eq(sale.email))
+//				.where(chatRoom.channelId.eq(channelId))
+//				.orderBy(chat.chatdate.desc())
+//				.fetchFirst();
+//	}
+//	public Tuple getChatListFormFromBuyer(String channelId) {
+//		QChatRoom chatRoom = QChatRoom.chatRoom;
+//		QChat chat = QChat.chat1;
+//		QSale sale = QSale.sale;
+//		QUser user = QUser.user;
+//
+//		return jpaQueryFactory.select(user.profileimgurl,user.nickname,sale.category,chat.chatdate,chat.chat,sale.fileurl)
+//				.from(chatRoom)
+//				.from(chat)
+//				.from(sale)
+//				.from(user)
+//				.where(chatRoom.channelId.eq(chat.channelId).and(chatRoom.saleNum.eq(sale.num)).and(user.email.eq(chatRoom.creator)).and(chatRoom.channelId.eq(channelId)))
+//				.orderBy(chat.chatdate.desc())
+//				.fetchFirst();
+//	}
+	public Sale getSaleForChatlist(String channelId) {
+		QChatRoom chatRoom = QChatRoom.chatRoom;
+		QSale sale = QSale.sale;
+		return jpaQueryFactory.select(sale)
+				.from(chatRoom)
+				.join(sale)
+				.on(chatRoom.saleNum.eq(sale.num))
+				.where(chatRoom.channelId.eq(channelId))
+				.fetchOne();
+	}
+	public User getUserFromBuyer(String channelId) {
+		QChatRoom chatRoom = QChatRoom.chatRoom;
+		QUser user = QUser.user;
+		return jpaQueryFactory.select(user)
+				.from(chatRoom)
+				.join(user)
+				.on(chatRoom.partner.eq(user.email).and(chatRoom.channelId.eq(channelId)))
+				.fetchOne();
+	}
 	
+	public User getUserFromSeller(String channelId) {
+		QChatRoom chatRoom = QChatRoom.chatRoom;
+		QUser user = QUser.user;
+		return jpaQueryFactory.select(user)
+				.from(chatRoom)
+				.join(user)
+				.on(chatRoom.creator.eq(user.email).and(chatRoom.channelId.eq(channelId)))
+				.fetchOne();
+	}
+	
+	public Chat getChatForChatlist(String channelId) {
+		QChat chat = QChat.chat1;
+		return jpaQueryFactory.select(chat)
+				.from(chat)
+				.where(chat.channelId.eq(channelId))
+				.orderBy(chat.chatdate.desc())
+				.fetchFirst();
+	}
+
+	public List<String> getChannelIdList(String email) {
+		QChatRoom chatRoom = QChatRoom.chatRoom;
+		return jpaQueryFactory.select(chatRoom.channelId)
+				.from(chatRoom)
+				.where(chatRoom.creator.eq(email).or(chatRoom.partner.eq(email)))
+				.fetch();
+	}
 }

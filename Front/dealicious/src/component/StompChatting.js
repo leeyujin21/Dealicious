@@ -32,6 +32,7 @@ const StompChatting = () => {
     buyeremail: "",
     writerdate: "",
   });
+  const [chatpartner, setChatpartner] = useState({email:'', nickname:'', password:'', type:'', typename:'', tel:'', accountbank:'', accountbank:'', admincode:'', profileimgurl:''});
   const messagesRef = useRef(null);
   const client = useRef({});
   const { channelId } = useParams();
@@ -54,6 +55,7 @@ const StompChatting = () => {
           ..._chat_list, ...res.data.chatlist
         ]);
         setSale(res.data.sale);
+        setChatpartner(res.data.chatpartner);
       })
       .catch(err => {
         console.log(err);
@@ -166,7 +168,7 @@ const StompChatting = () => {
 
       <div style={{ textAlign: "left", color: "#14C38E", display: "flex", verticalAlign: "middle" }}>
         <Link to="/chatlist"><GoArrowLeft size={30} style={{ color: "#14C38E", height: "40px" }} /></Link>
-        <div style={{ fontSize: "20px", fontWeight: "bold", marginLeft: "10px", height: "40px", lineHeight: "40px" }}>어깡이</div>
+        <div style={{ fontSize: "20px", fontWeight: "bold", marginLeft: "10px", height: "40px", lineHeight: "40px" }}>{chatpartner.nickname}</div>
       </div>
 
       <div style={{ marginTop: "20px", width: "385px", borderTop: "1px solid gray", borderBottom: "1px solid gray", height: "105px" }}>
@@ -174,7 +176,7 @@ const StompChatting = () => {
           <div style={{ display: "flex" }}>
             <div><img src={`http://localhost:8090/img/${sale.fileurl}`} style={{ width: "80px" }}></img></div>
             <div style={{ width: "230px", textAlign: "left", lineHeight: "40px" }}>
-              <Link to="/saledetail/num" style={{ color: "black", textDecoration: "none" }}><div style={{ textAlign: "left" }}>{sale.title}</div></Link>
+              <Link to={"/saledetail/"+sale.num} style={{ color: "black", textDecoration: "none" }}><div style={{ textAlign: "left" }}>{sale.title}</div></Link>
               <div style={{ textAlign: "left", fontSize: "18px" }}>{sale.amount}원</div>
             </div>
             <div style={{ lineHeight: "40px", width: "80px", textAlign: "right", marginRight: "10px" }}>
