@@ -46,7 +46,7 @@ function SaleDetail() {
     content: "",
     place: "",
     fileurl: "",
-    status: "",
+    status: null,
     ggull: "",
     viewcount: null,
     zzimcnt: "",
