@@ -15,7 +15,6 @@ const SaleWrite = () => {
     const [files, setFiles] = useState([]);
     let selectImg = null;
     const [imageCount, setImageCount] = useState(0); // 상태 변수로 이미지 카운트를 관리.
-    const [selectedImages, setSelectedImages] = useState([]); // 여러 이미지를 저장하는 배열
     const fileInputRef = useRef(null);
     const [timeAgo, setTimeAgo] = useState('');
     const [sale, setSale] = useState({      //상품 정보 초기화
@@ -29,7 +28,6 @@ const SaleWrite = () => {
         num: ''
     });
     const [currentImage, setCurrentImage] = useState();
-    const [fileurlList, setFileurlList] = useState([]);
     const { sect, num } = useParams();
     useEffect(() => {
         axios.get(`http://localhost:8090/saledetail/${sect}/${num}`)
