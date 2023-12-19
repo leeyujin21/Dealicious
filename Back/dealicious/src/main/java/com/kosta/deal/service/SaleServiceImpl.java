@@ -213,6 +213,23 @@ public class SaleServiceImpl implements SaleService {
 		saleRepository.save(sale1);
 		return sale1.getNum();
 	}
+	
+	@Override
+	public void changesalestatus(Integer num, String status) throws Exception {
+	    Sale sale = saleRepository.findByNum(num);
+	    if ("판매중".equals(sale.getStatus())) {
+	        sale.setStatus(sale.getStatus()); // 상태 변경이 필요 없을 때 현재 상태로 유지
+	    } else {
+	        sale.setStatus("예약중"); // 상태가 "판매중"이 아닐 경우 "예약중"으로 변경
+	    }
+	    System.out.println(sale.getStatus());
+	    
+
+	    saleRepository.save(sale);
+	}
+		
+		
+	
 
 	@Override
 	public void saleDelete(Integer num) throws Exception {
@@ -237,5 +254,7 @@ public class SaleServiceImpl implements SaleService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }

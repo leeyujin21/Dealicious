@@ -14,16 +14,25 @@ import Swal from 'sweetalert2';
 
 
 function SaleDetail() {
+  const [files, setFiles] = useState([]);
   const user = useSelector(state => state.persistedReducer.user);
   const [writer, setwriter] = useState({ nickname: '', typename: '', fileurl: '', ggull: '', email: '', id: '' });
+  
   const selectList = [
     { value: "판매중", name: "판매중" },
     { value: "예약", name: "예약중" },
   ];
-  const [selected, setSelected] = useState("상태 선택");
+  const [status, setStatus] = useState("상태 선택");
   const handleSelect = (e) => {
     console.log(e.target.value);
-    setSelected(e.target.value);
+    setStatus(e.target.value);
+    axios.get(`http://localhost:8090/changesalestatus/${num}/${e.target.value}`)
+    .then(res => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
   const { sect, num } = useParams();
   const token = useSelector(state => state.persistedReducer.token);
@@ -131,9 +140,11 @@ function SaleDetail() {
   const goToEditPage = () => {
     navigate(`/salemodify/${num}`);
   }
+
   const pay = () => {
     navigate(`/gpay`)
   }
+
 
   const fileurlList = sale.fileurl.split(',').map(url => url.trim());
   const settings = {
@@ -222,14 +233,16 @@ function SaleDetail() {
               }}
             >
               <div>
-                {user.email === writer.email ?
-                  <select value={selected} style={{ borderStyle: "none", borderRadius: "10px", width: "130px", height: "42px", textAlign: "left" }} onChange={handleSelect}>
-                    {selectList.map((item) => {
-                      return <option value={item.value} key={item.value}>
-                        &nbsp;&nbsp;{item.name}
-                      </option>;
-                    })}
-                  </select> : <option>{sale.status}</option>}
+
+                {user.email===writer.email?
+                <select value={status} style={{ borderStyle: "none", borderRadius: "10px", width: "130px", height: "42px", textAlign: "left" }} onChange={handleSelect}>
+                  {selectList.map((item) => {
+                    return <option value={item.value} key={item.value}>
+                      &nbsp;&nbsp;{item.name}
+                    </option>;
+                  })}
+                </select>:<option>{sale.status}</option>}
+
               </div>
 
 
@@ -262,17 +275,39 @@ function SaleDetail() {
           value={sale.content}
         ></Input>
         <div style={{ display: "flex" }}>
-          <div style={{ position: "relative", marginTop: "8px" }} onClick={selectGood}>
-            <img src={heart ? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px", position: "absolute" }} />
-            <div style={{ position: "relative", width: "40px", textAlign: "center", lineHeight: "30px" }}>{sale.zzimcnt}</div>
+
+          <div style={{ position: "relative", marginTop: "8px" }}>
+            <img src={heart? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px" }} onClick={selectGood} />
+            <div style={{marginTop:"-30px",marginLeft:"15px"}}>{sale.zzimcnt}</div>
+            <div
+              style={{
+                width: "20px",
+                height: "20px",
+                position: "absolute",
+                transform: "translate(70%, -165%)",
+                textAlign: "center",
+                color: "white",
+                fontWeight: "bold",
+              }}
+            >
+
+            </div>
           </div>
 
           <div style={{ marginLeft: "165px", lineHeight: "45px" }}>
-            {sale.ggull == 1 && writer.email === user.email ?
-              <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px", onClick: { pay } }} />
-              : <img src="/ggul2.png" style={{ height: "35px", lineHeight: "100px", cursor: "pointer" }} />}
+          {sale.ggull==1?//ggull이 1상태일때 
+          (writer.email===user.email?   //로그인한 이메일과,상품등록한 이메일이 같을때
+          <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px"}} />
+
+          ://이메일이 다를때
+          <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px", cursor:"pointer"}}  onClick={pay}/>)
+          ://ggull이 0일때
+          <img src="/ggul2.png" style={{ height: "35px", lineHeight: "100px"}}/>
+          
+          }
+
           </div>
-          {user.email === writer.email ? <Button style={{
+          {user.email === writer.email ? <Button style={{ //이메일이 같을때
             marginLeft: "15px", borderRadius: "5px",
             width: "100px",
             height: "45px",
