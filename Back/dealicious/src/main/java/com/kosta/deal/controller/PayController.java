@@ -1,18 +1,16 @@
 package com.kosta.deal.controller;
 
-import java.io.IOException;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kosta.deal.entity.Pay;
+import com.kosta.deal.entity.Sale;
 import com.kosta.deal.service.PayService;
 import com.kosta.deal.service.PaymentService;
+import com.kosta.deal.service.SaleService;
 
 @RestController
 public class PayController {
@@ -21,7 +19,22 @@ public class PayController {
 	private PayService payService;
 	
 	@Autowired
+	private SaleService saleService;
+	
+	@Autowired
 	private PaymentService paymentService;
+	
+	@GetMapping("/gpay/{num}")
+	public ResponseEntity<Sale> Gpay(@PathVariable Integer num){
+		try {
+			Sale sale=saleService.saleDetail(num);
+			return new ResponseEntity<Sale>(sale,HttpStatus.OK);
+
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Sale>(HttpStatus.BAD_REQUEST);
+		}
+	}
 	
 //	@PostMapping("/pay")
 //	public ResponseEntity<String> pay(@RequestBody Map<String,Object> param) {

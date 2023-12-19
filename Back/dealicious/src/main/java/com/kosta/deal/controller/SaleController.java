@@ -197,20 +197,7 @@ public class SaleController {
 			e.printStackTrace();
 		}
 	}
-	@GetMapping("/gpay/{num}")
-	public ResponseEntity<Sale> Gpay(@PathVariable Integer num){
-		try {
-			Sale sale=saleService.saleGpay(num);
-			return new ResponseEntity<Sale>(sale,HttpStatus.OK);
-			
-		
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<Sale>(HttpStatus.BAD_REQUEST);
-		}
-	}
-	
-	
+
 	@GetMapping("/changesalestatus/{num}/{status}")
 	public ResponseEntity<String> changesalestatus(@PathVariable Integer num, @PathVariable String status){
 		try {
