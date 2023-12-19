@@ -141,7 +141,7 @@ function SaleDetail() {
   }
 
   const pay = () => {
-    navigate(`/gpay`)
+    navigate(`/gpay/${num}`)
   }
 
 
