@@ -34,27 +34,7 @@ public class SaleController {
 	
 	
 	
-	@GetMapping("/userInfo")
-	public ResponseEntity<Object> userInfo(@RequestParam("id") Integer id){
-		try {
-			Map<String,Object> res= new HashMap<>();
-			res= saleService.userInfo(id);
-			return new ResponseEntity<Object>(res,HttpStatus.OK);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
-		}
-	}
-	@PostMapping("/login")
-	public ResponseEntity<Boolean> login(@RequestBody Map<String,String> param){
-		try {
-			Boolean isLogin= saleService.login(param.get("email"),param.get("password"));
-			return new ResponseEntity<Boolean>(isLogin,HttpStatus.OK);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<Boolean>(HttpStatus.BAD_REQUEST);
-		}
-	}
+	
 	@GetMapping({"/salelist/{page}","/salelist"})  //salelist 페이지 처리
 	public ResponseEntity<Map<String,Object>> saleList(@PathVariable(required=false) Integer page) {
 		try {

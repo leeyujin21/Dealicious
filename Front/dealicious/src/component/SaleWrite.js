@@ -24,12 +24,15 @@ const SaleWrite = () => {
     const [amountError,setAmountError]=useState(false);
     const [placeError,setPlaceError]=useState(false);
     const [contentError,setContentError]=useState(false);
+    const [fileurlError,setFileurlError]=useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [errorMessage_t, setErrorMessage_t] = useState('');
     const [errorMessage_ca, setErrorMessage_ca] = useState('');
     const [errorMessage_a, setErrorMessage_a] = useState('');
     const [errorMessage_p, setErrorMessage_p] = useState('');
     const [errorMessage_c, setErrorMessage_c] = useState('');
+    const [errorMessage_f,setErrorMessage_f]=useState('');
+    
 
 
 
@@ -52,7 +55,14 @@ const SaleWrite = () => {
     useEffect(() => {
         setUser(temp);
     }, [])
+    const formatPrice = (amount) => {
+        if (!amount) return '';
+        const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
 
+        // 숫자를 천단위로 포맷팅합니다.
+        const formattedPrice = numericPrice.toLocaleString('ko-KR');
+        return `${formattedPrice}원`;
+      };
 
 
     const removeImage = (indexToRemove) => {
@@ -84,19 +94,22 @@ const SaleWrite = () => {
         const { name, value } = e.target;//e.target은 이벤트가 발생한 HTML 엘리먼트
         setSale({ ...sale, [name]: value });//name 속성은 해당 입력 필드의 이름을 나타내며, value는 그 입력 필드의 값
     };
-    const changecontent = (e) => {
+    const changecontent = (e) => {  //초기화
         setError('');
-        setTitleError(false);
+        setTitleError(false);       //input 초기화
         setAmountError(false);
         setCategoryError(false);
         setContentError(false);
         setPlaceError(false);
-        setErrorMessage_ca('');
+        setFileurlError(false);
+        setErrorMessage_ca('');     //error메시지 초기화
         setErrorMessage_t('');
         setErrorMessage_a('');
         setErrorMessage_p('');
         setErrorMessage_c('');
+        setErrorMessage_f('');
         setErrorMessage('');
+        
 
 
 
@@ -108,7 +121,15 @@ const SaleWrite = () => {
     const isFormValid = () => { //유효성검사
         
         let isValid = true;
-
+    
+    if (sale.title.trim() === '') {
+            setFileurlError(true);
+            setErrorMessage_f('사진을 선택하세요.');
+            isValid = false;        
+    } else{
+            setFileurlError(false);
+            setErrorMessage_f('');
+    }
     if (sale.title.trim() === '') {
         setTitleError(true);
         setErrorMessage_t('제목을 입력하세요.');
@@ -116,6 +137,15 @@ const SaleWrite = () => {
     } else{
         setTitleError(false);
         setErrorMessage_t('');
+    }
+    
+    if (sale.category.trim() === '') {
+        setCategoryError(true);
+        setErrorMessage_ca('카테고리를 선택하세요.');
+        isValid = false;
+    } else{
+        setCategoryError(false);
+        setErrorMessage_ca('');
     }
 
     if (sale.amount.trim() === '') {
@@ -126,6 +156,7 @@ const SaleWrite = () => {
         setAmountError(false);
         setErrorMessage_a('');
     }
+
 
     if (sale.place.trim() === '') {
         setPlaceError(true);
@@ -202,7 +233,8 @@ const SaleWrite = () => {
                             {imageCount}/5
                         </div>
                     </div>
-                    <Input name="file" type="file" id="file" accept="image/*" onChange={fileChange} hidden ref={fileInputRef} />
+                    <Input name="file" type="file" id="file" accept="image/*"  onInput={changecontent}onChange={fileChange} hidden ref={fileInputRef} />
+                    
 
                     <div style={{ display: 'flex', marginLeft: '50px', marginTop: '-30px' }}>
                         {selectedImages.map((image, index) => (
@@ -217,8 +249,11 @@ const SaleWrite = () => {
                             </div>
                         ))}
                     </div>
+                    
                 </div>
+                
             </div>
+            {fileurlError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_f}</div>}
             <div style={{ marginBottom: "5px", fontSize: "18px", marginTop: "20px" }}>제목</div>
             <Input
                 type="text"
@@ -249,6 +284,8 @@ const SaleWrite = () => {
                         <option value="others" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;기타</option>
                     </select>
                 </div>
+                
+
                 <div style={{ marginLeft: "25px" }}>
                     <div style={{ marginBottom: "10px", fontSize: "18px" }} name="ggull" value={sale.ggull}>
                         꿀페이
@@ -256,17 +293,22 @@ const SaleWrite = () => {
                     <img src={currentImage} style={{ width: "50px" }} onClick={changeImage} alt="Ggul Image" />
                 </div>
             </div>
+            {categoryError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_ca}</div>} 
             <div style={{ marginBottom: "20px" }} />
             <div style={{ display: "flex" }}>
+                
                 <div>
                     <div style={{ marginBottom: "5px", fontSize: "18px" }}>가격</div>
-                    <div><Input type="text" placeholder="10,000원" style={{ borderRadius: "5px", height: "40px", width: "180px", float: "left" }} name="amount" value={sale.amount} onInput={changecontent}onChange={handleInputChange}></Input></div>
-                    {amountError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_a}</div>}       
+                    
+                    <div><Input type="text" placeholder="10,000원" style={{ borderRadius: "5px", height: "40px", width: "180px", float: "left" }} name="amount" value={formatPrice(sale.amount)} onInput={changecontent} onChange={handleInputChange}></Input></div>
+                    {amountError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_a}</div>}  
+                    
+                                          
                 </div>
                 <div>
                     <div style={{ marginBottom: "5px", fontSize: "18px", marginLeft: "25px" }}>장소</div>
                     <div><Input type="text" placeholder="A동 1층" style={{ borderRadius: "5px", height: "40px", width: "180px", marginLeft: "25px" }} name="place" value={sale.place} onInput={changecontent}onChange={handleInputChange}></Input></div>
-                    {placeError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px', marginLeft:"30px" }}>{errorMessage_p}</div>}
+                    {placeError && <div style={{ color: 'red', fontSize: '14px', marginTop: '2px', marginLeft:"30px" }}>{errorMessage_p}</div>}
                 </div>
             </div>
             <div>
