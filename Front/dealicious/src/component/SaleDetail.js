@@ -25,7 +25,6 @@ function SaleDetail() {
     console.log(e.target.value);
     setSelected(e.target.value);
   }
-
   const { sect, num } = useParams();
   const token = useSelector(state => state.persistedReducer.token);
   const [sale, setSale] = useState({
@@ -41,13 +40,13 @@ function SaleDetail() {
     status: "",
     ggull: "",
     viewcount: null,
-    zzimcnt: null,
+    zzimcnt: "",
     buyeremail: "",
     writerdate: "",
   });
   const [heart, setHeart] = useState(false);
   const navigate = useNavigate();
-  
+
 
 
 
@@ -66,17 +65,12 @@ function SaleDetail() {
         });
 
         setSale(res.data.sale);
-        const fileurlList = res.data.sale.fileurl.split(',').map(url => url.trim());
-        setSale((prevSale) => ({ ...prevSale, fileurlList }));
-
+        setHeart(res.data.heart);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-
-  console.log(writer.email)
-  console.log(user.email)
   const convertCategoryToKorean = (category) => {
     switch (category) {
       case "mobile":
@@ -95,30 +89,26 @@ function SaleDetail() {
         return category;
     }
   };
-  
-  const selectGood = (e) => {
 
+  const selectGood = (e) => {
     axios.get(`http://localhost:8090/salelike/${num}`)
       .then(res => {
         console.log(res.data)
-        setSale({ ...sale, likeCount: res.data.likeCount });
+        setSale({ ...sale, zzimcnt: res.data.zzimcnt });
         setHeart(res.data.isSelect);
-       
       })
   };
 
   const gochat = () => {
-    if(user.email==''){
+    if (user.email == '') {
       Swal.fire({
         icon: 'error',
         title: '잠깐!',
         text: '로그인해주세요',
-      
+
       });
       navigate(`/mypagenl`)
-    }else{
-
-   
+    } else {
     const uniqueString = uuidv4();
     const chatRoom = {channelId:uniqueString, creator:user.email, partner:writer.email,saleNum:num};
     console.log(chatRoom);
@@ -134,12 +124,13 @@ function SaleDetail() {
     .catch((err) => {
       console.log(err);
     });
+
     }
   }
   const goToEditPage = () => {
     navigate(`/salemodify/${num}`);
   }
-  const pay=()=>{
+  const pay = () => {
     navigate(`/gpay`)
   }
 
@@ -151,9 +142,9 @@ function SaleDetail() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
- 
 
-  
+
+
 
   return (
     <div
@@ -230,14 +221,14 @@ function SaleDetail() {
               }}
             >
               <div>
-                {user.email===writer.email?
-                <select value={selected} style={{ borderStyle: "none", borderRadius: "10px", width: "130px", height: "42px", textAlign: "left" }} onChange={handleSelect}>
-                  {selectList.map((item) => {
-                    return <option value={item.value} key={item.value}>
-                      &nbsp;&nbsp;{item.name}
-                    </option>;
-                  })}
-                </select>:<option>{sale.status}</option>}
+                {user.email === writer.email ?
+                  <select value={selected} style={{ borderStyle: "none", borderRadius: "10px", width: "130px", height: "42px", textAlign: "left" }} onChange={handleSelect}>
+                    {selectList.map((item) => {
+                      return <option value={item.value} key={item.value}>
+                        &nbsp;&nbsp;{item.name}
+                      </option>;
+                    })}
+                  </select> : <option>{sale.status}</option>}
               </div>
 
 
@@ -270,28 +261,15 @@ function SaleDetail() {
           value={sale.content}
         ></Input>
         <div style={{ display: "flex" }}>
-          <div style={{ position: "relative", marginTop: "8px" }}>
-            <img src={heart? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px" }} onClick={selectGood} />
-            <div>{sale.likecount}</div>
-            <div
-              style={{
-                width: "20px",
-                height: "20px",
-                position: "absolute",
-                transform: "translate(70%, -165%)",
-                textAlign: "center",
-                color: "white",
-                fontWeight: "bold",
-              }}
-            >
-
-            </div>
+          <div style={{ position: "relative", marginTop: "8px" }} onClick={selectGood}>
+            <img src={heart ? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px", position: "absolute" }} />
+            <div style={{ position: "relative", width: "40px", textAlign: "center", lineHeight: "30px" }}>{sale.zzimcnt}</div>
           </div>
 
           <div style={{ marginLeft: "165px", lineHeight: "45px" }}>
-          {sale.ggull==1 && writer.email===user.email?
-          <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px",onClick:{pay}}} />
-          :<img src="/ggul2.png" style={{ height: "35px", lineHeight: "100px", cursor:"pointer"}}/>}
+            {sale.ggull == 1 && writer.email === user.email ?
+              <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px", onClick: { pay } }} />
+              : <img src="/ggul2.png" style={{ height: "35px", lineHeight: "100px", cursor: "pointer" }} />}
           </div>
           {user.email === writer.email ? <Button style={{
             marginLeft: "15px", borderRadius: "5px",
