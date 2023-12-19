@@ -74,6 +74,7 @@ public class SaleServiceImpl implements SaleService {
 		Tuple tuple = saleDslRepository.findUserEmailAndRolesBySaleNum(num);
 
 		Sale sale = tuple.get(0, Sale.class);
+		System.out.println("-----------------------------------");
 		System.out.println(sale);
 		String nickname = tuple.get(1, String.class);
 
