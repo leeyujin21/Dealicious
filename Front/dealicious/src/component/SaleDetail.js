@@ -10,6 +10,8 @@ import { v4 as uuidv4 } from 'uuid';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Swal from 'sweetalert2';
+
 
 function SaleDetail() {
   const user = useSelector(state => state.persistedReducer.user);
@@ -93,9 +95,7 @@ function SaleDetail() {
         return category;
     }
   };
-  const pay=()=>{
-    navigate(`/gpay`);
-  }
+  
   const selectGood = (e) => {
 
     axios.get(`http://localhost:8090/salelike/${num}`)
@@ -108,11 +108,40 @@ function SaleDetail() {
   };
 
   const gochat = () => {
+    if(user.email==''){
+      Swal.fire({
+        icon: 'error',
+        title: '잠깐!',
+        text: '로그인해주세요',
+      
+      });
+      navigate(`/mypagenl`)
+    }else{
+
+   
     const uniqueString = uuidv4();
     navigate(`/chat/${uniqueString}/${num}`);
+    const chatRoom = {channelId:uniqueString, creator:user.email, partner:writer.email,saleNum:num};
+    console.log(chatRoom);
+    axios.post(`http://localhost:8090/findchatroom`, chatRoom, {
+      headers: {
+        Authorization: token,
+      }
+    })
+    .then(res=>{
+      console.log(res.data);
+      navigate(`/chat/${res.data}`);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+    }
   }
   const goToEditPage = () => {
     navigate(`/salemodify/${num}`);
+  }
+  const pay=()=>{
+    navigate(`/gpay`)
   }
 
   const fileurlList = sale.fileurl.split(',').map(url => url.trim());
@@ -123,6 +152,9 @@ function SaleDetail() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+ 
+
+  
 
   return (
     <div
@@ -258,8 +290,9 @@ function SaleDetail() {
           </div>
 
           <div style={{ marginLeft: "165px", lineHeight: "45px" }}>
-            {sale.ggull == 1 && writer.email!==user.email ? <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px", cursor:"pointer"}} onClick={pay}/>
-              : <img src="/ggul2.png" style={{ height: "35px" }} />}
+          {sale.ggull==1 && writer.email===user.email?
+          <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px",onClick:{pay}}} />
+          :<img src="/ggul2.png" style={{ height: "35px", lineHeight: "100px", cursor:"pointer"}}/>}
           </div>
           {user.email === writer.email ? <Button style={{
             marginLeft: "15px", borderRadius: "5px",
