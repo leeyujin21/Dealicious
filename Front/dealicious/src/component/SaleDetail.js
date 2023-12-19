@@ -17,7 +17,7 @@ function SaleDetail() {
   const [files, setFiles] = useState([]);
   const user = useSelector(state => state.persistedReducer.user);
   const [writer, setwriter] = useState({ nickname: '', typename: '', fileurl: '', ggull: '', email: '', id: '' });
-  
+
   const selectList = [
     { value: "판매중", name: "판매중" },
     { value: "예약", name: "예약중" },
@@ -27,12 +27,12 @@ function SaleDetail() {
     console.log(e.target.value);
     setStatus(e.target.value);
     axios.get(`http://localhost:8090/changesalestatus/${num}/${e.target.value}`)
-    .then(res => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then(res => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   const { sect, num } = useParams();
   const token = useSelector(state => state.persistedReducer.token);
@@ -103,7 +103,7 @@ function SaleDetail() {
     axios.get(`http://localhost:8090/salelike/${num}`)
       .then(res => {
         console.log(res.data)
-        setSale({ ...sale, zzimcnt: res.data.zzimcnt });
+        setSale({ ...sale, zzimcnt: res.data.zzimCnt });
         setHeart(res.data.isSelect);
       })
   };
@@ -118,21 +118,21 @@ function SaleDetail() {
       });
       navigate(`/mypagenl`)
     } else {
-    const uniqueString = uuidv4();
-    const chatRoom = {channelId:uniqueString, creator:user.email, partner:writer.email,saleNum:num};
-    console.log(chatRoom);
-    axios.post(`http://localhost:8090/findchatroom`, chatRoom, {
-      headers: {
-        Authorization: token,
-      }
-    })
-    .then(res=>{
-      console.log(res.data);
-      navigate(`/chat/${res.data}`);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      const uniqueString = uuidv4();
+      const chatRoom = { channelId: uniqueString, creator: user.email, partner: writer.email, saleNum: num };
+      console.log(chatRoom);
+      axios.post(`http://localhost:8090/findchatroom`, chatRoom, {
+        headers: {
+          Authorization: token,
+        }
+      })
+        .then(res => {
+          console.log(res.data);
+          navigate(`/chat/${res.data}`);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
     }
   }
@@ -233,14 +233,14 @@ function SaleDetail() {
             >
               <div>
 
-                {user.email===writer.email?
-                <select value={status} style={{ borderStyle: "none", borderRadius: "10px", width: "130px", height: "42px", textAlign: "left" }} onChange={handleSelect}>
-                  {selectList.map((item) => {
-                    return <option value={item.value} key={item.value}>
-                      &nbsp;&nbsp;{item.name}
-                    </option>;
-                  })}
-                </select>:<option style={{lineHeight:"45px"}}>{sale.status}</option>}
+                {user.email === writer.email ?
+                  <select value={status} style={{ borderStyle: "none", borderRadius: "10px", width: "130px", height: "42px", textAlign: "left" }} onChange={handleSelect}>
+                    {selectList.map((item) => {
+                      return <option value={item.value} key={item.value}>
+                        &nbsp;&nbsp;{item.name}
+                      </option>;
+                    })}
+                  </select> : <option style={{ lineHeight: "45px" }}>{sale.status}</option>}
               </div>
 
 
@@ -274,35 +274,22 @@ function SaleDetail() {
         ></Input>
         <div style={{ display: "flex" }}>
 
-          <div style={{ position: "relative", marginTop: "8px" }}>
-            <img src={heart? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px" }} onClick={selectGood} />
-            <div style={{marginTop:"-30px",marginLeft:"15px"}}>{sale.zzimcnt}</div>
-            <div
-              style={{
-                width: "20px",
-                height: "20px",
-                position: "absolute",
-                transform: "translate(70%, -165%)",
-                textAlign: "center",
-                color: "white",
-                fontWeight: "bold",
-              }}
-            >
-
-            </div>
+          <div style={{ position: "relative", marginTop: "8px", cursor:"pointer" }} onClick={selectGood}>
+            <img src={heart ? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px", position: "absolute" }} />
+            <div style={{ position: "relative", width: "40px", textAlign: "center", lineHeight: "30px" }}>{sale.zzimcnt}</div>
           </div>
 
           <div style={{ marginLeft: "165px", lineHeight: "45px" }}>
-          {sale.ggull==1?//ggull이 1상태일때 
-          (writer.email===user.email?   //로그인한 이메일과,상품등록한 이메일이 같을때
-          <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px"}} />
+            {sale.ggull == 1 ?//ggull이 1상태일때 
+              (writer.email === user.email ?   //로그인한 이메일과,상품등록한 이메일이 같을때
+                <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px" }} />
 
-          ://이메일이 다를때
-          <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px", cursor:"pointer"}}  onClick={pay}/>)
-          ://ggull이 0일때
-          <img src="/ggul2.png" style={{ height: "35px", lineHeight: "100px"}}/>
-          
-          }
+                ://이메일이 다를때
+                <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px", cursor: "pointer" }} onClick={pay} />)
+              ://ggull이 0일때
+              <img src="/ggul2.png" style={{ height: "35px", lineHeight: "100px" }} />
+
+            }
 
           </div>
           {user.email === writer.email ? <Button style={{ //이메일이 같을때
