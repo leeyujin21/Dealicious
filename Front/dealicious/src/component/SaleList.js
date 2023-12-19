@@ -94,7 +94,7 @@ const SaleList = () => {
       
       {saleList.map((item, index) =>
       
-      <Link to={"/saledetail/"+item.num} key={index}  style={{textDecoration: "none", color: "black" }}>
+      <Link to={"/saledetail/only-detail/"+item.num} key={index}  style={{textDecoration: "none", color: "black" }}>
       
         <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "124px" }}>
           <div style={{ marginTop: "15px" }}>

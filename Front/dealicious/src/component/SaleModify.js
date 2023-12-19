@@ -6,14 +6,14 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Input, Button } from 'reactstrap';
 import { FaCamera } from "react-icons/fa";
 import axios from 'axios';
-import Swal from 'sweetalert2';
-import { useSelector } from 'react-redux';
+import { GiCancel } from "react-icons/gi";
 
 
 
 const SaleWrite = () => {
-    const [writer, setwriter] = useState({ nickname: '', typename: '', fileurl: '', ggull: '', email: '', id: '' });
     const navigate = useNavigate();
+    const [files, setFiles] = useState([]);
+    let selectImg = null;
     const [imageCount, setImageCount] = useState(0); // 상태 변수로 이미지 카운트를 관리.
     const [selectedImages, setSelectedImages] = useState([]); // 여러 이미지를 저장하는 배열
     const fileInputRef = useRef(null);
@@ -25,29 +25,27 @@ const SaleWrite = () => {
         place: '',
         content: '',
         ggull: '0',
-        fileurl: ''
+        fileurl: '',
+        num: ''
     });
-    const [currentImage, setCurrentImage] = useState(sale.ggull === "1" ? "/ggul.png" : "/ggul2.png");
+    const [currentImage, setCurrentImage] = useState();
     const [fileurlList, setFileurlList] = useState([]);
     const { sect, num } = useParams();
     useEffect(() => {
         axios.get(`http://localhost:8090/saledetail/${sect}/${num}`)
             .then(res => {
                 console.log(res.data);
-
-                setwriter({
-                    nickname: res.data.nickname,
-                    typename: res.data.typename,
-                    fileurl: res.data.profileimgurl,
-                    email: res.data.email,
-                    id: res.data.id,
-                });
-
                 setSale(res.data.sale);
-                setFileurlList(res.data.sale.fileurl.split(',').map(url => url.trim()));
+                let fileurl = res.data.sale.fileurl;
+                let filenums = fileurl.split(',');
+                let filearr = [];
+                for (let filenum of filenums) {
+                    filearr.push({ type: 'i', data: filenum })
+                }
+                setFiles([...filearr])
                 setImageCount(res.data.sale.fileurl.split(',').length);
-                console.log(fileurlList);
-                setSale((prevSale) => ({ ...prevSale, fileurlList }));
+                setSale((prevSale) => ({ ...prevSale, files }));
+                setCurrentImage(res.data.sale.ggull === "1" ? "/ggul.png" : "/ggul2.png");
             })
             .catch((err) => {
                 console.log(err);
@@ -55,7 +53,6 @@ const SaleWrite = () => {
 
 
     }, []);
-
     const calculateTimeAgo = (submissionTime) => {
         const currentTime = new Date(); // 현재 시간
         const timeDiffInMs = currentTime - submissionTime; // 현재 시간 - 등록 시간
@@ -69,34 +66,50 @@ const SaleWrite = () => {
         }
     };
 
-    const removeImage = (indexToRemove) => {
+    const imageClick = (e) => {
+        selectImg = e;
+        document.getElementById("file").click();
+    }
 
-        // fileurlList를 업데이트
-        const updatedFileurlList = fileurlList.filter((_, index) => index !== indexToRemove);
-        setImageCount(updatedFileurlList.length);
-        setFileurlList(updatedFileurlList);
-        setSale((prevSale) => ({ ...prevSale, fileurlList: updatedFileurlList }));
-
-        console.log("지워줘")
-        console.log(updatedFileurlList);
-    };
-
-    const fileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            if (selectedImages.length < 5) { // 이미지가 5개 미만일 때만 추가
-                setSelectedImages([...selectedImages, file]);
-                setImageCount(selectedImages.length + 1);
-            }
+    const plusClick = (e) => {
+        if (files.length >= 5) {
+            alert('최대 5장까지 첨부 가능합니다.');
+            return;
         }
+        selectImg = null;
+        document.getElementById("file").click();
+    }
+
+    const deleteClick = (e) => {
+        let idx = e.target.dataset.idx;
+        files.splice(idx, 1);
+        setFiles([...files]);
+        setImageCount((prevCount) => Math.max(0, prevCount - 1));
+    }
+
+    const fileChange = (e) => {
+        if (e.target.files.length == 0) return;
+        if (files.length >= 5) {
+            alert('더 이상 사진을 추가할 수 없습니다. 최대 5장까지 첨부 가능합니다.');
+            return;
+        }
+        if (selectImg == null)
+            setFiles([...files, { type: 'f', data: e.target.files[0] }]);
+        else {
+            let id = selectImg.target.id;
+            files.splice(id, 1, { type: 'f', data: e.target.files[0] })
+            setFiles([...files]);
+        }
+        setImageCount((prevCount) => Math.min(5, prevCount + 1));
     };
+
 
     const changeImage = () => {
-        if (currentImage === "./ggul2.png") {
-            setCurrentImage("./ggul.png");
+        if (currentImage === "/ggul2.png") {
+            setCurrentImage("/ggul.png");
             setSale({ ...sale, ggull: 1 });
-        } else if (currentImage === './ggul.png') {
-            setCurrentImage("./ggul2.png"); // 처음 이미지로 다시 변경.
+        } else if (currentImage === '/ggul.png') {
+            setCurrentImage("/ggul2.png");
             setSale({ ...sale, ggull: 0 });
         }
     };
@@ -108,24 +121,26 @@ const SaleWrite = () => {
 
     const submit = (e) => {
         const formData = new FormData();
+        formData.append("num", sale.num);
         formData.append("title", sale.title);
         formData.append("category", sale.category);
         formData.append("amount", sale.amount);
         formData.append("place", sale.place);
         formData.append("content", sale.content);
         formData.append("ggull", sale.ggull);
-        formData.append("file", sale.fileurl);
-        for (let image of selectedImages) {
-            formData.append("file", image);
-        }
 
-        console.log(formData)
+        for(let file of files) {
+            if(file.type==='i')
+                formData.append("file",new Blob(),file.data);
+            else
+                formData.append("file",file.data);
+        }
 
         axios.post('http://localhost:8090/salemodify', formData)
             .then(res => {
                 console.log(res);
                 let saleNum = res.data;
-                navigate(`/salelist/after-modify/${saleNum}`);
+                navigate(`/saledetail/after-modify/${saleNum}`);
             })
             .catch(err => {
                 console.log(err);
@@ -133,20 +148,15 @@ const SaleWrite = () => {
         const submissionTime = new Date(); // 등록 시간
         calculateTimeAgo(submissionTime); // 함수 호출하여 시간 차이 계산
     }
-    const deleteSale = (e) => {
-        let saleNum = e.target.id;
-        axios.delete(`http://localhost:8090/saledelete/${saleNum}`)
+    const deleteSale = () => {
+        axios.delete(`http://localhost:8090/saledelete/${num}`)
             .then(res => {
-                let num = res.data;
-                let resale = sale.filter(sale => sale.num !== num);
-                setSale([...resale]);
-
+                navigate(`/salelist`);
             })
             .catch(err => {
                 console.log(err);
-            })
-
-    }
+            });
+    };
 
     return (
         <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden" }}>
@@ -170,7 +180,7 @@ const SaleWrite = () => {
             <div style={{ backgroundColor: "#E9E9E9", width: "48px", height: "63px", textAlign: "center", paddingTop: "5px", position: "relative", cursor: "pointer" }}
             >
                 <div style={{ display: "flex" }}>
-                    <div onClick={() => document.getElementById("file").click()}>
+                    <div onClick={plusClick}>
                         <div style={{ width: "48px", textAlign: "center" }}>
                             <FaCamera size="30" color='gray' />
                         </div>
@@ -179,38 +189,17 @@ const SaleWrite = () => {
                         </div>
                     </div>
                     <Input name="file" type="file" id="file" accept="image/*" onChange={fileChange} hidden ref={fileInputRef} />
-
-                    <div style={{ display: "flex" }}>
-                        {fileurlList.map((url, index) => (
-                            <div key={index} style={{ position: "relative", marginRight: "10px" }}>
-                                <img
-                                    src={`http://localhost:8090/img/${url}`}
-                                    alt={`${index}`}
-                                    style={{ width: '45px', height: '45px', marginLeft: "10px" }}
-                                />
-                                <Button
-                                    onClick={() => removeImage(index)}
-                                    style={{
-                                        position: 'absolute',
-                                        top: '-10px',
-                                        right: '-10px',
-                                        backgroundColor: '#14C38E',
-                                        borderRadius: '50px',
-                                        border: "none",
-                                        cursor: 'pointer',
-                                        padding: '0',
-                                        width: '20px',
-                                        height: '20px',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        fontSize: '12px',
-                                        color: 'white',
-                                    }}
-                                >
-                                    X
-                                </Button>
-                            </div>
-                        ))}
+                    <div style={{ display: "flex", marginLeft: "10px" }}>
+                        {files.length !== 0 &&
+                            files.map((file, index) =>
+                                <span key={index}>
+                                    <div style={{ position: "relative", display: 'inline-block', marginRight: "10px" }}>
+                                        <img src={file.type === 'i' ? `http://localhost:8090/img/${file.data}` : URL.createObjectURL(file.data)} width="45px" height="45px" alt='' id={index} onClick={imageClick} />
+                                        <button data-idx={index} onClick={deleteClick} style={{ position: "absolute", top: "-15px", right: "-15px", background: "none", border: "none", cursor: "pointer" }}><GiCancel/></button>
+                                    </div>
+                                </span>
+                            )
+                        }
                     </div>
                 </div>
             </div>
@@ -271,12 +260,12 @@ const SaleWrite = () => {
                 </div>
                 <br />
                 <div style={{ display: "flex", textAlign: 'center' }}>
-                    <div style={{ width: "180px", textAlign: "right" }}>
+                    <div style={{ width: "190px", textAlign: "right" }}>
                         <Button
                             onClick={submit}
                             style={{
                                 textAlign: "center",
-                                width: "120px",
+                                width: "190px",
                                 height: "45px",
                                 backgroundColor: '#14C38E',
                                 color: "white",
@@ -285,9 +274,10 @@ const SaleWrite = () => {
                             수정하기
                         </Button>
                     </div>
-                    <div style={{ width: "180px", textAlign: "left" }}>
-                        <Button id={sale.num} onclick={deleteSale} style={{
-                            width: "120px", marginLeft: "5px",
+                    <div style={{ width: "190px", textAlign: "left" }}>
+                        <Button onClick={deleteSale} style={{
+                            width: "190px",
+                            marginLeft: "5px",
                             height: "45px"
                         }}>삭제하기</Button>
                     </div>

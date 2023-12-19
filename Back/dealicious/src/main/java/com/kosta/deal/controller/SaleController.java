@@ -96,11 +96,11 @@ public class SaleController {
 			res = saleService.saleInfo(num);
 			if(sect.equals("only-detail")) {
 				saleService.plusViewCount(num);
-				Boolean heart= saleService.isHeartSale("k@kosta.com",num);
-				res.put("heart", heart);
+//				Boolean heart= saleService.isHeartSale("k@kosta.com",num);
+//				res.put("heart", heart);
 			}else if(sect.equals("after-modify")) {
-				Boolean heart=saleService.isHeartSale("k@kosta.com",num);
-				res.put("heart", heart);
+//				Boolean heart=saleService.isHeartSale("k@kosta.com",num);
+//				res.put("heart", heart);
 			}
 			return new ResponseEntity<Map<String,Object>> (res,HttpStatus.OK);
 		}catch(Exception e){
@@ -150,6 +150,7 @@ public class SaleController {
 	}
 	@PostMapping("/salemodify")
 	public ResponseEntity<Integer> saleModify(@ModelAttribute Sale sale,@RequestParam(value="file",required=false)List<MultipartFile>file){
+		System.out.println(sale);
 		try {
 			Integer num =saleService.saleModify(sale,file);
 			return new ResponseEntity<Integer>(num,HttpStatus.OK);
