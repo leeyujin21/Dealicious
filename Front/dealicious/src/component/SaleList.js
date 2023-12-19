@@ -113,7 +113,7 @@ const SaleList = () => {
     
 
                 {item.fileurl == null ? <img src='./profile.png' width="130px" height="87px" />
-                  : <img src={`http://localhost:8090/img/${item.fileurl[0]}${item.fileurl[1]}`} width="130px" height="87px" />}
+                  : <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} width="130px" height="87px" />}
 
                 <div style={{ textAlign: "left", marginLeft: "20px" }}>
                   <a style={{ fontSize: "18px" }}>

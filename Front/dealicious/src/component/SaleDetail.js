@@ -120,7 +120,6 @@ function SaleDetail() {
 
    
     const uniqueString = uuidv4();
-    navigate(`/chat/${uniqueString}/${num}`);
     const chatRoom = {channelId:uniqueString, creator:user.email, partner:writer.email,saleNum:num};
     console.log(chatRoom);
     axios.post(`http://localhost:8090/findchatroom`, chatRoom, {
