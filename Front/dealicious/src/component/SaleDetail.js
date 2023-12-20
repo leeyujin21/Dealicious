@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 
 
 function SaleDetail() {
-  const [files, setFiles] = useState([]);
+  const Image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   const user = useSelector(state => state.persistedReducer.user);
   const [writer, setwriter] = useState({ nickname: '', typename: '', fileurl: '', ggull: '', email: '', id: '' });
 
@@ -200,7 +200,7 @@ function SaleDetail() {
         <div style={{ marginTop: "15px" }}>
           <div style={{ display: "flex" }}>
             <div rowSpan={2}>
-              {writer.fileurl == null ? <img src='/profile.png' alt='' style={{ width: "60px", height: "60px", marginRight: "10px", borderRadius: "50px" }} /> : <img src={`http://localhost:8090/img/${writer.fileurl}`} alt='' style={{ width: "60px", height: "60px", marginRight: "10px", borderRadius: "50px" }} />}
+              <img src={writer.fileurl == null ? Image:`http://localhost:8090/img/${writer.fileurl}`} style={{ width: "60px", height: "60px", marginRight: "10px", borderRadius: "50px" }} /> 
             </div>
             <div
               style={{
