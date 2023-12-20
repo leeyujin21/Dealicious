@@ -152,4 +152,17 @@ public class ChatController {
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
 	}
+    
+    @GetMapping("/review/{fixedRating}/{partneremail}/{salenum}")
+    public ResponseEntity<String> review(Authentication authentication,@PathVariable String fixedRating,@PathVariable String partneremail,@PathVariable Integer salenum) {    	
+    	PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+    	User user = principalDetails.getUser();
+    	try {
+    		userService.registerReview(user.getEmail(),partneremail,fixedRating,salenum);
+			return new ResponseEntity<String>(HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
+		}
+	}
 }

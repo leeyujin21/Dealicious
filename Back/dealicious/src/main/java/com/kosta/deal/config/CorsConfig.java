@@ -23,6 +23,7 @@ public class CorsConfig {		//CORS:웹 애플리케이션이 다른 도메인에�
 		source.registerCorsConfiguration("/*", config);
 		source.registerCorsConfiguration("/*/*", config);
 		source.registerCorsConfiguration("/*/*/*", config);//registerCorsConfiguration(): 특정 URL 패턴에 대해 CORS 설정을 등록하는 메서드
+		source.registerCorsConfiguration("/*/*/*/*", config);//registerCorsConfiguration(): 특정 URL 패턴에 대해 CORS 설정을 등록하는 메서드
 		return new CorsFilter(source);
 	}
 }

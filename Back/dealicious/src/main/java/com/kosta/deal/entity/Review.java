@@ -28,5 +28,5 @@ public class Review {
 	private String giver;
 	private String receiver;
 	private String starcount;
-	
+	private Integer salenum;
 }
