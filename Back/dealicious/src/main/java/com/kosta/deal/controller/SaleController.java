@@ -87,6 +87,21 @@ public class SaleController {
 		}
 	}
 	
+	@GetMapping("/saledetail/{sect}/{num}")
+	public ResponseEntity<Map<String,Object>> saleDetail(@PathVariable String sect,@PathVariable Integer num){
+		try {
+			Map<String,Object> res= new HashMap<>();
+			res = saleService.saleInfo(num);
+			if(sect.equals("only-detail")) {
+				saleService.plusViewCount(num);
+			}
+			return new ResponseEntity<Map<String,Object>> (res,HttpStatus.OK);
+		}catch(Exception e){
+			e.printStackTrace();
+			return new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	//채팅창에서 사용
 	@GetMapping("/saledetail/{num}")
 	public ResponseEntity<Sale> saleDetail(@PathVariable Integer num){
