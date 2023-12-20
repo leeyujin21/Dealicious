@@ -33,6 +33,9 @@ public interface SaleService {
 	Sale saleGpay(Integer num) throws Exception ;
 
 	void changesalestatus(Integer num, String status) throws Exception;
+
+	void payFinish(Integer num) throws Exception;
+
 	List<Sale> SaleListByCategory(String category) throws Exception;
 
 }

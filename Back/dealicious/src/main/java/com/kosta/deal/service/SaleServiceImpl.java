@@ -249,6 +249,13 @@ public class SaleServiceImpl implements SaleService {
 		return null;
 	}
 
+	@Override
+	public void payFinish(Integer num) throws Exception {
+		Sale sale = saleRepository.findByNum(num);
+		sale.setStatus("결제완료");
+		saleRepository.save(sale);
+	}
+
 	
 
 }
