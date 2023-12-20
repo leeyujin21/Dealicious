@@ -28,7 +28,7 @@ function SaleDetail() {
   });
   const handleSelect = (e) => {
     const selectedStatus = e.target.value;
-   
+
     localStorage.setItem('status', selectedStatus);
     console.log(e.target.value);
     setStatus(selectedStatus);
@@ -36,7 +36,7 @@ function SaleDetail() {
       .then(res => {
         console.log(res);
         setStatus(e.target.value);
-        
+
       })
       .catch((err) => {
         console.log(err);
@@ -75,25 +75,47 @@ function SaleDetail() {
 
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8090/saledetail/${sect}/${user.email}/${num}`)
-      .then(res => {
-        console.log(res.data);
+    if (user.email === "") {
+      axios
+        .get(`http://localhost:8090/saledetail/${sect}/${num}`)
+        .then(res => {
+          console.log(res.data);
 
-        setwriter({
-          nickname: res.data.nickname,
-          typename: res.data.typename,
-          fileurl: res.data.profileimgurl,
-          email: res.data.email,
-          id: res.data.id
+          setwriter({
+            nickname: res.data.nickname,
+            typename: res.data.typename,
+            fileurl: res.data.profileimgurl,
+            email: res.data.email,
+            id: res.data.id
+          });
+
+          setSale(res.data.sale);
+          setHeart(res.data.heart);
+        })
+        .catch((err) => {
+          console.log(err);
         });
+    } else {
+      axios
+        .get(`http://localhost:8090/saledetail/${sect}/${user.email}/${num}`)
+        .then(res => {
+          console.log(res.data);
 
-        setSale(res.data.sale);
-        setHeart(res.data.heart);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+          setwriter({
+            nickname: res.data.nickname,
+            typename: res.data.typename,
+            fileurl: res.data.profileimgurl,
+            email: res.data.email,
+            id: res.data.id
+          });
+
+          setSale(res.data.sale);
+          setHeart(res.data.heart);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, []);
   const convertCategoryToKorean = (category) => {
     switch (category) {
@@ -122,9 +144,9 @@ function SaleDetail() {
         setHeart(res.data.isSelect);
       })
   };
-  
+
   const gochat = () => {
-    if (user.email!=='') {
+    if (user.email !== '') {
       const uniqueString = uuidv4();
       const chatRoom = { channelId: uniqueString, creator: user.email, partner: writer.email, saleNum: num };
       console.log(chatRoom);
@@ -141,23 +163,23 @@ function SaleDetail() {
           console.log(err);
         });
 
-     
+
     } else {
       alert("로그인 해주세요");
       navigate(`/mypagenl`);
-  }
-};
+    }
+  };
   const goToEditPage = () => {
     navigate(`/salemodify/${num}`);
   }
 
   const pay = () => {
-    if(user.email===writer.email)
-    alert("작성자와 같은사람은 결제할수 없습니다")
-    else if(user.email!==writer.email&&user.email!==''){
-    navigate(`/gpay/${num}`)
+    if (user.email === writer.email)
+      alert("작성자와 같은사람은 결제할수 없습니다")
+    else if (user.email !== writer.email && user.email !== '') {
+      navigate(`/gpay/${num}`)
     }
-    else if(user.email==''){
+    else if (user.email == '') {
       alert("로그인해주세요")
       navigate(`/mypagenl`);
     }
@@ -224,7 +246,7 @@ function SaleDetail() {
         <div style={{ marginTop: "15px" }}>
           <div style={{ display: "flex" }}>
             <div rowSpan={2}>
-              <img src={writer.fileurl == null ? Image:`http://localhost:8090/img/${writer.fileurl}`} style={{ width: "60px", height: "60px", marginRight: "10px", borderRadius: "50px" }} /> 
+              <img src={writer.fileurl == null ? Image : `http://localhost:8090/img/${writer.fileurl}`} style={{ width: "60px", height: "60px", marginRight: "10px", borderRadius: "50px" }} />
             </div>
             <div
               style={{
@@ -293,21 +315,21 @@ function SaleDetail() {
         ></Input>
         <div style={{ display: "flex" }}>
 
-          {writer.email===user.email||user.email==''?
-          <div style={{ position: "relative", marginTop: "8px" }} >
-          <img src={heart ? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px", position: "absolute" }} />
-          <div style={{ position: "relative", width: "40px", textAlign: "center", lineHeight: "30px" }}>{sale.zzimcnt}</div>
-        </div>
-          :<div style={{ position: "relative", marginTop: "8px", cursor:"pointer" }} onClick={selectGood}>
-            <img src={heart ? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px", position: "absolute" }} />
-            <div style={{ position: "relative", width: "40px", textAlign: "center", lineHeight: "30px" }}>{sale.zzimcnt}</div>
-          </div>}
+          {writer.email === user.email || user.email == '' ?
+            <div style={{ position: "relative", marginTop: "8px" }} >
+              <img src={heart ? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px", position: "absolute" }} />
+              <div style={{ position: "relative", width: "40px", textAlign: "center", lineHeight: "30px" }}>{sale.zzimcnt}</div>
+            </div>
+            : <div style={{ position: "relative", marginTop: "8px", cursor: "pointer" }} onClick={selectGood}>
+              <img src={heart ? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px", position: "absolute" }} />
+              <div style={{ position: "relative", width: "40px", textAlign: "center", lineHeight: "30px" }}>{sale.zzimcnt}</div>
+            </div>}
 
           <div style={{ marginLeft: "165px", lineHeight: "45px" }}>
-            
-            {sale.ggull == 1?//ggull이 1상태일때 
+
+            {sale.ggull == 1 ?//ggull이 1상태일때 
               (writer.email === user.email ?   //로그인한 이메일과,상품등록한 이메일이 같을때
-                <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px",cursor:"pointer" }} onClick={pay}/>
+                <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px", cursor: "pointer" }} onClick={pay} />
 
                 ://이메일이 다를때
                 <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px", cursor: "pointer" }} onClick={pay} />)
@@ -317,26 +339,26 @@ function SaleDetail() {
             }
 
           </div>
-          {user.email === writer.email ? 
-          <Button style={{ //이메일이 같을때
-            marginLeft: "15px", borderRadius: "5px",
-            width: "100px",
-            height: "45px",
-            backgroundColor: "#14C38E",
-            color: "white",
-            borderStyle: "none",
-          }} onClick={goToEditPage}>
-            수정하기
-          </Button> : <Button style={{
-            marginLeft: "15px", borderRadius: "5px",
-            width: "100px",
-            height: "45px",
-            backgroundColor: "#14C38E",
-            color: "white",
-            borderStyle: "none",
-          }} onClick={gochat}>
-            채팅하기
-          </Button>}
+          {user.email === writer.email ?
+            <Button style={{ //이메일이 같을때
+              marginLeft: "15px", borderRadius: "5px",
+              width: "100px",
+              height: "45px",
+              backgroundColor: "#14C38E",
+              color: "white",
+              borderStyle: "none",
+            }} onClick={goToEditPage}>
+              수정하기
+            </Button> : <Button style={{
+              marginLeft: "15px", borderRadius: "5px",
+              width: "100px",
+              height: "45px",
+              backgroundColor: "#14C38E",
+              color: "white",
+              borderStyle: "none",
+            }} onClick={gochat}>
+              채팅하기
+            </Button>}
 
         </div>
       </div>
