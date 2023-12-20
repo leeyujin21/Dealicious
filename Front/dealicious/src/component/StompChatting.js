@@ -63,6 +63,7 @@ const StompChatting = () => {
         setChatList((_chat_list) => [
           ..._chat_list, ...res.data.chatlist
         ]);
+        console.log(res.data.sale);
         setSale(res.data.sale);
         setChatpartner(res.data.chatpartner);
       })
@@ -233,7 +234,7 @@ const StompChatting = () => {
           <div style={{ display: "flex" }}>
             <div><img src={`http://localhost:8090/img/${fileurlList[0]}`} style={{ width: "80px" }}></img></div>
             <div style={{ width: "230px", textAlign: "left", lineHeight: "40px" }}>
-              <Link to={"/saledetail/" + sale.num} style={{ color: "black", textDecoration: "none" }}><div style={{ textAlign: "left" }}>{sale.title}</div></Link>
+              <Link to={"/saledetail/only-detail/" + sale.num} style={{ color: "black", textDecoration: "none" }}><div style={{ textAlign: "left" }}>{sale.title}</div></Link>
               <div style={{ textAlign: "left", fontSize: "18px" }}>{sale.amount}</div>
             </div>
             <div style={{ lineHeight: "40px", width: "80px", textAlign: "right", marginRight: "10px" }}>
