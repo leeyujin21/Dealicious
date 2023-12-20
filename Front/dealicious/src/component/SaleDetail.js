@@ -21,22 +21,17 @@ function SaleDetail() {
   const selectList = [
     { value: "판매중", name: "판매중" },
     { value: "예약중", name: "예약중" },
+    { value: "거래완료", name: "거래완료"}
   ];
-  const [status, setStatus] = useState(() => {
-    const savedStatus = localStorage.getItem('status');
-    return savedStatus || '상태 선택';
-  });
-  const handleSelect = (e) => {
-    const selectedStatus = e.target.value;
 
-    localStorage.setItem('status', selectedStatus);
-    console.log(e.target.value);
-    setStatus(selectedStatus);
+  const handleSelect = (e) => {
+    setSale(prevSale => ({
+      ...prevSale,
+      status: e.target.value
+    }));
     axios.get(`http://localhost:8090/changesalestatus/${num}/${e.target.value}`)
       .then(res => {
-        console.log(res);
-        setStatus(e.target.value);
-
+        console.log(res);      
       })
       .catch((err) => {
         console.log(err);
@@ -275,7 +270,7 @@ function SaleDetail() {
               <div>
 
                 {user.email === writer.email ?
-                  <select value={status} style={{ borderStyle: "none", borderRadius: "10px", width: "130px", height: "42px", textAlign: "left" }} onChange={handleSelect}>
+                  <select value={sale.status} style={{ borderStyle: "none", borderRadius: "10px", width: "130px", height: "42px", textAlign: "left" }} onChange={handleSelect}>
                     {selectList.map((item) => {
                       return <option value={item.value} key={item.value}>
                         &nbsp;&nbsp;{item.name}

@@ -225,13 +225,7 @@ public class SaleServiceImpl implements SaleService {
 	@Override
 	public void changesalestatus(Integer num, String status) throws Exception {
 		Sale sale = saleRepository.findByNum(num);
-	    if ("판매중".equals(sale.getStatus())) {
-	        sale.setStatus("판매중"); // "판매중"인 경우 "판매중"으로 변경
-	    } else if("예약중".equals(sale.getStatus())) {
-	        sale.setStatus("예약중"); // "예약중"이 아닌 경우 "예약중"으로 변경
-	    }
-	    System.out.println(sale.getStatus());
-
+		sale.setStatus(status);
 	    saleRepository.save(sale);
 	}
 		
@@ -277,8 +271,7 @@ public class SaleServiceImpl implements SaleService {
 
 	@Override
 	public Sale saleDetail(Integer num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return saleRepository.findByNum(num);
 	}
 
 	
