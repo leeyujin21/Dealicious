@@ -28,8 +28,6 @@ const SaleList = () => {
 };
 
   useEffect(() => {
-
-
     const observer = new IntersectionObserver((entries) => {//IntersectionObserver를 생성하여 관찰 대상 요소(observerRef.current)의 교차점을 감시
       if (entries[0].isIntersecting && saleList.length > 0) {//관찰 대상 요소가 뷰포트와 교차되고 데이터가 있을 때(saleList.length > 0), Axios를 사용하여 서버에서 데이터를 가져오는 GET 요청
         axios.get(`http://localhost:8090/salelist/${page + 1}`)
@@ -97,9 +95,9 @@ const SaleList = () => {
   return (
     <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px", paddingTop: "0px" }}>
       {user.email !== '' ?
-        <Link to="/salewrite" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px" }}>
+        <Link to="/salewrite" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px", borderRadius:"50px" }}>
           <FiPlusCircle size="50" color="#14C38E" />
-        </Link> : <Link to="/mypagenl" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px" }}><FiPlusCircle size="50" color="#14C38E" /></Link>}
+        </Link> : <Link to="/mypagenl" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px", borderRadius:"50px" }}><FiPlusCircle size="50" color="#14C38E" /></Link>}
 
       {saleList.map((item, index) =>
 

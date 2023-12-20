@@ -30,6 +30,10 @@ public class Pay {
 	private String imp_uid;
 	@Column
 	private Integer salenum;
+	@Column 
+	private Integer payAmount;
+	@Column 
+	private String buyerEmail;
 	@Column
 	@CreationTimestamp
 	private Date paydate;

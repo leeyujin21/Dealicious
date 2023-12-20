@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kosta.deal.entity.Admin;
+import com.kosta.deal.entity.AdminAccount;
 import com.kosta.deal.entity.Pay;
 import com.kosta.deal.entity.Sale;
+import com.kosta.deal.repository.AdminAccountRepository;
 import com.kosta.deal.repository.AdminRepository;
 import com.kosta.deal.repository.DslRepository;
 import com.kosta.deal.repository.PayRepository;
@@ -28,6 +30,8 @@ public class AdminServiceImpl implements AdminService{
 	private SaleRepository saleRepository;
 	@Autowired
 	private PayRepository payRepository;
+	@Autowired
+	private AdminAccountRepository adminAccountRepository;
 	
 	@Autowired
 	private DslRepository dslRepository;
@@ -90,12 +94,15 @@ public class AdminServiceImpl implements AdminService{
 		for(String s: settlenum) {
 			Pay pay = payRepository.findById(Integer.parseInt(s)).get();
 			Sale sale = saleRepository.findById(pay.getSalenum()).get();
-			sale.setStatus("정산완료");
+			sale.setStatus("거래완료");
 			totalAmount += Integer.parseInt(sale.getAmount());
 			saleRepository.save(sale);
 		}
-		//로그인되어있는 admin 계정의 계좌에 totalAmount만큼 빼면 정산 완료됨.
 		System.out.println(totalAmount);
+		AdminAccount adminAccount = adminAccountRepository.findById("12345-12345").get();
+		adminAccount.setBalance(adminAccount.getBalance()-totalAmount);
+		adminAccountRepository.save(adminAccount);
+		
 	}
 
 	@Override
@@ -129,6 +136,12 @@ public class AdminServiceImpl implements AdminService{
 		if(checkadminid) {
 			return false;
 		} return true;
+	}
+
+	@Override
+	public void registerAccountId(String accountid, String bank) throws Exception {
+		AdminAccount adminAccount =new AdminAccount(accountid,bank,0);
+		adminAccountRepository.save(adminAccount);
 	}
 
 }

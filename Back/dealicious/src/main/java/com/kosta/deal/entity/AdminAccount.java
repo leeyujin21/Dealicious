@@ -2,8 +2,6 @@ package com.kosta.deal.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
@@ -16,16 +14,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Admin {
+public class AdminAccount {
 	@Id
-	private String adminid;
+	private String accountid;
 	
 	@Column
-	private String admincode;
-
+	private String bank;
 	@Column
-	private String password;
-	
-	@Column
-	private String roles;
+	private Integer balance;
 }

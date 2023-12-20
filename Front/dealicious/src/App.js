@@ -104,7 +104,7 @@ function App() {
                             <Route exect path="/profiledetail" element={<Profiledetail />} /> {/**/}
                             <Route exect path="/profilemodify" element={<Profilemodify />} /> {/**/}
                             <Route exect path="/changepassword" element={<Changepassword />} /> {/**/}
-                            <Route exect path="/gpay_finish" element={<Gpay_finish />} /> {/**/}
+                            <Route exect path="/gpay_finish/:num" element={<Gpay_finish />} /> {/**/}
                             <Route exect path="/gpay/:num" element={<Gpay />} /> {/**/}
 
                             <Route exect path="/categorylist" element={<CategoryList />} /> {/**/}
