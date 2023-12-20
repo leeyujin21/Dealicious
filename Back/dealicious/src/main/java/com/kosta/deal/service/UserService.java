@@ -13,4 +13,5 @@ public interface UserService {
 	void verifiedCode(String email, String authCode) throws Exception;
 	String createCode() throws Exception;
 	void checkDuplicatedEmail(String email) throws Exception;
+	void registerReview(String userEmail, String partnerEmail, String startCnt,Integer salenum) throws Exception;
 }

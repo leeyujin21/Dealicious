@@ -5,20 +5,22 @@ import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.time.Duration;
 import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kosta.deal.entity.FileVo;
+import com.kosta.deal.entity.Review;
 import com.kosta.deal.entity.User;
+import com.kosta.deal.repository.DslRepository;
 import com.kosta.deal.repository.FileVoRepository;
+import com.kosta.deal.repository.ReviewRepository;
 import com.kosta.deal.repository.UserRepository;
-
-import java.time.Duration;
-import org.springframework.beans.factory.annotation.Value;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -33,6 +35,10 @@ public class UserServiceImpl implements UserService {
 	private MailService mailService;
 	@Autowired
 	private RedisService redisService;
+	@Autowired
+	private ReviewRepository reviewRepository;
+	@Autowired
+	private DslRepository dslRepository;
 
 	@Override
 	public User login(String email, String password) throws Exception {
@@ -131,5 +137,18 @@ public class UserServiceImpl implements UserService {
         if (user.isPresent()) {
             throw new Exception("UserServiceImpl.checkDuplicatedEmail exception occur email: {}\", email 오류");
         }
+	}
+
+	@Override
+	public void registerReview(String userEmail, String partnerEmail, String startCnt,Integer salenum) throws Exception {
+		Review review = new Review();
+		review.setGiver(userEmail);
+		review.setReceiver(partnerEmail);
+		review.setStarcount(startCnt);
+		review.setSalenum(salenum);
+		Review review2 = dslRepository.getReviewForCheck(userEmail,partnerEmail,salenum);
+		if(review2!=null) throw new Exception("이미 리뷰를 작성하셨습니다.");
+		reviewRepository.save(review);
+		
 	}
 }

@@ -4,18 +4,21 @@ import { Stomp } from '@stomp/stompjs'; //npm install --save @stomp/stompjs
 import * as SockJS from 'sockjs-client'; //npm install --save sockjs-client
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { FaImage } from "react-icons/fa6";
 import { GoArrowLeft } from "react-icons/go";
 import { IoMdSend } from "react-icons/io";
 import './img.css';
 import { Button } from 'reactstrap';
 import Modal from 'react-modal';
+import { FaImage, FaStar } from "react-icons/fa6";
 
 
 
 const StompChatting = () => {
   const [chatList, setChatList] = useState([]);
+  const [modal1IsOpen, setModal1IsOpen] = useState(false);
   const [modal2IsOpen, setModal2IsOpen] = useState(false);
+  const [rating, setRating] = useState(0); // 사용자가 선택한 별점을 저장
+  const [fixedRating, setFixedRating] = useState(0);
   const [chat, setChat] = useState('');
   const token = useSelector(state => state.persistedReducer.token);
   const [sale, setSale] = useState({
@@ -183,6 +186,41 @@ const StompChatting = () => {
         console.log(err);
       })
   }
+  const handleClick = (starValue) => {
+    setRating(starValue);
+    setFixedRating(starValue); // 사용자가 선택한 별을 고정
+  };
+
+  const handleHover = (starValue) => {
+    if (fixedRating === 0) {
+      setRating(starValue);
+    }
+  };
+
+  const handleHoverLeave = () => {
+    if (fixedRating === 0) {
+      setRating(0);
+    }
+  };
+  const handleRegister = (e) => {
+    // 여기서 실제로 등록하는 로직을 구현.
+    // 예시로 console에 선택한 별점을 출력
+    
+    axios.get(`http://localhost:8090/review/${fixedRating}/${chatpartner.email}/${sale.num}`,{
+      headers: {
+        Authorization: token,
+      }
+    })
+    .then(res=>{
+      alert("리뷰 등록 완료!")
+    })
+    .catch(err => {
+      console.log(err);
+      alert(err.response.data);
+    })
+    // 등록 후 모달을 닫을 수 있도록 처리
+    setModal1IsOpen(false);
+  };
 
   return (
     <div className='main' >
@@ -255,7 +293,39 @@ const StompChatting = () => {
         <img src='/dealicious1.png' style={{ marginBottom: "10px", width: "100px" }}></img>
         <p style={{ fontWeight: "bold" }}>디스펜서 팔아요!  의 거래가 완료되었어요.</p>
         <p style={{ color: "gray" }}>거래는 만족스러우셨나요? 후기를 남겨주세요 :)</p>
-        <button style={{ width: "310px", backgroundColor: "#C7FBEB", border: "white", padding: "5px", borderRadius: "10px", color: "#14C38E", fontWeight: "bold" }}>후기 작성하기</button>
+        <button style={{ width: "310px", backgroundColor: "#C7FBEB", border: "white", padding: "5px", borderRadius: "10px", color: "#14C38E", fontWeight: "bold" }} onClick={() => setModal1IsOpen(true)}>후기 작성하기</button>
+        <Modal className='main' style={{
+          content: {
+            width: "300px", height: "330px", position: "absolute", borderRadius: "20px",
+            top: "40%", left: "50%", transform: "translate(-50%, -50%)", backgroundColor: "white", border: "1px solid lightgray"
+          }
+        }} isOpen={modal1IsOpen} onRequestClose={() => setModal1IsOpen(false)}>
+          <div style={{ textAlign: "center" }}>
+            <div className="logo">DEALicious</div>
+            <div><img src="./1.png" /></div>
+            <div style={{ textAlign: "center", marginTop: "5px" }}>디스펜서</div>
+            <div style={{ textAlign: "center" }}><b>60,000원</b></div>
+            <div>
+              {[...Array(5)].map((star, i) => {
+                const starValue = i + 1;
+
+                return (
+                  <FaStar
+                    key={i}
+                    size={30}
+                    color={starValue <= (fixedRating !== 0 ? fixedRating : rating) ? '#ffc107' : '#e4e5e9'}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => handleClick(starValue)}
+                    onMouseEnter={() => handleHover(starValue)}
+                    onMouseLeave={handleHoverLeave}
+                  />
+                );
+              })}
+
+            </div>
+            <Button style={{ width: "60px", height: "35px", borderRadius: "8px", backgroundColor: "#14C38E", border: "white", fontWeight: "bold", color: "white", marginTop: "20px" }} onClick={handleRegister}>등록</Button>
+          </div>
+        </Modal>
       </div>
           }
           </div>)}

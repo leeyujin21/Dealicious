@@ -15,9 +15,11 @@ import com.kosta.deal.entity.QChatRoom;
 import com.kosta.deal.entity.QCorpData;
 import com.kosta.deal.entity.QHot;
 import com.kosta.deal.entity.QPay;
+import com.kosta.deal.entity.QReview;
 import com.kosta.deal.entity.QSale;
 import com.kosta.deal.entity.QUnivData;
 import com.kosta.deal.entity.QUser;
+import com.kosta.deal.entity.Review;
 import com.kosta.deal.entity.Sale;
 import com.kosta.deal.entity.User;
 import com.querydsl.core.Tuple;
@@ -199,6 +201,13 @@ public class DslRepository {
 		QChatRoom chatRoom = QChatRoom.chatRoom;
 		return jpaQueryFactory.selectFrom(chatRoom)
 				.where(chatRoom.creator.eq(email).and(chatRoom.saleNum.eq(saleNum)))
+				.fetchOne();
+	}
+	
+	public Review getReviewForCheck(String userEmail,String partnerEmail, Integer salenum) {
+		QReview review = QReview.review;
+		return jpaQueryFactory.selectFrom(review)
+				.where(review.giver.eq(userEmail).and(review.receiver.eq(partnerEmail)).and(review.salenum.eq(salenum)))
 				.fetchOne();
 	}
 }
