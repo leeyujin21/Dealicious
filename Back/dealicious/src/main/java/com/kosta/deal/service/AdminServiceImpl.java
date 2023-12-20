@@ -94,12 +94,15 @@ public class AdminServiceImpl implements AdminService{
 		for(String s: settlenum) {
 			Pay pay = payRepository.findById(Integer.parseInt(s)).get();
 			Sale sale = saleRepository.findById(pay.getSalenum()).get();
-			sale.setStatus("정산완료");
+			sale.setStatus("거래완료");
 			totalAmount += Integer.parseInt(sale.getAmount());
 			saleRepository.save(sale);
 		}
-		//로그인되어있는 admin 계정의 계좌에 totalAmount만큼 빼면 정산 완료됨.
 		System.out.println(totalAmount);
+		AdminAccount adminAccount = adminAccountRepository.findById("12345-12345").get();
+		adminAccount.setBalance(adminAccount.getBalance()-totalAmount);
+		adminAccountRepository.save(adminAccount);
+		
 	}
 
 	@Override

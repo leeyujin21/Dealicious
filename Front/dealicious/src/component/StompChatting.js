@@ -8,11 +8,14 @@ import { FaImage } from "react-icons/fa6";
 import { GoArrowLeft } from "react-icons/go";
 import { IoMdSend } from "react-icons/io";
 import './img.css';
+import { Button } from 'reactstrap';
+import Modal from 'react-modal';
 
 
 
 const StompChatting = () => {
   const [chatList, setChatList] = useState([]);
+  const [modal2IsOpen, setModal2IsOpen] = useState(false);
   const [chat, setChat] = useState('');
   const token = useSelector(state => state.persistedReducer.token);
   const [sale, setSale] = useState({
@@ -32,7 +35,7 @@ const StompChatting = () => {
     buyeremail: "",
     writerdate: "",
   });
-  const [chatpartner, setChatpartner] = useState({email:'', nickname:'', password:'', type:'', typename:'', tel:'', accountbank:'', accountbank:'', admincode:'', profileimgurl:''});
+  const [chatpartner, setChatpartner] = useState({ email: '', nickname: '', password: '', type: '', typename: '', tel: '', accountbank: '', accountbank: '', admincode: '', profileimgurl: '' });
   const messagesRef = useRef(null);
   const client = useRef({});
   const { channelId } = useParams();
@@ -64,11 +67,11 @@ const StompChatting = () => {
         console.log(err);
       })
 
-      
+
     return () => disconnect();
   }, [])
 
-  
+
 
   const connect = () => {
     client.current = Stomp.over(() => {
@@ -166,6 +169,21 @@ const StompChatting = () => {
     }
   };
 
+  const receipt = () => {
+    axios.get(`http://localhost:8090/receipt/` + sale.num, {
+      headers: {
+        Authorization: token,
+      }
+    })
+      .then(res => {
+        console.log(res.data);
+        setModal2IsOpen(false);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
   return (
     <div className='main' >
       <div style={{ textAlign: "left", color: "#14C38E", display: "flex", verticalAlign: "middle" }}>
@@ -177,8 +195,8 @@ const StompChatting = () => {
           <div style={{ display: "flex" }}>
             <div><img src={`http://localhost:8090/img/${fileurlList[0]}`} style={{ width: "80px" }}></img></div>
             <div style={{ width: "230px", textAlign: "left", lineHeight: "40px" }}>
-              <Link to={"/saledetail/"+sale.num} style={{ color: "black", textDecoration: "none" }}><div style={{ textAlign: "left" }}>{sale.title}</div></Link>
-              <div style={{ textAlign: "left", fontSize: "18px" }}>{sale.amount}원</div>
+              <Link to={"/saledetail/" + sale.num} style={{ color: "black", textDecoration: "none" }}><div style={{ textAlign: "left" }}>{sale.title}</div></Link>
+              <div style={{ textAlign: "left", fontSize: "18px" }}>{sale.amount}</div>
             </div>
             <div style={{ lineHeight: "40px", width: "80px", textAlign: "right", marginRight: "10px" }}>
               <div>{sale.status}</div>
@@ -187,28 +205,67 @@ const StompChatting = () => {
           </div>
         </div>
       </div>
-      <div ref={messagesRef} style={{ overflowY: 'auto', maxHeight: "477px", overflowX: "hidden" }}>
-      <div style={{paddingRight:"10px"}}>
-        <br />
-        {chatList.map((item, index) => <div key={index}>{
-
-          item.writerId == user.email ? <div style={{ textAlign: "right", marginBottom: "15px" }}>
-            <div style={{ display: "inline-block", width: "auto", maxWidth: "210px", borderRadius: "10px", backgroundColor: "#14C38E", padding: "10px", color: "white" }}>{item.chat}</div>
-          </div>
-            :
-            <div style={{ textAlign: "left", marginBottom: "15px" }}>
-              <div style={{ display: "inline-block", marginRight: "8px" }}><img src='/profile.png' style={{ width: "50px" }}></img></div>
-              <div style={{ display: "inline-block", width: "auto", maxWidth: "210px", borderRadius: "10px", backgroundColor: "#D9D9D9", padding: "10px" }}>{item.chat}</div>
+      <div ref={messagesRef} style={{ overflowY: 'auto',height: "477px", maxHeight: "477px",  overflowX: "hidden" }}>
+        <div style={{ paddingRight: "10px" }}>
+          <br />
+          {chatList.map((item, index) => <div key={index}>{
+            item.type == "chat" ?
+              item.writerId == user.email ?
+                <div style={{ textAlign: "right", marginBottom: "15px" }}>
+                  <div style={{ display: "inline-block", width: "auto", maxWidth: "210px", borderRadius: "10px", backgroundColor: "#14C38E", padding: "10px", color: "white" }}>{item.chat}</div>
+                </div>
+                :
+                <div style={{ textAlign: "left", marginBottom: "15px" }}>
+                  <div style={{ display: "inline-block", marginRight: "8px" }}><img src='/profile.png' style={{ width: "50px" }}></img></div>
+                  <div style={{ display: "inline-block", width: "auto", maxWidth: "210px", borderRadius: "10px", backgroundColor: "#D9D9D9", padding: "10px" }}>{item.chat}</div>
+                </div>
+              :
+              item.type == "completepay" ?
+              sale.email == user.email ?
+                <div style={{ borderLeft: "3px solid #D9D9D9", paddingLeft: "10px", textAlign: "left", marginBottom: "15px" }}>
+                  <img src='/dealicious1.png' style={{ marginBottom: "10px", width: "100px" }}></img>
+                  <p style={{ fontWeight: "bold" }}>디스펜서 팔아요! 의 결제가 완료되었어요.</p>
+                  <p style={{ color: "gray" }}>구매자에게 물건을 전달해주세요:)</p>
+                </div>
+                : <div style={{ borderLeft: "3px solid #D9D9D9", paddingLeft: "10px", textAlign: "left", marginBottom: "15px" }}>
+                  <img src='/dealicious1.png' style={{ marginBottom: "10px", width: "100px" }}></img>
+                  <p style={{ fontWeight: "bold" }}>디스펜서 팔아요!  의 결제가 완료되었어요.</p>
+                  <a style={{ color: "gray" }}>수령 후 수령완료 버튼을 눌러주세요:)</a>
+                  <p style={{ color: "gray", fontSize: "12px" }}>수령완료 버튼을 누르면 판매자에게 정산액이 입금됩니다.</p>
+                  <button style={{ width: "310px", backgroundColor: "#C7FBEB", border: "white", padding: "5px", borderRadius: "10px", color: "#14C38E", fontWeight: "bold" }} onClick={() => setModal2IsOpen(true)}>수령완료</button>
+                  <Modal className='main' style={{
+          content: {
+            width: "350px", height: "190px", position: "absolute",
+            top: "40%", left: "50%", transform: "translate(-50%, -50%)", backgroundColor: "white", border: "1px solid lightgray", borderRadius: "10px"
+          }
+        }} isOpen={modal2IsOpen} onRequestClose={() => setModal2IsOpen(false)}>
+          <div style={{ textAlign: "center" }}>
+            <br />
+            <div style={{ marginBottom: "20px" }}>
+              <a>수령완료 상태가 되면 판매자에게 정산됩니다.</a>
+              <a>수령완료 상태로 변경하시겠습니까?</a>
             </div>
-        }
-        </div>)}
+            <Button style={{ backgroundColor: "gray", border: "white", color: "white" }} onClick={() => setModal2IsOpen(false)}>취소하기</Button>
+            <Button style={{ backgroundColor: "#14C38E", border: "white", color: "white", marginLeft: "10px" }} onClick={receipt}>수령하기</Button>
+          </div>
+        </Modal>
+                </div>
+                :
+                <div style={{ borderLeft: "3px solid #D9D9D9", paddingLeft: "10px", textAlign: "left", marginBottom: "15px" }}>
+        <img src='/dealicious1.png' style={{ marginBottom: "10px", width: "100px" }}></img>
+        <p style={{ fontWeight: "bold" }}>디스펜서 팔아요!  의 거래가 완료되었어요.</p>
+        <p style={{ color: "gray" }}>거래는 만족스러우셨나요? 후기를 남겨주세요 :)</p>
+        <button style={{ width: "310px", backgroundColor: "#C7FBEB", border: "white", padding: "5px", borderRadius: "10px", color: "#14C38E", fontWeight: "bold" }}>후기 작성하기</button>
       </div>
+          }
+          </div>)}
+        </div>
       </div>
       <div style={{ paddingTop: "8px", textAlign: "left", width: "390px", height: "50px", backgroundColor: "white" }}>
         <FaImage size="30" style={{ color: "#D9D9D9" }} />
         <input style={{ marginLeft: "10px", border: "white", width: "300px", height: "40px", borderRadius: "10px", backgroundColor: "#D9D9D9" }} placeholder='  채팅하기' onChange={handleChange} value={chat}></input>
         <IoMdSend size="40" style={{ marginLeft: "10px", color: "#D9D9D9" }} onClick={publish} />
-      </div>  
+      </div>
     </div>
 
 

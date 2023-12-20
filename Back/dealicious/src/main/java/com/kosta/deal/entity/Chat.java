@@ -31,6 +31,7 @@ public class Chat {
 	 private String chat;
 	 private String data;
 	 private String isRead;
+	 private String type;
 	 @CreationTimestamp
 	 private Date chatdate;
 }

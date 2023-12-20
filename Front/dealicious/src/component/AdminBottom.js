@@ -13,7 +13,7 @@ const AdminBottom = () => {
   return (
     <Nav className="b_wrapper nav">
         <div>
-          <Link href="/adminmain">
+          <Link to="/adminmain">
             <AiFillHome size='38' color='72DBBB' />
           </Link>
         </div>

@@ -7,7 +7,7 @@ const AdminMain = () => {
     { value: "all", name: "전체" },
     { value: "결제완료", name: "결제완료" },
     { value: "수령완료", name: "수령완료" },
-    { value: "정산완료", name: "정산완료" }
+    { value: "거래완료", name: "거래완료" }
   ];
   const [payList,setPayList] = useState([]);
 

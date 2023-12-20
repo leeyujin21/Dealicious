@@ -37,5 +37,5 @@ public interface SaleService {
 	void payFinish(Integer num) throws Exception;
 
 	List<Sale> SaleListByCategory(String category) throws Exception;
-
+	void changesalestatusToreceipt(Integer num, String email) throws Exception;
 }

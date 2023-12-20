@@ -64,6 +64,7 @@ public class ChatController {
     @MessageMapping("/chat")
     public void sendMessage(Chat chat, SimpMessageHeaderAccessor accessor) {
     	try {
+    		chat.setType("chat");
 			chatService.addChat(chat);
 			sendingOperations.convertAndSend("/sub/chat/" + chat.getChannelId(), chat);
 		} catch (Exception e) {
@@ -76,6 +77,7 @@ public class ChatController {
     	sendingOperations.convertAndSend("/sub/notifications/" + user.getEmail(), "알림 추가");
     }
     
+    //1대1 대화 채팅방 생성된 채팅방 내역 불러오는거
     @GetMapping("/chatroom/{channelid}")
 	public ResponseEntity<Map<String,Object>> chatRoom(Authentication authentication,@PathVariable String channelid) {    	
     	PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
@@ -100,7 +102,7 @@ public class ChatController {
 			return new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
 		}
 	}
-    
+    //saledetail에서 채팅하기 눌렀을때 기존 채팅방이있으면 그 채팅방으로 연결하고 없으면 채팅방 하나 생성해서 전달
     @PostMapping("/findchatroom")
 	public ResponseEntity<String> findchatroom(Authentication authentication,@RequestBody ChatRoom chatRoom) {
     	PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
@@ -121,7 +123,7 @@ public class ChatController {
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
 	}
-    
+    //기존 채팅방 내역 리스트 출력
     @GetMapping("/chatroomlist")
 	public ResponseEntity<List<Map<String,Object>>> chatroomlist(Authentication authentication) {    	
     	PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
@@ -135,6 +137,19 @@ public class ChatController {
 		} catch(Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<Map<String,Object>>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+    
+    @GetMapping("/receipt/{salenum}")
+    public ResponseEntity<String> receipt(Authentication authentication,@PathVariable Integer salenum) {    	
+    	PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+    	User user = principalDetails.getUser();
+    	try {
+    		saleService.changesalestatusToreceipt(salenum,user.getEmail());
+			return new ResponseEntity<String>(HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
 	}
 }
