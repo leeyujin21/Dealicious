@@ -225,9 +225,8 @@ public class SaleServiceImpl implements SaleService {
 	@Override
 	public void changesalestatus(Integer num, String status) throws Exception {
 		Sale sale = saleRepository.findByNum(num);
-	    sale.setStatus(status);
-	    System.out.println(sale.getStatus());
 
+		sale.setStatus(status);
 	    saleRepository.save(sale);
 	}
 		
@@ -273,8 +272,7 @@ public class SaleServiceImpl implements SaleService {
 
 	@Override
 	public Sale saleDetail(Integer num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return saleRepository.findByNum(num);
 	}
 
 	
