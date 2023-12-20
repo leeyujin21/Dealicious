@@ -178,12 +178,9 @@ public class SaleServiceImpl implements SaleService {
 	}
 
 	@Override
-	public Sale saleDetail(Integer num) throws Exception {
+	public Sale saleDetail(String email,Integer num) {
 
-		Optional<Sale> osale = saleRepository.findById(num);
-		if (osale.isEmpty())
-			throw new Exception("상품번호 오류");
-		return osale.get();
+		return saleDslRepository.findSaleBySaleNum(num);
 
 	}
 
@@ -254,11 +251,7 @@ public class SaleServiceImpl implements SaleService {
 		return null;
 	}
 
-	@Override
-	public Sale saleGpay(Integer num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public void payFinish(Integer num) throws Exception {
@@ -281,6 +274,14 @@ public class SaleServiceImpl implements SaleService {
     	chatRepository.save(chat);
     	sendingOperations.convertAndSend("/sub/chat/" + chatRoom.getChannelId(), chat);
 	}
+
+	@Override
+	public Sale saleDetail(Integer num) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 	
 

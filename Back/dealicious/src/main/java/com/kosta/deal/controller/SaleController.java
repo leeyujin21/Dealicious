@@ -67,17 +67,17 @@ public class SaleController {
 	
 	
 	
-	@GetMapping("/saledetail/{sect}/{num}")
-	public ResponseEntity<Map<String,Object>> saleDetail(@PathVariable String sect,@PathVariable Integer num){
+	@GetMapping("/saledetail/{sect}/{email}/{num}")
+	public ResponseEntity<Map<String,Object>> saleDetail(@PathVariable String sect,@PathVariable String email,@PathVariable Integer num){
 		try {
 			Map<String,Object> res= new HashMap<>();
 			res = saleService.saleInfo(num);
 			if(sect.equals("only-detail")) {
 				saleService.plusViewCount(num);
-				Boolean heart= saleService.isHeartSale("k@kosta.com",num);
+				Boolean heart= saleService.isHeartSale(email,num);
 				res.put("heart", heart);
 			}else if(sect.equals("after-modify")) {
-				Boolean heart=saleService.isHeartSale("k@kosta.com",num);
+				Boolean heart=saleService.isHeartSale(email,num);
 				res.put("heart", heart);
 			}
 			return new ResponseEntity<Map<String,Object>> (res,HttpStatus.OK);
@@ -137,13 +137,13 @@ public class SaleController {
 		}
 	}
 	
-	@GetMapping("/salelike/{num}")
-	public ResponseEntity<Map<String,Object>> saleLike(@PathVariable Integer num){
+	@GetMapping("/salelike/{email}/{num}")
+	public ResponseEntity<Map<String,Object>> saleLike(@PathVariable String email,@PathVariable Integer num){
 		try {
 			Map<String,Object> res= new HashMap<>();
-			Boolean selectSale=saleService.selHeartSale("k@kosta.com", num);
+			Boolean selectSale=saleService.selHeartSale(email, num);
 			res.put("isSelect", selectSale);
-			Integer zzimCnt = saleService.saleDetail(num).getZzimcnt();
+			Integer zzimCnt = saleService.saleDetail(email,num).getZzimcnt();
 			res.put("zzimCnt", zzimCnt);
 			return new ResponseEntity<Map<String,Object>>(res,HttpStatus.OK);
 		}catch(Exception e) {
