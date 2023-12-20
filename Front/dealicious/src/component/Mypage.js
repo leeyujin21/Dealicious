@@ -8,26 +8,32 @@ import axios from "axios";
 
 const Mypage = () => {
     const [Image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
-    const [user, setUser] = useState({ id: '', email: '', nickname: '' })
     const [saleList, setSaleList] = useState([]);
     const [page, setPage] = useState(1);
-    const temp = useSelector(state => state.persistedReducer.user);
+    const user = useSelector(state => state.persistedReducer.user);
+    const [filterOption, setFilterOption] = useState("전체");
+
     useEffect(() => {
-        setUser(temp);
-    }, [])
-    useEffect(() => {
-        axios.get(`http://localhost:8090/mypagelist`)
+        axios.get(`http://localhost:8090/mypagelist/${user.email}`)
             .then(res => {
-                console.log(res);
+                console.log(res.data);
                 setSaleList([]);
                 setSaleList((_sale_list) => [
-                    ..._sale_list, ...res.data.saleList
+                    ..._sale_list, ...res.data
                 ]);
             })
             .catch(err => {
                 console.log(err);
             })
     }, []);
+
+    // const handleFilterChange = (event) => {
+    //     setFilterOption(event.target.value);
+    // }
+    const handleFilterChange = (option) => {
+        setFilterOption(option);
+      };
+
     return (
         <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "50px" }}>
             <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
@@ -69,54 +75,86 @@ const Mypage = () => {
                 <div style={{ position: "absolute", height: "3px", width: "90px", backgroundColor: "#14C38E" }} />
             </div>
             <div style={{ height: "10px" }} />
-            <div style={{ textAlign: "left", marginBottom: "10px", marginLeft: "5px" }}>
-                <select style={{ border: "1px solid lightgray", borderRadius: "10px", width: "83px", height: "30px", textAlign: "center", fontSize: "14px" }}>
-                    <option>판매중</option>
-                    <option>판매완료</option>
-                </select>
+            <div style={{ display: "flex", marginBottom: "10px" }}>
+                <div
+                    onClick={() => handleFilterChange("전체")}
+                    style={{
+                        cursor: "pointer",
+                        marginRight: "10px",
+                        fontWeight: filterOption === "전체" ? "bold" : "normal",
+                    }}
+                >
+                    전체
+                </div>
+                <div
+                    onClick={() => handleFilterChange("판매중")}
+                    style={{
+                        cursor: "pointer",
+                        marginRight: "10px",
+                        fontWeight: filterOption === "판매중" ? "bold" : "normal",
+                    }}
+                >
+                    판매중
+                </div>
+                <div
+                    onClick={() => handleFilterChange("판매완료")}
+                    style={{
+                        cursor: "pointer",
+                        fontWeight: filterOption === "판매완료" ? "bold" : "normal",
+                    }}
+                >
+                    판매완료
+                </div>
             </div>
-            <Link to="/saledetail" style={{ textDecoration: "none", color: "black" }}>
-                <div style={{ display: "inline-block", paddingRight: "10px" }}>
-                    <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative", opacity: "0.5" }}>
-                        <img src="..\1.png" style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
-                        <a style={{ fontWeight: "bold", color: "white", position: "absolute", top: "40%", left: "32%" }}>예약중</a>
-                    </div>
-                    <div style={{ textAlign: "left", fontWeight: "bold" }}>
-                        50,000원
-                    </div>
-                    <div style={{ textAlign: "left", marginTop: "-5px" }}>
-                        <a style={{ fontSize: "13px" }}>커피 디스펜서 팔아...</a>
-                    </div>
-                </div>
-            </Link>
-            <Link to="/saledetail" style={{ textDecoration: "none", color: "black" }}>
-                <div style={{ display: "inline-block", paddingRight: "10px" }}>
-                    <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative", opacity: "0.5" }}>
-                        <img src="..\1.png" style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
-                        <a style={{ fontWeight: "bold", color: "white", position: "absolute", top: "40%", left: "32%" }}>예약중</a>
-                    </div>
-                    <div style={{ textAlign: "left", fontWeight: "bold" }}>
-                        50,000원
-                    </div>
-                    <div style={{ textAlign: "left", marginTop: "-5px" }}>
-                        <a style={{ fontSize: "13px" }}>커피 디스펜서 팔아...</a>
-                    </div>
-                </div>
-            </Link>
-            <Link to="/saledetail" style={{ textDecoration: "none", color: "black" }}>
-                <div style={{ display: "inline-block" }}>
-                    <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative", opacity: "0.5" }}>
-                        <img src="..\1.png" style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
-                        <a style={{ fontWeight: "bold", color: "white", position: "absolute", top: "40%", left: "32%" }}>예약중</a>
-                    </div>
-                    <div style={{ textAlign: "left", fontWeight: "bold" }}>
-                        50,000원
-                    </div>
-                    <div style={{ textAlign: "left", marginTop: "-5px" }}>
-                        <a style={{ fontSize: "13px" }}>커피 디스펜서 팔아...</a>
-                    </div>
-                </div>
-            </Link>
+            {/* <div style={{ textAlign: "left", marginBottom: "10px" }}>
+                <select
+                    value={filterOption}
+                    onChange={handleFilterChange}
+                    style={{ border: "1px solid lightgray", borderRadius: "10px", width: "83px", height: "30px", textAlign: "center", fontSize: "14px" }}
+                >
+                    <option value="전체">전체</option>
+                    <option value="판매중">판매중</option>
+                    <option value="판매완료">판매완료</option>
+                </select>
+            </div> */}
+            <div style={{ display: "flex", flexWrap: "wrap", textAlign: "left", marginBottom: "3px" }}>
+                {saleList
+                    .filter(item => filterOption === "전체" || (filterOption === "판매중" && item.status !== "판매완료") || (filterOption === "판매완료" && item.status === "판매완료"))
+                    .map((item, index) =>
+                        <Link to={"/saledetail/only-detail/" + item.num} key={index} style={{ textDecoration: "none", color: "black" }}>
+                            <div style={{ display: "inline-block", paddingRight: "10px" }}>
+                                {item.status === "판매완료" ?
+                                    <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative", opacity: "0.5" }}>
+                                        <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
+                                        <a style={{ fontWeight: "bold", color: "white", position: "absolute", top: "41%", left: "26%" }}>판매완료</a>
+                                    </div> :
+                                    <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative" }}>
+                                        <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
+                                    </div>
+                                }
+                                {item.amount.length > 15 ? (
+                                    <div style={{ textAlign: "left", fontWeight: "bold" }}>
+                                        {`${item.amount.slice(0, 15)}...`}
+                                    </div>
+                                ) : (
+                                    <div style={{ textAlign: "left", fontWeight: "bold" }}>
+                                        {item.amount}
+                                    </div>
+                                )}
+
+                                {item.title.length > 11 ? (
+                                    <div style={{ textAlign: "left", marginTop: "-5px" }}>
+                                        <a style={{ fontSize: "13px" }}>{`${item.title.slice(0, 11)}...`}</a>
+                                    </div>
+                                ) : (
+                                    <div style={{ textAlign: "left", marginTop: "-5px" }}>
+                                        <a style={{ fontSize: "13px" }}>{item.title}</a>
+                                    </div>
+                                )}
+                            </div>
+                        </Link>
+                    )}
+            </div>
         </div>
     )
 }
