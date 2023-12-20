@@ -303,7 +303,7 @@ const SaleWrite = () => {
 
                 <div>
                     <div style={{ marginBottom: "5px", fontSize: "18px" }}>가격</div>   
-                    <div><Input type="text" placeholder="10,000원" style={{ borderRadius: "5px", height: "40px", width: "180px", float: "left" }} name="amount" value={sale.amount}원 onInput={changecontent} onChange={handleInputChange}></Input></div>
+                    <div><Input type="text" placeholder="10,000원" style={{ borderRadius: "5px", height: "40px", width: "180px", float: "left" }} name="amount" value={sale.amount} onInput={changecontent} onChange={handleInputChange}></Input></div>
                     {amountError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_a}</div>}  
                 </div>
                 <div>
