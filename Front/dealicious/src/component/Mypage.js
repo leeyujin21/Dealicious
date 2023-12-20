@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 const Mypage = () => {
-    const [Image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+    const Image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     const [saleList, setSaleList] = useState([]);
     const [page, setPage] = useState(1);
     const user = useSelector(state => state.persistedReducer.user);
@@ -26,13 +26,9 @@ const Mypage = () => {
                 console.log(err);
             })
     }, []);
-
-    // const handleFilterChange = (event) => {
-    //     setFilterOption(event.target.value);
-    // }
     const handleFilterChange = (option) => {
         setFilterOption(option);
-      };
+    };
 
     return (
         <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "50px" }}>
@@ -106,32 +102,22 @@ const Mypage = () => {
                     판매완료
                 </div>
             </div>
-            {/* <div style={{ textAlign: "left", marginBottom: "10px" }}>
-                <select
-                    value={filterOption}
-                    onChange={handleFilterChange}
-                    style={{ border: "1px solid lightgray", borderRadius: "10px", width: "83px", height: "30px", textAlign: "center", fontSize: "14px" }}
-                >
-                    <option value="전체">전체</option>
-                    <option value="판매중">판매중</option>
-                    <option value="판매완료">판매완료</option>
-                </select>
-            </div> */}
             <div style={{ display: "flex", flexWrap: "wrap", textAlign: "left", marginBottom: "3px" }}>
                 {saleList
                     .filter(item => filterOption === "전체" || (filterOption === "판매중" && item.status !== "판매완료") || (filterOption === "판매완료" && item.status === "판매완료"))
-                    .map((item, index) =>
+                    .map((item, index) => (
                         <Link to={"/saledetail/only-detail/" + item.num} key={index} style={{ textDecoration: "none", color: "black" }}>
-                            <div style={{ display: "inline-block", paddingRight: "10px" }}>
-                                {item.status === "판매완료" ?
+                            <div style={{ display: "inline-block", paddingRight: index % 3 === 2 ? "0px" : "10px" }}>
+                                {item.status === "판매완료" ? (
                                     <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative", opacity: "0.5" }}>
                                         <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
                                         <a style={{ fontWeight: "bold", color: "white", position: "absolute", top: "41%", left: "26%" }}>판매완료</a>
-                                    </div> :
+                                    </div>
+                                ) : (
                                     <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative" }}>
                                         <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
                                     </div>
-                                }
+                                )}
                                 {item.amount.length > 15 ? (
                                     <div style={{ textAlign: "left", fontWeight: "bold" }}>
                                         {`${item.amount.slice(0, 15)}...`}
@@ -141,7 +127,6 @@ const Mypage = () => {
                                         {item.amount}
                                     </div>
                                 )}
-
                                 {item.title.length > 11 ? (
                                     <div style={{ textAlign: "left", marginTop: "-5px" }}>
                                         <a style={{ fontSize: "13px" }}>{`${item.title.slice(0, 11)}...`}</a>
@@ -153,7 +138,7 @@ const Mypage = () => {
                                 )}
                             </div>
                         </Link>
-                    )}
+                    ))}
             </div>
         </div>
     )
