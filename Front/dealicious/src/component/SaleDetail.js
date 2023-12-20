@@ -46,7 +46,7 @@ function SaleDetail() {
     content: "",
     place: "",
     fileurl: "",
-    status: "",
+    status: null,
     ggull: "",
     viewcount: null,
     zzimcnt: "",
@@ -107,17 +107,9 @@ function SaleDetail() {
         setHeart(res.data.isSelect);
       })
   };
-
+  
   const gochat = () => {
-    if (user.email == '') {
-      Swal.fire({
-        icon: 'error',
-        title: '잠깐!',
-        text: '로그인해주세요',
-
-      });
-      navigate(`/mypagenl`)
-    } else {
+    if (user.email!==writer.email) {
       const uniqueString = uuidv4();
       const chatRoom = { channelId: uniqueString, creator: user.email, partner: writer.email, saleNum: num };
       console.log(chatRoom);
@@ -134,6 +126,9 @@ function SaleDetail() {
           console.log(err);
         });
 
+     
+    } else {
+      navigate(`/mypagenl`)
     }
   }
   const goToEditPage = () => {

@@ -109,7 +109,7 @@ const SaleList = () => {
                   <div style={{ display: "flex" }}>
                     <div style={{ fontSize: "15px", width: "180px" }}>{item.place}</div>
                     <div style={{ textAlign: "right" }}>
-                      {item.ggull == 0 ? <img src='' /> : <img src='/ggul.png' style={{ width: "35px" }} onClick={"뭐라도 하셈"} />}
+                      {item.ggull == 0 ? <img src='' /> : <img src='/ggul.png' style={{ width: "35px" }} />}
                     </div>
                   </div>
                   <div style={{ display: "flex" }}>
