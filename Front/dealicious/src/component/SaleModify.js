@@ -11,6 +11,7 @@ import { GiCancel } from "react-icons/gi";
 
 
 const SaleModify = () => {
+    const MAX_TITLE_LENGTH = 20;
     const navigate = useNavigate();
     const [files, setFiles] = useState([]);
     let selectImg = null;
@@ -113,8 +114,13 @@ const SaleModify = () => {
     };
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;//e.target은 이벤트가 발생한 HTML 엘리먼트
-        setSale({ ...sale, [name]: value });//name 속성은 해당 입력 필드의 이름을 나타내며, value는 그 입력 필드의 값
+        const { name, value } = e.target;
+        if (name === 'title') {
+            const truncatedValue = value.slice(0, MAX_TITLE_LENGTH);
+            setSale({ ...sale, [name]: truncatedValue });
+        } else {
+            setSale({ ...sale, [name]: value });
+        }
     };
 
     const submit = (e) => {
@@ -127,11 +133,11 @@ const SaleModify = () => {
         formData.append("content", sale.content);
         formData.append("ggull", sale.ggull);
 
-        for(let file of files) {
-            if(file.type==='i')
-                formData.append("file",new Blob(),file.data);
+        for (let file of files) {
+            if (file.type === 'i')
+                formData.append("file", new Blob(), file.data);
             else
-                formData.append("file",file.data);
+                formData.append("file", file.data);
         }
 
         axios.post('http://localhost:8090/salemodify', formData)
@@ -193,7 +199,7 @@ const SaleModify = () => {
                                 <span key={index}>
                                     <div style={{ position: "relative", display: 'inline-block', marginRight: "10px" }}>
                                         <img src={file.type === 'i' ? `http://localhost:8090/img/${file.data}` : URL.createObjectURL(file.data)} width="45px" height="45px" alt='' id={index} onClick={imageClick} />
-                                        <button data-idx={index} onClick={deleteClick} style={{ position: "absolute", top: "-15px", right: "-15px", background: "none", border: "none", cursor: "pointer" }}><GiCancel/></button>
+                                        <button data-idx={index} onClick={deleteClick} style={{ position: "absolute", top: "-15px", right: "-15px", background: "none", border: "none", cursor: "pointer" }}><GiCancel /></button>
                                     </div>
                                 </span>
                             )
