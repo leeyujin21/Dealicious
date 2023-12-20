@@ -32,11 +32,6 @@ const SaleWrite = () => {
     const [errorMessage_p, setErrorMessage_p] = useState('');
     const [errorMessage_c, setErrorMessage_c] = useState('');
     const [errorMessage_f,setErrorMessage_f]=useState('');
-    
-
-
-
-
     const [error, setError] = useState('');
 
 
@@ -61,8 +56,8 @@ const SaleWrite = () => {
 
         // 숫자를 천단위로 포맷팅합니다.
         const formattedPrice = numericPrice.toLocaleString('ko-KR');
-        return `${formattedPrice}원`;
-      };
+        return `${formattedPrice}`;
+    };
 
 
     const removeImage = (indexToRemove) => {
@@ -184,7 +179,7 @@ const SaleWrite = () => {
         if (!isFormValid()) {
             e.preventDefault(); // 폼 제출 막기
         
-            setErrorMessage('모든 항목을 작성해주세요!');
+            setErrorMessage('');
             return;
         
             
@@ -300,7 +295,7 @@ const SaleWrite = () => {
                 <div>
                     <div style={{ marginBottom: "5px", fontSize: "18px" }}>가격</div>
                     
-                    <div><Input type="text" placeholder="10,000원" style={{ borderRadius: "5px", height: "40px", width: "180px", float: "left" }} name="amount" value={formatPrice(sale.amount)} onInput={changecontent} onChange={handleInputChange}></Input></div>
+                    <div><Input type="text" placeholder="10,000원" style={{ borderRadius: "5px", height: "40px", width: "180px", float: "left" }} name="amount" value={sale.amount}원 onInput={changecontent} onChange={handleInputChange}></Input></div>
                     {amountError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_a}</div>}  
                     
                                           
@@ -316,8 +311,8 @@ const SaleWrite = () => {
                 <Input type='textarea'
                     style={{ width: "385px", height: "300px", resize: "none" }} name="content" value={sale.content} onInput={changecontent}onChange={handleInputChange}
                     placeholder='상세설명을 입력하세요
-구매날짜, 하자 등 자세하게 작성할수록
-구매자에게 편리합니다'></Input>
+                    구매날짜, 하자 등 자세하게 작성할수록
+                    구매자에게 편리합니다'></Input>
                 {contentError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_c}</div>}
 
             </div>

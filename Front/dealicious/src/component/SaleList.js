@@ -18,6 +18,15 @@ const SaleList = () => {
 
   const observerRef = useRef(null);
 
+  const formatPrice = (amount) => {
+    if (!amount) return '';
+    const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
+
+    // 숫자를 천단위로 포맷팅합니다.
+    const formattedPrice = numericPrice.toLocaleString('ko-KR');
+    return `${formattedPrice}원`;
+};
+
   useEffect(() => {
 
 
@@ -113,7 +122,7 @@ const SaleList = () => {
                     </div>
                   </div>
                   <div style={{ display: "flex" }}>
-                    <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "150px" }}>{item.amount}</div>
+                    <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "150px" }}>{formatPrice(item.amount)}</div>
                     <div style={{ textAlign: "right", color: "gray", marginRight: "20px" }}></div>
                   </div>
                 </div>

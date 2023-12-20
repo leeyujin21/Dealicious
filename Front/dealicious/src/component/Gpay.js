@@ -102,6 +102,15 @@ const Gpay = () => {
             setCheck(true);
         }
     }
+    const formatPrice = (amount) => {
+        if (!amount) return '';
+        const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
+
+        // 숫자를 천단위로 포맷팅합니다.
+        const formattedPrice = numericPrice.toLocaleString('ko-KR');
+        return `${formattedPrice}`;
+    };
+
 
     return (
         <div className='main' style={{overflow:"scroll", height:"732px", overflowX:"hidden", padding:"20px 50px 0 50px"}}>
@@ -116,7 +125,7 @@ const Gpay = () => {
                 <img src={`http://localhost:8090/img/${sale.fileurl.split(',')[0]}`} style={{width:"100px",height:"100px"}}></img>
                 <div style={{marginLeft:"10px"}}>
                 <div style={{marginLeft:"10px",fontSize:"25px",marginBottom:"5px"}}> {sale.title}</div>
-                    <div style={{marginLeft:"10px"}}> {sale.amount} 원</div>
+                    <div style={{marginLeft:"10px"}}> {formatPrice(sale.amount)}원 </div>
                 </div>
                 
             </div>
@@ -183,10 +192,10 @@ const Gpay = () => {
             <div style={{textAlign:"right", marginRight:"10px"}}>
                 &nbsp;&nbsp;
                 <div>
-                    수수료: {sale.amount*0.05}원
+                    수수료: {formatPrice(sale.amount)*0.05}
                 </div>
                 <div style={{fontWeight:"bold"}}>
-                    결제 예정 금액: {sale.amount*1.05}원
+                    결제 예정 금액: {formatPrice(sale.amount)*1.05}
                 </div>
             </div>
             <br/>

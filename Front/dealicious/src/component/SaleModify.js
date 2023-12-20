@@ -8,7 +8,14 @@ import { FaCamera } from "react-icons/fa";
 import axios from 'axios';
 import { GiCancel } from "react-icons/gi";
 
+const formatPrice = (amount) => {
+    if (!amount) return '';
+    const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
 
+    // 숫자를 천단위로 포맷팅합니다.
+    const formattedPrice = numericPrice.toLocaleString('ko-KR');
+    return `${formattedPrice}원`;
+  };
 
 const SaleModify = () => {
     const navigate = useNavigate();
@@ -240,7 +247,7 @@ const SaleModify = () => {
                 <div style={{ display: "flex" }}>
                     <div>
                         <div style={{ marginBottom: "5px", fontSize: "18px" }}>가격</div>
-                        <div><Input type="text" placeholder="10,000원" style={{ borderRadius: "5px", height: "40px", width: "180px", float: "left" }} name="amount" value={sale.amount} onChange={handleInputChange}></Input></div>
+                        <div><Input type="text" placeholder="10,000원" style={{ borderRadius: "5px", height: "40px", width: "180px", float: "left" }} name="amount" value={formatPrice(sale.amount)} onChange={handleInputChange}></Input></div>
                     </div>
                     <div>
                         <div style={{ marginBottom: "5px", fontSize: "18px", marginLeft: "25px" }}>장소</div>
