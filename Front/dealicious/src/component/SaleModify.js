@@ -10,7 +10,7 @@ import { GiCancel } from "react-icons/gi";
 
 
 
-const SaleWrite = () => {
+const SaleModify = () => {
     const navigate = useNavigate();
     const [files, setFiles] = useState([]);
     let selectImg = null;
@@ -284,4 +284,4 @@ const SaleWrite = () => {
         </div>
     )
 };
-export default SaleWrite;
+export default SaleModify;

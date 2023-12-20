@@ -13,7 +13,8 @@ import com.kosta.deal.util.PageInfo;
 public interface SaleService {
 	
 	List<Sale> saleListByPage(PageInfo pageInfo) throws Exception;
-	List<Sale> SaleListByCategory(String category) throws Exception;
+	List<Sale> SaleListByCategory(String category, PageInfo pageInfo)throws Exception;
+
 	
 	Integer saleWrite(Sale sale, List<MultipartFile> file) throws Exception;
 	void plusViewCount(Integer num)throws Exception;
@@ -28,7 +29,13 @@ public interface SaleService {
 	void readImage(Integer num, OutputStream out) throws Exception;
 	Boolean selHeartSale(String email, Integer num)throws Exception;
 	void saleDelete(Integer num) throws Exception;
-	Boolean login(String email, String password)throws Exception;
-	Map<String, Object> userInfo(Integer id) throws Exception;
+
+	Sale saleGpay(Integer num) throws Exception ;
+
 	void changesalestatus(Integer num, String status) throws Exception;
+
+	void payFinish(Integer num) throws Exception;
+
+	List<Sale> SaleListByCategory(String category) throws Exception;
+
 }

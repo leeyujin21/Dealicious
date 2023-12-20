@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.kosta.deal.entity.CorpData;
 import com.kosta.deal.repository.CorpDataRepository;
+import com.kosta.deal.service.AdminService;
 import com.kosta.deal.service.UnivDataService;
 
 @Component
@@ -26,6 +27,9 @@ public class UnivDataController implements CommandLineRunner {
 
 	@Autowired
 	private CorpDataRepository corpDataRepository;
+	
+	@Autowired
+	private AdminService adminService;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -58,6 +62,8 @@ public class UnivDataController implements CommandLineRunner {
 				corpDataRepository.save(corpData);
 			}
 		}
+		
+		adminService.registerAccountId("12345-12345","한국은행");
 
 		System.out.println("MyControllerInitializer 실행됨");
 	}

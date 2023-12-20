@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kosta.deal.entity.Admin;
+import com.kosta.deal.entity.AdminAccount;
 import com.kosta.deal.entity.Pay;
 import com.kosta.deal.entity.Sale;
+import com.kosta.deal.repository.AdminAccountRepository;
 import com.kosta.deal.repository.AdminRepository;
 import com.kosta.deal.repository.DslRepository;
 import com.kosta.deal.repository.PayRepository;
@@ -28,6 +30,8 @@ public class AdminServiceImpl implements AdminService{
 	private SaleRepository saleRepository;
 	@Autowired
 	private PayRepository payRepository;
+	@Autowired
+	private AdminAccountRepository adminAccountRepository;
 	
 	@Autowired
 	private DslRepository dslRepository;
@@ -129,6 +133,12 @@ public class AdminServiceImpl implements AdminService{
 		if(checkadminid) {
 			return false;
 		} return true;
+	}
+
+	@Override
+	public void registerAccountId(String accountid, String bank) throws Exception {
+		AdminAccount adminAccount =new AdminAccount(accountid,bank,0);
+		adminAccountRepository.save(adminAccount);
 	}
 
 }

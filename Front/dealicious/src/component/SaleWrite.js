@@ -19,6 +19,27 @@ const SaleWrite = () => {
     const [imageCount, setImageCount] = useState(0); // 상태 변수로 이미지 카운트를 관리.
     const [selectedImages, setSelectedImages] = useState([]); // 여러 이미지를 저장하는 배열
     const fileInputRef = useRef(null);
+    const [titleError,setTitleError]=useState(false);
+    const [categoryError,setCategoryError]=useState(false);
+    const [amountError,setAmountError]=useState(false);
+    const [placeError,setPlaceError]=useState(false);
+    const [contentError,setContentError]=useState(false);
+    const [fileurlError,setFileurlError]=useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage_t, setErrorMessage_t] = useState('');
+    const [errorMessage_ca, setErrorMessage_ca] = useState('');
+    const [errorMessage_a, setErrorMessage_a] = useState('');
+    const [errorMessage_p, setErrorMessage_p] = useState('');
+    const [errorMessage_c, setErrorMessage_c] = useState('');
+    const [errorMessage_f,setErrorMessage_f]=useState('');
+    
+
+
+
+
+    const [error, setError] = useState('');
+
+
 
     const [sale, setSale] = useState({      //상품 정보 초기화
         title: '',
@@ -34,7 +55,14 @@ const SaleWrite = () => {
     useEffect(() => {
         setUser(temp);
     }, [])
+    const formatPrice = (amount) => {
+        if (!amount) return '';
+        const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
 
+        // 숫자를 천단위로 포맷팅합니다.
+        const formattedPrice = numericPrice.toLocaleString('ko-KR');
+        return `${formattedPrice}원`;
+      };
 
 
     const removeImage = (indexToRemove) => {
@@ -66,26 +94,100 @@ const SaleWrite = () => {
         const { name, value } = e.target;//e.target은 이벤트가 발생한 HTML 엘리먼트
         setSale({ ...sale, [name]: value });//name 속성은 해당 입력 필드의 이름을 나타내며, value는 그 입력 필드의 값
     };
+    const changecontent = (e) => {  //초기화
+        setError('');
+        setTitleError(false);       //input 초기화
+        setAmountError(false);
+        setCategoryError(false);
+        setContentError(false);
+        setPlaceError(false);
+        setFileurlError(false);
+        setErrorMessage_ca('');     //error메시지 초기화
+        setErrorMessage_t('');
+        setErrorMessage_a('');
+        setErrorMessage_p('');
+        setErrorMessage_c('');
+        setErrorMessage_f('');
+        setErrorMessage('');
+        
 
+
+
+
+
+        
+    }
+    
     const isFormValid = () => { //유효성검사
-        return (
-            sale.title.trim() !== '' &&   //공백제거해서 비어있지 않으면
-            sale.amount.trim() !== '' &&
-            sale.place.trim() !== '' &&
-            sale.category.trim() !== '' &&
-            sale.content.trim() !== ''
+        
+        let isValid = true;
+    
+    if (sale.title.trim() === '') {
+            setFileurlError(true);
+            setErrorMessage_f('사진을 선택하세요.');
+            isValid = false;        
+    } else{
+            setFileurlError(false);
+            setErrorMessage_f('');
+    }
+    if (sale.title.trim() === '') {
+        setTitleError(true);
+        setErrorMessage_t('제목을 입력하세요.');
+        isValid = false;
+    } else{
+        setTitleError(false);
+        setErrorMessage_t('');
+    }
+    
+    if (sale.category.trim() === '') {
+        setCategoryError(true);
+        setErrorMessage_ca('카테고리를 선택하세요.');
+        isValid = false;
+    } else{
+        setCategoryError(false);
+        setErrorMessage_ca('');
+    }
 
-        );
+    if (sale.amount.trim() === '') {
+        setAmountError(true);
+        setErrorMessage_a('가격을 입력하세요.');
+        isValid = false;
+    } else {
+        setAmountError(false);
+        setErrorMessage_a('');
+    }
+
+
+    if (sale.place.trim() === '') {
+        setPlaceError(true);
+        setErrorMessage_p('장소를 입력하세요.');
+        isValid = false;
+    } else {
+        setPlaceError(false);
+        setErrorMessage_p('');
+    }
+
+    if (sale.content.trim() === '') {
+        setContentError(true);
+        setErrorMessage_c('상세 설명을 입력하세요.');
+        isValid = false;
+    } else {
+        setContentError(false);
+        setErrorMessage_c('');
+    }
+
+    return isValid;
     };
 
     const submit = (e) => {
+        
         if (!isFormValid()) {
-            Swal.fire({
-                icon: 'error',
-                title: '잠깐만요...',
-                text: '모든 항목을 작성해주세요!',
-            });
-            return; // 폼 제출을 막습니다.
+            e.preventDefault(); // 폼 제출 막기
+        
+            setErrorMessage('모든 항목을 작성해주세요!');
+            return;
+        
+            
         }
         const formData = new FormData();
         formData.append("title", sale.title);
@@ -131,7 +233,8 @@ const SaleWrite = () => {
                             {imageCount}/5
                         </div>
                     </div>
-                    <Input name="file" type="file" id="file" accept="image/*" onChange={fileChange} hidden ref={fileInputRef} />
+                    <Input name="file" type="file" id="file" accept="image/*"  onInput={changecontent}onChange={fileChange} hidden ref={fileInputRef} />
+                    
 
                     <div style={{ display: 'flex', marginLeft: '50px', marginTop: '-30px' }}>
                         {selectedImages.map((image, index) => (
@@ -146,8 +249,11 @@ const SaleWrite = () => {
                             </div>
                         ))}
                     </div>
+                    
                 </div>
+                
             </div>
+            {fileurlError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_f}</div>}
             <div style={{ marginBottom: "5px", fontSize: "18px", marginTop: "20px" }}>제목</div>
             <Input
                 type="text"
@@ -155,8 +261,11 @@ const SaleWrite = () => {
                 style={{ width: "385px", height: "40px", borderColor: "lightgray" }}
                 name="title"
                 value={sale.title}
+                onInput={changecontent}
                 onChange={handleInputChange}
             />
+            {titleError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_t}</div>}
+
 
             <div style={{ marginTop: "20px", display: "flex" }}>
                 <div>
@@ -164,7 +273,7 @@ const SaleWrite = () => {
                     <select
                         style={{ width: "180px", height: "40px", textAlign: "center", borderRadius: "5px", float: "left", borderColor: "lightgray" }}
                         name="category"
-                        value={sale.category}
+                        value={sale.category} onInput={changecontent}
                         onChange={handleInputChange}>
                         <option value="" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;선택</option>
                         <option value="mobile" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;모바일/태블릿</option>
@@ -175,6 +284,8 @@ const SaleWrite = () => {
                         <option value="others" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;기타</option>
                     </select>
                 </div>
+                
+
                 <div style={{ marginLeft: "25px" }}>
                     <div style={{ marginBottom: "10px", fontSize: "18px" }} name="ggull" value={sale.ggull}>
                         꿀페이
@@ -182,28 +293,37 @@ const SaleWrite = () => {
                     <img src={currentImage} style={{ width: "50px" }} onClick={changeImage} alt="Ggul Image" />
                 </div>
             </div>
+            {categoryError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_ca}</div>} 
             <div style={{ marginBottom: "20px" }} />
             <div style={{ display: "flex" }}>
+                
                 <div>
                     <div style={{ marginBottom: "5px", fontSize: "18px" }}>가격</div>
-                    <div><Input type="text" placeholder="10,000원" style={{ borderRadius: "5px", height: "40px", width: "180px", float: "left" }} name="amount" value={sale.amount} onChange={handleInputChange}></Input></div>
+                    
+                    <div><Input type="text" placeholder="10,000원" style={{ borderRadius: "5px", height: "40px", width: "180px", float: "left" }} name="amount" value={formatPrice(sale.amount)} onInput={changecontent} onChange={handleInputChange}></Input></div>
+                    {amountError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_a}</div>}  
+                    
+                                          
                 </div>
                 <div>
                     <div style={{ marginBottom: "5px", fontSize: "18px", marginLeft: "25px" }}>장소</div>
-                    <div><Input type="text" placeholder="A동 1층" style={{ borderRadius: "5px", height: "40px", width: "180px", marginLeft: "25px" }} name="place" value={sale.place} onChange={handleInputChange}></Input></div>
+                    <div><Input type="text" placeholder="A동 1층" style={{ borderRadius: "5px", height: "40px", width: "180px", marginLeft: "25px" }} name="place" value={sale.place} onInput={changecontent}onChange={handleInputChange}></Input></div>
+                    {placeError && <div style={{ color: 'red', fontSize: '14px', marginTop: '2px', marginLeft:"30px" }}>{errorMessage_p}</div>}
                 </div>
             </div>
             <div>
                 <div style={{ fontSize: "18px", marginBottom: "10px", marginTop: "20px" }}>상세설명</div>
                 <Input type='textarea'
-                    style={{ width: "385px", height: "300px", resize: "none" }} name="content" value={sale.content} onChange={handleInputChange}
+                    style={{ width: "385px", height: "300px", resize: "none" }} name="content" value={sale.content} onInput={changecontent}onChange={handleInputChange}
                     placeholder='상세설명을 입력하세요
 구매날짜, 하자 등 자세하게 작성할수록
 구매자에게 편리합니다'></Input>
+                {contentError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_c}</div>}
 
             </div>
             <br /> <p style={{ textAlign: "center" }}><Button
                 type="button"
+                onInput={changecontent}
                 onClick={submit}
                 style={{
                     fontWeight: "bold",
@@ -214,13 +334,16 @@ const SaleWrite = () => {
                     backgroundColor: '#14C38E',
                     color: "white",
                     borderStyle: "none"
-                }}
-
-            >
+                }}>
                 등록하기
             </Button></p>
-
+            {errorMessage && (
+            <div style={{ color: 'red', fontSize: '14px', marginTop: '10px', textAlign: 'center' }}>
+            {errorMessage}
+            </div>
+        )}      
         </div>
+        
 
 
 

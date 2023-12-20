@@ -216,14 +216,13 @@ public class SaleServiceImpl implements SaleService {
 	
 	@Override
 	public void changesalestatus(Integer num, String status) throws Exception {
-	    Sale sale = saleRepository.findByNum(num);
+		Sale sale = saleRepository.findByNum(num);
 	    if ("판매중".equals(sale.getStatus())) {
-	        sale.setStatus(sale.getStatus()); // 상태 변경이 필요 없을 때 현재 상태로 유지
-	    } else {
-	        sale.setStatus("예약중"); // 상태가 "판매중"이 아닐 경우 "예약중"으로 변경
+	        sale.setStatus("예약중"); // "판매중"인 경우 "예약중"으로 변경
+	    } else if("예약중".equals(sale.getStatus())) {
+	        sale.setStatus("판매중"); // "판매중"이 아닌 경우 "판매중"으로 변경
 	    }
 	    System.out.println(sale.getStatus());
-	    
 
 	    saleRepository.save(sale);
 	}
@@ -237,16 +236,24 @@ public class SaleServiceImpl implements SaleService {
 		saleRepository.delete(sale);
 	}
 
+	
 	@Override
-	public Boolean login(String email, String password) throws Exception {
+	public List<Sale> SaleListByCategory(String category, PageInfo pageInfo) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, Object> userInfo(Integer id) throws Exception {
+	public Sale saleGpay(Integer num) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void payFinish(Integer num) throws Exception {
+		Sale sale = saleRepository.findByNum(num);
+		sale.setStatus("결제완료");
+		saleRepository.save(sale);
 	}
 
 	
