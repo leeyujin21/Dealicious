@@ -18,6 +18,15 @@ const SaleList = () => {
 
   const observerRef = useRef(null);
 
+  const formatPrice = (amount) => {
+    if (!amount) return '';
+    const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
+
+    // 숫자를 천단위로 포맷팅합니다.
+    const formattedPrice = numericPrice.toLocaleString('ko-KR');
+    return `${formattedPrice}원`;
+};
+
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {//IntersectionObserver를 생성하여 관찰 대상 요소(observerRef.current)의 교차점을 감시
       if (entries[0].isIntersecting && saleList.length > 0) {//관찰 대상 요소가 뷰포트와 교차되고 데이터가 있을 때(saleList.length > 0), Axios를 사용하여 서버에서 데이터를 가져오는 GET 요청
@@ -111,7 +120,7 @@ const SaleList = () => {
                     </div>
                   </div>
                   <div style={{ display: "flex" }}>
-                    <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "150px" }}>{item.amount}</div>
+                    <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "150px" }}>{formatPrice(item.amount)}</div>
                     <div style={{ textAlign: "right", color: "gray", marginRight: "20px" }}></div>
                   </div>
                 </div>

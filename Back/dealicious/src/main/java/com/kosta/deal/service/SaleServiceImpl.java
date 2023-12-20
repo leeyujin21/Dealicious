@@ -59,7 +59,7 @@ public class SaleServiceImpl implements SaleService {
 																														// 페이징
 																														// 처리
 																														// 위한
-																														// API
+																												// API
 		Page<Sale> pages = saleRepository.findAll(pageRequest);
 		pageInfo.setAllPage(pages.getTotalPages());
 		int startPage = (pageInfo.getCurPage() - 1) / 10 * 10 + 1;
@@ -229,9 +229,9 @@ public class SaleServiceImpl implements SaleService {
 	public void changesalestatus(Integer num, String status) throws Exception {
 		Sale sale = saleRepository.findByNum(num);
 	    if ("판매중".equals(sale.getStatus())) {
-	        sale.setStatus("예약중"); // "판매중"인 경우 "예약중"으로 변경
+	        sale.setStatus("판매중"); // "판매중"인 경우 "판매중"으로 변경
 	    } else if("예약중".equals(sale.getStatus())) {
-	        sale.setStatus("판매중"); // "판매중"이 아닌 경우 "판매중"으로 변경
+	        sale.setStatus("예약중"); // "예약중"이 아닌 경우 "예약중"으로 변경
 	    }
 	    System.out.println(sale.getStatus());
 

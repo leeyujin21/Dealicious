@@ -20,15 +20,23 @@ function SaleDetail() {
 
   const selectList = [
     { value: "판매중", name: "판매중" },
-    { value: "예약", name: "예약중" },
+    { value: "예약중", name: "예약중" },
   ];
-  const [status, setStatus] = useState("상태 선택");
+  const [status, setStatus] = useState(() => {
+    const savedStatus = localStorage.getItem('status');
+    return savedStatus || '상태 선택';
+  });
   const handleSelect = (e) => {
+    const selectedStatus = e.target.value;
+   
+    localStorage.setItem('status', selectedStatus);
     console.log(e.target.value);
-    setStatus(e.target.value);
+    setStatus(selectedStatus);
     axios.get(`http://localhost:8090/changesalestatus/${num}/${e.target.value}`)
       .then(res => {
         console.log(res);
+        setStatus(e.target.value);
+        
       })
       .catch((err) => {
         console.log(err);
@@ -55,7 +63,14 @@ function SaleDetail() {
   });
   const [heart, setHeart] = useState(false);
   const navigate = useNavigate();
+  const formatPrice = (amount) => {
+    if (!amount) return '';
+    const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
 
+    // 숫자를 천단위로 포맷팅합니다.
+    const formattedPrice = numericPrice.toLocaleString('ko-KR');
+    return `${formattedPrice}원`;
+  };
 
 
 
@@ -109,7 +124,7 @@ function SaleDetail() {
   };
   
   const gochat = () => {
-    if (user.email!==writer.email) {
+    if (user.email!=='') {
       const uniqueString = uuidv4();
       const chatRoom = { channelId: uniqueString, creator: user.email, partner: writer.email, saleNum: num };
       console.log(chatRoom);
@@ -128,15 +143,37 @@ function SaleDetail() {
 
      
     } else {
-      navigate(`/mypagenl`)
-    }
+      // SweetAlert를 사용한 커스텀한 한글 알림 창
+      Swal.fire({
+        icon: 'error',
+        title: '로그인 필요',
+        text: '로그인 후 진행해주세요',
+        showCancelButton: true,
+        cancelButtonText: '닫기',
+        confirmButtonText: '로그인',
+        cancelButtonColor: '#d33',
+        confirmButtonColor: '#3085d6',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate(`/mypagenl`);
+        }
+      });
   }
+};
   const goToEditPage = () => {
     navigate(`/salemodify/${num}`);
   }
 
   const pay = () => {
+    if(user.email===writer.email)
+    alert("작성자와 같은사람은 결제할수 없습니다")
+    else if(user.email!==writer.email&&user.email!==''){
     navigate(`/gpay/${num}`)
+    }
+    else if(user.email==''){
+      alert("로그인해주세요")
+      navigate(`/mypagenl`);
+    }
   }
 
 
@@ -251,7 +288,7 @@ function SaleDetail() {
           <td
             style={{ width: "250px", fontWeight: "bold", textAlign: "right" }}
           >
-            {sale.amount}
+            {formatPrice(sale.amount)}
           </td>
         </tr>
         <Input
@@ -269,15 +306,21 @@ function SaleDetail() {
         ></Input>
         <div style={{ display: "flex" }}>
 
-          <div style={{ position: "relative", marginTop: "8px", cursor:"pointer" }} onClick={selectGood}>
+          {writer.email===user.email||user.email===''?
+          <div style={{ position: "relative", marginTop: "8px" }} >
+          <img src={heart ? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px", position: "absolute" }} />
+          <div style={{ position: "relative", width: "40px", textAlign: "center", lineHeight: "30px" }}>{sale.zzimcnt}</div>
+        </div>
+          :<div style={{ position: "relative", marginTop: "8px", cursor:"pointer" }} onClick={selectGood}>
             <img src={heart ? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px", position: "absolute" }} />
             <div style={{ position: "relative", width: "40px", textAlign: "center", lineHeight: "30px" }}>{sale.zzimcnt}</div>
-          </div>
+          </div>}
 
           <div style={{ marginLeft: "165px", lineHeight: "45px" }}>
-            {sale.ggull == 1 ?//ggull이 1상태일때 
+            
+            {sale.ggull == 1?//ggull이 1상태일때 
               (writer.email === user.email ?   //로그인한 이메일과,상품등록한 이메일이 같을때
-                <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px" }} />
+                <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px",cursor:"pointer" }} onClick={pay}/>
 
                 ://이메일이 다를때
                 <img src="/ggul.png" style={{ height: "35px", lineHeight: "100px", cursor: "pointer" }} onClick={pay} />)
@@ -287,7 +330,8 @@ function SaleDetail() {
             }
 
           </div>
-          {user.email === writer.email ? <Button style={{ //이메일이 같을때
+          {user.email === writer.email ? 
+          <Button style={{ //이메일이 같을때
             marginLeft: "15px", borderRadius: "5px",
             width: "100px",
             height: "45px",
