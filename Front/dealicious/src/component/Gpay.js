@@ -76,7 +76,7 @@ const Gpay = () => {
             if (rsp.success) {
                 console.log(rsp.imp_uid);
                 console.log("결제성공");
-                const pay = {salenum:num,amount:sale.amount*1.05,imp_uid:rsp.imp_uid,buyEmail:user.email};
+                const pay = {salenum:num,amount:sale.amount*1.05,imp_uid:rsp.imp_uid,buyerEmail:user.email};
                 axios.post(`http://localhost:8090/pay`, pay)
                     .then(res => {
                         console.log("어드민 계좌 입금 성공");

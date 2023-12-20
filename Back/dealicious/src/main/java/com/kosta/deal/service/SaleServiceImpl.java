@@ -13,13 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kosta.deal.entity.Chat;
+import com.kosta.deal.entity.ChatRoom;
 import com.kosta.deal.entity.FileVo;
 import com.kosta.deal.entity.Sale;
 import com.kosta.deal.entity.SaleLike;
+import com.kosta.deal.repository.ChatRepository;
+import com.kosta.deal.repository.DslRepository;
 import com.kosta.deal.repository.FileVoRepository;
 import com.kosta.deal.repository.SaleDslRepository;
 import com.kosta.deal.repository.SaleLikeRepository;
@@ -40,6 +45,12 @@ public class SaleServiceImpl implements SaleService {
 
 	@Autowired
 	private SaleLikeRepository salelikeRepository;
+	@Autowired
+	private DslRepository dslRepository;
+	@Autowired
+	private ChatRepository chatRepository;
+	@Autowired
+	private SimpMessageSendingOperations sendingOperations;
 
 	// salelist 무한 스크롤 페이지 처리
 	@Override
@@ -254,6 +265,21 @@ public class SaleServiceImpl implements SaleService {
 		Sale sale = saleRepository.findByNum(num);
 		sale.setStatus("결제완료");
 		saleRepository.save(sale);
+	}
+	
+	//sale status 수령완료로 변경 후 수령완료 관련 채팅 등록 및 실시간 발송
+	@Override
+	public void changesalestatusToreceipt(Integer num, String email) throws Exception {
+		Sale sale = saleRepository.findByNum(num);
+		sale.setStatus("수령완료");
+		saleRepository.save(sale);
+		ChatRoom chatRoom = dslRepository.findChatRoomBySalenumAndCreator(num,email);
+		Chat chat = new Chat();
+    	chat.setType("completereceipt");
+    	chat.setChannelId(chatRoom.getChannelId());
+    	chat.setWriterId("admin");
+    	chatRepository.save(chat);
+    	sendingOperations.convertAndSend("/sub/chat/" + chatRoom.getChannelId(), chat);
 	}
 
 	

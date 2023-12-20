@@ -194,4 +194,11 @@ public class DslRepository {
 				.where(chatRoom.creator.eq(email).or(chatRoom.partner.eq(email)))
 				.fetch();
 	}
+	
+	public ChatRoom findChatRoomBySalenumAndCreator(Integer saleNum, String email) {
+		QChatRoom chatRoom = QChatRoom.chatRoom;
+		return jpaQueryFactory.selectFrom(chatRoom)
+				.where(chatRoom.creator.eq(email).and(chatRoom.saleNum.eq(saleNum)))
+				.fetchOne();
+	}
 }
