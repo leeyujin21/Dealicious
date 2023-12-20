@@ -4,7 +4,7 @@ import { FaCheck } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
-import {useParams,useNavigate} from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from "react-redux";
 
@@ -13,7 +13,7 @@ const Gpay = () => {
     const user = useSelector(state => state.persistedReducer.user);
     const navigate = useNavigate();
     const { num } = useParams();
-    const [check,setCheck] = useState(false);
+    const [check, setCheck] = useState(false);
     const [sale, setSale] = useState({
         num: "",
         email: "",
@@ -25,12 +25,12 @@ const Gpay = () => {
         place: "",
         fileurl: "",
         status: "",
-        ggull:"",
+        ggull: "",
         viewcount: null,
         zzimcnt: null,
         buyeremail: "",
         writerdate: "",
-      });
+    });
     useEffect(() => {
         const jquery = document.createElement("script");
         jquery.src = "http://code.jquery.com/jquery-1.12.4.min.js";
@@ -38,27 +38,26 @@ const Gpay = () => {
         iamport.src = "http://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
         document.head.appendChild(jquery);
         document.head.appendChild(iamport);
-        
+
         axios
-        .get(`http://localhost:8090/gpay/${num}`)
-        .then(res => {
-          console.log(res.data);
-          setSale(res.data);
-          
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+            .get(`http://localhost:8090/gpay/${num}`)
+            .then(res => {
+                console.log(res.data);
+                setSale(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         return () => {
             document.head.removeChild(jquery);
             document.head.removeChild(iamport);
         };
-        
-    
+
+
     }, []);
 
     const requestPay = () => {
-        if(!check) {
+        if (!check) {
             alert("수수료 약관에 동의하여 주세요");
             return;
         }
@@ -77,18 +76,16 @@ const Gpay = () => {
             if (rsp.success) {
                 console.log(rsp.imp_uid);
                 console.log("결제성공");
-                
-                const pay1 = {saletitle:'결제테스트', amount:'1004',buyeremail:'gudtjq444@naver.com',imp_uid:rsp.imp_uid};
-                console.log(pay1);
-                axios.post(`http://localhost:8090/pay`,pay1)
-                .then(res=> {
-                    console.log("어드민 계좌 입금 성공");
-                    navigate(`/gpay_finish`)
-                })
-                .catch(err=> {
-                    console.log(err);
-                    console.log("어드민 계좌 입금 실패, 관리자 확인 필요");
-                })
+                const pay = {salenum:num,amount:sale.amount*1.05,imp_uid:rsp.imp_uid,buyEmail:user.email};
+                axios.post(`http://localhost:8090/pay`, pay)
+                    .then(res => {
+                        console.log("어드민 계좌 입금 성공");
+                        navigate(`/gpay_finish/${num}`)
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        console.log("어드민 계좌 입금 실패, 관리자 확인 필요");
+                    })
             } else {
                 console.log(rsp);
                 console.log("결제실패");
@@ -96,7 +93,7 @@ const Gpay = () => {
         });
     }
     const checkUse = () => {
-        if(check) {
+        if (check) {
             setCheck(false);
         } else {
             setCheck(true);
@@ -104,75 +101,75 @@ const Gpay = () => {
     }
 
     return (
-        <div className='main' style={{overflow:"scroll", height:"732px", overflowX:"hidden", padding:"20px 50px 0 50px"}}>
-            <div style={{textAlign:"left", paddingBottom:"10px"}}>
-                <IoArrowBackOutline style={{marginRight:"80px"}} size="30" color="lightgray"/>
+        <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", padding: "20px 50px 0 50px" }}>
+            <div style={{ textAlign: "left", paddingBottom: "10px" }}>
+                <IoArrowBackOutline style={{ marginRight: "80px" }} size="30" color="lightgray" />
             </div>
-            <div style={{textAlign:"left", marginLeft:"10px"}}>
-                <Label style={{fontSize:"20px", fontWeight:"bold", color:"black"}}>꿀페이 결제하기</Label>
+            <div style={{ textAlign: "left", marginLeft: "10px" }}>
+                <Label style={{ fontSize: "20px", fontWeight: "bold", color: "black" }}>꿀페이 결제하기</Label>
             </div>
-            <div style={{textAlign:"left", paddingBottom:"20px", borderBottom:"1px solid lightgray", display:"flex"}}>
+            <div style={{ textAlign: "left", paddingBottom: "20px", borderBottom: "1px solid lightgray", display: "flex" }}>
                 &nbsp;&nbsp;
-                <img src={`http://localhost:8090/img/${sale.fileurl.split(',')[0]}`} style={{width:"100px",height:"100px"}}></img>
-                <div style={{marginLeft:"10px"}}>
-                <div style={{marginLeft:"10px",fontSize:"25px",marginBottom:"5px"}}> {sale.title}</div>
-                    <div style={{marginLeft:"10px"}}> {sale.amount} 원</div>
+                <img src={`http://localhost:8090/img/${sale.fileurl.split(',')[0]}`} style={{ width: "100px", height: "100px" }}></img>
+                <div style={{ marginLeft: "10px" }}>
+                    <div style={{ marginLeft: "10px", fontSize: "25px", marginBottom: "5px" }}> {sale.title}</div>
+                    <div style={{ marginLeft: "10px" }}> {sale.amount} 원</div>
                 </div>
-                
+
             </div>
-            
-            <div style={{textAlign:"left", borderBottom:"1px solid lightgray", paddingBottom:"20px"}}>
+
+            <div style={{ textAlign: "left", borderBottom: "1px solid lightgray", paddingBottom: "20px" }}>
                 &nbsp;&nbsp;
-                <div style={{marginBottom:"10px", paddingLeft:"5px"}}>
-                    <span style={{color:"gray",}}>거래방법</span>
-                    <span style={{fontWeight:"bold", paddingLeft:"20px", fontSize:"18px"}}>직거래</span>
+                <div style={{ marginBottom: "10px", paddingLeft: "5px" }}>
+                    <span style={{ color: "gray", }}>거래방법</span>
+                    <span style={{ fontWeight: "bold", paddingLeft: "20px", fontSize: "18px" }}>직거래</span>
                 </div>
-                <div style={{paddingLeft:"5px"}}>
-                    <span style={{color:"gray"}}>결제수단</span>
-                    <img src="../ggul.png" style={{width:"40px", marginLeft:"20px"}}/>
+                <div style={{ paddingLeft: "5px" }}>
+                    <span style={{ color: "gray" }}>결제수단</span>
+                    <img src="../ggul.png" style={{ width: "40px", marginLeft: "20px" }} />
                 </div>
             </div>
-            <div style={{textAlign:"left", borderBottom:"1px solid lightgray", paddingBottom:"20px"}}>
+            <div style={{ textAlign: "left", borderBottom: "1px solid lightgray", paddingBottom: "20px" }}>
                 &nbsp;&nbsp;
-                <div style={{paddingLeft:"5px"}}>
-                    <FaCheck size="20" style={{cursor:"pointer"}}onClick={checkUse} color={check?"black":"gray"}/>&nbsp;&nbsp;
-                    <Button style={{backgroundColor:"lightgray", borderStyle:"none"}}>
+                <div style={{ paddingLeft: "5px" }}>
+                    <FaCheck size="20" style={{ cursor: "pointer" }} onClick={checkUse} color={check ? "black" : "gray"} />&nbsp;&nbsp;
+                    <Button style={{ backgroundColor: "lightgray", borderStyle: "none" }}>
                         꿀페이 수수료 서비스 이용약관&nbsp;&nbsp;&nbsp;
-                        <Link style={{color:"gray", fontWeight:"bold"}} onClick={()=>setModalIsOpen(true)}>자세히
-                            <Modal className="main" style={{ 
-                                width:"420px", top:"30%"
+                        <Link style={{ color: "gray", fontWeight: "bold" }} onClick={() => setModalIsOpen(true)}>자세히
+                            <Modal className="main" style={{
+                                width: "420px", top: "30%"
                             }} isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
-                                <div style={{ textAlign: "center", height:"100%"}}>
+                                <div style={{ textAlign: "center", height: "100%" }}>
                                     <div>
-                                        <button style={{color:"#14C38E",border:"none",backgroundColor:"white",float:"right", marginRight:"10px", marginTop:"20px"}}onClick={() => setModalIsOpen(false)}>
-                                            <IoClose size="27"/>
+                                        <button style={{ color: "#14C38E", border: "none", backgroundColor: "white", float: "right", marginRight: "10px", marginTop: "20px" }} onClick={() => setModalIsOpen(false)}>
+                                            <IoClose size="27" />
                                         </button>
                                     </div>
-                                    <br/>
-                                    <div style={{textAlign:"left"}}>
-                                        <div style={{fontWeight:"bold", marginLeft:"20px", marginTop:"25px"}}>
+                                    <br />
+                                    <div style={{ textAlign: "left" }}>
+                                        <div style={{ fontWeight: "bold", marginLeft: "20px", marginTop: "25px" }}>
                                             1. 꿀페이 결제 수수료는 얼마인가요?
                                         </div>
-                                        <div style={{marginLeft:"37px", marginBottom:"10px"}}>
+                                        <div style={{ marginLeft: "37px", marginBottom: "10px" }}>
                                             꿀페이 수수료는 건당 5%입니다.
                                         </div>
-                                        <div style={{fontWeight:"bold", marginLeft:"20px"}}>
+                                        <div style={{ fontWeight: "bold", marginLeft: "20px" }}>
                                             2. 거래 완료 후 정산은 언제 되나요?
                                         </div>
-                                        <div style={{marginLeft:"37px"}}>
+                                        <div style={{ marginLeft: "37px" }}>
                                             영업일 기준 1~3일 소요됩니다.
                                         </div>
-                                        <br/><br/>
-                                        <div style={{display:"flex"}}>
-                                            <div style={{marginLeft:"20px", fontWeight:"bold"}}>
+                                        <br /><br />
+                                        <div style={{ display: "flex" }}>
+                                            <div style={{ marginLeft: "20px", fontWeight: "bold" }}>
                                                 꿀페이 문의하기
                                             </div>
-                                            <div style={{marginLeft:"10px", textAlign:"right"}}>
-                                                DEALicious 고객센터<br/>
+                                            <div style={{ marginLeft: "10px", textAlign: "right" }}>
+                                                DEALicious 고객센터<br />
                                                 070-6767-4054
                                             </div>
                                         </div>
-                                        <br/>
+                                        <br />
                                     </div>
                                 </div>
                             </Modal>
@@ -180,17 +177,17 @@ const Gpay = () => {
                     </Button>
                 </div>
             </div>
-            <div style={{textAlign:"right", marginRight:"10px"}}>
+            <div style={{ textAlign: "right", marginRight: "10px" }}>
                 &nbsp;&nbsp;
                 <div>
-                    수수료: {sale.amount*0.05}원
+                    수수료: {sale.amount * 0.05}원
                 </div>
-                <div style={{fontWeight:"bold"}}>
-                    결제 예정 금액: {sale.amount*1.05}원
+                <div style={{ fontWeight: "bold" }}>
+                    결제 예정 금액: {sale.amount * 1.05}원
                 </div>
             </div>
-            <br/>
-                <Button style={{width:"325px", height:"55px", fontSize:"20px", backgroundColor:"#14C38E", borderStyle:"none"}} onClick={requestPay}>결제하기</Button>
+            <br />
+            <Button style={{ width: "325px", height: "55px", fontSize: "20px", backgroundColor: "#14C38E", borderStyle: "none" }} onClick={requestPay}>결제하기</Button>
         </div>
     )
 }

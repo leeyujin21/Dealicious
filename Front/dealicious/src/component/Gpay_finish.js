@@ -1,12 +1,46 @@
 import { IoArrowBackOutline } from "react-icons/io5";
 import { Button, Label, Modal } from "reactstrap";
 import { FaCheck } from "react-icons/fa6";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
+import axios from "axios";
 
 const Gpay_finish = () => {
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const { num } = useParams();
+    const [sale, setSale] = useState({
+        num: "",
+        email: "",
+        title: "",
+        type: "",
+        amount: "",
+        category: "",
+        content: "",
+        place: "",
+        fileurl: "",
+        status: "",
+        ggull: "",
+        viewcount: null,
+        zzimcnt: null,
+        buyeremail: "",
+        writerdate: "",
+    });
+    useEffect(() => {
+        axios
+            .get(`http://localhost:8090/gpay/${num}`)
+            .then(res => {
+                console.log(res.data);
+                setSale(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+
+
+    }, []);
+
+
     return (
         <div className='main' style={{overflow:"scroll", height:"732px", overflowX:"hidden", padding:"20px 50px 0 50px"}}>
             <div style={{textAlign:"left", paddingBottom:"10px"}}>
@@ -17,10 +51,10 @@ const Gpay_finish = () => {
             </div>
             <div style={{textAlign:"left", paddingBottom:"20px", borderBottom:"1px solid lightgray", display:"flex"}}>
                 &nbsp;&nbsp;
-                <img src="..\1.png"></img>
-                <div style={{marginLeft:"10px"}}>
-                    디스펜서 팔아요<br/>
-                    60,000원
+                <img src={`http://localhost:8090/img/${sale.fileurl.split(',')[0]}`}style={{ width: "100px", height: "100px" }}></img>
+                <div style={{ marginLeft: "10px" }}>
+                    <div style={{ marginLeft: "10px", fontSize: "25px", marginBottom: "5px" }}> {sale.title}</div>
+                    <div style={{ marginLeft: "10px" }}> {sale.amount*1.05} 원</div>
                 </div>
             </div>
             <div style={{textAlign:"left", borderBottom:"1px solid lightgray", paddingBottom:"20px"}}>
@@ -44,15 +78,15 @@ const Gpay_finish = () => {
             <div style={{textAlign:"right", marginRight:"10px"}}>
                 &nbsp;&nbsp;
                 <div>
-                    수수료: 3,000원
+                    수수료: {sale.amount * 0.05}원
                 </div>
                 <div style={{fontWeight:"bold"}}>
-                    결제 예정 금액: 63,000원
+                    결제 금액: {sale.amount * 1.05}원
                 </div>
             </div>
             <br/>
-            <Link to="/pay">
-                <Button style={{width:"330px", height:"55px", fontSize:"20px", backgroundColor:"#14C38E", borderStyle:"none"}}>이전화면으로 이동</Button>
+            <Link to="/">
+                <Button style={{width:"330px", height:"55px", fontSize:"20px", backgroundColor:"#14C38E", borderStyle:"none"}}>메인화면으로 이동</Button>
             </Link>
         </div>
     )

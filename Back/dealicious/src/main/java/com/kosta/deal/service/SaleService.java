@@ -31,4 +31,5 @@ public interface SaleService {
 	Boolean login(String email, String password)throws Exception;
 	Map<String, Object> userInfo(Integer id) throws Exception;
 	void changesalestatus(Integer num, String status) throws Exception;
+	void payFinish(Integer num) throws Exception;
 }

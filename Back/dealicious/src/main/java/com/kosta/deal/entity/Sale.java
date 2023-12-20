@@ -38,7 +38,6 @@ public class Sale {
 	private String place;
 	private String fileurl;
 	private String status;
-	private String buyeremail;
 	private String ggull;
 	private String zzim;
 

@@ -12,4 +12,5 @@ public interface AdminService {
 	void settle(List<String> settlenum) throws Exception;
 	List<Map<String,Object>> settleList(String startDate,String endDate) throws Exception;
 	boolean checkadminid(String adminid) throws Exception;
+	void registerAccountId(String accountid, String bank) throws Exception;
 }
