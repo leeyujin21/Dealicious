@@ -30,7 +30,7 @@ public interface SaleService {
 	Boolean selHeartSale(String email, Integer num)throws Exception;
 	void saleDelete(Integer num) throws Exception;
 
-	Sale saleGpay(Integer num) throws Exception ;
+	
 
 	void changesalestatus(Integer num, String status) throws Exception;
 
@@ -38,4 +38,5 @@ public interface SaleService {
 
 	List<Sale> SaleListByCategory(String category) throws Exception;
 	void changesalestatusToreceipt(Integer num, String email) throws Exception;
+	Sale saleDetail(String email, Integer num) ;;
 }

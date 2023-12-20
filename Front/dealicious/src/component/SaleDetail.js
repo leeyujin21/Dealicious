@@ -76,7 +76,7 @@ function SaleDetail() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8090/saledetail/${sect}/${num}`)
+      .get(`http://localhost:8090/saledetail/${sect}/${user.email}/${num}`)
       .then(res => {
         console.log(res.data);
 
@@ -115,7 +115,7 @@ function SaleDetail() {
   };
 
   const selectGood = (e) => {
-    axios.get(`http://localhost:8090/salelike/${num}`)
+    axios.get(`http://localhost:8090/salelike/${user.email}/${num}`)
       .then(res => {
         console.log(res.data)
         setSale({ ...sale, zzimcnt: res.data.zzimCnt });
@@ -143,21 +143,8 @@ function SaleDetail() {
 
      
     } else {
-      // SweetAlert를 사용한 커스텀한 한글 알림 창
-      Swal.fire({
-        icon: 'error',
-        title: '로그인 필요',
-        text: '로그인 후 진행해주세요',
-        showCancelButton: true,
-        cancelButtonText: '닫기',
-        confirmButtonText: '로그인',
-        cancelButtonColor: '#d33',
-        confirmButtonColor: '#3085d6',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate(`/mypagenl`);
-        }
-      });
+      alert("로그인 해주세요");
+      navigate(`/mypagenl`);
   }
 };
   const goToEditPage = () => {
@@ -306,7 +293,7 @@ function SaleDetail() {
         ></Input>
         <div style={{ display: "flex" }}>
 
-          {writer.email===user.email||user.email===''?
+          {writer.email===user.email||user.email==''?
           <div style={{ position: "relative", marginTop: "8px" }} >
           <img src={heart ? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px", position: "absolute" }} />
           <div style={{ position: "relative", width: "40px", textAlign: "center", lineHeight: "30px" }}>{sale.zzimcnt}</div>
