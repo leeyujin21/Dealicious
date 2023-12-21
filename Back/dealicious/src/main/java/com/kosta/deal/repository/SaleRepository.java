@@ -22,6 +22,7 @@ public interface SaleRepository extends JpaRepository<Sale, Integer> {
 	List<Sale> findByEmail(String email);
 	
 	List<Sale> findByNumIn(List<Integer> numList);
+	
 
 	
 	

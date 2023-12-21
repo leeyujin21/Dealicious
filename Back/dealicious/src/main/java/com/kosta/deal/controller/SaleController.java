@@ -38,30 +38,49 @@ public class SaleController {
 	@GetMapping({"/salelist/{page}","/salelist"})  //salelist 페이지 처리
 	public ResponseEntity<Map<String,Object>> saleList(@PathVariable(required=false) Integer page) {
 		try {
-			PageInfo pageInfo = PageInfo.builder().curPage(page).build();
+			PageInfo pageInfo = new PageInfo(page);
 			List<Sale> saleList = saleService.saleListByPage(pageInfo);		
 			Map<String,Object> res = new HashMap<>();
 			res.put("pageInfo", pageInfo);
 			res.put("saleList", saleList);
-			return new ResponseEntity<>(res, HttpStatus.OK);
+			return new ResponseEntity<Map<String,Object>>(res, HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
+	@GetMapping("/salelist/{page}/{category}")
+	public ResponseEntity<Map<String,Object>>saleListByCategory(@PathVariable(required=false)Integer page,
+			@PathVariable(required=false)String category){
+		try {
+			PageInfo pageInfo=new PageInfo(page);
+			List<Sale>saleList=saleService.categoryListByPage(category,pageInfo);
+			Map<String,Object> res= new HashMap<>();
+			res.put("saleList", saleList);
+			res.put("pageInfo", pageInfo);
+			return new ResponseEntity<Map<String,Object>> (res,HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
+			
+		}
+	}
 	@PostMapping("/salelist") //카테고리별 salelist 목록
-	public ResponseEntity<List<Sale>> saleListByCategory(@RequestBody Map<String,String> cat) {
+	public ResponseEntity<Object> saleListByCategory(@RequestBody Map<String,String> param) {
 		
-		String category = (String)cat.get("cat");
-		System.out.println(category);
+		
 		
 	     try {
-	    	 List<Sale> saleList= saleService.SaleListByCategory(category);
-	    	 return new ResponseEntity<List<Sale>>(saleList,HttpStatus.OK);
+	    	 String category = (String)param.get("cat");
+	    	 Integer page=Integer.valueOf((String)param.get("page"));
+	 		 Map<String,Object>res=new HashMap<>();
+	 		 res.put("category", category);
+	    	
+	    	 return new ResponseEntity<Object>(res,HttpStatus.OK);
 			} catch(Exception e) {
 				e.printStackTrace();
-				return new ResponseEntity<List<Sale>>(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 			}
 	}
 	

@@ -201,6 +201,7 @@ const SaleWrite = () => {
         formData.append("ggull", sale.ggull);
         formData.append("file", sale.fileurl);
         formData.append("email", user.email);
+        formData.append("writedate",sale.writedate);
 
         // formData.append("file", files);
         for (let image of selectedImages) {
@@ -218,6 +219,8 @@ const SaleWrite = () => {
             .catch(err => {
                 console.log(err);
             });
+        
+        
 
     }
     return (
