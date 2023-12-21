@@ -1,8 +1,7 @@
 import { Button, FormGroup, Input, Label } from "reactstrap";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import Avvvatars from 'avvvatars-react';
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,14 +9,11 @@ const Profilemodify = () => {
     const [nicknameMessage, setNicknameMessage] = useState('');
     const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
     const navigate = useNavigate();
-    const [Image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+    const Image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     const [files, setFiles] = useState(null);
     const [selected, setSelected] = useState();
     const dispatch = useDispatch();
-    const fileChange = (e) => {
-        const selectedFile = e.target.files[0];
-        setFiles(selectedFile);
-    }
+    const [previewImage, setPreviewImage] = useState(Image);
     const [user, setUser] = useState({ name: '', email: '', nickname: '', typename: '', tel: '', accountid: '' })
     const temp = useSelector(state => state.persistedReducer.user);
     useEffect(() => {
@@ -39,14 +35,14 @@ const Profilemodify = () => {
         if (isNicknameAvailable) {
             console.log("2")
             axios.put("http://localhost:8090/profilemodify", formData)
-            .then(res => {
-                console.log(res);
-                dispatch({ type: "user", payload: res.data });
-                navigate("/profiledetail");
-            })
-            .catch(err => {
-                console.error(err);
-            });
+                .then(res => {
+                    console.log(res);
+                    dispatch({ type: "user", payload: res.data });
+                    navigate("/profiledetail");
+                })
+                .catch(err => {
+                    console.error(err);
+                });
         } else {
             console.log("에휴");
             setNicknameMessage("중복확인 버튼을 눌러주세요");
@@ -57,6 +53,12 @@ const Profilemodify = () => {
         setIsNicknameAvailable(false)
     }
     const handleNicknameCheck = () => {
+        if (user.nickname === temp.nickname) {
+            setIsNicknameAvailable(true);
+            setNicknameMessage("현재 사용 중인 닉네임입니다");
+            return;
+        }
+
         axios.get("http://localhost:8090/nicknamecheck/" + user.nickname)
             .then(res => {
                 console.log(res.data);
@@ -71,6 +73,24 @@ const Profilemodify = () => {
                 console.log(err);
             });
     }
+    useEffect(() => {
+        if (temp.profileimgurl) {
+            setPreviewImage(`http://localhost:8090/img/${temp.profileimgurl}`);
+        } else {
+            setPreviewImage(Image);
+        }
+    }, [temp.profileimgurl]);
+    const fileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        setFiles(selectedFile);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setPreviewImage(reader.result);
+        };
+        if (selectedFile) {
+            reader.readAsDataURL(selectedFile);
+        }
+    };
 
     return (
         <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "50px", paddingLeft: "50px", paddingRight: "50px" }}>
@@ -79,7 +99,7 @@ const Profilemodify = () => {
                 <Label style={{ fontSize: "25px", fontWeight: "bold", color: "#14C38E" }}>마이페이지</Label>
             </FormGroup>
             <div style={{ display: "flex", paddingBottom: "20px" }}>
-                <img src={user.profileimgurl ? `http://localhost:8090/img/${user.profileimgurl}` : Image} width="100px" height="100px" alt='' style={{ marginRight: "10px", borderRadius: "50px", width: "55px", height: "55px" }} />
+                <img src={previewImage} width="100px" height="100px" alt='' style={{ marginRight: "10px", borderRadius: "50px", width: "55px", height: "55px" }} />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <div style={{ lineHeight: "55px" }}>
                     <Button style={{
@@ -121,7 +141,7 @@ const Profilemodify = () => {
                     <Label for="email" style={{ fontSize: "20px" }}>{user.email}</Label>
                 </FormGroup>
                 <FormGroup style={{ textAlign: "left", display: "flex" }}>
-                    <Label for="univ" style={{ fontSize: "20px", width: "100px" }}>{user.typename==="univ"? "학교" : "회사"}</Label>
+                    <Label for="univ" style={{ fontSize: "20px", width: "100px" }}>{user.typename === "univ" ? "학교" : "회사"}</Label>
                     <Label for="univ" style={{ fontSize: "20px" }}>{user.typename}</Label>
                 </FormGroup>
                 <FormGroup style={{ textAlign: "left", display: "flex" }}>
@@ -133,6 +153,7 @@ const Profilemodify = () => {
                     <div style={{ display: "flex" }}>
                         <select style={{ border: "1px solid lightgray", borderRadius: "5px", width: "100px", height: "45px", textAlign: "left" }}
                             name="accountbank" id="accountbank" value={selected} onChange={selectbank}>
+                            <option value="">선택하세요</option>
                             <option value="국민">국민은행</option>
                             <option value="신한">신한은행</option>
                             <option value="농협">농협은행</option>
@@ -142,7 +163,7 @@ const Profilemodify = () => {
                             <option value="카카오">카카오뱅크</option>
                         </select>
                         <Input type="text" for="accountid" name="accountid" id="accountid" style={{ fontSize: "16px", width: "214px", height: "44px", marginLeft: "5px" }}
-                            onChange={(e) => setUser({ ...user, accountid: e.target.value })} value={user.accountid} />
+                            onChange={(e) => setUser({ ...user, accountid: e.target.value })} value={user.accountid === "null" || user.accountid === null ? "" : user.accountid} />
                     </div>
                 </FormGroup>
             </div>

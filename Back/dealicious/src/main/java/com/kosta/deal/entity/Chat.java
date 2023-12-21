@@ -28,6 +28,7 @@ public class Chat {
 	 @Column
 	 private String channelId;
 	 private String writerId;
+	 private String receiverId;
 	 private String chat;
 	 private String data;
 	 private String isRead;

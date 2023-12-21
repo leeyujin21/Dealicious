@@ -76,7 +76,7 @@ const Mypage_zzim = () => {
             <div style={{ height: "20px" }} />
             <div style={{ display: "flex", flexWrap: "wrap", textAlign: "left", marginBottom: "3px" }}>
                 {saleList.map((item, index) => (
-                    <Link to={`/saledetail/${item.num}`} key={index} style={{ textDecoration: "none", color: "black" }}>
+                    <Link to={`/saledetail/only-detail/${item.num}`} key={index} style={{ textDecoration: "none", color: "black" }}>
                         <div style={{ display: "inline-block", paddingRight: (index + 1) % 3 === 0 ? "0px" : "10px" }}>
                             <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative" }}>
                                 <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />

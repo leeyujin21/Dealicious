@@ -64,9 +64,9 @@ public class ChatController {
     @MessageMapping("/chat")
     public void sendMessage(Chat chat, SimpMessageHeaderAccessor accessor) {
     	try {
-    		chat.setType("chat");
 			chatService.addChat(chat);
-			sendingOperations.convertAndSend("/sub/chat/" + chat.getChannelId(), chat);
+			sendingOperations.convertAndSend("/sub/chat/" + chat.getReceiverId(), chat);
+			sendingOperations.convertAndSend("/sub/chat/" + chat.getWriterId(), chat);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

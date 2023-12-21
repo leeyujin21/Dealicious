@@ -1,7 +1,9 @@
 package com.kosta.deal.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -11,7 +13,13 @@ import org.springframework.web.socket.server.standard.ServletServerContainerFact
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+public class WebSocketConfig implements WebSocketMessageBrokerConfigurer  {
+	
+	@Autowired
+	private ChatPreHandler chatPreHandler;
+	
+	@Autowired
+	private ChatErrorHandler chatErrorHandler;
 	  
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
@@ -21,7 +29,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 			에서 새로운 핸드쉐이크 커넥션을 생성할 때 사용됨.
     	 */
         registry.addEndpoint("/ws").setAllowedOriginPatterns("*").withSockJS();
-
+        registry.setErrorHandler(chatErrorHandler);
     }
 
     @Override
@@ -39,6 +47,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.setApplicationDestinationPrefixes("/pub"); 
     }
 
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration){
+        registration.interceptors(chatPreHandler);
+    }    
 	
     @Override
     public void configureWebSocketTransport(WebSocketTransportRegistration registration) {
@@ -56,5 +68,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         container.setMaxBinaryMessageBufferSize(2048 * 2048);
         return container;
     }
-    
+
+	   
 }

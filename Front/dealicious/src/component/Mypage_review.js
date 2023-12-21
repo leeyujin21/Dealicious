@@ -8,12 +8,8 @@ import axios from "axios";
 
 const Mypage_review = () => {
     const Image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-    const fileInput = useRef(null)
     const [reviewList, setReviewList] = useState([]);
     const user = useSelector(state => state.persistedReducer.user);
-    function toProfileDetail(e) {
-        window.location.href = "/profiledetail"
-    }
     useEffect(() => {
         axios.get(`http://localhost:8090/myreviewlist/${user.email}`)
             .then(res => {
@@ -73,11 +69,10 @@ const Mypage_review = () => {
             <div style={{ height: "20px" }} />
             {reviewList.map((review, index) => (
                 <div key={index} style={{ marginLeft: "5px", display: "flex", width: "100%", height: "90px", borderBottom: "1px solid lightgray" }}>
-                    <div style={{height: "70px", marginTop:"7.5px" }}>
+                    <div style={{ height: "70px", marginTop: "7.5px" }}>
                         <img
                             src={review.profileimgurl ? `http://localhost:8090/img/${review.profileimgurl}` : Image}
                             style={{ borderRadius: "50px", width: "55px", height: "55px" }}
-                            onClick={toProfileDetail}
                         />
                     </div>
                     <div style={{ marginLeft: "10px", textAlign: "left", width: "130px", marginTop: "9px" }}>
@@ -90,8 +85,8 @@ const Mypage_review = () => {
                         </div>
                     </div>
                     <div style={{ width: "95px", textAlign: "right", marginRight: "15px", marginTop: "10px" }}>
-                        <div style={{ fontSize: "14px", color: "black", marginBottom: "7px" }}>{review.reviewdate}</div>
-                        <img src={review.ggull==="1"?"\ggul.png":"\ggul2.png"} style={{ width: "34px", height: "19px" }} />
+                        <div style={{ fontSize: "14px", color: "black", marginBottom: "7px" }}>{formatDate(review.reviewdate)}</div>
+                        <img src={review.ggull === "1" ? "\ggul.png" : "\ggul2.png"} style={{ width: "34px", height: "19px" }} />
                     </div>
                     <div style={{ width: "70px", height: "70px", borderRadius: "10px", textAlign: "right" }}>
                         <img src={`http://localhost:8090/img/${review.fileurl.split(',')[0]}`} style={{ width: "70px", height: "70px", borderRadius: "10px" }} />
@@ -101,5 +96,11 @@ const Mypage_review = () => {
         </div>
     )
 }
+
+const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+    const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+    return formattedDate.replace(/\.$/, '');
+};
 
 export default Mypage_review;

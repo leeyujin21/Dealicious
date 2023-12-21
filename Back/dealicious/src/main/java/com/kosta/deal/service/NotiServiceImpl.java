@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kosta.deal.entity.Hot;
+import com.kosta.deal.entity.Notification;
 import com.kosta.deal.repository.DslRepository;
 import com.kosta.deal.repository.HotRepository;
+import com.kosta.deal.repository.NotiRepository;
 
 @Service
 public class NotiServiceImpl implements NotiService {
@@ -17,7 +19,9 @@ public class NotiServiceImpl implements NotiService {
 	private DslRepository dslRepository;
 	
 	@Autowired
-	private HotRepository hodRepository;
+	private HotRepository hotRepository;
+	@Autowired
+	private NotiRepository notiRepository;
 	
 	@Override
 	public List<Hot> getHotList() throws Exception {
@@ -27,7 +31,7 @@ public class NotiServiceImpl implements NotiService {
 
 	@Override
 	public void addKeyword(String keyword) throws Exception {
-		Optional<Hot> ohot = hodRepository.findByContent(keyword);
+		Optional<Hot> ohot = hotRepository.findByContent(keyword);
 		System.out.println("1");
 		if(!ohot.isEmpty()) {
 			System.out.println("2");
@@ -35,12 +39,29 @@ public class NotiServiceImpl implements NotiService {
 			System.out.println("3");
 			hot.setSearchcnt(hot.getSearchcnt()+1);
 			System.out.println("4");
-			hodRepository.save(hot);
+			hotRepository.save(hot);
 		} else {
 			System.out.println("5");
-			hodRepository.save(new Hot(keyword));
+			hotRepository.save(new Hot(keyword));
 		}
 		
+	}
+
+	@Override
+	public Integer findNotiCnt(String email) throws Exception {
+		List<Notification> notilist = dslRepository.findNoneReadNotiList(email);
+		Integer cnt = notilist.size();
+		return cnt;
+	}
+
+	@Override
+	public List<Notification> findNotiActiList(String email) throws Exception {
+		List<Notification> notilist = dslRepository.findNotiActiList(email);
+		for(Notification n : notilist) {
+			n.setIsRead("1");
+			notiRepository.save(n);
+		}
+		return notilist;
 	}
 
 }
