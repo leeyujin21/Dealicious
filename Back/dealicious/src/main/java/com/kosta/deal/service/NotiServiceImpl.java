@@ -10,6 +10,7 @@ import com.kosta.deal.entity.Hot;
 import com.kosta.deal.entity.Notification;
 import com.kosta.deal.repository.DslRepository;
 import com.kosta.deal.repository.HotRepository;
+import com.kosta.deal.repository.NotiRepository;
 
 @Service
 public class NotiServiceImpl implements NotiService {
@@ -19,6 +20,8 @@ public class NotiServiceImpl implements NotiService {
 	
 	@Autowired
 	private HotRepository hotRepository;
+	@Autowired
+	private NotiRepository notiRepository;
 	
 	@Override
 	public List<Hot> getHotList() throws Exception {
@@ -54,6 +57,10 @@ public class NotiServiceImpl implements NotiService {
 	@Override
 	public List<Notification> findNotiActiList(String email) throws Exception {
 		List<Notification> notilist = dslRepository.findNotiActiList(email);
+		for(Notification n : notilist) {
+			n.setIsRead("1");
+			notiRepository.save(n);
+		}
 		return notilist;
 	}
 
