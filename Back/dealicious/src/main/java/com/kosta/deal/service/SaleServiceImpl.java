@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -125,12 +124,10 @@ public class SaleServiceImpl implements SaleService {
 				if (!fileNums.equals(""))
 					fileNums += ",";
 				fileNums += fileVo.getNum();
-
 			}
 			sale.setFileurl(fileNums);
 
 		}
-
 		Sale sale1 = sale;
 		saleRepository.save(sale1);
 		return sale1.getNum();
@@ -179,9 +176,7 @@ public class SaleServiceImpl implements SaleService {
 
 	@Override
 	public Sale saleDetail(String email,Integer num) {
-
 		return saleDslRepository.findSaleBySaleNum(num);
-
 	}
 
 	@Override
@@ -229,17 +224,13 @@ public class SaleServiceImpl implements SaleService {
 		sale.setStatus(status);
 	    saleRepository.save(sale);
 	}
-		
-		
 	
-
 	@Override
 	public void saleDelete(Integer num) throws Exception {
 		Sale sale = saleRepository.findByNum(num);
 		saleRepository.delete(sale);
 	}
 
-	
 	@Override
 	public List<Sale> SaleListByCategory(String category, PageInfo pageInfo) throws Exception {
 		// TODO Auto-generated method stub

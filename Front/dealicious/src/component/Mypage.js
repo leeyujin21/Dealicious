@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Button, FormGroup, Label } from "reactstrap";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { FaArrowRight } from "react-icons/fa";
 
 const Mypage = () => {
     const Image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
@@ -26,8 +27,16 @@ const Mypage = () => {
                 console.log(err);
             })
     }, []);
+
     const handleFilterChange = (option) => {
         setFilterOption(option);
+    };
+
+    const formatPrice = (amount) => {
+        if (!amount) return '';
+        const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
+        const formattedPrice = numericPrice.toLocaleString('ko-KR');
+        return `${formattedPrice}원`;
     };
 
     return (
@@ -71,75 +80,85 @@ const Mypage = () => {
                 <div style={{ position: "absolute", height: "3px", width: "90px", backgroundColor: "#14C38E" }} />
             </div>
             <div style={{ height: "10px" }} />
-            <div style={{ display: "flex", marginBottom: "10px" }}>
-                <div
-                    onClick={() => handleFilterChange("전체")}
-                    style={{
-                        cursor: "pointer",
-                        marginRight: "10px",
-                        fontWeight: filterOption === "전체" ? "bold" : "normal",
-                    }}
-                >
-                    전체
+            {saleList.length === 0 ? (
+                <div style={{ textAlign: "center", marginTop: "50px", width: "305px", marginLeft: "40px" }}>
+                    <img src="\ggulee.png" style={{ width: "100px" }} /><br />
+                    <b>현재 작성한 글이 없어요!</b><br />
+                    <a style={{ color: '#14C38E', fontWeight: "bold" }}>딜리셔스</a>로 안전한 중고거래<br />
+                    <Link to="/salewrite" style={{ color: "black" }}>첫 시작하기<FaArrowRight /></Link>
                 </div>
-                <div
-                    onClick={() => handleFilterChange("판매중")}
-                    style={{
-                        cursor: "pointer",
-                        marginRight: "10px",
-                        fontWeight: filterOption === "판매중" ? "bold" : "normal",
-                    }}
-                >
-                    판매중
-                </div>
-                <div
-                    onClick={() => handleFilterChange("판매완료")}
-                    style={{
-                        cursor: "pointer",
-                        fontWeight: filterOption === "판매완료" ? "bold" : "normal",
-                    }}
-                >
-                    판매완료
-                </div>
-            </div>
-            <div style={{ display: "flex", flexWrap: "wrap", textAlign: "left", marginBottom: "3px" }}>
-                {saleList
-                    .filter(item => filterOption === "전체" || (filterOption === "판매중" && item.status !== "판매완료") || (filterOption === "판매완료" && item.status === "판매완료"))
-                    .map((item, index) => (
-                        <Link to={"/saledetail/only-detail/" + item.num} key={index} style={{ textDecoration: "none", color: "black" }}>
-                            <div style={{ display: "inline-block", paddingRight: index % 3 === 2 ? "0px" : "10px" }}>
-                                {item.status === "판매완료" ? (
-                                    <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative", opacity: "0.5" }}>
-                                        <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
-                                        <a style={{ fontWeight: "bold", color: "white", position: "absolute", top: "41%", left: "26%" }}>판매완료</a>
+            ) : (
+                <div>
+                    <div style={{ display: "flex", marginBottom: "10px" }}>
+                        <div
+                            onClick={() => handleFilterChange("전체")}
+                            style={{
+                                cursor: "pointer",
+                                marginRight: "10px",
+                                fontWeight: filterOption === "전체" ? "bold" : "normal",
+                            }}
+                        >
+                            전체
+                        </div>
+                        <div
+                            onClick={() => handleFilterChange("판매중")}
+                            style={{
+                                cursor: "pointer",
+                                marginRight: "10px",
+                                fontWeight: filterOption === "판매중" ? "bold" : "normal",
+                            }}
+                        >
+                            판매중
+                        </div>
+                        <div
+                            onClick={() => handleFilterChange("판매완료")}
+                            style={{
+                                cursor: "pointer",
+                                fontWeight: filterOption === "판매완료" ? "bold" : "normal",
+                            }}
+                        >
+                            판매완료
+                        </div>
+                    </div>
+                    <div style={{ display: "flex", flexWrap: "wrap", textAlign: "left", marginBottom: "3px" }}>
+                        {saleList
+                            .filter(item => filterOption === "전체" || (filterOption === "판매중" && item.status !== "판매완료") || (filterOption === "판매완료" && item.status === "판매완료"))
+                            .map((item, index) => (
+                                <Link to={"/saledetail/only-detail/" + item.num} key={index} style={{ textDecoration: "none", color: "black" }}>
+                                    <div style={{ display: "inline-block", paddingRight: index % 3 === 2 ? "0px" : "10px" }}>
+                                        {item.status === "판매완료" ? (
+                                            <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative", opacity: "0.5" }}>
+                                                <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
+                                                <a style={{ fontWeight: "bold", color: "white", position: "absolute", top: "41%", left: "26%" }}>판매완료</a>
+                                            </div>
+                                        ) : (
+                                            <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative" }}>
+                                                <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
+                                            </div>
+                                        )}
+                                        {item.amount.length > 15 ? (
+                                            <div style={{ textAlign: "left", fontWeight: "bold" }}>
+                                                {formatPrice(`${item.amount.slice(0, 15)}...`)}
+                                            </div>
+                                        ) : (
+                                            <div style={{ textAlign: "left", fontWeight: "bold" }}>
+                                                {formatPrice(item.amount)}
+                                            </div>
+                                        )}
+                                        {item.title.length > 11 ? (
+                                            <div style={{ textAlign: "left", marginTop: "-5px" }}>
+                                                <a style={{ fontSize: "13px" }}>{`${item.title.slice(0, 11)}...`}</a>
+                                            </div>
+                                        ) : (
+                                            <div style={{ textAlign: "left", marginTop: "-5px" }}>
+                                                <a style={{ fontSize: "13px" }}>{item.title}</a>
+                                            </div>
+                                        )}
                                     </div>
-                                ) : (
-                                    <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative" }}>
-                                        <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
-                                    </div>
-                                )}
-                                {item.amount.length > 15 ? (
-                                    <div style={{ textAlign: "left", fontWeight: "bold" }}>
-                                        {`${item.amount.slice(0, 15)}...`}
-                                    </div>
-                                ) : (
-                                    <div style={{ textAlign: "left", fontWeight: "bold" }}>
-                                        {item.amount}
-                                    </div>
-                                )}
-                                {item.title.length > 11 ? (
-                                    <div style={{ textAlign: "left", marginTop: "-5px" }}>
-                                        <a style={{ fontSize: "13px" }}>{`${item.title.slice(0, 11)}...`}</a>
-                                    </div>
-                                ) : (
-                                    <div style={{ textAlign: "left", marginTop: "-5px" }}>
-                                        <a style={{ fontSize: "13px" }}>{item.title}</a>
-                                    </div>
-                                )}
-                            </div>
-                        </Link>
-                    ))}
-            </div>
+                                </Link>
+                            ))}
+                    </div>
+                </div>)}
         </div>
     )
 }

@@ -17,6 +17,7 @@ import com.kosta.deal.entity.QHot;
 import com.kosta.deal.entity.QPay;
 import com.kosta.deal.entity.QReview;
 import com.kosta.deal.entity.QSale;
+import com.kosta.deal.entity.QSaleLike;
 import com.kosta.deal.entity.QUnivData;
 import com.kosta.deal.entity.QUser;
 import com.kosta.deal.entity.Review;
@@ -209,5 +210,24 @@ public class DslRepository {
 		return jpaQueryFactory.selectFrom(review)
 				.where(review.giver.eq(userEmail).and(review.receiver.eq(partnerEmail)).and(review.salenum.eq(salenum)))
 				.fetchOne();
+	}
+	
+	public List<Sale> findZzimListByUserEmail(String email) {
+		QSaleLike salelike = QSaleLike.saleLike;
+		QSale sale = QSale.sale;
+		return jpaQueryFactory.select(sale)
+				.from(salelike)
+				.join(sale)
+				.on(sale.num.eq(salelike.saleNum))
+				.where(salelike.userEmail.eq(email))
+				.fetch();
+	}
+	
+	public List<Review> findReviewByReceiver(String email) {
+		QReview review = QReview.review;
+		return jpaQueryFactory.select(review)
+				.from(review)
+				.where(review.receiver.eq(email))
+				.fetch();
 	}
 }
