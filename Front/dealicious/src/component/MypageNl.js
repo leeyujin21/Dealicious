@@ -1,12 +1,9 @@
 import Avvvatars from "avvvatars-react";
 import { useRef, useState } from "react";
-import { IoArrowBackOutline } from "react-icons/io5";
-import { FaStar } from "react-icons/fa6";
-import { Link, Navigate } from "react-router-dom";
-import { Button, FormGroup, Label } from "reactstrap";
+import { Button } from "reactstrap";
 
 const MypageNl = () => {
-    const [Image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+    const Image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     const fileInput = useRef(null)
     function goToLogin() {
         window.location.replace("/login")

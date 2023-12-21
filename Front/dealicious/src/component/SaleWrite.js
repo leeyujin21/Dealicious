@@ -6,7 +6,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Input, Button } from 'reactstrap';
 import { FaCamera } from "react-icons/fa";
 import axios from 'axios';
-import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
 import { GiCancel } from 'react-icons/gi';
 

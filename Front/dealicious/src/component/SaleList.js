@@ -25,7 +25,7 @@ const SaleList = () => {
     // 숫자를 천단위로 포맷팅합니다.
     const formattedPrice = numericPrice.toLocaleString('ko-KR');
     return `${formattedPrice}원`;
-};
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {//IntersectionObserver를 생성하여 관찰 대상 요소(observerRef.current)의 교차점을 감시
@@ -75,6 +75,7 @@ const SaleList = () => {
     } else {
       axios.post(`http://localhost:8090/salelist`, { cat: category })
         .then(res => {
+
           console.log(res);
           setSaleList([]);
           console.log(res.data);
@@ -94,10 +95,11 @@ const SaleList = () => {
 
   return (
     <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px", paddingTop: "0px" }}>
-      {user.email !== '' ?
-        <Link to="/salewrite" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px", borderRadius:"50px" }}>
+      {user.email !== undefined && user.email!=='' ?
+        <Link to="/salewrite" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px", borderRadius: "50px" }}>
           <FiPlusCircle size="50" color="#14C38E" />
-        </Link> : <Link to="/mypagenl" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px", borderRadius:"50px" }}><FiPlusCircle size="50" color="#14C38E" /></Link>}
+        </Link> : <Link to="/mypagenl" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px", borderRadius: "50px" }}><FiPlusCircle size="50" color="#14C38E" /></Link>
+      }
 
       {saleList.map((item, index) =>
 

@@ -53,7 +53,7 @@ const DEALTop = () => {
             <Link to='/search'>
               <IoIosSearch size='38' color='14C38E' />
             </Link>
-            <Link to='/notiactivity'>
+            <Link to={user.email !== undefined && user.email!=='' ?'/notiactivity':'mypagenl'}>
               {noticnt >= 1 && <div style={{ borderRadius: "50px", position: "absolute", marginLeft: "20px", width: "18px", height: "18px", backgroundColor: "red", justifyContent: "center", alignItems: "center", display: "flex", color: "white", fontSize: "15px" }}>{noticnt}</div>}
               <PiBell size='38' color='14C38E' />
             </Link>

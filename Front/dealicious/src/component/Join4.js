@@ -19,11 +19,11 @@ const Join4 = () => {
     const nickname = location.state?.nickname;
     const password = location.state?.password;
     const token = useSelector(state => state.persistedReducer.token);
-    const [successEmail, setSuccessEmail] = useState(false);
+    const [successEmail, setSuccessEmail] = useState(true);
 
     useEffect(() => {
         setEmailError('');
-        setSuccessEmail(false);
+        setSuccessEmail(true);
     }, [email]);
 
     useEffect(() => {
