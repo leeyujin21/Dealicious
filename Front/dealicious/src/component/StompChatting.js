@@ -193,6 +193,7 @@ const StompChatting = () => {
   };
 
   const receipt = () => {
+    console.log("수령완료");
     axios.get(`http://localhost:8090/receipt/` + sale.num, {
       headers: {
         Authorization: token,

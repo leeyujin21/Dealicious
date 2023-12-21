@@ -42,7 +42,7 @@ const DEALTop = () => {
       }
     }
   }
-  }, [receivedata,user]);
+  }, [receivedata]);
 
   const goNotification = () => {
     if(user.email !== undefined && user.email !== '') {

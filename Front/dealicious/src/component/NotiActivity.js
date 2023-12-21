@@ -2,11 +2,12 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { GoArrowLeft } from "react-icons/go";
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const NotiActivity = () => {
   const [notiactiList, setNotiactiList] = useState([]);
   const token = useSelector(state => state.persistedReducer.token);
+  const navigate = useNavigate();
   useEffect(() => {
     axios.get(`http://localhost:8090/notiactivity`, {
             headers: {
@@ -22,6 +23,10 @@ const NotiActivity = () => {
                 console.log(err);
             })
   }, []);
+
+  const goChat = (e) => {
+    navigate("/chat/"+e);
+  }
 
   return (
     <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop:"10px", paddingLeft:"20px", paddingRight:"20px"}}>
@@ -39,7 +44,7 @@ const NotiActivity = () => {
             <div style={{position:"absolute", height:"3px", width:"192.5px", backgroundColor:"#14C38E"}}/>
         </div>
         {notiactiList.map((item, index) =>
-        <div key={index} style={{borderBottom: "1px solid gray", width:"385px" }}>
+        <div key={index} style={{borderBottom: "1px solid gray", width:"385px", cursor:"pointer"}} onClick={() => goChat(item.channelId)}>
         <div style={{display:"flex", paddingBottom:"15px", paddingTop:"15px"}}>
           <div><img src='gg.png' style={{width:"50px", height:"50px", marginTop:"10px"}}></img></div>
           <div style={{marginLeft:"10px", width:"330px"}}>
