@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kosta.deal.entity.Sale;
-import com.kosta.deal.entity.User;
 import com.kosta.deal.util.PageInfo;
 
 public interface SaleService {
@@ -38,5 +37,5 @@ public interface SaleService {
 
 	List<Sale> SaleListByCategory(String category) throws Exception;
 	void changesalestatusToreceipt(Integer num, String email) throws Exception;
-	Sale saleDetail(String email, Integer num) ;;
+	Sale saleDetail(String email, Integer num);
 }
