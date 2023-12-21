@@ -1,6 +1,7 @@
 package com.kosta.deal.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,10 +41,10 @@ public class MyPageController {
 		}
 	}
 	@GetMapping("/myreviewlist/{email}")
-	public ResponseEntity<List<Review>> myReviewList(@PathVariable String email) {
+	public ResponseEntity<List<Map<String, Object>>> myReviewList(@PathVariable String email) {
 		System.out.println("마이페이지 컨트롤러에 이메일이 오나? " + email);
 		try {
-			List<Review> myReviewList = mypageService.reviewListByReceiver(email);
+			List<Map<String, Object>> myReviewList = mypageService.reviewListByReceiver(email);
 			System.out.println(myReviewList.get(0));
 			return ResponseEntity.ok(myReviewList);
 		} catch(Exception e) {
