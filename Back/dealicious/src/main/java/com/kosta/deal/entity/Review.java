@@ -1,6 +1,6 @@
 package com.kosta.deal.entity;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,5 +33,5 @@ public class Review {
 	private String starcount;
 	private Integer salenum;
 	@CreationTimestamp
-	 private Date reviewdate;
+	private Timestamp reviewdate;
 }
