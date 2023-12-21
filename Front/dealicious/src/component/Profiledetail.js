@@ -45,8 +45,8 @@ const Profiledetail = () => {
                 </FormGroup>
                 <FormGroup style={{ textAlign: "left", display: "flex", paddingBottom: "24px" }}>
                     <Label for="accountid" style={{ fontSize: "20px", width: "100px" }}>계좌번호</Label>
-                    <Label for="accountbank" style={{ fontSize: "16px", lineHeight: "30px" }}>{user.accountbank == null ? "" : user.accountbank}</Label>&nbsp;
-                    <Label for="accountid" style={{ fontSize: "16px", lineHeight: "30px" }}>{user.accountid == null ? "등록된 계좌번호가 없습니다" : user.accountid}</Label>
+                    <Label for="accountbank" style={{ fontSize: "16px", lineHeight: "30px" }}>{user.accountbank == null || user.accountbank == "null" ? "등록된 계좌번호가 없습니다" : user.accountbank}</Label>&nbsp;
+                    <Label for="accountid" style={{ fontSize: "16px", lineHeight: "30px" }}>{user.accountid == null || user.accountbank == "null" ? "" : user.accountid}</Label>
                 </FormGroup>
             </div>
             <Link to="/profilemodify">

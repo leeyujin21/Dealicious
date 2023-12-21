@@ -9,9 +9,6 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { GiCancel } from 'react-icons/gi';
 
-
-
-
 const SaleWrite = () => {
     const [currentImage, setCurrentImage] = useState("./ggul2.png");
     const navigate = useNavigate();
@@ -30,10 +27,9 @@ const SaleWrite = () => {
     const [errorMessage_a, setErrorMessage_a] = useState('');
     const [errorMessage_p, setErrorMessage_p] = useState('');
     const [errorMessage_c, setErrorMessage_c] = useState('');
-
     const [errorMessage_f, setErrorMessage_f] = useState('');
     const MAX_TITLE_LENGTH = 20;
-    const [error, setError] = useState('');
+
     const [sale, setSale] = useState({      //상품 정보 초기화
         title: '',
         category: '',
@@ -43,11 +39,14 @@ const SaleWrite = () => {
         ggull: '0',
         fileurl: ''
     });
+
     const [user, setUser] = useState({ id: '', email: '', nickname: '' });
     const temp = useSelector(state => state.persistedReducer.user);
+
     useEffect(() => {
         setUser(temp);
     }, [])
+
     const formatPrice = (amount) => {
         if (!amount) return '';
         const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
@@ -58,12 +57,12 @@ const SaleWrite = () => {
 
     };
 
-
     const removeImage = (indexToRemove) => {
         const updatedImages = selectedImages.filter((_, index) => index !== indexToRemove);
         setSelectedImages(updatedImages);
         setImageCount(updatedImages.length);
     };
+
     const fileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -86,20 +85,19 @@ const SaleWrite = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-
-        // Check if the input is the 'title' field
         if (name === 'title') {
-            // Trim the input to the maximum allowed length
             const truncatedValue = value.slice(0, MAX_TITLE_LENGTH);
             setSale({ ...sale, [name]: truncatedValue });
+        } else if (name === 'amount') {
+            const numericValue = value.replace(/[^0-9]/g, '');
+            const truncatedValue = numericValue.slice(0, 10);
+            setSale({ ...sale, [name]: truncatedValue });
         } else {
-            // For other fields, update the state normally
             setSale({ ...sale, [name]: value });
         }
     };
 
     const changecontent = (e) => {  //초기화
-        setError('');
         setTitleError(false);       //input 초기화
         setAmountError(false);
         setCategoryError(false);
@@ -113,13 +111,6 @@ const SaleWrite = () => {
         setErrorMessage_c('');
         setErrorMessage_f('');
         setErrorMessage('');
-
-
-
-
-
-
-
     }
 
     const isFormValid = () => { //유효성검사
@@ -161,7 +152,6 @@ const SaleWrite = () => {
             setErrorMessage_a('');
         }
 
-
         if (sale.place.trim() === '') {
             setPlaceError(true);
             setErrorMessage_p('장소를 입력하세요.');
@@ -184,13 +174,10 @@ const SaleWrite = () => {
     };
 
     const submit = (e) => {
-
         if (!isFormValid()) {
             e.preventDefault(); // 폼 제출 막기
             setErrorMessage('');
             return;
-
-
         }
         const formData = new FormData();
         formData.append("title", sale.title);
@@ -202,7 +189,6 @@ const SaleWrite = () => {
         formData.append("file", sale.fileurl);
         formData.append("email", user.email);
 
-        // formData.append("file", files);
         for (let image of selectedImages) {
             formData.append("file", image);
         }
@@ -220,6 +206,7 @@ const SaleWrite = () => {
             });
 
     }
+
     return (
         <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden" }}>
             <br />
@@ -237,8 +224,6 @@ const SaleWrite = () => {
                         </div>
                     </div>
                     <Input name="file" type="file" id="file" accept="image/*" onInput={changecontent} onChange={fileChange} hidden ref={fileInputRef} />
-
-
                     <div style={{ display: 'flex', marginLeft: '50px', marginTop: '-30px' }}>
                         {selectedImages.map((image, index) => (
                             <div key={index} style={{ marginLeft: '10px', position: 'relative' }}>
@@ -246,15 +231,12 @@ const SaleWrite = () => {
                                     src={URL.createObjectURL(image)}
                                     alt={`Selected ${index + 1}`}
                                     style={{ width: '45px', height: '45px' }}
-
                                 />
                                 <button data-idx={index} onClick={() => removeImage(index)} style={{ position: "absolute", top: "-15px", right: "-15px", background: "none", border: "none", cursor: "pointer" }}><GiCancel /></button>
                             </div>
                         ))}
                     </div>
-
                 </div>
-
             </div>
             {fileurlError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_f}</div>}
             <div style={{ marginBottom: "5px", fontSize: "18px", marginTop: "20px" }}>제목</div>
@@ -268,8 +250,6 @@ const SaleWrite = () => {
                 onChange={handleInputChange}
             />
             {titleError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_t}</div>}
-
-
             <div style={{ marginTop: "20px", display: "flex" }}>
                 <div>
                     <div style={{ marginBottom: "5px", fontSize: "18px" }}>카테고리</div>
@@ -287,8 +267,6 @@ const SaleWrite = () => {
                         <option value="others" style={{ textAlign: "left" }}>&nbsp;&nbsp;&nbsp;기타</option>
                     </select>
                 </div>
-
-
                 <div style={{ marginLeft: "25px" }}>
                     <div style={{ marginBottom: "10px", fontSize: "18px" }} name="ggull" value={sale.ggull}>
                         꿀페이
@@ -299,11 +277,10 @@ const SaleWrite = () => {
             {categoryError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_ca}</div>}
             <div style={{ marginBottom: "20px" }} />
             <div style={{ display: "flex" }}>
-
                 <div>
-                    <div style={{ marginBottom: "5px", fontSize: "18px" }}>가격</div>   
+                    <div style={{ marginBottom: "5px", fontSize: "18px" }}>가격</div>
                     <div><Input type="text" placeholder="10,000원" style={{ borderRadius: "5px", height: "40px", width: "180px", float: "left" }} name="amount" value={sale.amount} onInput={changecontent} onChange={handleInputChange}></Input></div>
-                    {amountError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_a}</div>}  
+                    {amountError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_a}</div>}
                 </div>
                 <div>
                     <div style={{ marginBottom: "5px", fontSize: "18px", marginLeft: "25px" }}>장소</div>
@@ -319,7 +296,6 @@ const SaleWrite = () => {
                     구매날짜, 하자 등 자세하게 작성할수록
                     구매자에게 편리합니다'></Input>
                 {contentError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_c}</div>}
-
             </div>
             <br /> <p style={{ textAlign: "center" }}><Button
                 type="button"
@@ -343,10 +319,6 @@ const SaleWrite = () => {
                 </div>
             )}
         </div>
-
-
-
-
     )
 };
 export default SaleWrite;
