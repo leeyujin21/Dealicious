@@ -223,11 +223,15 @@ public class DslRepository {
 				.fetch();
 	}
 	
-	public List<Review> findReviewByReceiver(String email) {
+	public List<Tuple> findReviewByReceiver(String email) {
 		QReview review = QReview.review;
-		return jpaQueryFactory.select(review)
+		QUser user = QUser.user;
+		QSale sale = QSale.sale;
+		return jpaQueryFactory.select(user.profileimgurl, user.nickname, review.starcount, sale.ggull, sale.fileurl, review.reviewdate)
 				.from(review)
-				.where(review.receiver.eq(email))
+				.from(sale)
+				.from(user)
+				.where(review.receiver.eq(email).and(sale.num.eq(review.salenum)).and(user.email.eq(review.giver)))
 				.fetch();
 	}
 }

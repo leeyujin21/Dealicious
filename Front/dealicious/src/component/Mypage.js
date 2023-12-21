@@ -10,7 +10,6 @@ import { FaArrowRight } from "react-icons/fa";
 const Mypage = () => {
     const Image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     const [saleList, setSaleList] = useState([]);
-    const [page, setPage] = useState(1);
     const user = useSelector(state => state.persistedReducer.user);
     const [filterOption, setFilterOption] = useState("전체");
 
