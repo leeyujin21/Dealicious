@@ -202,10 +202,5 @@ public class SaleController {
 			e.printStackTrace();
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
-		
-		
-		
 	}
-	
-	
 }

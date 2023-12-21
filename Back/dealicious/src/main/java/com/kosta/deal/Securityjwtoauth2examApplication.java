@@ -9,5 +9,4 @@ public class Securityjwtoauth2examApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(Securityjwtoauth2examApplication.class, args);
 	}
-
 }

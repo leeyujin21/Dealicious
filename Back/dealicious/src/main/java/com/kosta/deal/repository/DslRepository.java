@@ -19,6 +19,7 @@ import com.kosta.deal.entity.QNotification;
 import com.kosta.deal.entity.QPay;
 import com.kosta.deal.entity.QReview;
 import com.kosta.deal.entity.QSale;
+import com.kosta.deal.entity.QSaleLike;
 import com.kosta.deal.entity.QUnivData;
 import com.kosta.deal.entity.QUser;
 import com.kosta.deal.entity.Review;
@@ -224,6 +225,29 @@ public class DslRepository {
 		QNotification notification = QNotification.notification;
 		return jpaQueryFactory.selectFrom(notification)
 				.where(notification.email.eq(email).and(notification.type.eq("activity")))
+        .fetch();
+  }
+  
+	public List<Sale> findZzimListByUserEmail(String email) {
+		QSaleLike salelike = QSaleLike.saleLike;
+		QSale sale = QSale.sale;
+		return jpaQueryFactory.select(sale)
+				.from(salelike)
+				.join(sale)
+				.on(sale.num.eq(salelike.saleNum))
+				.where(salelike.userEmail.eq(email))
+				.fetch();
+	}
+	
+	public List<Tuple> findReviewByReceiver(String email) {
+		QReview review = QReview.review;
+		QUser user = QUser.user;
+		QSale sale = QSale.sale;
+		return jpaQueryFactory.select(user.profileimgurl, user.nickname, review.starcount, sale.ggull, sale.fileurl, review.reviewdate)
+				.from(review)
+				.from(sale)
+				.from(user)
+				.where(review.receiver.eq(email).and(sale.num.eq(review.salenum)).and(user.email.eq(review.giver)))
 				.fetch();
 	}
 }

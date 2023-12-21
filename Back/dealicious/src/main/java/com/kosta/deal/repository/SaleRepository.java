@@ -6,10 +6,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.util.Streamable;
-import org.springframework.http.ResponseEntity;
 
 import com.kosta.deal.entity.Sale;
 
@@ -23,6 +20,8 @@ public interface SaleRepository extends JpaRepository<Sale, Integer> {
 	Page<Sale>findByFileurlContains(String fileurl,PageRequest pageRequest);
 	Sale findByNum(Integer num);
 	List<Sale> findByEmail(String email);
+	
+	List<Sale> findByNumIn(List<Integer> numList);
 
 	
 	
