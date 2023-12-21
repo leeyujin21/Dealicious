@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kosta.deal.config.auth.PrincipalDetails;
 import com.kosta.deal.entity.User;
 import com.kosta.deal.repository.UserRepository;
+import com.kosta.deal.service.UserListService;
 import com.kosta.deal.service.UserService;
 import com.kosta.deal.validation.CustomAnnotaionCollection.CustomEmail;
 
@@ -35,7 +36,9 @@ public class RestApiController {
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	private final UserService userService;
+	private final UserListService userListService;
 
+	//로그인 후 user정보 불러와서 redux에 넣는용도
 	@GetMapping("user")
 	public ResponseEntity<User> user(Authentication authentication) {
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
@@ -43,6 +46,7 @@ public class RestApiController {
 		System.out.println(principalDetails.getUser().getUsername());
 		System.out.println(principalDetails.getUser().getPassword());
 		System.out.println(principalDetails.getUser().getRoles());
+		userListService.add(principalDetails.getUser());
 		return new ResponseEntity<User>(principalDetails.getUser(), HttpStatus.OK);
 	}
 
@@ -161,6 +165,18 @@ public class RestApiController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/logout1")
+	public ResponseEntity<String> logout(Authentication authentication) {
+		try {
+			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+			userListService.remove(principalDetails.getUser());
+			return new ResponseEntity<String>("로그아웃성공", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
 	}
 }

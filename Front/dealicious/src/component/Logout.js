@@ -1,14 +1,28 @@
 import {useEffect} from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {persistor} from '../App';
+import axios from "axios";
 const Logout = () => {
     const dispatch = useDispatch();
+    const token = useSelector(state => state.persistedReducer.token);
 
     useEffect(()=> {
-        dispatch({type:"token", payload:''})
-        dispatch({type:"user", payload:''})
-        persistor.purge();
-        window.location.href="/mypagenl";
+        axios.get("http://localhost:8090/logout1", {
+                    headers: {
+                        Authorization: token,
+                    }
+                })
+                    .then(res => {
+                        console.log(res);
+                        dispatch({type:"token", payload:''})
+                        dispatch({type:"user", payload:''})
+                        persistor.purge();
+                        window.location.href="/mypagenl";
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+
     }, [])
 }
 

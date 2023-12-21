@@ -9,11 +9,13 @@ import com.kosta.deal.entity.Admin;
 import com.kosta.deal.entity.Chat;
 import com.kosta.deal.entity.ChatRoom;
 import com.kosta.deal.entity.Hot;
+import com.kosta.deal.entity.Notification;
 import com.kosta.deal.entity.QAdmin;
 import com.kosta.deal.entity.QChat;
 import com.kosta.deal.entity.QChatRoom;
 import com.kosta.deal.entity.QCorpData;
 import com.kosta.deal.entity.QHot;
+import com.kosta.deal.entity.QNotification;
 import com.kosta.deal.entity.QPay;
 import com.kosta.deal.entity.QReview;
 import com.kosta.deal.entity.QSale;
@@ -209,5 +211,19 @@ public class DslRepository {
 		return jpaQueryFactory.selectFrom(review)
 				.where(review.giver.eq(userEmail).and(review.receiver.eq(partnerEmail)).and(review.salenum.eq(salenum)))
 				.fetchOne();
+	}
+	
+	public List<Notification> findNoneReadNotiList(String email) {
+		QNotification notification = QNotification.notification;
+		return jpaQueryFactory.selectFrom(notification)
+				.where(notification.email.eq(email).and(notification.isRead.eq("0")))
+				.fetch();
+	}
+	
+	public List<Notification> findNotiActiList(String email) {
+		QNotification notification = QNotification.notification;
+		return jpaQueryFactory.selectFrom(notification)
+				.where(notification.email.eq(email).and(notification.type.eq("activity")))
+				.fetch();
 	}
 }
