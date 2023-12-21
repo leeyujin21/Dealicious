@@ -20,11 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kosta.deal.entity.Chat;
 import com.kosta.deal.entity.ChatRoom;
 import com.kosta.deal.entity.FileVo;
+import com.kosta.deal.entity.Notification;
 import com.kosta.deal.entity.Sale;
 import com.kosta.deal.entity.SaleLike;
 import com.kosta.deal.repository.ChatRepository;
 import com.kosta.deal.repository.DslRepository;
 import com.kosta.deal.repository.FileVoRepository;
+import com.kosta.deal.repository.NotiRepository;
 import com.kosta.deal.repository.SaleDslRepository;
 import com.kosta.deal.repository.SaleLikeRepository;
 import com.kosta.deal.repository.SaleRepository;
@@ -50,6 +52,10 @@ public class SaleServiceImpl implements SaleService {
 	private ChatRepository chatRepository;
 	@Autowired
 	private SimpMessageSendingOperations sendingOperations;
+	@Autowired
+	private NotiRepository notiRepository;
+	@Autowired
+	private UserListService userListService;
 
 	// salelist 무한 스크롤 페이지 처리
 	@Override
@@ -253,12 +259,28 @@ public class SaleServiceImpl implements SaleService {
 		sale.setStatus("수령완료");
 		saleRepository.save(sale);
 		ChatRoom chatRoom = dslRepository.findChatRoomBySalenumAndCreator(num,email);
+		
+    	Notification noti1 = new Notification();
+    	noti1.setChannelId(chatRoom.getChannelId());
+    	noti1.setTitle("작성하신 '"+sale.getTitle()+"' 거래가 완료되었습니다.");
+    	noti1.setContent("후기를 작성해주세요!");
+    	noti1.setEmail(sale.getEmail());
+    	noti1.setType("activity");
+    	notiRepository.save(noti1);
+    	Notification noti2 = new Notification();
+    	noti2.setChannelId(chatRoom.getChannelId());
+    	noti2.setTitle("구매하신 '"+sale.getTitle()+"' 의 거래가 완료되었습니다.");
+    	noti2.setContent("후기를 작성해주세요!");
+    	noti2.setEmail(email);
+    	noti2.setType("activity");
+    	notiRepository.save(noti2);
 		Chat chat = new Chat();
     	chat.setType("completereceipt");
     	chat.setChannelId(chatRoom.getChannelId());
     	chat.setWriterId("admin");
     	chatRepository.save(chat);
-    	sendingOperations.convertAndSend("/sub/chat/" + chatRoom.getChannelId(), chat);
+    	
+    	userListService.sendCompleteNoti(chat,email,sale.getEmail());
 	}
 
 	@Override

@@ -20,8 +20,8 @@ const MypageNl = () => {
             </div>
             <p>로그인 후 이용해주세요</p>
             <div style={{ paddingBottom: "30px" , fontSize:"13px"}}>
-                <a>딜리셔스 서비스를 이용하기 위해
-                    로그인이 필요합니다</a>
+                딜리셔스 서비스를 이용하기 위해
+                    로그인이 필요합니다
             </div>
             <Button style={{ backgroundColor: "#14C38E", borderStyle: "none" }} onClick={goToLogin}>
                 로그인/회원가입

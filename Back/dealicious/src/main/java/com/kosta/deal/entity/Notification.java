@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -22,17 +23,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicInsert
-public class Chat {
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	 private Integer num;
-	 @Column
-	 private String channelId;
-	 private String writerId;
-	 private String receiverId;
-	 private String chat;
-	 private String data;
-	 private String isRead;
-	 private String type;
-	 @CreationTimestamp
-	 private Date chatdate;
+public class Notification {
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer num;
+	@Column
+	private String email;
+	private String title;
+	private String content;
+	private String type;
+	private String channelId;
+	@ColumnDefault("0")
+	private String isRead;
+	@CreationTimestamp
+	private Date notidate;
 }
