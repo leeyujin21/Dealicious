@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kosta.deal.config.auth.PrincipalDetails;
 import com.kosta.deal.entity.Admin;
-import com.kosta.deal.entity.User;
 import com.kosta.deal.repository.AdminRepository;
 import com.kosta.deal.service.AdminService;
 
@@ -43,9 +42,7 @@ public class AdminController {
 
 	@GetMapping("adminlogin")
 	public ResponseEntity<Admin> admin(Authentication authentication) {
-		System.out.println("되나?");
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-		System.out.println(principalDetails.getAdmin());
 		return new ResponseEntity<Admin>(principalDetails.getAdmin(), HttpStatus.OK);
 	}
 	
@@ -107,8 +104,6 @@ public class AdminController {
 		try {
 			String startDate = ((String) param.get("sdate"));
 			String endDate = ((String) param.get("edate")).substring(0, 10);
-			System.out.println(startDate);
-			System.out.println(endDate);
 			List<Map<String, Object>> settleList = adminService.settleList(startDate, endDate);
 			return new ResponseEntity<List<Map<String, Object>>>(settleList, HttpStatus.OK);
 		} catch (Exception e) {

@@ -51,6 +51,7 @@ import Oauth2 from './component/Oauth2';
 import StompChatting from './component/StompChatting';
 import MypageNl from './component/MypageNl';
 import { WebSocketProvider } from './component/WebSocketProvider';
+import About from './component/About';
 
 export const persistor = persistStore(store);
 function App() {
@@ -76,6 +77,7 @@ function App() {
                             {isLoginJoinRoute ? '' : isAdminRoute ? <AdminTop /> : <DEALTop />}
                             <Routes>
                                 <Route exect path="/" element={<Main />} /> {/**/}
+                                <Route exect path="/about" element={<About/>} />
 
                                 <Route exect path="/adminmy" element={<AdminMy />} /> {/**/}
                                 <Route exect path="/adminmymodi" element={<AdminMyModi />} />

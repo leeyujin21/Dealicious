@@ -65,19 +65,13 @@ public class UserServiceImpl implements UserService {
 		String dir="c:/upload/";
 		if (file != null && !file.isEmpty()) {
             try {
-                // file table에 insert
-            	System.out.println("1");
                 FileVo fileVo = FileVo.builder().directory(dir).name(file.getOriginalFilename())
                         .size(file.getSize()).contenttype(file.getContentType()).data(file.getBytes()).build();
-                System.out.println("2");
                 fileVoRepository.save(fileVo);
-
-                // upload 폴더에 upload
-                System.out.println("3");
+                
                 File uploadFile = new File(dir + fileVo.getNum());
                 file.transferTo(uploadFile);
 
-                System.out.println("4");
                 String fileNums = Integer.toString(fileVo.getNum());
                 user.setProfileimgurl(fileNums);
             } catch (IOException e) {
@@ -99,11 +93,9 @@ public class UserServiceImpl implements UserService {
         String title = "Dealicious 이메일 인증 번호";
         String authCode = this.createCode();
         mailService.sendEmail(toEmail, title, authCode);
-        System.out.println("1");
         // 이메일 인증 요청 시 인증 번호 Redis에 저장 ( key = "AuthCode " + Email / value = AuthCode )
         redisService.setValues(AUTH_CODE_PREFIX + toEmail,
                 authCode, Duration.ofMillis(this.authCodeExpirationMillis));
-        System.out.println("2");
 	}
 
 	@Override

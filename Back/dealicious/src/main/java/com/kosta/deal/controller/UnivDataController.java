@@ -33,7 +33,6 @@ public class UnivDataController implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("김형섭");
 		try {
 			univDataService.univDataList();
 		} catch (Exception e) {
@@ -64,7 +63,5 @@ public class UnivDataController implements CommandLineRunner {
 		}
 		
 		adminService.registerAccountId("12345-12345","한국은행");
-
-		System.out.println("MyControllerInitializer 실행됨");
 	}
 }

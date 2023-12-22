@@ -98,7 +98,6 @@ public class AdminServiceImpl implements AdminService{
 			totalAmount += Integer.parseInt(sale.getAmount());
 			saleRepository.save(sale);
 		}
-		System.out.println(totalAmount);
 		AdminAccount adminAccount = adminAccountRepository.findById("12345-12345").get();
 		adminAccount.setBalance(adminAccount.getBalance()-totalAmount);
 		adminAccountRepository.save(adminAccount);

@@ -9,10 +9,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kosta.deal.entity.Review;
 import com.kosta.deal.entity.Sale;
 import com.kosta.deal.repository.DslRepository;
-import com.kosta.deal.repository.SaleRepository;
 import com.querydsl.core.Tuple;
 
 @Service
@@ -33,7 +31,6 @@ public class MyPageServiceImpl implements MyPageService {
 
 	@Override
 	public List<Map<String,Object>> reviewListByReceiver(String email) {
-		System.out.println("마이페이지 서비스: " + email);
 		try {
 			List<Map<String,Object>> reviewList = new ArrayList<>();
 			List<Tuple> tupleList = dslRepository.findReviewByReceiver(email);
@@ -53,7 +50,6 @@ public class MyPageServiceImpl implements MyPageService {
 				map.put("reviewdate", reviewdate);
 				reviewList.add(map);
 			}
-			System.out.println("마이페이지 서비스: " + reviewList);
 			return reviewList;
 		} catch (Exception e){
 			e.printStackTrace();

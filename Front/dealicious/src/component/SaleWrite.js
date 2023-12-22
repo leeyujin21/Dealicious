@@ -175,8 +175,13 @@ const SaleWrite = () => {
 
     const submit = (e) => {
         if (!isFormValid()) {
-            e.preventDefault(); // 폼 제출 막기
+            e.preventDefault();
             setErrorMessage('');
+            return;
+        }
+        if (imageCount === 0) {
+            e.preventDefault();
+            setErrorMessage_f('이미지를 최소 1개 이상 선택하세요.');
             return;
         }
         const formData = new FormData();
@@ -204,9 +209,6 @@ const SaleWrite = () => {
             .catch(err => {
                 console.log(err);
             });
-        
-        
-
     }
 
     return (
@@ -315,11 +317,6 @@ const SaleWrite = () => {
                 }}>
                 등록하기
             </Button></p>
-            {errorMessage && (
-                <div style={{ color: 'red', fontSize: '14px', marginTop: '10px', textAlign: 'center' }}>
-                    {errorMessage}
-                </div>
-            )}
         </div>
     )
 };

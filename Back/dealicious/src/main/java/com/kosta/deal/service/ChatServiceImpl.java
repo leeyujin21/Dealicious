@@ -60,13 +60,9 @@ public class ChatServiceImpl implements ChatService {
 	public List<Map<String, Object>> getChatListForm(User user) throws Exception {
 		List<Map<String, Object>> res = new ArrayList<Map<String, Object>>();
 		List<String> channelId = dslRepository.getChannelIdList(user.getEmail());
-		System.out.println(channelId);
-		System.out.println("---------------------");
 		for (String s : channelId) {
 			ChatRoom chatRoom = chatRoomRepository.findByChannelId(s).get();
-			System.out.println(chatRoom);
 			if (chatRoom.getCreator().equals(user.getEmail())) {
-				System.out.println("구매자");
 				User user1 = dslRepository.getUserFromBuyer(s);
 				Sale sale = dslRepository.getSaleForChatlist(s);
 				Chat chat = dslRepository.getChatForChatlist(s);
@@ -75,7 +71,6 @@ public class ChatServiceImpl implements ChatService {
 				map.put("nickname", user1.getNickname());
 				map.put("category", sale.getCategory());
 				map.put("chatdate", chat.getChatdate());
-				System.out.println(chat.getChatdate());
 				if(!chat.getWriterId().equals(user.getEmail())) {
 					map.put("isRead", chat.getIsRead());
 				}
@@ -84,9 +79,7 @@ public class ChatServiceImpl implements ChatService {
 				map.put("channelId", s);
 				res.add(map);
 			} else {
-				System.out.println("판매자");
 				User user1 = dslRepository.getUserFromSeller(s);
-				System.out.println(user1);
 				Sale sale = dslRepository.getSaleForChatlist(s);
 				Chat chat = dslRepository.getChatForChatlist(s);
 				Map<String, Object> map = new HashMap<>();
@@ -94,7 +87,6 @@ public class ChatServiceImpl implements ChatService {
 				map.put("nickname", user1.getNickname());
 				map.put("category", sale.getCategory());
 				map.put("chatdate", chat.getChatdate());
-				System.out.println(chat.getChatdate());
 				if(!chat.getWriterId().equals(user.getEmail())) {
 					map.put("isRead", chat.getIsRead());
 				}

@@ -14,11 +14,11 @@ const SaleList = () => {
   const { category,keyword} = useParams();
   const [page, setPage] = useState(1); // 페이지 번호
 
-  
+
 
   const user = useSelector(state => state.persistedReducer.user);
-  
-  
+
+
   const observerRef = useRef(null);
 
   const formatPrice = (amount) => {
@@ -28,26 +28,26 @@ const SaleList = () => {
     // 숫자를 천단위로 포맷팅합니다.
     const formattedPrice = numericPrice.toLocaleString('ko-KR');
     return `${formattedPrice}원`;
-};
-const timediff = (writedate) => {
-  const currentDate = new Date(); // 현재 날짜와 시간
-  const writeDate = new Date(writedate); // 주어진 날짜
+  };
+  const timediff = (writedate) => {
+    const currentDate = new Date(); // 현재 날짜와 시간
+    const writeDate = new Date(writedate); // 주어진 날짜
 
-  const diffInMilliseconds = currentDate - writeDate; // 밀리초 단위의 시간 차이
-  const diffInMinutes = diffInMilliseconds / (1000 * 60); // 분 단위의 차이
+    const diffInMilliseconds = currentDate - writeDate; // 밀리초 단위의 시간 차이
+    const diffInMinutes = diffInMilliseconds / (1000 * 60); // 분 단위의 차이
 
-  if (diffInMinutes < 60) {
-    return `${Math.floor(diffInMinutes)} 분 전`;
-  } else if (diffInMinutes < 1440) {
-    const hoursDiff = Math.floor(diffInMinutes / 60);
-    const remainingMinutes = Math.floor(diffInMinutes % 60);
-    return `${hoursDiff} 시간 전`;
-  } else {
-    const daysDiff = Math.floor(diffInMinutes / 1440);
-    return `${daysDiff} 일 전`;
-  }
-  
-};
+    if (diffInMinutes < 60) {
+      return `${Math.floor(diffInMinutes)} 분 전`;
+    } else if (diffInMinutes < 1440) {
+      const hoursDiff = Math.floor(diffInMinutes / 60);
+      const remainingMinutes = Math.floor(diffInMinutes % 60);
+      return `${hoursDiff} 시간 전`;
+    } else {
+      const daysDiff = Math.floor(diffInMinutes / 1440);
+      return `${daysDiff} 일 전`;
+    }
+
+  };
 
 
   useEffect(() => {
@@ -151,45 +151,46 @@ const timediff = (writedate) => {
         })
     }
 
-  }, []); 
+  }, []);
 
 
   console.log(user.email);
 
   return (
     <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "632px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px", paddingTop: "0px" }}>
-      {user.email !== '' ?
-        <Link to="/salewrite" style={{ marginLeft: "300px", marginTop: "550px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px", borderRadius:"50px" }}>
-          <FiPlusCircle size="50" color="#14C38E" />
-        </Link> : <Link to="/mypagenl" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px", borderRadius:"50px" }}><FiPlusCircle size="50" color="#14C38E" /></Link>}
-
+      {user.email === "" || user.email === undefined ?
+        <Link to="/mypagenl" style={{ marginLeft: "320px", marginTop: "550px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px", borderRadius: "50px" }}><FiPlusCircle size="40" color="#14C38E" /></Link>
+        : <Link to="/salewrite" style={{ marginLeft: "320px", marginTop: "550px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px", borderRadius: "50px" }}>
+          <FiPlusCircle size="40" color="#14C38E" />
+        </Link>}
+      <div style={{ color: "#14C38E", marginTop: "5px" }}>
+        {user.typename}
+      </div>
       {saleList.map((item, index) =>
-
         <Link to={"/saledetail/only-detail/" + item.num} key={index} style={{ textDecoration: "none", color: "black" }}>
 
-          <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "124px" }}>
-            <div style={{ marginTop: "15px" }}>
-              <div style={{ height: "35px", display: "flex" }} >
+          <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "100px" }}>
+            <div>
+              <div style={{ display: "flex" }} >
                 {item.fileurl == null ? <img src='./profile.png' width="130px" height="87px" />
-                  : <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} width="130px" height="87px" />}
+                  : <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} width="80px" height="80px" style={{ borderRadius: "10px" }} />}
 
-                <div style={{ textAlign: "left", marginLeft: "20px" }}>
+                <div style={{ textAlign: "left", marginLeft: "15px", width: "290px" }}>
                   <a style={{ fontSize: "18px" }}>
-                    {item.title.length > 13 ? `${item.title.slice(0, 13)}...` : item.title}
+                    {item.title.length > 20 ? `${item.title.slice(0, 20)}...` : item.title}
                   </a>
                   <div style={{ display: "flex" }}>
-                    <div style={{ fontSize: "15px", width: "180px" }}>{item.place}</div>
-                    <div style={{ textAlign: "right" }}>
-                      {item.ggull == 0 ? <img src='' /> : <img src='/ggul.png' style={{ width: "35px" }} />}
+                    <div style={{ fontSize: "15px", width: "230px" }}>{item.place}</div>
+                    <div style={{ textAlign: "right", width: "55px" }}>
+                      {item.ggull == 0 ? <img src='' style={{ width: "35px" }} /> : <img src='/ggul.png' style={{ width: "35px" }} />}
                     </div>
-                    
-                    
+
+
                   </div>
-                 
+
                   <div style={{ display: "flex" }}>
-                    <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "150px" }}>{formatPrice(item.amount)}</div>
-                    <div style={{ textAlign: "right", color: "gray", marginRight: "20px" }}></div>
-                    <div>
+                    <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "190px" }}>{formatPrice(item.amount)}</div>
+                    <div style={{ width: "95px", textAlign: "right" }}>
                       {timediff(item.writedate)}
                     </div>
                   </div>

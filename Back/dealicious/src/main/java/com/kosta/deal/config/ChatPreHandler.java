@@ -3,7 +3,6 @@ package com.kosta.deal.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.MessageDeliveryException;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 
@@ -12,9 +11,6 @@ public class ChatPreHandler implements ChannelInterceptor {
 	@Override
 	public Message<?> preSend(Message<?> message, MessageChannel channel) {
 		StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
-		System.out.println("message:" + message);
-		System.out.println("헤더 : " + message.getHeaders());
-		System.out.println("토큰" + accessor.getNativeHeader("Authorization"));
 //		if (accessor.getCommand().toString().equals("CONNECT")) {
 //			try {
 //				String token = accessor.getNativeHeader("Authorization").get(0).replace(JwtProperties.TOKEN_PREFIX, "");

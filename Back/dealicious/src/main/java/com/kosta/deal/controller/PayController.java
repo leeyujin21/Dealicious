@@ -51,10 +51,8 @@ public class PayController {
 			pay.setImp_uid((String)param.get("imp_uid"));
 			pay.setSalenum(Integer.parseInt((String.valueOf(param.get("salenum")))));
 			pay.setBuyerEmail((String)param.get("buyerEmail"));
-			System.out.println((String)param.get("imp_uid"));
 			//token
 			String token = paymentService.getToken();
-			System.out.println("토큰 : " + token);
 			//결제 완료 금액
 			int amount = paymentService.paymentInfo(pay.getImp_uid(), token);
 			if(amount != pay.getPayAmount()) {

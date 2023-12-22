@@ -1,9 +1,7 @@
 package com.kosta.deal.config.oauth2;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +23,6 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-
-		System.out.println("OAuth2LoginSuccessHandler 진입");
 		PrincipalDetails principalDetails = (PrincipalDetails)authentication.getPrincipal();
 		String jwtToken = JWT.create()
 				.withSubject(principalDetails.getUsername())
@@ -34,7 +30,6 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 				.withClaim("id", principalDetails.getUser().getId())
 				.withClaim("username", principalDetails.getUser().getUsername())
 				.sign(Algorithm.HMAC512(JwtProperties.SECRET));
-		System.out.println(jwtToken);
 		response.setCharacterEncoding("UTF-8");
 		boolean aaValue = PrincipalOauth2UserService.getAa();
 		if(aaValue == false) {
