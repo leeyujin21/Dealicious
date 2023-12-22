@@ -32,59 +32,39 @@ public class SaleController {
 	@Autowired
 	private SaleService saleService;
 	
-	
-	
-	
 	@GetMapping({"/salelist/{page}","/salelist"})  //salelist 페이지 처리
-	public ResponseEntity<Map<String,Object>> saleList(@PathVariable(required=false) Integer page) {
+	public ResponseEntity<List<Sale>> saleList(@PathVariable(required=false) Integer page) {
 		try {
-			PageInfo pageInfo = new PageInfo(page);
-			List<Sale> saleList = saleService.saleListByPage(pageInfo);		
-			Map<String,Object> res = new HashMap<>();
-			res.put("pageInfo", pageInfo);
-			res.put("saleList", saleList);
-			return new ResponseEntity<Map<String,Object>>(res, HttpStatus.OK);
+			List<Sale> saleList = saleService.saleListByPage(page);		
+			return new ResponseEntity<List<Sale>>(saleList, HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<List<Sale>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
 	@GetMapping("/salelist/{page}/{category}")
-	public ResponseEntity<Map<String,Object>>saleListByCategory(@PathVariable(required=false)Integer page,
+	public ResponseEntity<List<Sale>>saleListByCategory(@PathVariable(required=false)Integer page,
 			@PathVariable(required=false)String category){
 		try {
-			PageInfo pageInfo=new PageInfo(page);
-			List<Sale>saleList=saleService.categoryListByPage(category,pageInfo);
-			Map<String,Object> res= new HashMap<>();
-			res.put("saleList", saleList);
-			res.put("pageInfo", pageInfo);
-			return new ResponseEntity<Map<String,Object>> (res,HttpStatus.OK);
+			List<Sale>saleList=saleService.categoryListByPage(category,page);
+			return new ResponseEntity<List<Sale>> (saleList,HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
-			
+			return new ResponseEntity<List<Sale>>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	@PostMapping("/salelist") //카테고리별 salelist 목록
-	public ResponseEntity<Object> saleListByCategory(@RequestBody Map<String,String> param) {
-		
-		
-		
-	     try {
-	    	 String category = (String)param.get("cat");
-//	    	 Integer page=Integer.valueOf((String)param.get("page"));
-	 		 Map<String,Object>res=new HashMap<>();
-	 		 res.put("category", category);
-	    	
-	    	 return new ResponseEntity<Object>(res,HttpStatus.OK);
-			} catch(Exception e) {
-				e.printStackTrace();
-				return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
-			}
+	@GetMapping("/salesearchlist/{page}/{keyword}")
+	public ResponseEntity<List<Sale>>salesearchlist(@PathVariable(required=false)Integer page,
+			@PathVariable(required=false)String keyword){
+		try {
+			List<Sale>saleList=saleService.salesearchlistByPage(keyword,page);
+			return new ResponseEntity<List<Sale>> (saleList,HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<List<Sale>>(HttpStatus.BAD_REQUEST);
+		}
 	}
-	
-	
 	
 	@GetMapping("/saledetail/{sect}/{email}/{num}")
 	public ResponseEntity<Map<String,Object>> saleDetail(@PathVariable String sect,@PathVariable String email,@PathVariable Integer num){

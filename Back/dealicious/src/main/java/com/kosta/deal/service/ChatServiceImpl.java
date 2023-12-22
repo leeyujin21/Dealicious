@@ -1,6 +1,9 @@
 package com.kosta.deal.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,7 +133,7 @@ public class ChatServiceImpl implements ChatService {
 //				res.add(map);
 //			}
 		}
-//		Collections.sort(res, Comparator.comparing(m -> (String) m.get("chatdate")));
+		Collections.sort(res, Comparator.comparing(m -> (Date) m.get("chatdate"), Comparator.nullsLast(Comparator.reverseOrder())));
 		return res;
 
 	}

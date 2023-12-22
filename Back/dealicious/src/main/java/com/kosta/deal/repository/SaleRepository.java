@@ -20,27 +20,6 @@ public interface SaleRepository extends JpaRepository<Sale, Integer> {
 	Page<Sale>findByFileurlContains(String fileurl,PageRequest pageRequest);
 	Sale findByNum(Integer num);
 	List<Sale> findByEmail(String email);
-	
 	List<Sale> findByNumIn(List<Integer> numList);
 	
-
-	
-	
-
-
-
-
-
-	
-
-
-
-	
-	
-	
-
-
-
-	
-
 }

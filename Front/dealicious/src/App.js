@@ -114,6 +114,7 @@ function App() {
                             <Route path="/chatlist" element={<ChatList />}></Route>
                             <Route path="/salelist" element={<SaleList />}></Route> {/**/}
                             <Route path="/salelist/:category" element={<SaleList />}></Route> {/**/}
+                            <Route path="/salelist/:category/:keyword" element={<SaleList />}></Route> {/**/}
                             <Route path="/salewrite" element={<SaleWrite />}></Route> {/**/}
                             <Route path="/saledetail/:sect/:num" element={<SaleDetail />}></Route> {/**/}
                             <Route path="/salemodify/:num" element={<SaleModify />}></Route> {/**/}

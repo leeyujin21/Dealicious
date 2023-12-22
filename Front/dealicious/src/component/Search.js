@@ -12,7 +12,7 @@ const Search = () => {
     axios.get(`http://localhost:8090/search/${keyword}`)
       .then(res => {
         console.log("검색어 추가완료");
-        navigate(`/salelist/${keyword}`);
+        navigate(`/salelist/search/${keyword}`);
       })
       .catch(err => {
         console.log(err)

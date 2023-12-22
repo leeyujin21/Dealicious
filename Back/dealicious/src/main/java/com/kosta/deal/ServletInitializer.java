@@ -7,7 +7,7 @@ public class ServletInitializer extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(Securityjwtoauth2examApplication.class);
+		return application.sources(dealicious.class);
 	}
 
 }

@@ -57,15 +57,9 @@ public class SaleServiceImpl implements SaleService {
 
 	// salelist 무한 스크롤 페이지 처리
 	@Override
-	public List<Sale> saleListByPage(PageInfo pageInfo) throws Exception {
-		PageRequest pageRequest = PageRequest.of(pageInfo.getCurPage() - 1, 10, Sort.by(Sort.Direction.DESC, "num"));// PageRequest
-																														// 페이징																								// API
+	public List<Sale> saleListByPage(Integer page) throws Exception {
+		PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.DESC, "num"));// PageRequest																											// 페이징																								// API
 		Page<Sale> pages = saleRepository.findAll(pageRequest);
-		pageInfo.setAllPage(pages.getTotalPages());
-		int startPage = (pageInfo.getCurPage() - 1) / 10 * 10 + 1;
-		int endPage = Math.min(startPage + 10 - 1, pageInfo.getAllPage());
-		pageInfo.setStartPage(startPage);
-		pageInfo.setEndPage(endPage);
 		List<Sale> saleList = new ArrayList<>();
 		for (Sale sale : pages.getContent()) {
 			saleList.add(sale);
@@ -74,19 +68,22 @@ public class SaleServiceImpl implements SaleService {
 	}
 
 	@Override
-	public List<Sale> categoryListByPage(String category, PageInfo pageInfo) throws Exception {
-		PageRequest pageRequest=PageRequest.of(pageInfo.getCurPage()-1,10,
+	public List<Sale> categoryListByPage(String category, Integer page) throws Exception {
+		PageRequest pageRequest=PageRequest.of(page-1,10,
 				Sort.by(Sort.Direction.DESC,"num"));
-		Page<Sale>pages=null;
-		if(category.equals("category")) {
-			pages=saleRepository.findByCategoryContains(category, pageRequest);
+		Page<Sale> pages = saleRepository.findByCategoryContains(category, pageRequest);
+		List<Sale> saleList = new ArrayList<>();
+		for(Sale sale : pages.getContent()) {
+			saleList.add(sale);
 		}
-		
-		pageInfo.setAllPage(pages.getTotalPages());
-		int startPage=(pageInfo.getCurPage()-1)/10*10+1;
-		int endPage=Math.min(startPage+10-1, pageInfo.getAllPage());
-		pageInfo.setStartPage(startPage);
-		pageInfo.setEndPage(endPage);
+		return saleList;
+	}
+	
+	@Override
+	public List<Sale> salesearchlistByPage(String keyword, Integer page) throws Exception {
+		PageRequest pageRequest=PageRequest.of(page-1,10,
+				Sort.by(Sort.Direction.DESC,"num"));
+		Page<Sale> pages = saleRepository.findByTitleContains(keyword, pageRequest);
 		List<Sale> saleList = new ArrayList<>();
 		for(Sale sale : pages.getContent()) {
 			saleList.add(sale);
