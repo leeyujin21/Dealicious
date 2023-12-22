@@ -28,12 +28,10 @@ import Mypage_zzim from './component/Mypage_zzim';
 import Mypage_review from './component/Mypage_review';
 import Gpay_finish from './component/Gpay_finish';
 
-import CategoryList from './component/CategoryList';
 import ChatList from './component/ChatList';
 import SaleList from './component/SaleList';
 import SaleWrite from './component/SaleWrite';
 import SaleDetail from './component/SaleDetail';
-
 import SaleModify from './component/SaleModify';
 
 import Gpay from './component/Gpay';
@@ -109,13 +107,15 @@ function App() {
                                 <Route exect path="/gpay_finish/:num" element={<Gpay_finish />} /> {/**/}
                                 <Route exect path="/gpay/:num" element={<Gpay />} /> {/**/}
 
-                                <Route exect path="/categorylist" element={<CategoryList />} /> {/**/}
-                                <Route path="/chatlist" element={<ChatList />}></Route>
-                                <Route path="/salelist" element={<SaleList />}></Route> {/**/}
-                                <Route path="/salelist/:category" element={<SaleList />}></Route> {/**/}
-                                <Route path="/salewrite" element={<SaleWrite />}></Route> {/**/}
-                                <Route path="/saledetail/:sect/:num" element={<SaleDetail />}></Route> {/**/}
-                                <Route path="/salemodify/:num" element={<SaleModify />}></Route> {/**/}
+
+                           
+                            <Route path="/chatlist" element={<ChatList />}></Route>
+                            <Route path="/salelist" element={<SaleList />}></Route> {/**/}
+                            <Route path="/salelist/:category" element={<SaleList />}></Route> {/**/}
+                            <Route path="/salewrite" element={<SaleWrite />}></Route> {/**/}
+                            <Route path="/saledetail/:sect/:num" element={<SaleDetail />}></Route> {/**/}
+                            <Route path="/salemodify/:num" element={<SaleModify />}></Route> {/**/}
+
 
 
                                 <Route exect path="/oauth/redirect/:token" element={<Oauth />} />

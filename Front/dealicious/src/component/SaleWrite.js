@@ -204,6 +204,8 @@ const SaleWrite = () => {
             .catch(err => {
                 console.log(err);
             });
+        
+        
 
     }
 

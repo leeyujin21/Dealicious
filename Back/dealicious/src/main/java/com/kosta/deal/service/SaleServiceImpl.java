@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import com.kosta.deal.entity.Chat;
 import com.kosta.deal.entity.ChatRoom;
 import com.kosta.deal.entity.FileVo;
@@ -61,10 +62,7 @@ public class SaleServiceImpl implements SaleService {
 	@Override
 	public List<Sale> saleListByPage(PageInfo pageInfo) throws Exception {
 		PageRequest pageRequest = PageRequest.of(pageInfo.getCurPage() - 1, 10, Sort.by(Sort.Direction.DESC, "num"));// PageRequest
-																														// 페이징
-																														// 처리
-																														// 위한
-																												// API
+																														// 페이징																								// API
 		Page<Sale> pages = saleRepository.findAll(pageRequest);
 		pageInfo.setAllPage(pages.getTotalPages());
 		int startPage = (pageInfo.getCurPage() - 1) / 10 * 10 + 1;
@@ -78,11 +76,28 @@ public class SaleServiceImpl implements SaleService {
 		return saleList;
 	}
 
-	// salelist 별 카테고리
 	@Override
-	public List<Sale> SaleListByCategory(String category) throws Exception {
-		return saleDslRepository.findByCategory(category);
+	public List<Sale> categoryListByPage(String category, PageInfo pageInfo) throws Exception {
+		PageRequest pageRequest=PageRequest.of(pageInfo.getCurPage()-1,10,
+				Sort.by(Sort.Direction.DESC,"num"));
+		Page<Sale>pages=null;
+		if(category.equals("category")) {
+			pages=saleRepository.findByCategoryContains(category, pageRequest);
+		}
+		
+		pageInfo.setAllPage(pages.getTotalPages());
+		int startPage=(pageInfo.getCurPage()-1)/10*10+1;
+		int endPage=Math.min(startPage+10-1, pageInfo.getAllPage());
+		pageInfo.setStartPage(startPage);
+		pageInfo.setEndPage(endPage);
+		List<Sale> saleList = new ArrayList<>();
+		for(Sale sale : pages.getContent()) {
+			saleList.add(sale);
+		}
+		return saleList;
 	}
+
+	
 
 	@Override
 	public Map<String, Object> saleInfo(Integer num) throws Exception {
@@ -237,11 +252,7 @@ public class SaleServiceImpl implements SaleService {
 		saleRepository.delete(sale);
 	}
 
-	@Override
-	public List<Sale> SaleListByCategory(String category, PageInfo pageInfo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	
 
@@ -287,6 +298,9 @@ public class SaleServiceImpl implements SaleService {
 	public Sale saleDetail(Integer num) throws Exception {
 		return saleRepository.findByNum(num);
 	}
+
+	
+	
 
 	
 
