@@ -29,25 +29,26 @@ const SaleList = () => {
     const formattedPrice = numericPrice.toLocaleString('ko-KR');
     return `${formattedPrice}원`;
 };
-const timediff=(writedate)=>{
-  const date=new Date(writedate);
-  const hours =date.getHours();
-  const minutes=date.getMinutes();
+const timediff = (writedate) => {
+  const currentDate = new Date(); // 현재 날짜와 시간
+  const writeDate = new Date(writedate); // 주어진 날짜
+
+  const diffInMilliseconds = currentDate - writeDate; // 밀리초 단위의 시간 차이
+  const diffInMinutes = diffInMilliseconds / (1000 * 60); // 분 단위의 차이
+
+  if (diffInMinutes < 60) {
+    return `${Math.floor(diffInMinutes)} 분 전`;
+  } else if (diffInMinutes < 1440) {
+    const hoursDiff = Math.floor(diffInMinutes / 60);
+    const remainingMinutes = Math.floor(diffInMinutes % 60);
+    return `${hoursDiff} 시간 ${remainingMinutes} 분 전`;
+  } else {
+    const daysDiff = Math.floor(diffInMinutes / 1440);
+    return `${daysDiff} 일 전`;
+  }
   
-  const time=timediff-setInterval;
-  setInterval(()=>{
-    const now = new Date(); // 현재 날짜와 시간을 가져옵니다.
-    const minutes = now.getMinutes(); // 분을 추출합니다.
-    
-  
-    return `${minutes}`
-    
-   }, 60000);
- 
-  return `${time}`;
-}
- 
- 
+};
+
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {//IntersectionObserver를 생성하여 관찰 대상 요소(observerRef.current)의 교차점을 감시
@@ -173,13 +174,16 @@ const timediff=(writedate)=>{
                     <div style={{ textAlign: "right" }}>
                       {item.ggull == 0 ? <img src='' /> : <img src='/ggul.png' style={{ width: "35px" }} />}
                     </div>
-                    <div>
-                      {timediff(item.writedate)}
-                    </div>
+                    
+                    
                   </div>
+                 
                   <div style={{ display: "flex" }}>
                     <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "150px" }}>{formatPrice(item.amount)}</div>
                     <div style={{ textAlign: "right", color: "gray", marginRight: "20px" }}></div>
+                    <div>
+                      {timediff(item.writedate)}
+                    </div>
                   </div>
                 </div>
               </div>
