@@ -63,7 +63,7 @@ const Chat = () => {
     setModal1IsOpen(false);
   };
   return (
-    <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
+    <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden" }}>
       <div style={{ textAlign: "left", color: "#14C38E", display: "flex", verticalAlign: "middle" }}>
         <Link to="/chatlist"><GoArrowLeft size={30} style={{ color: "#14C38E", height: "40px" }} /></Link>
         <div style={{ fontSize: "20px", fontWeight: "bold", marginLeft: "10px", height: "40px", lineHeight: "40px" }}>어깡이</div>

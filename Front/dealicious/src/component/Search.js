@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from "react";
 import { GoArrowLeft } from "react-icons/go";
 import { Link, useNavigate } from 'react-router-dom';
+import { Button } from 'reactstrap';
 
 const Search = () => {
   const [keyword, setKeyword] = useState();
@@ -32,12 +33,12 @@ const Search = () => {
   }, []);
 
   return (
-    <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "10px" }}>
+    <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden", paddingTop: "10px" }}>
       <br />
       <div style={{ display: "flex" }}>
-        <div style={{ textAlign: "left", color: "gray", width: "340px", borderBottom: "1px solid gray", height: "40px" }}>
+        <div style={{ textAlign: "left", color: "gray", width: "320px", borderBottom: "1px solid gray", height: "40px" }}>
           <Link to="/"><GoArrowLeft size={30} style={{ color: "gray" }} /></Link><input style={{ marginLeft: "10px", border: "white", width: "280px" }} placeholder='어떤 물품을 원하시나요?' onChange={(e) => setKeyword(e.target.value)} value={keyword}></input>
-        </div><button style={{ marginLeft: "10px", width: "55px", borderRadius: "15px", backgroundColor: "#14C38E", border: "white", fontWeight: "bold", color: "white", height: "40px" }} onClick={search}>검색</button>
+        </div><Button style={{ marginLeft: "10px", width: "50px", backgroundColor: "#14C38E", borderStyle: "none", color: "white", height: "40px", fontSize:"13px" }} onClick={search}>검색</Button>
       </div>
 
       <br />

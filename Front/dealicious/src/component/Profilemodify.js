@@ -93,7 +93,7 @@ const Profilemodify = () => {
     };
 
     return (
-        <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "50px", paddingLeft: "50px", paddingRight: "50px" }}>
+        <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden", paddingTop: "50px", paddingLeft: "50px", paddingRight: "50px" }}>
             <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
                 <Link to="/profiledetail"><IoArrowBackOutline style={{ marginRight: "80px" }} size="30" color="#14C38E" /></Link>
                 <Label style={{ fontSize: "25px", fontWeight: "bold", color: "#14C38E" }}>마이페이지</Label>
@@ -141,7 +141,7 @@ const Profilemodify = () => {
                     <Label for="email" style={{ fontSize: "20px" }}>{user.email}</Label>
                 </FormGroup>
                 <FormGroup style={{ textAlign: "left", display: "flex" }}>
-                    <Label for="univ" style={{ fontSize: "20px", width: "100px" }}>{user.typename === "univ" ? "학교" : "회사"}</Label>
+                    <Label for="univ" style={{ fontSize: "20px", width: "100px" }}>{user.type === "univ" ? "학교" : "회사"}</Label>
                     <Label for="univ" style={{ fontSize: "20px" }}>{user.typename}</Label>
                 </FormGroup>
                 <FormGroup style={{ textAlign: "left", display: "flex" }}>

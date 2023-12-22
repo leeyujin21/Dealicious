@@ -210,7 +210,7 @@ const SaleWrite = () => {
     }
 
     return (
-        <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden" }}>
+        <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "632px", overflowX: "hidden" }}>
             <br />
             <Link to="/salelist">
                 <IoArrowBackOutline size="30" color="14C38E" />

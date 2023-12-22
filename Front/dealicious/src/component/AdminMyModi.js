@@ -33,7 +33,7 @@ const AdminMyModi = () => {
   };
 
   return (
-    <div className='admin' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "10px" }}>
+    <div className='admin' style={{ overflow: "scroll", height: "632px", overflowX: "hidden", paddingTop: "10px" }}>
       <div style={{ width: "395px", textAlign: "left", fontSize: "20px", fontWeight: "bold", paddingLeft: "15px", paddingTop: "20px", paddingBottom: "20px" }}>
         마이페이지 수정하기
       </div>

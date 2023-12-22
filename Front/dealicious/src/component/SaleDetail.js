@@ -21,7 +21,7 @@ function SaleDetail() {
   const selectList = [
     { value: "판매중", name: "판매중" },
     { value: "예약중", name: "예약중" },
-    { value: "거래완료", name: "거래완료"}
+    { value: "거래완료", name: "판매완료" }
   ];
 
   const handleSelect = (e) => {
@@ -31,7 +31,7 @@ function SaleDetail() {
     }));
     axios.get(`http://localhost:8090/changesalestatus/${num}/${e.target.value}`)
       .then(res => {
-        console.log(res);      
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -199,7 +199,7 @@ function SaleDetail() {
       style={{
         textAlign: "left",
         overflow: "scroll",
-        height: "732px",
+        height: "632px",
         overflowX: "hidden",
       }}
 
@@ -267,18 +267,20 @@ function SaleDetail() {
                 textAlign: "center",
               }}
             >
-              <div>
-
-                {user.email === writer.email ?
-                  <select value={sale.status} style={{ borderStyle: "none", borderRadius: "10px", width: "130px", height: "42px", textAlign: "left" }} onChange={handleSelect}>
-                    {selectList.map((item) => {
-                      return <option value={item.value} key={item.value}>
-                        &nbsp;&nbsp;{item.name}
-                      </option>;
-                    })}
-                  </select> : <option style={{ lineHeight: "45px" }}>{sale.status}</option>}
-              </div>
-
+              {sale.status === "판매중" || sale.status === "예약중" ?
+                <div>
+                  {user.email === writer.email ?
+                    <select value={sale.status} style={{ borderStyle: "none", borderRadius: "10px", width: "130px", height: "42px", textAlign: "left" }} onChange={handleSelect}>
+                      {selectList.map((item) => {
+                        return <option value={item.value} key={item.value}>
+                          &nbsp;&nbsp;{item.name}
+                        </option>;
+                      })}
+                    </select> : <option style={{ lineHeight: "45px" }}>{sale.status}</option>}
+                </div>
+                :
+                <div style={{ lineHeight: "43px" }}>{sale.status==="결제완료"?"거래중":"판매완료"}</div>
+              }
 
             </div>
           </div>
