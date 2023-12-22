@@ -8,10 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kosta.deal.config.auth.PrincipalDetails;
 import com.kosta.deal.entity.Hot;
+import com.kosta.deal.entity.Keyword;
 import com.kosta.deal.entity.Notification;
 import com.kosta.deal.entity.User;
 import com.kosta.deal.service.NotiService;
@@ -69,6 +72,87 @@ public class NotiController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<Notification>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/notikeyword")
+	public ResponseEntity<List<Notification>> notikeyword(Authentication authentication) {
+		try {
+			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+			User user = principalDetails.getUser();
+			List<Notification> notilist = notiService.findNotiKeywordList(user.getEmail());
+			return new ResponseEntity<List<Notification>>(notilist,HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<List<Notification>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/keywordlist")
+	public ResponseEntity<List<Keyword>> keywordlist(Authentication authentication) {
+		try {
+			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+			User user = principalDetails.getUser();
+			List<Keyword> keywordlist = notiService.findKeywordList(user.getEmail());
+			return new ResponseEntity<List<Keyword>>(keywordlist,HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<List<Keyword>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/registerkeyword/{keyword}")
+	public ResponseEntity<Keyword> registerkeyword(Authentication authentication, @PathVariable String keyword) {
+		try {
+			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+			User user = principalDetails.getUser();
+			Keyword keyword1 = new Keyword();
+			keyword1.setContent(keyword);
+			keyword1.setEmail(user.getEmail());
+			notiService.registerkeyword(keyword1);
+			return new ResponseEntity<Keyword>(keyword1,HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Keyword>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PostMapping("/deletekeyword")
+	public ResponseEntity<String> deletekeyword(Authentication authentication, @RequestBody Keyword keyword) {
+		try {
+			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+			User user = principalDetails.getUser();
+			notiService.deletekeyword(keyword);
+			return new ResponseEntity<String>("키워드 삭제완료",HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/notiacticnt")
+	public ResponseEntity<Integer> notiacticnt(Authentication authentication) {
+		try {
+			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+			User user = principalDetails.getUser();
+			Integer cnt = notiService.findNotiActiCnt(user.getEmail());
+			return new ResponseEntity<Integer>(cnt,HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/notikeycnt")
+	public ResponseEntity<Integer> notikeycnt(Authentication authentication) {
+		try {
+			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+			User user = principalDetails.getUser();
+			Integer cnt = notiService.findNotiKeyCnt(user.getEmail());
+			return new ResponseEntity<Integer>(cnt,HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
 		}
 	}
 }
