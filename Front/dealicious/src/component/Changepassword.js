@@ -54,7 +54,7 @@ const Changepassword = () => {
     };
 
     return (
-        <div className='main' style={{ overflow: 'scroll', height: '732px', overflowX: 'hidden', paddingTop: '50px', paddingLeft: '50px', paddingRight: '50px' }}>
+        <div className='main' style={{ overflow: 'scroll', height: '632px', overflowX: 'hidden', paddingTop: '50px', paddingLeft: '50px', paddingRight: '50px' }}>
             <FormGroup style={{ textAlign: 'left', paddingBottom: '10px' }}>
                 <Link to="/profiledetail"><IoArrowBackOutline style={{ marginRight: '75px' }} size='30' color='#14C38E' /></Link>
                 <Label style={{ fontSize: '25px', fontWeight: 'bold', color: '#14C38E' }}>비밀번호 변경</Label>

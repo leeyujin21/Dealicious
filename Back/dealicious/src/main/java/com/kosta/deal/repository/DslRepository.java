@@ -236,6 +236,7 @@ public class DslRepository {
 				.join(sale)
 				.on(sale.num.eq(salelike.saleNum))
 				.where(salelike.userEmail.eq(email))
+				.orderBy(sale.writedate.desc())
 				.fetch();
 	}
 	
@@ -248,6 +249,16 @@ public class DslRepository {
 				.from(sale)
 				.from(user)
 				.where(review.receiver.eq(email).and(sale.num.eq(review.salenum)).and(user.email.eq(review.giver)))
+				.orderBy(review.reviewdate.desc())
+				.fetch();
+	}
+	
+	public List<Sale> findSaleListByUserEmail(String email) {
+		QSale sale = QSale.sale;
+		return jpaQueryFactory.select(sale)
+				.from(sale)
+				.where(sale.email.eq(email))
+				.orderBy(sale.writedate.desc())
 				.fetch();
 	}
 }

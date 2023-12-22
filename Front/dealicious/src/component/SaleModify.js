@@ -12,7 +12,6 @@ const formatPrice = (amount) => {
     if (!amount) return '';
     const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
 
-    // 숫자를 천단위로 포맷팅합니다.
     const formattedPrice = numericPrice.toLocaleString('ko-KR');
     return `${formattedPrice}원`;
   };
@@ -22,10 +21,10 @@ const SaleModify = () => {
     const navigate = useNavigate();
     const [files, setFiles] = useState([]);
     let selectImg = null;
-    const [imageCount, setImageCount] = useState(0); // 상태 변수로 이미지 카운트를 관리.
+    const [imageCount, setImageCount] = useState(0);
     const fileInputRef = useRef(null);
     const [timeAgo, setTimeAgo] = useState('');
-    const [sale, setSale] = useState({      //상품 정보 초기화
+    const [sale, setSale] = useState({
         title: '',
         category: '',
         amount: '',
@@ -170,7 +169,7 @@ const SaleModify = () => {
     };
 
     return (
-        <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden" }}>
+        <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "632px", overflowX: "hidden" }}>
             <br />
             <div style={{ display: 'flex', marginBottom: "20px" }}>
                 <Link to="/salelist">

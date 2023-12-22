@@ -36,22 +36,22 @@ const DEALBottom = () => {
     <Nav className="b_wrapper nav">
       <div>
         <Link to="/" onClick={() => handleLinkClick('/')}>
-          <AiFillHome size="38" color="72DBBB" />
+          <AiFillHome size="23" color="72DBBB" />
         </Link>
       </div>
       <div>
         <Link to="/salelist" onClick={() => handleLinkClick('/salelist')}>
-          <TbExchange size="38" color="72DBBB" />
+          <TbExchange size="23" color="72DBBB" />
         </Link>
       </div>
       <div>
         <Link onClick={() => handleLinkClick('/chatlist')}>
-          <IoChatboxEllipsesOutline size="38" color="72DBBB" />
+          <IoChatboxEllipsesOutline size="23" color="72DBBB" />
         </Link>
       </div>
       <div>
         <Link onClick={() => handleLinkClick('/mypage')}>
-          <IoPerson size="38" color="72DBBB" />
+          <IoPerson size="23" color="72DBBB" />
         </Link>
       </div>
     </Nav>

@@ -45,7 +45,7 @@ const AdminMain = () => {
 }, []);
 
   return (
-    <div className='admin' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
+    <div className='admin' style={{ overflow: "scroll", height: "632px", overflowX: "hidden" }}>
       <div style={{textAlign:"left", marginBottom:"10px"}}>
         <select value={selected} style={{ border: "1px solid lightgray", marginTop: "12.5px", borderRadius: "10px", width: "133px", height: "45px", textAlign: "left" }} onChange={handleSelect}>
         {selectList.map((item) => {
