@@ -158,8 +158,8 @@ const Chat = () => {
           <div style={{ textAlign: "center" }}>
             <br />
             <div style={{ marginBottom: "20px" }}>
-              <a>수령완료 상태가 되면 판매자에게 정산됩니다.</a>
-              <a>수령완료 상태로 변경하시겠습니까?</a>
+              수령완료 상태가 되면 판매자에게 정산됩니다.<br/>
+              수령완료 상태로 변경하시겠습니까?
             </div>
             <Button style={{ backgroundColor: "gray", border: "white", color: "white" }} onClick={() => setModal2IsOpen(false)}>취소하기</Button>
             <Button style={{ backgroundColor: "#14C38E", border: "white", color: "white", marginLeft: "10px" }} onClick={() => setModal2IsOpen(false)}>수령하기</Button>

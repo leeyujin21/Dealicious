@@ -1,6 +1,6 @@
 package com.kosta.deal.service;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +44,7 @@ public class MyPageServiceImpl implements MyPageService {
 			String starcount = t.get(2,String.class);
 			String ggull = t.get(3,String.class);
 			String fileurl = t.get(4,String.class);
-			Date reviewdate = t.get(5,Date.class);
+			Timestamp reviewdate = t.get(5,Timestamp.class);
 			Map<String, Object> map = new HashMap<>();
 			map.put("profileimgurl",profileimgurl);
 			map.put("nickname", nickname);
