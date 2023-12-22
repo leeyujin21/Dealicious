@@ -11,7 +11,7 @@ const SaleList = () => {
   const [saleList, setSaleList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
   
-  const { category } = useParams();
+  const { category,keyword} = useParams();
   const [page, setPage] = useState(1); // 페이지 번호
 
   
@@ -53,38 +53,8 @@ const timediff = (writedate) => {
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {//IntersectionObserver를 생성하여 관찰 대상 요소(observerRef.current)의 교차점을 감시
       if (entries[0].isIntersecting && saleList.length > 0) {//관찰 대상 요소가 뷰포트와 교차되고 데이터가 있을 때(saleList.length > 0), Axios를 사용하여 서버에서 데이터를 가져오는 GET 요청
+        if(category==null && keyword==null) {
         axios.get(`http://localhost:8090/salelist/${page + 1}`)
-          .then(res => {
-            const newSaleList = res.data.saleList;//새로운 데이터가 수신되면(newSaleList.length > 0), setSaleList 함수를 사용하여 새 데이터를 기존 saleList에 추가하고 페이지 번호를 업데이트
-            if (newSaleList.length > 0) {
-              setSaleList(prevSaleList => [...prevSaleList, ...newSaleList]);
-              setPage(page + 1);
-            } else {    //새로운 데이터가 없으면 Intersection Observer를 중지하여 추가 요청을 방지
-              observer.disconnect();
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-    }, { threshold: 1 });
-
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
-    }
-
-    return () => {//컴포넌트가 언마운트되거나 의존성인 page 또는 saleList.length가 변경될 때 옵저버를 해제
-      if (observerRef.current) {
-        observer.disconnect(); // 컴포넌트가 언마운트될 때 Observer를 해제합니다.
-      }
-    };
-    
-
-  }, [page, saleList.length]);
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {//IntersectionObserver를 생성하여 관찰 대상 요소(observerRef.current)의 교차점을 감시
-      if (entries[0].isIntersecting && saleList.length > 0) {//관찰 대상 요소가 뷰포트와 교차되고 데이터가 있을 때(saleList.length > 0), Axios를 사용하여 서버에서 데이터를 가져오는 GET 요청
-        axios.get(`http://localhost:8090/salelist/${page+1}/${category}`)
           .then(res => {
             const newSaleList = res.data;//새로운 데이터가 수신되면(newSaleList.length > 0), setSaleList 함수를 사용하여 새 데이터를 기존 saleList에 추가하고 페이지 번호를 업데이트
             if (newSaleList.length > 0) {
@@ -97,6 +67,35 @@ const timediff = (writedate) => {
           .catch(err => {
             console.log(err);
           });
+        } else if(keyword==null){
+          axios.get(`http://localhost:8090/salelist/${page + 1}/${category}`)
+          .then(res => {
+            const newSaleList = res.data;//새로운 데이터가 수신되면(newSaleList.length > 0), setSaleList 함수를 사용하여 새 데이터를 기존 saleList에 추가하고 페이지 번호를 업데이트
+            if (newSaleList.length > 0) {
+              setSaleList(prevSaleList => [...prevSaleList, ...newSaleList]);
+              setPage(page + 1);
+            } else {    //새로운 데이터가 없으면 Intersection Observer를 중지하여 추가 요청을 방지
+              observer.disconnect();
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        } else {
+          axios.get(`http://localhost:8090/salesearchlist/${page + 1}/${keyword}`)
+          .then(res => {
+            const newSaleList = res.data;//새로운 데이터가 수신되면(newSaleList.length > 0), setSaleList 함수를 사용하여 새 데이터를 기존 saleList에 추가하고 페이지 번호를 업데이트
+            if (newSaleList.length > 0) {
+              setSaleList(prevSaleList => [...prevSaleList, ...newSaleList]);
+              setPage(page + 1);
+            } else {    //새로운 데이터가 없으면 Intersection Observer를 중지하여 추가 요청을 방지
+              observer.disconnect();
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        }
       }
     }, { threshold: 1 });
 
@@ -109,33 +108,42 @@ const timediff = (writedate) => {
         observer.disconnect(); // 컴포넌트가 언마운트될 때 Observer를 해제합니다.
       }
     };
-    
-
   }, [page, saleList.length]);
-  
- 
-  useEffect(() => {
 
-    if (category == null) {
+  useEffect(() => {
+    if (category == null && keyword==null) {
       axios.get(`http://localhost:8090/salelist/${page}`)
         .then(res => {
           console.log(res);
           setSaleList([]);
           setSaleList((_sale_list) => [
-            ..._sale_list, ...res.data.saleList
+            ..._sale_list, ...res.data
+          ]);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    } else if(keyword==null) {
+      axios.get(`http://localhost:8090/salelist/${page}/${category}`)
+        .then(res => {
+          console.log(res);
+          setSaleList([]);
+          console.log(res.data);
+          setSaleList((_sale_list) => [
+            ..._sale_list, ...res.data
           ]);
         })
         .catch(err => {
           console.log(err);
         })
     } else {
-      axios.post(`http://localhost:8090/salelist/${category}`)
+      axios.get(`http://localhost:8090/salesearchlist/${page}/${keyword}`)
         .then(res => {
           console.log(res);
           setSaleList([]);
           console.log(res.data);
           setSaleList((_sale_list) => [
-            ..._sale_list, ...res.data.saleList
+            ..._sale_list, ...res.data
           ]);
         })
         .catch(err => {

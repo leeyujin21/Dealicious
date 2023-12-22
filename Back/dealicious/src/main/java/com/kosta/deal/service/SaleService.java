@@ -11,7 +11,7 @@ import com.kosta.deal.util.PageInfo;
 
 public interface SaleService {
 	
-	List<Sale> saleListByPage(PageInfo pageInfo) throws Exception;
+	List<Sale> saleListByPage(Integer curPage) throws Exception;
 
 	
 	Integer saleWrite(Sale sale, List<MultipartFile> file) throws Exception;
@@ -38,5 +38,6 @@ public interface SaleService {
 	Sale saleDetail(String email, Integer num);
 
 
-	List<Sale> categoryListByPage(String category, PageInfo pageInfo)throws Exception;
+	List<Sale> categoryListByPage(String category, Integer page)throws Exception;
+	List<Sale> salesearchlistByPage(String keyword, Integer page)throws Exception;
 }
