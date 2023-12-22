@@ -39,7 +39,7 @@ const Mypage = () => {
     };
 
     return (
-        <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop: "50px" }}>
+        <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden", paddingTop: "50px" }}>
             <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
                 <IoArrowBackOutline style={{ marginRight: "100px" }} size="30" color="#14C38E" />
                 <Label style={{ fontSize: "25px", fontWeight: "bold", color: "#14C38E" }}>마이페이지</Label>
@@ -110,10 +110,10 @@ const Mypage = () => {
                             판매중
                         </div>
                         <div
-                            onClick={() => handleFilterChange("판매완료")}
+                            onClick={() => handleFilterChange("거래완료")}
                             style={{
                                 cursor: "pointer",
-                                fontWeight: filterOption === "판매완료" ? "bold" : "normal",
+                                fontWeight: filterOption === "거래완료" ? "bold" : "normal",
                             }}
                         >
                             판매완료
@@ -121,11 +121,11 @@ const Mypage = () => {
                     </div>
                     <div style={{ display: "flex", flexWrap: "wrap", textAlign: "left", marginBottom: "3px" }}>
                         {saleList
-                            .filter(item => filterOption === "전체" || (filterOption === "판매중" && item.status !== "판매완료") || (filterOption === "판매완료" && item.status === "판매완료"))
+                            .filter(item => filterOption === "전체" || (filterOption === "판매중" && item.status !== "거래완료") || (filterOption === "거래완료" && item.status === "거래완료"))
                             .map((item, index) => (
                                 <Link to={"/saledetail/only-detail/" + item.num} key={index} style={{ textDecoration: "none", color: "black" }}>
                                     <div style={{ display: "inline-block", paddingRight: index % 3 === 2 ? "0px" : "10px" }}>
-                                        {item.status === "판매완료" ? (
+                                        {item.status === "거래완료" ? (
                                             <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative", opacity: "0.5" }}>
                                                 <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
                                                 <a style={{ fontWeight: "bold", color: "white", position: "absolute", top: "41%", left: "26%" }}>판매완료</a>

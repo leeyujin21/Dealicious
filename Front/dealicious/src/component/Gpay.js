@@ -103,7 +103,7 @@ const Gpay = () => {
 
 
     return (
-        <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", padding: "20px 50px 0 50px" }}>
+        <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden", padding: "20px 50px 0 50px" }}>
             <div style={{ textAlign: "left", paddingBottom: "10px" }}>
                 <IoArrowBackOutline style={{ marginRight: "80px" }} size="30" color="lightgray" />
             </div>

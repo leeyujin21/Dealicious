@@ -14,7 +14,7 @@ const Main = () => {
   const {category} =useParams();
   const [saleList,setSaleList] = useState([]);
   return (
-    <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
+    <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden" }}>
       <Link><img src="..\dealmain.png" style={{width:"385px"}}></img></Link>
       <br /><br />
       <div style={{ textAlign: "left", fontSize: "20px", fontWeight: "bold" }}>

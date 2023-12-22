@@ -5,6 +5,7 @@ import { Stomp } from '@stomp/stompjs'; //npm install --save @stomp/stompjs
 import * as SockJS from 'sockjs-client'; //npm install --save sockjs-client
 import { useSelector } from 'react-redux';
 import { useWebSocket } from './WebSocketProvider';
+import { FaArrowRight } from 'react-icons/fa6';
 
 function ChatList() {
     const [chatRoomList, setChatRoomList] = useState([]);
@@ -43,26 +44,36 @@ function ChatList() {
         window.location.href = "/chat/" + e;
     }
     return (
-        <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px" }}>
+        <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "632px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px" }}>
             <div style={{ borderBottom: "1px solid", fontSize: "20px", paddingBottom: "10px" }}><b>채팅</b></div>
-            {chatRoomList.map((item, index) =>
-                <div key={index} style={{ cursor: "pointer", paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray" }} onClick={() => goChatRoom(item.channelId)}>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td rowSpan={2}>{item.profileimgurl == null ? <img src='/profile.png' alt='' style={{ width: "50px", height: "50px" }} /> : <img src={`http://localhost:8090/img/${item.profileimgurl}`} alt='' style={{ width: "50px", height: "50px" }} />}</td>
-                                <td style={{ width: "120px", fontSize: "15px", paddingLeft: "10px" }}>{item.nickname}</td>
-                                <td style={{ paddingRight: "15px", width: "70px", color: "gray", fontSize: "12px" }}>{item.category}&nbsp;</td>
-                                <td style={{ width: "150px", color: "gray", fontSize: "13px" }}>{changedate(item.chatdate)}&nbsp;</td>
-                                <td rowSpan={2}><img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} alt='' style={{ width: "50px", height: "50px" }} /></td>
-                            </tr>
-                            <tr>
-                                <td colSpan={4} style={{ width: "300px", fontSize: "13px", color: "gray", paddingLeft: "10px" }}>{item.chat}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            {chatRoomList.length === 0 ? (
+                <div style={{ textAlign: "center", marginTop: "50px", width: "305px", marginLeft: "40px" }}>
+                    <img src="\ggulggulee.png" style={{ width: "100px" }} /><br />
+                    <b>현재 채팅 목록이 비어있어요!</b><br />
+                    <a style={{ color: '#14C38E', fontWeight: "bold" }}>딜리셔스</a>로 구경하고<br />
+                    <Link to="/salelist" style={{ color: "black" }}>안전한 중고거래 하러가기<FaArrowRight /></Link>
                 </div>
-            )}
+            ) : (
+                <div>
+                    {chatRoomList.map((item, index) =>
+                        <div key={index} style={{ cursor: "pointer", paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray" }} onClick={() => goChatRoom(item.channelId)}>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td rowSpan={2}>{item.profileimgurl == null ? <img src='/profile.png' alt='' style={{ width: "50px", height: "50px" }} /> : <img src={`http://localhost:8090/img/${item.profileimgurl}`} alt='' style={{ width: "50px", height: "50px" }} />}</td>
+                                        <td style={{ width: "120px", fontSize: "15px", paddingLeft: "10px" }}>{item.nickname}</td>
+                                        <td style={{ paddingRight: "15px", width: "70px", color: "gray", fontSize: "12px" }}>{item.category}&nbsp;</td>
+                                        <td style={{ width: "150px", color: "gray", fontSize: "13px" }}>{changedate(item.chatdate)}&nbsp;</td>
+                                        <td rowSpan={2}><img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} alt='' style={{ width: "50px", height: "50px" }} /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan={4} style={{ width: "300px", fontSize: "13px", color: "gray", paddingLeft: "10px" }}>{item.chat}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </div>)}
 
 
         </div>

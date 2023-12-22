@@ -72,7 +72,7 @@ const AdminSettle = () => {
   }
 
   return (
-    <div className='admin' style={{ overflow: "scroll", height: "732px", overflowX: "hidden" }}>
+    <div className='admin' style={{ overflow: "scroll", height: "632px", overflowX: "hidden" }}>
       <div>
         <FormGroup row style={{ width: "395px", margin: "0 auto", paddingTop: "20px" }}>
           <Col sm={6} style={{ textAlign: "left", fontWeight: "bold", fontSize: "20px" }}>

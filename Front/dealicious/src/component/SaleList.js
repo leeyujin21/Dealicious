@@ -149,9 +149,9 @@ const timediff = (writedate) => {
   console.log(user.email);
 
   return (
-    <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "732px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px", paddingTop: "0px" }}>
+    <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "632px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px", paddingTop: "0px" }}>
       {user.email !== '' ?
-        <Link to="/salewrite" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px", borderRadius:"50px" }}>
+        <Link to="/salewrite" style={{ marginLeft: "300px", marginTop: "550px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px", borderRadius:"50px" }}>
           <FiPlusCircle size="50" color="#14C38E" />
         </Link> : <Link to="/mypagenl" style={{ marginLeft: "300px", marginTop: "650px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px", borderRadius:"50px" }}><FiPlusCircle size="50" color="#14C38E" /></Link>}
 

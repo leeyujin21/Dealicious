@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const NotiKeyword = () => {
 
   return (
-    <div className='main' style={{ overflow: "scroll", height: "732px", overflowX: "hidden", paddingTop:"10px", paddingLeft:"20px", paddingRight:"20px"}}>
+    <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden", paddingTop:"10px", paddingLeft:"20px", paddingRight:"20px"}}>
       <br />
       <div>
         <div style={{display:"flex"}}>

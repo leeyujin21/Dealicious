@@ -66,11 +66,11 @@ const DEALTop = () => {
           <div className="d-flex">
 
             <Link to='/search'>
-              <IoIosSearch size='38' color='14C38E' />
+              <IoIosSearch size='23' color='14C38E' />
             </Link>
             <div onClick={goNotification} style={{cursor:"pointer"}}>
                 {noticnt >= 1 && <div style={{ borderRadius: "50px", position: "absolute", marginLeft: "20px", width: "18px", height: "18px", backgroundColor: "red", justifyContent: "center", alignItems: "center", display: "flex", color: "white", fontSize: "15px" }}>{noticnt}</div>}
-                <PiBell size='38' color='14C38E' />
+                <PiBell size='23' color='14C38E' />
             </div>
           </div>
         </NavbarBrand>

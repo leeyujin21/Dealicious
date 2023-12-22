@@ -18,13 +18,11 @@ import com.querydsl.core.Tuple;
 @Service
 public class MyPageServiceImpl implements MyPageService {
 	@Autowired
-	private SaleRepository saleRepository;
-	@Autowired
 	private DslRepository dslRepository;
 
 	@Override
 	public List<Sale> saleListByEmail(String email) throws Exception {
-		return saleRepository.findByEmail(email);
+		return dslRepository.findSaleListByUserEmail(email);
 	}
 
 	@Override
