@@ -1,9 +1,9 @@
 package com.kosta.deal.service;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,6 @@ import com.kosta.deal.entity.User;
 import com.kosta.deal.repository.ChatRepository;
 import com.kosta.deal.repository.ChatRoomRepository;
 import com.kosta.deal.repository.DslRepository;
-import com.querydsl.core.Tuple;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -142,7 +141,7 @@ public class ChatServiceImpl implements ChatService {
 //				res.add(map);
 //			}
 		}
-//		Collections.sort(res, Comparator.comparing(m -> (String) m.get("chatdate")));
+		Collections.sort(res, Comparator.comparing(m -> (Date) m.get("chatdate"), Comparator.nullsLast(Comparator.reverseOrder())));
 		return res;
 
 	}

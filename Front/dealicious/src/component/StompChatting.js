@@ -323,9 +323,9 @@ const StompChatting = () => {
                   }} isOpen={modal1IsOpen} onRequestClose={() => setModal1IsOpen(false)}>
                     <div style={{ textAlign: "center" }}>
                       <div className="logo">DEALicious</div>
-                      <div><img src="./1.png" /></div>
-                      <div style={{ textAlign: "center", marginTop: "5px" }}>디스펜서</div>
-                      <div style={{ textAlign: "center" }}><b>60,000원</b></div>
+                      <div><img src={`http://localhost:8090/img/${fileurlList[0]}`} style={{width:"100px"}}/></div>
+                      <div style={{ textAlign: "center", marginTop: "5px" }}>{sale.title}</div>
+                      <div style={{ textAlign: "center" }}><b>{sale.amount}원</b></div>
                       <div>
                         {[...Array(5)].map((star, i) => {
                           const starValue = i + 1;
