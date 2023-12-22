@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import com.kosta.deal.entity.Chat;
 import com.kosta.deal.entity.ChatRoom;
 import com.kosta.deal.entity.FileVo;
+import com.kosta.deal.entity.Keyword;
 import com.kosta.deal.entity.Notification;
 import com.kosta.deal.entity.Sale;
 import com.kosta.deal.entity.SaleLike;
@@ -151,6 +151,25 @@ public class SaleServiceImpl implements SaleService {
 		}
 		Sale sale1 = sale;
 		saleRepository.save(sale1);
+		
+		//sale.title에 keyword 내용이 포함될 경우 알림 생성
+		List<Keyword> keywordlist = dslRepository.getAllKeywordList();
+		for(Keyword k : keywordlist) {
+			if(sale1.getTitle().contains(k.getContent())) {
+				Notification noti1 = new Notification();
+				noti1.setTitle("등록하신 '"+k.getContent()+"' 키워드 상품이 등록되었습니다.");
+		    	noti1.setContent("지금 바로 확인하러 가실까요?");
+		    	noti1.setEmail(k.getEmail());
+		    	noti1.setType("keyword");
+		    	noti1.setSalenum(sale1.getNum());
+		    	notiRepository.save(noti1);
+		    	Chat chat = new Chat();
+		    	chat.setType("notikeyword");
+		    	chat.setWriterId("admin");
+		    	userListService.sendKeywordNoti(chat,k.getEmail());
+			}
+		}
+		
 		return sale1.getNum();
 	}
 

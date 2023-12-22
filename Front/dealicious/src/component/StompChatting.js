@@ -259,7 +259,7 @@ const StompChatting = () => {
             </div>
             <div style={{ lineHeight: "40px", width: "80px", textAlign: "right", marginRight: "10px" }}>
               <div>{sale.status}</div>
-              <div>{sale.ggull == 1 ? <Link to="/gpay"><img src='/ggul.png' style={{ width: "34px", height: "19px" }}></img></Link> : ""}</div>
+              <div>{sale.ggull == 1 ? sale.email == user.email ? <img src='/ggul.png' style={{ width: "34px", height: "19px" }}></img>:<Link to={"/gpay/"+sale.num}><img src='/ggul.png' style={{ width: "34px", height: "19px" }}></img></Link> : ""}</div>
             </div>
           </div>
         </div>
@@ -275,7 +275,7 @@ const StompChatting = () => {
                 </div>
                 :
                 <div style={{ textAlign: "left", marginBottom: "15px" }}>
-                  <div style={{ display: "inline-block", marginRight: "8px" }}><img src='/profile.png' style={{ width: "50px" }}></img></div>
+                  <div style={{ display: "inline-block", marginRight: "8px" }}>{chatpartner.profileimgurl==null ? <img src='/profile.png' style={{ width: "50px" }}></img>:<img src={`http://localhost:8090/img/${chatpartner.profileimgurl}`} style={{ width: "50px" }}></img>}</div>
                   <div style={{ display: "inline-block", width: "auto", maxWidth: "210px", borderRadius: "10px", backgroundColor: "#D9D9D9", padding: "10px" }}>{item.chat}</div>
                 </div>
               :

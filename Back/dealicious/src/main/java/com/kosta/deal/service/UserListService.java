@@ -54,4 +54,12 @@ public class UserListService {
 			}
 		}
 	}
+	public void sendKeywordNoti(Chat chat, String email) {
+		for(User u : loginUserList) {
+			if(u.getEmail().equals(email)) {
+				System.out.println("로그인한사람한테 보냄");
+				sendingOperations.convertAndSend("/sub/chat/" + email, chat);
+			}
+		}
+	}
 }

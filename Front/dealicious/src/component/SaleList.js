@@ -41,7 +41,7 @@ const timediff = (writedate) => {
   } else if (diffInMinutes < 1440) {
     const hoursDiff = Math.floor(diffInMinutes / 60);
     const remainingMinutes = Math.floor(diffInMinutes % 60);
-    return `${hoursDiff} 시간 ${remainingMinutes} 분 전`;
+    return `${hoursDiff} 시간 전`;
   } else {
     const daysDiff = Math.floor(diffInMinutes / 1440);
     return `${daysDiff} 일 전`;

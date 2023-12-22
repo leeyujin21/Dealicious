@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kosta.deal.entity.Hot;
+import com.kosta.deal.entity.Keyword;
 import com.kosta.deal.entity.Notification;
 import com.kosta.deal.repository.DslRepository;
 import com.kosta.deal.repository.HotRepository;
+import com.kosta.deal.repository.KeywordRepository;
 import com.kosta.deal.repository.NotiRepository;
 
 @Service
@@ -22,6 +24,8 @@ public class NotiServiceImpl implements NotiService {
 	private HotRepository hotRepository;
 	@Autowired
 	private NotiRepository notiRepository;
+	@Autowired
+	private KeywordRepository keywordRepository;
 	
 	@Override
 	public List<Hot> getHotList() throws Exception {
@@ -32,16 +36,11 @@ public class NotiServiceImpl implements NotiService {
 	@Override
 	public void addKeyword(String keyword) throws Exception {
 		Optional<Hot> ohot = hotRepository.findByContent(keyword);
-		System.out.println("1");
 		if(!ohot.isEmpty()) {
-			System.out.println("2");
 			Hot hot = ohot.get();
-			System.out.println("3");
 			hot.setSearchcnt(hot.getSearchcnt()+1);
-			System.out.println("4");
 			hotRepository.save(hot);
 		} else {
-			System.out.println("5");
 			hotRepository.save(new Hot(keyword));
 		}
 		
@@ -62,6 +61,46 @@ public class NotiServiceImpl implements NotiService {
 			notiRepository.save(n);
 		}
 		return notilist;
+	}
+
+	@Override
+	public List<Notification> findNotiKeywordList(String email) throws Exception {
+		List<Notification> notilist = dslRepository.findNotiKeywordList(email);
+		for(Notification n : notilist) {
+			n.setIsRead("1");
+			notiRepository.save(n);
+		}
+		return notilist;
+	}
+
+	@Override
+	public List<Keyword> findKeywordList(String email) throws Exception {
+		List<Keyword> kewordlist = dslRepository.findKeywordList(email);
+		return kewordlist;
+	}
+
+	@Override
+	public void registerkeyword(Keyword keyword) throws Exception {
+		keywordRepository.save(keyword);
+	}
+
+	@Override
+	public void deletekeyword(Keyword keyword) throws Exception {
+		keywordRepository.delete(keyword);
+	}
+
+	@Override
+	public Integer findNotiActiCnt(String email) throws Exception {
+		List<Notification> notilist = dslRepository.findNoneReadNotiActiList(email);
+		Integer cnt = notilist.size();
+		return cnt;
+	}
+
+	@Override
+	public Integer findNotiKeyCnt(String email) throws Exception {
+		List<Notification> notilist = dslRepository.findNoneReadNotiKeyList(email);
+		Integer cnt = notilist.size();
+		return cnt;
 	}
 
 }

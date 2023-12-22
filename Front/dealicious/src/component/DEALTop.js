@@ -21,7 +21,6 @@ const DEALTop = () => {
 
   useEffect(() => {
     if(user.email !== undefined && user.email !== '') {
-      console.log("여기 계속?")
     axios.get(`http://localhost:8090/noticnt`, {
             headers: {
                 Authorization: token,
@@ -37,7 +36,7 @@ const DEALTop = () => {
     // 데이터를 기반으로 원하는 작업 수행
     if (receivedata) {
       console.log('Received data:', receivedata);
-      if (receivedata.type == 'completepay' || receivedata.type == 'completereceipt') {
+      if (receivedata.type == 'completepay' || receivedata.type == 'completereceipt' || receivedata.type == 'notikeyword') {
         setNoticnt(noticnt + 1);
       }
     }
@@ -55,7 +54,6 @@ const DEALTop = () => {
   const goHome = () => {
     navigate("/");
   }
-  console.log(noticnt);
   return (
     <div className="t_wrapper" style={{ zIndex: 0 }}>
       <Navbar color='white' expand="md" className="navbar-expand-md">
