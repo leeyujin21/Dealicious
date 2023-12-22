@@ -47,9 +47,7 @@ public class ChatController {
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectEvent event) {
         StompHeaderAccessor headerAccesor = StompHeaderAccessor.wrap(event.getMessage());
-        String sessionId = headerAccesor.getSessionId();        
-        System.out.println("event:");
-        System.out.println(event);
+        String sessionId = headerAccesor.getSessionId();
         LOGGER.info("Received a new web socket connection : "+sessionId);
     }
 
@@ -106,8 +104,6 @@ public class ChatController {
     @PostMapping("/findchatroom")
 	public ResponseEntity<String> findchatroom(Authentication authentication,@RequestBody ChatRoom chatRoom) {
     	PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-    	System.out.println("---------------------------");
-    	System.out.println(chatRoom);
     	User user = principalDetails.getUser();
     	try {
 			ChatRoom chatRoom2 = chatService.findChatRoomBySaleNumAndEmail(chatRoom.getSaleNum(),user.getEmail());
@@ -128,11 +124,8 @@ public class ChatController {
 	public ResponseEntity<List<Map<String,Object>>> chatroomlist(Authentication authentication) {    	
     	PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
     	User user = principalDetails.getUser();
-    	System.out.println("-------------------------");
-    	System.out.println(user);
     	try {
     		List<Map<String,Object>> res = chatService.getChatListForm(user);
-    		System.out.println(res);
 			return new ResponseEntity<List<Map<String,Object>>>(res, HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();

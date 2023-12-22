@@ -24,7 +24,6 @@ public class UnivDataRestController {
 		String typename = param.get("typename");
 		try {
 			List<String> schoolName = univDataService.processUserInput(typename);
-			System.out.println(schoolName);
 			return ResponseEntity.ok(schoolName);
 		} catch (Exception e) {
 			e.printStackTrace();

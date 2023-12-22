@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kosta.deal.service.CorpDataService;
-import com.kosta.deal.service.UnivDataService;
 
 @RestController
 @RequestMapping("/corp")
@@ -24,7 +23,6 @@ public class CorpDataRestController {
 		String typename = param.get("typename");
 		try {
 			List<String> corpName = corpDataService.processUserInput(typename);
-			System.out.println(corpName);
 			return ResponseEntity.ok(corpName);
 		} catch (Exception e) {
 			e.printStackTrace();

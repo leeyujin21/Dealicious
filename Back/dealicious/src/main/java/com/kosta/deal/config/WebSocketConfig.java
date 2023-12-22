@@ -34,7 +34,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer  {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-    	System.out.println("configureMessageBroker");
     	/*
         	# 메시지 받을 때 관련 경로 설정
         	"/queue", "/topic" 이 두 경로가 prefix(api 경로 맨 앞)에 붙은 경우, 

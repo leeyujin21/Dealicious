@@ -31,7 +31,6 @@ public class UnivDataService {
 		sb.append("&svcType=api&svcCode=SCHOOL&contentType=json&gubun=univ_list&perPage=500");
 
 		URL url = new URL(sb.toString());
-		System.out.println(url.toString());
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.setRequestProperty("Content-type", "application/json");

@@ -28,13 +28,11 @@ public class PrincipalDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		if (email.contains("@")) {
 			User userEntity = userRepository.findByEmail(email).get();
-			System.out.println("loadUserByUsername:" + userEntity);
 			if (userEntity != null) {
 				return new PrincipalDetails(userEntity);
 			}
 		} else {
 			Admin admin = adminRepository.findByAdminid(email).get();
-			System.out.println("loadUserByUsername:" + admin);
 			if (admin != null) {
 				return new PrincipalDetails(admin);
 			}

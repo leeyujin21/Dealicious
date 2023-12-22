@@ -40,7 +40,6 @@ public class NotiController {
 	@GetMapping("/search/{keyword}")
 	public ResponseEntity<String> search(@PathVariable String keyword) {
 		try {
-			System.out.println(keyword);
 			notiService.addKeyword(keyword);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch (Exception e) {
@@ -120,8 +119,8 @@ public class NotiController {
 	@PostMapping("/deletekeyword")
 	public ResponseEntity<String> deletekeyword(Authentication authentication, @RequestBody Keyword keyword) {
 		try {
-			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-			User user = principalDetails.getUser();
+//			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+//			User user = principalDetails.getUser();
 			notiService.deletekeyword(keyword);
 			return new ResponseEntity<String>("키워드 삭제완료",HttpStatus.OK);
 		} catch (Exception e) {

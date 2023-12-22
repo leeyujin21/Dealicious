@@ -6,16 +6,12 @@ import { IoTicketSharp } from "react-icons/io5";
 import { GiLaptop } from "react-icons/gi";
 import { MdOutlineMoreHoriz } from "react-icons/md";
 import { MdArrowForward } from "react-icons/md";
-import { Link,useParams  } from "react-router-dom";
-import React, { useState,useEffect} from 'react';
-import axios from 'axios';
+import { Link } from "react-router-dom";
 
 const Main = () => {
-  const {category} =useParams();
-  const [saleList,setSaleList] = useState([]);
   return (
     <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden" }}>
-      <Link><img src="..\dealmain.png" style={{width:"385px"}}></img></Link>
+      <Link to="/about"><img src="..\dealmain.png" style={{width:"385px"}}></img></Link>
       <br /><br />
       <div style={{ textAlign: "left", fontSize: "20px", fontWeight: "bold" }}>
         지금 <a style={{color:"#72DBBB"}}>딜리셔스</a>에서<br />

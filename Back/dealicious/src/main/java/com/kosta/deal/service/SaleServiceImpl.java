@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,8 +50,6 @@ public class SaleServiceImpl implements SaleService {
 	private DslRepository dslRepository;
 	@Autowired
 	private ChatRepository chatRepository;
-	@Autowired
-	private SimpMessageSendingOperations sendingOperations;
 	@Autowired
 	private NotiRepository notiRepository;
 	@Autowired
@@ -101,12 +98,9 @@ public class SaleServiceImpl implements SaleService {
 
 	@Override
 	public Map<String, Object> saleInfo(Integer num) throws Exception {
-		System.out.println(num);
 		Tuple tuple = saleDslRepository.findUserEmailAndRolesBySaleNum(num);
 
 		Sale sale = tuple.get(0, Sale.class);
-		System.out.println("-----------------------------------");
-		System.out.println(sale);
 		String nickname = tuple.get(1, String.class);
 
 		String typename = tuple.get(2, String.class);
@@ -121,7 +115,6 @@ public class SaleServiceImpl implements SaleService {
 		res.put("profileimgurl", profileimgurl);
 		res.put("email", email);
 		res.put("id", id);
-		System.out.println(res);
 		return res;
 
 	}
@@ -135,7 +128,6 @@ public class SaleServiceImpl implements SaleService {
 				// file table에 insert
 				FileVo fileVo = FileVo.builder().directory(dir).name(file.getOriginalFilename()).size(file.getSize())
 						.contenttype(file.getContentType()).data(file.getBytes()).build();
-				System.out.println(fileVo);
 				fileVoRepository.save(fileVo);
 
 				// upload 폴더에 upload
@@ -228,8 +220,6 @@ public class SaleServiceImpl implements SaleService {
 		sale1.setAmount(sale.getAmount());
 		sale1.setPlace(sale.getPlace());
 		sale1.setGgull(sale.getGgull());
-		System.out.println("----------------------------------");
-		System.out.println(files.size());
 
 		if (files != null && files.size() != 0) {
 			String dir = "c:/upload/";

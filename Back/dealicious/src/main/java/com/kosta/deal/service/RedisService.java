@@ -25,20 +25,13 @@ public class RedisService {
 
     public void setValues(String key, String data, Duration duration) {
         ValueOperations<String, Object> values = redisTemplate.opsForValue();
-        System.out.println(key);
-        System.out.println(data);
-        System.out.println(duration);
         values.set(key, data, duration);
-        System.out.println(values);
     }
 
     @Transactional(readOnly = true)
     public String getValues(String key) {
         ValueOperations<String, Object> values = redisTemplate.opsForValue();
-        Object result = values.get(key);
-        System.out.println(result);
         if (values.get(key) == null) {
-        	System.out.println("여기?");
             return "false";
         }
         return (String) values.get(key);
