@@ -39,6 +39,25 @@ const NotiActivity = () => {
   const goChat = (e) => {
     window.location.href="/chat/" + e ;
   }
+  const timediff = (writedate) => {
+    const currentDate = new Date(); // 현재 날짜와 시간
+    const writeDate = new Date(writedate); // 주어진 날짜
+  
+    const diffInMilliseconds = currentDate - writeDate; // 밀리초 단위의 시간 차이
+    const diffInMinutes = diffInMilliseconds / (1000 * 60); // 분 단위의 차이
+  
+    if (diffInMinutes < 60) {
+      return `${Math.floor(diffInMinutes)} 분 전`;
+    } else if (diffInMinutes < 1440) {
+      const hoursDiff = Math.floor(diffInMinutes / 60);
+      const remainingMinutes = Math.floor(diffInMinutes % 60);
+      return `${hoursDiff} 시간 전`;
+    } else {
+      const daysDiff = Math.floor(diffInMinutes / 1440);
+      return `${daysDiff} 일 전`;
+    }
+    
+  };
 
   return (
     <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden", paddingTop:"10px", paddingLeft:"20px", paddingRight:"20px"}}>
@@ -63,7 +82,7 @@ const NotiActivity = () => {
                 <div style={{ textAlign: "left", marginBottom: "5px" }}>{item.title}</div>
                 <div style={{ display: "flex" }}>
                   <div style={{ textAlign: "left", color: "gray", fontSize: "15px", width: "200px" }}>{item.content}</div>
-                  <div style={{ textAlign: "right", color: "gray", fontSize: "14px", width: "125px" }}>{item.notidate}</div>
+                  <div style={{ textAlign: "right", color: "gray", fontSize: "14px", width: "125px" }}>{timediff(item.notidate)}</div>
                 </div>
               </div>
             </div>
