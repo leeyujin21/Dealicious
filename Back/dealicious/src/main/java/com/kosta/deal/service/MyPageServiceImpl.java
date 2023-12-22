@@ -36,25 +36,30 @@ public class MyPageServiceImpl implements MyPageService {
 	@Override
 	public List<Map<String,Object>> reviewListByReceiver(String email) {
 		System.out.println("마이페이지 서비스: " + email);
-		List<Map<String,Object>> reviewList = new ArrayList<>();
-		List<Tuple> tupleList = dslRepository.findReviewByReceiver(email);
-		for(Tuple t: tupleList) {
-			String profileimgurl = t.get(0,String.class);
-			String nickname = t.get(1,String.class);
-			String starcount = t.get(2,String.class);
-			String ggull = t.get(3,String.class);
-			String fileurl = t.get(4,String.class);
-			Timestamp reviewdate = t.get(5,Timestamp.class);
-			Map<String, Object> map = new HashMap<>();
-			map.put("profileimgurl",profileimgurl);
-			map.put("nickname", nickname);
-			map.put("starcount", starcount);
-			map.put("ggull", ggull);
-			map.put("fileurl", fileurl);
-			map.put("reviewdate", reviewdate);
-			reviewList.add(map);
+		try {
+			List<Map<String,Object>> reviewList = new ArrayList<>();
+			List<Tuple> tupleList = dslRepository.findReviewByReceiver(email);
+			for(Tuple t: tupleList) {
+				String profileimgurl = t.get(0,String.class);
+				String nickname = t.get(1,String.class);
+				String starcount = t.get(2,String.class);
+				String ggull = t.get(3,String.class);
+				String fileurl = t.get(4,String.class);
+				Timestamp reviewdate = t.get(5,Timestamp.class);
+				Map<String, Object> map = new HashMap<>();
+				map.put("profileimgurl",profileimgurl);
+				map.put("nickname", nickname);
+				map.put("starcount", starcount);
+				map.put("ggull", ggull);
+				map.put("fileurl", fileurl);
+				map.put("reviewdate", reviewdate);
+				reviewList.add(map);
+			}
+			System.out.println("마이페이지 서비스: " + reviewList);
+			return reviewList;
+		} catch (Exception e){
+			e.printStackTrace();
+			return null;
 		}
-		System.out.println("마이페이지 서비스: " + reviewList);
-		return reviewList;
 	}
 }
