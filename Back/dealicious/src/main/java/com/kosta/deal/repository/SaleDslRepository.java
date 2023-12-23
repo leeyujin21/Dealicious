@@ -79,7 +79,13 @@ public class SaleDslRepository {
 				.fetchOne();
 	}
 
-	
+	public List<Sale> hotsalelist() throws Exception {
+		QSale sale= QSale.sale;
+		return jpaQueryFactory.selectFrom(sale)
+				.orderBy(sale.viewcnt.desc())  // 조회수를 기준으로 내림차순 정렬
+	            .limit(6)  // 최대 6개의 결과만 반환
+	            .fetch();
+	}
 
 	
 

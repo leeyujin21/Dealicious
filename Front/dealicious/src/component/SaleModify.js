@@ -86,8 +86,10 @@ const SaleModify = () => {
     }
 
     const deleteClick = (e) => {
-        let idx = e.target.dataset.idx;
-        files.splice(idx, 1);
+        console.log("deleteClick");
+        // let idx = e.target.dataset.idx;
+        console.log(e);
+        files.splice(e, 1);
         setFiles([...files]);
         setImageCount((prevCount) => Math.max(0, prevCount - 1));
     }
@@ -101,6 +103,7 @@ const SaleModify = () => {
         if (selectImg == null)
             setFiles([...files, { type: 'f', data: e.target.files[0] }]);
         else {
+            console.log("fileChange");
             let id = selectImg.target.id;
             files.splice(id, 1, { type: 'f', data: e.target.files[0] })
             setFiles([...files]);
@@ -205,7 +208,7 @@ const SaleModify = () => {
                                 <span key={index}>
                                     <div style={{ position: "relative", display: 'inline-block', marginRight: "10px" }}>
                                         <img src={file.type === 'i' ? `http://localhost:8090/img/${file.data}` : URL.createObjectURL(file.data)} width="45px" height="45px" alt='' id={index} onClick={imageClick} />
-                                        <button data-idx={index} onClick={deleteClick} style={{ position: "absolute", top: "-15px", right: "-15px", background: "none", border: "none", cursor: "pointer" }}><GiCancel /></button>
+                                        <button data-idx={index} onClick={() => deleteClick(index)} style={{ position: "absolute", top: "-15px", right: "-15px", background: "none", border: "none", cursor: "pointer" }}><GiCancel /></button>
                                     </div>
                                 </span>
                             )
@@ -252,7 +255,7 @@ const SaleModify = () => {
                 <div style={{ display: "flex" }}>
                     <div>
                         <div style={{ marginBottom: "5px", fontSize: "18px" }}>가격</div>
-                        <div><Input type="text" placeholder="10,000원" style={{ borderRadius: "5px", height: "40px", width: "180px", float: "left" }} name="amount" value={formatPrice(sale.amount)} onChange={handleInputChange}></Input></div>
+                        <div><Input type="text" placeholder="10,000원" style={{ borderRadius: "5px", height: "40px", width: "180px", float: "left" }} name="amount" value={sale.amount} onChange={handleInputChange}></Input></div>
                     </div>
                     <div>
                         <div style={{ marginBottom: "5px", fontSize: "18px", marginLeft: "25px" }}>장소</div>
