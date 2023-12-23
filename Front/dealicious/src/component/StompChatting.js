@@ -53,7 +53,7 @@ const StompChatting = () => {
   useEffect(() => {
     scrollToBottom();
   }, [chatList]);
-  console.log(token);
+
   useEffect(() => { //컴포넌트가 마운트될 때 connect() 함수를 호출하여 Stomp 클라이언트를 연결하고, 컴포넌트가 언마운트될때  disconnect() 함수를 호출하여 연결을 끊습니다.
     axios.get(`http://localhost:8090/chatroom/` + channelId, {
       headers: {
@@ -283,12 +283,12 @@ const StompChatting = () => {
                 sale.email == user.email ?
                   <div style={{ borderLeft: "3px solid #D9D9D9", paddingLeft: "10px", textAlign: "left", marginBottom: "15px" }}>
                     <img src='/dealicious1.png' style={{ marginBottom: "10px", width: "100px" }}></img>
-                    <p style={{ fontWeight: "bold" }}>디스펜서 팔아요! 의 결제가 완료되었어요.</p>
+                    <p style={{ fontWeight: "bold" }}>{sale.title} 의 결제가 완료되었어요.</p>
                     <p style={{ color: "gray" }}>구매자에게 물건을 전달해주세요:)</p>
                   </div>
                   : <div style={{ borderLeft: "3px solid #D9D9D9", paddingLeft: "10px", textAlign: "left", marginBottom: "15px" }}>
                     <img src='/dealicious1.png' style={{ marginBottom: "10px", width: "100px" }}></img>
-                    <p style={{ fontWeight: "bold" }}>디스펜서 팔아요!  의 결제가 완료되었어요.</p>
+                    <p style={{ fontWeight: "bold" }}>{sale.title} 의 결제가 완료되었어요.</p>
                     <a style={{ color: "gray" }}>수령 후 수령완료 버튼을 눌러주세요:)</a>
                     <p style={{ color: "gray", fontSize: "12px" }}>수령완료 버튼을 누르면 판매자에게 정산액이 입금됩니다.</p>
                     <button style={{ width: "310px", backgroundColor: "#C7FBEB", border: "white", padding: "5px", borderRadius: "10px", color: "#14C38E", fontWeight: "bold" }} onClick={() => setModal2IsOpen(true)}>수령완료</button>
@@ -312,7 +312,7 @@ const StompChatting = () => {
                 :
                 <div style={{ borderLeft: "3px solid #D9D9D9", paddingLeft: "10px", textAlign: "left", marginBottom: "15px" }}>
                   <img src='/dealicious1.png' style={{ marginBottom: "10px", width: "100px" }}></img>
-                  <p style={{ fontWeight: "bold" }}>디스펜서 팔아요!  의 거래가 완료되었어요.</p>
+                  <p style={{ fontWeight: "bold" }}>{sale.title} 의 거래가 완료되었어요.</p>
                   <p style={{ color: "gray" }}>거래는 만족스러우셨나요? 후기를 남겨주세요 :)</p>
                   <button style={{ width: "310px", backgroundColor: "#C7FBEB", border: "white", padding: "5px", borderRadius: "10px", color: "#14C38E", fontWeight: "bold" }} onClick={() => setModal1IsOpen(true)}>후기 작성하기</button>
                   <Modal className='main' style={{

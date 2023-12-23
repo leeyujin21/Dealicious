@@ -3,25 +3,40 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { FaArrowRight, FaStar } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { Button, FormGroup, Label } from "reactstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 const Mypage_review = () => {
     const Image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     const [reviewList, setReviewList] = useState([]);
-    const user = useSelector(state => state.persistedReducer.user);
+    const token = useSelector(state => state.persistedReducer.token);
+    const [user, setUser] = useState({ email: '', nickname: '', password: '', type: '', typename: '', tel: '', accountbank: '', accountbank: '', admincode: '', profileimgurl: '', starpoint: '' });
+    const dispatch = useDispatch();
     useEffect(() => {
-        axios.get(`http://localhost:8090/myreviewlist/${user.email}`)
+        axios.get("http://localhost:8090/user1", {
+            headers: {
+                Authorization: token,
+            }
+        })
             .then(res => {
-                console.log(user.email)
-                console.log(res.data);
-                setReviewList([]);
-                setReviewList((_review_list) => [
-                    ..._review_list, ...res.data
-                ]);
+                console.log(res)
+                setUser(res.data);
+                dispatch({ type: "user", payload: res.data });
+                axios.get(`http://localhost:8090/myreviewlist/${res.data.email}`)
+                    .then(res => {
+                        console.log(user.email)
+                        console.log(res.data);
+                        setReviewList([]);
+                        setReviewList((_review_list) => [
+                            ..._review_list, ...res.data
+                        ]);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
             })
             .catch(err => {
-                console.log(err);
+                console.log(err)
             })
     }, []);
 
@@ -40,10 +55,9 @@ const Mypage_review = () => {
                     &nbsp;{user.nickname}
                     <br />
                     <div>
-                        <FaStar size="25" color="#F2D43E" />
-                        <FaStar size="25" color="#F2D43E" />
-                        <FaStar size="25" color="#F2D43E" />
-                        <FaStar size="25" color="#F2D43E" />
+                    {Array.from({ length: user.starpoint }, (_, index) => (
+                            <FaStar key={index} size="25" color="#F2D43E" />
+                        ))}
                     </div>
                 </div>
 

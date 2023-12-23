@@ -10,6 +10,7 @@ import { FaArrowRight } from 'react-icons/fa6';
 function ChatList() {
     const [chatRoomList, setChatRoomList] = useState([]);
     const token = useSelector(state => state.persistedReducer.token);
+    const { receivedata } = useWebSocket();
 
     useEffect(() => { //컴포넌트가 마운트될 때 connect() 함수를 호출하여 Stomp 클라이언트를 연결하고, 컴포넌트가 언마운트될때  disconnect() 함수를 호출하여 연결을 끊습니다.
         axios.get(`http://localhost:8090/chatroomlist`, {
@@ -27,28 +28,53 @@ function ChatList() {
                 console.log(err);
             })
     }, [])
+    useEffect(() => {
+        // 데이터를 기반으로 원하는 작업 수행
+        if (receivedata) {
+            console.log('Received data:', receivedata);
+            if (receivedata.type == "chat" || receivedata.type == "completepay" || receivedata.type == "completereceipt") {
+                console.log("넣어주는곳")
+                setChatRoomList((prevChatRoomList) => {
+                    const updatedChatRoomList = prevChatRoomList.map((chatRoom) => {
+                        if (chatRoom.channelId == receivedata.channelId) {
+                            console.log("조건문")
+                            return {
+                                ...chatRoom,
+                                chat: [receivedata.chat], chatdate: [receivedata.chatdate]
+                            };
+                        }
+                        return chatRoom;
+                    });
+                    const sortedChatRoomList = updatedChatRoomList.sort((a, b) => new Date(b.chatdate) - new Date(a.chatdate));
+                    return sortedChatRoomList;
+                });
+
+            }
+        }
+    }, [receivedata]);
+
     const goChatRoom = (e) => {
         window.location.href = "/chat/" + e;
     }
     const timediff = (writedate) => {
         const currentDate = new Date(); // 현재 날짜와 시간
         const writeDate = new Date(writedate); // 주어진 날짜
-      
+
         const diffInMilliseconds = currentDate - writeDate; // 밀리초 단위의 시간 차이
         const diffInMinutes = diffInMilliseconds / (1000 * 60); // 분 단위의 차이
-      
+
         if (diffInMinutes < 60) {
-          return `${Math.floor(diffInMinutes)} 분 전`;
+            return `${Math.floor(diffInMinutes)} 분 전`;
         } else if (diffInMinutes < 1440) {
-          const hoursDiff = Math.floor(diffInMinutes / 60);
-          const remainingMinutes = Math.floor(diffInMinutes % 60);
-          return `${hoursDiff} 시간 전`;
+            const hoursDiff = Math.floor(diffInMinutes / 60);
+            const remainingMinutes = Math.floor(diffInMinutes % 60);
+            return `${hoursDiff} 시간 전`;
         } else {
-          const daysDiff = Math.floor(diffInMinutes / 1440);
-          return `${daysDiff} 일 전`;
+            const daysDiff = Math.floor(diffInMinutes / 1440);
+            return `${daysDiff} 일 전`;
         }
-        
-      };
+
+    };
     return (
         <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "632px", overflowX: "hidden", paddingLeft: "20px", paddingRight: "20px" }}>
             <div style={{ borderBottom: "1px solid", fontSize: "20px", paddingBottom: "10px" }}><b>채팅</b></div>

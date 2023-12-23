@@ -3,28 +3,44 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { FaStar } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { Button, FormGroup, Label } from "reactstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { FaArrowRight } from "react-icons/fa";
 
 const Mypage = () => {
     const Image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     const [saleList, setSaleList] = useState([]);
-    const user = useSelector(state => state.persistedReducer.user);
+    const token = useSelector(state => state.persistedReducer.token);
     const [filterOption, setFilterOption] = useState("전체");
+    const [user, setUser] = useState({ email: '', nickname: '', password: '', type: '', typename: '', tel: '', accountbank: '', accountbank: '', admincode: '', profileimgurl: '', starpoint: '' });
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        axios.get(`http://localhost:8090/mypagelist/${user.email}`)
+        axios.get("http://localhost:8090/user1", {
+            headers: {
+                Authorization: token,
+            }
+        })
             .then(res => {
-                console.log(res.data);
-                setSaleList([]);
-                setSaleList((_sale_list) => [
-                    ..._sale_list, ...res.data
-                ]);
+                console.log(res)
+                setUser(res.data);
+                dispatch({ type: "user", payload: res.data });
+                axios.get(`http://localhost:8090/mypagelist/${res.data.email}`)
+                    .then(res => {
+                        console.log(res.data);
+                        setSaleList([]);
+                        setSaleList((_sale_list) => [
+                            ..._sale_list, ...res.data
+                        ]);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
             })
             .catch(err => {
-                console.log(err);
+                console.log(err)
             })
+
     }, []);
 
     const handleFilterChange = (option) => {
@@ -52,10 +68,9 @@ const Mypage = () => {
                     &nbsp;{user.nickname}
                     <br />
                     <div>
-                        <FaStar size="25" color="#F2D43E" />
-                        <FaStar size="25" color="#F2D43E" />
-                        <FaStar size="25" color="#F2D43E" />
-                        <FaStar size="25" color="#F2D43E" />
+                        {Array.from({ length: user.starpoint }, (_, index) => (
+                            <FaStar key={index} size="25" color="#F2D43E" />
+                        ))}
                     </div>
                 </div>
 

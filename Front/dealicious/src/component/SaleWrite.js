@@ -117,7 +117,7 @@ const SaleWrite = () => {
 
         let isValid = true;
 
-        if (sale.title.trim() === '') {
+        if (imageCount === 0) {
             setFileurlError(true);
             setErrorMessage_f('사진을 선택하세요.');
             isValid = false;
