@@ -14,7 +14,7 @@ const Main = () => {
   const user = useSelector(state => state.persistedReducer.user);
   const [firstHalf, setFirstHalf] = useState([]);
   const [secondHalf, setSecondHalf] = useState([]);
-
+  console.log(user.typename)
   useEffect(() => {
     axios.get(`http://localhost:8090/hotsalelist`)
       .then(res => {
@@ -38,7 +38,7 @@ const Main = () => {
       </Link>
       <br /><br />
       <div style={{ textAlign: "left", fontSize: "20px", fontWeight: "bold" }}>
-        지금 <a style={{ color: "#72DBBB" }}>{user.typename}</a>에서<br />
+        지금 <a style={{ color: "#72DBBB" }}>{user.typename===""?"딜리셔스":user.typename}</a>에서<br />
         가장 인기있는 상품&nbsp;<FaFire size='20' color='F4900C' />
       </div>
       <br />
@@ -52,7 +52,7 @@ const Main = () => {
                 alt={`Item ${index + 1}`}
               />
               <div style={{ textAlign: "left" }}>
-                <div style={{ fontSize: "13px" }}>{item.title.length > 11 ? item.title.slice(0, 11) + `...` : item.title}</div>
+                <div style={{ fontSize: "13px" }}>{item.title.length > 10 ? item.title.slice(0, 10) + `...` : item.title}</div>
                 <div style={{ fontSize: "16px", fontWeight: "bold" }}>{item.amount}원</div>
               </div>
             </div>
@@ -69,7 +69,7 @@ const Main = () => {
                 alt={`Item ${index + 4}`}
               />
               <div style={{ textAlign: "left" }}>
-                <div style={{ fontSize: "13px" }}>{item.title.length > 11 ? item.title.slice(0, 11) + `...` : item.title}</div>
+                <div style={{ fontSize: "13px" }}>{item.title.length > 10 ? item.title.slice(0, 10) + `...` : item.title}</div>
                 <div style={{ fontSize: "16px", fontWeight: "bold" }}>{item.amount}원</div>
               </div>
             </div>
