@@ -16,7 +16,7 @@ const Main = () => {
   const [secondHalf, setSecondHalf] = useState([]);
   console.log(user.typename)
   useEffect(() => {
-    axios.get(`http://localhost:8090/hotsalelist`)
+    axios.get(`http://13.125.155.38:8090/hotsalelist`)
       .then(res => {
         console.log(res.data);
         if (res.data.length <= 3) {
@@ -47,7 +47,7 @@ const Main = () => {
           <Link to={`/saledetail/only-detail/${item.num}`} style={{ textDecoration: "none", color: "black" }} key={index}>
             <div style={{ marginRight: "10px" }}>
               <img
-                src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`}
+                src={`http://13.125.155.38:8090/img/${item.fileurl.split(',')[0]}`}
                 style={{ width: "120px", height: "120px", borderRadius: "5px" }}
                 alt={`Item ${index + 1}`}
               />
@@ -64,7 +64,7 @@ const Main = () => {
           <Link to={`/saledetail/only-detail/${item.num}`} style={{ textDecoration: "none", color: "black" }} key={index}>
             <div style={{ marginRight: "10px" }}>
               <img
-                src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`}
+                src={`http://13.125.155.38:8090/img/${item.fileurl.split(',')[0]}`}
                 style={{ width: "120px", height: "120px", borderRadius: "5px" }}
                 alt={`Item ${index + 4}`}
               />

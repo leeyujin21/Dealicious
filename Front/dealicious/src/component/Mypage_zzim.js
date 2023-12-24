@@ -15,7 +15,7 @@ const Mypage_zzim = () => {
     const [user, setUser] = useState({ email: '', nickname: '', password: '', type: '', typename: '', tel: '', accountbank: '', accountbank: '', admincode: '', profileimgurl: '', starpoint: '' });
     const dispatch = useDispatch();
     useEffect(() => {
-        axios.get("http://localhost:8090/user1", {
+        axios.get("http://13.125.155.38:8090/user1", {
             headers: {
                 Authorization: token,
             }
@@ -24,7 +24,7 @@ const Mypage_zzim = () => {
                 console.log(res)
                 setUser(res.data);
                 dispatch({ type: "user", payload: res.data });
-                axios.get(`http://localhost:8090/myzzimlist/${res.data.email}`)
+                axios.get(`http://13.125.155.38:8090/myzzimlist/${res.data.email}`)
             .then(res => {
                 console.log(res.data);
                 setSaleList([]);
@@ -57,7 +57,7 @@ const Mypage_zzim = () => {
             </FormGroup>
             <div style={{ paddingBottom: "30px", display: "flex", paddingBottom: "30px" }}>
                 <div style={{ paddingBottom: "20px", textAlign: "left" }}>
-                    <img src={user.profileimgurl ? `http://localhost:8090/img/${user.profileimgurl}` : Image} width="100px" height="100px" alt='' style={{ borderRadius: "50px", width: "65px", height: "65px" }} />
+                    <img src={user.profileimgurl ? `http://13.125.155.38:8090/img/${user.profileimgurl}` : Image} width="100px" height="100px" alt='' style={{ borderRadius: "50px", width: "65px", height: "65px" }} />
                 </div>
                 <div style={{ fontSize: "20px", fontWeight: "bold", textAlign: "left", paddingLeft: "20px", width: "220px" }}>
                     &nbsp;{user.nickname}
@@ -102,7 +102,7 @@ const Mypage_zzim = () => {
                         <Link to={`/saledetail/only-detail/${item.num}`} key={index} style={{ textDecoration: "none", color: "black" }}>
                             <div style={{ display: "inline-block", paddingRight: (index + 1) % 3 === 0 ? "0px" : "10px" }}>
                                 <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative" }}>
-                                    <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
+                                    <img src={`http://13.125.155.38:8090/img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
                                     <IoHeartCircleOutline color="#E57070" size="30" style={{ position: "absolute", top: "3%", left: "3%" }} />
                                 </div>
                                 {item.amount.length > 15 ? (
