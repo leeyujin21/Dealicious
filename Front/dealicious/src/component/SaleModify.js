@@ -194,7 +194,7 @@ const SaleModify = () => {
                         <div style={{ width: "48px", textAlign: "center" }}>
                             <FaCamera size="30" color='gray' />
                         </div>
-                        <div style={{ position: "absolute", textAlign: "center", width: "48px", paddingBottom: "5px", fontWeight: "bold" }}>
+                        <div style={{ position: "absolute", textAlign: "center", width: "48px", paddingBottom: "5px", fontWeight: "bold", color:"gray" }}>
                             {imageCount}/5
                         </div>
                     </div>

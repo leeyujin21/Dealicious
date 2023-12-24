@@ -47,16 +47,6 @@ const SaleWrite = () => {
         setUser(temp);
     }, [])
 
-    const formatPrice = (amount) => {
-        if (!amount) return '';
-        const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
-
-        // 숫자를 천단위로 포맷팅합니다.
-        const formattedPrice = numericPrice.toLocaleString('ko-KR');
-        return `${formattedPrice}`;
-
-    };
-
     const removeImage = (indexToRemove) => {
         const updatedImages = selectedImages.filter((_, index) => index !== indexToRemove);
         setSelectedImages(updatedImages);
@@ -74,12 +64,18 @@ const SaleWrite = () => {
     };
 
     const changeImage = () => {
-        if (currentImage === "./ggul2.png") {
-            setCurrentImage("./ggul.png");
-            setSale({ ...sale, ggull: 1 });
-        } else if (currentImage === './ggul.png') {
-            setCurrentImage("./ggul2.png"); // 처음 이미지로 다시 변경.
-            setSale({ ...sale, ggull: 0 });
+        if (user.accountid === "" || user.accountid==="null") {
+            alert("계좌번호 등록 후 꿀페이 이용 가능합니다.")
+            console.log(user.accountid)
+        } else {
+            console.log(user.accountbank)
+            if (currentImage === "./ggul2.png") {
+                setCurrentImage("./ggul.png");
+                setSale({ ...sale, ggull: 1 });
+            } else if (currentImage === './ggul.png') {
+                setCurrentImage("./ggul2.png"); // 처음 이미지로 다시 변경.
+                setSale({ ...sale, ggull: 0 });
+            }
         }
     };
 

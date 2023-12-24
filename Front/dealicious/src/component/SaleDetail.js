@@ -190,8 +190,9 @@ function SaleDetail() {
     slidesToScroll: 1,
   };
 
-
-
+  // const backButton = () => {
+  //   navigate(-1);
+  // }
 
   return (
     <div
@@ -208,15 +209,14 @@ function SaleDetail() {
 
 
         <Link to="/salelist">
-          <IoArrowBackOutline size="30" color="14C38E" />
+          <div><IoArrowBackOutline size="30" color="14C38E" /></div>
         </Link>
         <div
           style={{
             color: "#14C38E",
             fontSize: "20px",
             textAlign: "center",
-            width: "360px",
-            marginLeft: "-20px"
+            width: "360px"
           }}
         >
           <b>{sale.title}</b>
@@ -245,17 +245,17 @@ function SaleDetail() {
             </div>
             <div
               style={{
-                marginTop: "7.5px",
                 fontSize: "16px",
                 width: "180px",
                 marginLeft: "10px",
+                lineHeight: "60px"
               }}
             >
               <b>{writer.nickname}</b>
               <br />
-              {writer.typename.length > 9
+              {/* {writer.typename.length > 9
                 ? `${writer.typename.slice(0, 9)}...`
-                : writer.typename}
+                : writer.typename} */}
             </div>
             <div
               style={{
@@ -279,7 +279,7 @@ function SaleDetail() {
                     </select> : <option style={{ lineHeight: "45px" }}>{sale.status}</option>}
                 </div>
                 :
-                <div style={{ lineHeight: "43px" }}>{sale.status==="결제완료"?"거래중":"판매완료"}</div>
+                <div style={{ lineHeight: "43px" }}>{sale.status === "결제완료" ? "거래중" : "판매완료"}</div>
               }
 
             </div>
