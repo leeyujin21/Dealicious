@@ -7,10 +7,8 @@ import { GiLaptop } from "react-icons/gi";
 import { MdOutlineMoreHoriz } from "react-icons/md";
 import { MdArrowForward } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
-
 const Main = () => {
+  const user = useSelector(state => state.persistedReducer.user);
   const [firstHalf, setFirstHalf] = useState([]);
   const [secondHalf, setSecondHalf] = useState([]);
 
@@ -31,13 +29,12 @@ const Main = () => {
       })
 
   }, []);
-
   return (
     <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden" }}>
       <Link to="/about"><img src="..\dealmain.png" style={{ width: "385px" }}></img></Link>
       <br /><br />
       <div style={{ textAlign: "left", fontSize: "20px", fontWeight: "bold" }}>
-        지금 <a style={{ color: "#72DBBB" }}>딜리셔스</a>에서<br />
+        지금 <a style={{ color: "#72DBBB" }}>{user.typename}</a>에서<br />
         가장 인기있는 상품&nbsp;<FaFire size='20' color='F4900C' />
       </div>
       <br />
@@ -57,7 +54,6 @@ const Main = () => {
           </div>
         </div>
         </Link>
-      )}
       </div>
       <div style={{ display: "flex" }}>
       {secondHalf.map((item, index) => 
