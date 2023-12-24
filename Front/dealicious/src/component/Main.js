@@ -7,10 +7,28 @@ import { GiLaptop } from "react-icons/gi";
 import { MdOutlineMoreHoriz } from "react-icons/md";
 import { MdArrowForward } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-
 const Main = () => {
   const user = useSelector(state => state.persistedReducer.user);
+  const [firstHalf, setFirstHalf] = useState([]);
+  const [secondHalf, setSecondHalf] = useState([]);
+
+  useEffect(() => {
+
+    axios.get(`http://localhost:8090/hotsalelist`)
+      .then(res => {
+        console.log(res.data);
+        if(res.data.length<=3) {
+          setFirstHalf(res.data);
+        } else {
+          setFirstHalf(res.data.slice(0, 3));
+          setSecondHalf(res.data.slice(3));
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+  }, []);
   return (
     <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden" }}>
       <Link to="/about"><img src="..\dealmain.png" style={{ width: "385px" }}></img></Link>
@@ -21,79 +39,39 @@ const Main = () => {
       </div>
       <br />
       <div style={{ display: "flex", marginBottom: "10px" }}>
-        <div>
-          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
+      {firstHalf.map((item, index) => 
+      <Link to={"/saledetail/only-detail/" + item.num} style={{ textDecoration: "none", color: "black" }}>
+        <div key={index} style={{ marginRight: "10px" }}>
+          <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} style={{
             width: "120px",
             height: "120px",
             borderRadius: "5px"
           }}>
           </img>
           <div style={{ textAlign: "left" }}>
-            <div style={{ fontSize: "13px" }}>사과 팔아요 맛있는...</div>
-            <div style={{ fontSize: "16px", fontWeight: "bold" }}>5,000원</div>
-          </div>
-        </div>&nbsp;&nbsp;&nbsp;
-        <div>
-          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "120px",
-            height: "120px",
-            borderRadius: "5px"
-          }}>
-          </img>
-          <div style={{ textAlign: "left" }}>
-            <div style={{ fontSize: "13px" }}>사과 팔아요 맛있는...</div>
-            <div style={{ fontSize: "16px", fontWeight: "bold" }}>5,000원</div>
-          </div>
-        </div>&nbsp;&nbsp;&nbsp;
-        <div>
-          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "120px",
-            height: "120px",
-            borderRadius: "5px"
-          }}>
-          </img>
-          <div style={{ textAlign: "left" }}>
-            <div style={{ fontSize: "13px" }}>사과 팔아요 맛있는...</div>
-            <div style={{ fontSize: "16px", fontWeight: "bold" }}>5,000원</div>
+            <div style={{ fontSize: "13px" }}>{item.title.length > 11 ? item.title.slice(0, 11)+`...`:item.title}</div>
+            <div style={{ fontSize: "16px", fontWeight: "bold" }}>{item.amount}원</div>
           </div>
         </div>
+        </Link>
       </div>
       <div style={{ display: "flex" }}>
-        <div>
-          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
+      {secondHalf.map((item, index) => 
+      <Link to={"/saledetail/only-detail/" + item.num} style={{ textDecoration: "none", color: "black" }}>
+        <div key={index} style={{ marginRight: "10px" }}>
+          <img src={`http://localhost:8090/img/${item.fileurl.split(',')[0]}`} style={{
             width: "120px",
             height: "120px",
             borderRadius: "5px"
           }}>
           </img>
           <div style={{ textAlign: "left" }}>
-            <div style={{ fontSize: "13px" }}>사과 팔아요 맛있는...</div>
-            <div style={{ fontSize: "16px", fontWeight: "bold" }}>5,000원</div>
-          </div>
-        </div>&nbsp;&nbsp;&nbsp;
-        <div>
-          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "120px",
-            height: "120px",
-            borderRadius: "5px"
-          }}>
-          </img>
-          <div style={{ textAlign: "left" }}>
-            <div style={{ fontSize: "13px" }}>사과 팔아요 맛있는...</div>
-            <div style={{ fontSize: "16px", fontWeight: "bold" }}>5,000원</div>
-          </div>
-        </div>&nbsp;&nbsp;&nbsp;<div>
-          <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2429257734724726-4e817a3f-5f48-4bdd-a45a-9153ca81caf0.jpg" style={{
-            width: "120px",
-            height: "120px",
-            borderRadius: "5px"
-          }}>
-          </img>
-          <div style={{ textAlign: "left" }}>
-            <div style={{ fontSize: "13px" }}>사과 팔아요 맛있는...</div>
-            <div style={{ fontSize: "16px", fontWeight: "bold" }}>5,000원</div>
+            <div style={{ fontSize: "13px" }}>{item.title.length > 11 ? item.title.slice(0, 11)+`...`:item.title}</div>
+            <div style={{ fontSize: "16px", fontWeight: "bold" }}>{item.amount}원</div>
           </div>
         </div>
+        </Link>
+      )}
       </div>
       <br /><br />
 

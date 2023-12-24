@@ -21,6 +21,10 @@ const Logout = () => {
                     })
                     .catch(err => {
                         console.log(err)
+                        dispatch({type:"token", payload:''})
+                        dispatch({type:"user", payload:''})
+                        persistor.purge();
+                        window.location.href="/mypagenl";
                     })
 
     }, [])

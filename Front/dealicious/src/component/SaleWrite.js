@@ -46,7 +46,15 @@ const SaleWrite = () => {
     useEffect(() => {
         setUser(temp);
     }, [])
+    const formatPrice = (amount) => {
+        if (!amount) return '';
+        const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
 
+        // 숫자를 천단위로 포맷팅합니다.
+        const formattedPrice = numericPrice.toLocaleString('ko-KR');
+        return `${formattedPrice}원`;
+
+    };
     const removeImage = (indexToRemove) => {
         const updatedImages = selectedImages.filter((_, index) => index !== indexToRemove);
         setSelectedImages(updatedImages);
@@ -113,7 +121,7 @@ const SaleWrite = () => {
 
         let isValid = true;
 
-        if (sale.title.trim() === '') {
+        if (imageCount === 0) {
             setFileurlError(true);
             setErrorMessage_f('사진을 선택하세요.');
             isValid = false;
@@ -279,7 +287,7 @@ const SaleWrite = () => {
             <div style={{ display: "flex" }}>
                 <div>
                     <div style={{ marginBottom: "5px", fontSize: "18px" }}>가격</div>
-                    <div><Input type="text" placeholder="10,000원" style={{ borderRadius: "5px", height: "40px", width: "180px", float: "left" }} name="amount" value={sale.amount} onInput={changecontent} onChange={handleInputChange}></Input></div>
+                    <div><Input type="text" placeholder="10,000원" style={{ borderRadius: "5px", height: "40px", width: "180px", float: "left" }} name="amount" value={formatPrice(sale.amount)} onInput={changecontent} onChange={handleInputChange}></Input></div>
                     {amountError && <div style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errorMessage_a}</div>}
                 </div>
                 <div>

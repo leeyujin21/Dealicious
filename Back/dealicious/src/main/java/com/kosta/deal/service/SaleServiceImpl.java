@@ -295,6 +295,7 @@ public class SaleServiceImpl implements SaleService {
     	chat.setType("completereceipt");
     	chat.setChannelId(chatRoom.getChannelId());
     	chat.setWriterId("admin");
+    	chat.setChat("거래 완료 메세지");
     	chatRepository.save(chat);
     	
     	userListService.sendCompleteNoti(chat,email,sale.getEmail());
@@ -303,6 +304,11 @@ public class SaleServiceImpl implements SaleService {
 	@Override
 	public Sale saleDetail(Integer num) throws Exception {
 		return saleRepository.findByNum(num);
+	}
+
+	@Override
+	public List<Sale> hotsalelist() throws Exception {
+		return saleDslRepository.hotsalelist();
 	}
 
 	

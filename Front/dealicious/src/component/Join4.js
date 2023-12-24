@@ -19,11 +19,11 @@ const Join4 = () => {
     const nickname = location.state?.nickname;
     const password = location.state?.password;
     const token = useSelector(state => state.persistedReducer.token);
-    const [successEmail, setSuccessEmail] = useState(true);
+    const [successEmail, setSuccessEmail] = useState(false);
 
     useEffect(() => {
         setEmailError('');
-        setSuccessEmail(true);
+        setSuccessEmail(false);
     }, [email]);
 
     useEffect(() => {
@@ -69,7 +69,7 @@ const Join4 = () => {
                     console.log(err);
                 });
         } else {
-            alert("이메일 인증을 다시 해주세요")
+            alert("이메일 인증을 해주세요")
         }
     }
 
@@ -106,9 +106,11 @@ const Join4 = () => {
         axios.post("http://localhost:8090/emails/verification-requests", { email: email })
             .then(res => {
                 console.log(res.data);
+                alert("인증번호를 발송했습니다.")
             })
             .catch(err => {
                 console.log(err);
+                alert("이미 가입된 이메일입니다. 다른 이메일로 인증받아주세요.")
             });
     }
     const verificationEmailCode = () => {
@@ -121,7 +123,7 @@ const Join4 = () => {
             })
             .catch(err => {
                 console.log(err);
-                console.log("앙ㄴ되냐?")
+                alert("이메일 인증 오류.")
             });
     }
 
