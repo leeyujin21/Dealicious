@@ -10,7 +10,7 @@ import { FaArrowRight } from 'react-icons/fa6';
 function ChatList() {
     const [chatRoomList, setChatRoomList] = useState([]);
     const token = useSelector(state => state.persistedReducer.token);
-    const { receivedata } = useWebSocket();
+    const { receivedata,resetData } = useWebSocket();
 
     useEffect(() => { //컴포넌트가 마운트될 때 connect() 함수를 호출하여 Stomp 클라이언트를 연결하고, 컴포넌트가 언마운트될때  disconnect() 함수를 호출하여 연결을 끊습니다.
         axios.get(`http://13.125.155.38:8090/chatroomlist`, {
@@ -35,26 +35,62 @@ function ChatList() {
             if (receivedata.type == "chat" || receivedata.type == "completepay" || receivedata.type == "completereceipt") {
                 console.log("넣어주는곳")
                 setChatRoomList((prevChatRoomList) => {
-                    const updatedChatRoomList = prevChatRoomList.map((chatRoom) => {
-                        if (chatRoom.channelId == receivedata.channelId) {
-                            console.log("조건문")
-                            return {
-                                ...chatRoom,
-                                chat: [receivedata.chat], chatdate: [receivedata.chatdate]
-                            };
-                        }
-                        return chatRoom;
-                    });
-                    const sortedChatRoomList = updatedChatRoomList.sort((a, b) => new Date(b.chatdate) - new Date(a.chatdate));
-                    return sortedChatRoomList;
+                    const isChannelIdExists = prevChatRoomList.some(chatRoom => chatRoom.channelId === receivedata.channelId);
+
+                    if (isChannelIdExists) {
+                        const updatedChatRoomList = prevChatRoomList.map((chatRoom) => {
+                            if (chatRoom.channelId === receivedata.channelId) {
+                                console.log("조건문")
+                                return {
+                                    ...chatRoom,
+                                    chat: [receivedata.chat],
+                                    chatdate: [receivedata.chatdate],
+                                    nonReadCnt: chatRoom.nonReadCnt+1
+                                };
+                            }
+                            return chatRoom;
+                        });
+                        const sortedChatRoomList = updatedChatRoomList.sort((a, b) => new Date(b.chatdate) - new Date(a.chatdate));
+                        return sortedChatRoomList;
+                    } else {    // If channelId doesn't exist, add a new chat room
+                        axios.get(`http://localhost:8090/chatroomlist/`+receivedata.channelId, {
+                            headers: {
+                                Authorization: token,
+                            }
+                        })
+                        .then(res => {
+                            console.log(res.data);
+                            const newChatRoom = res.data;
+                            const updatedChatRoomList = [...prevChatRoomList, newChatRoom];
+                            const sortedChatRoomList = updatedChatRoomList.sort((a, b) => new Date(b.chatdate) - new Date(a.chatdate));
+                            setChatRoomList(sortedChatRoomList); // 수정된 부분
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                }
+                return prevChatRoomList; // 이 부분 추가
                 });
 
             }
+            resetData();
         }
     }, [receivedata]);
 
     const goChatRoom = (e) => {
-        window.location.href = "/chat/" + e;
+        axios.get(`http://localhost:8090/chatRead/${e}`, {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log(res.data);
+                window.location.href = "/chat/" + e;
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        
     }
     const timediff = (writedate) => {
         const currentDate = new Date(); // 현재 날짜와 시간
@@ -95,11 +131,15 @@ function ChatList() {
                                         <td rowSpan={2}>{item.profileimgurl == null ? <img src='/profile.png' alt='' style={{ width: "50px", height: "50px" }} /> : <img src={`http://13.125.155.38:8090/img/${item.profileimgurl}`} alt='' style={{ width: "50px", height: "50px" }} />}</td>
                                         <td style={{ width: "120px", fontSize: "15px", paddingLeft: "10px" }}>{item.nickname}</td>
                                         <td style={{ paddingRight: "15px", width: "70px", color: "gray", fontSize: "12px" }}>{item.category}&nbsp;</td>
-                                        <td style={{ width: "150px", color: "gray", fontSize: "13px" }}>{timediff(item.chatdate)}&nbsp;</td>
+
+                                        <td style={{ width: "60px", color: "gray", fontSize: "13px" }}>{timediff(item.chatdate)}&nbsp;</td>
                                         <td rowSpan={2}><img src={`http://13.125.155.38:8090/img/${item.fileurl.split(',')[0]}`} alt='' style={{ width: "50px", height: "50px" }} /></td>
                                     </tr>
                                     <tr>
-                                        <td colSpan={4} style={{ width: "300px", fontSize: "13px", color: "gray", paddingLeft: "10px" }}>{item.chat}</td>
+                                        <td colSpan={2} style={{ width: "250px", fontSize: "13px", color: "gray", paddingLeft: "10px" }}>{item.chat}</td>
+                                        <td style={{textAlign:"center"}}>{item.nonReadCnt>0?<div style={{width:"25px", textAlign:"center", borderRadius:"50%",color:"white", fontWeight:"bold",backgroundColor:"red"}}>{item.nonReadCnt}</div>:"" }
+                                            
+                                            </td>
                                     </tr>
                                 </tbody>
                             </table>
