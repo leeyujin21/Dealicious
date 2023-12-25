@@ -52,15 +52,18 @@ export const WebSocketProvider = ({ children }) => {
       stompClient.send('/pub/chat', {}, JSON.stringify(data));
     }
   };
+  const resetData = () => {
+    setReceivedata(null);
+  };
 
   return (
-    <WebSocketContext.Provider value={{ stompClient, receivedata, sendDataToServer }}>
+    <WebSocketContext.Provider value={{ stompClient, receivedata, resetData, sendDataToServer }}>
       {children}
     </WebSocketContext.Provider>
   );
 };
 
 export const useWebSocket = () => {
-  const { stompClient, receivedata, sendDataToServer } = useContext(WebSocketContext);
-  return { stompClient, receivedata, sendDataToServer };
+  const { stompClient, receivedata, resetData, sendDataToServer } = useContext(WebSocketContext);
+  return { stompClient, receivedata, resetData, sendDataToServer };
 };
