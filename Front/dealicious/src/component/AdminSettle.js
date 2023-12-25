@@ -11,7 +11,7 @@ const AdminSettle = () => {
   
   useEffect(() => {
 
-    axios.get(`http://localhost:8090/adminsettle`)
+    axios.get(`http://13.125.155.38:8090/adminsettle`)
       .then(res => {
         console.log(res);
         setPayList([]);
@@ -59,7 +59,7 @@ const AdminSettle = () => {
     console.log("여기옴?")
     var temp = checkItems.join();
     const settlelist = {data:temp};
-    axios.post(`http://localhost:8090/settle`,settlelist)
+    axios.post(`http://13.125.155.38:8090/settle`,settlelist)
     .then(res => {
       console.log(res);
       setModalIsOpen(false);

@@ -20,12 +20,13 @@ const DEALTop = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+
     if (user.email !== undefined && user.email !== '') {
-      axios.get(`http://localhost:8090/noticnt`, {
+        axios.get(`http://13.125.155.38:8090/noticnt`, {
         headers: {
           Authorization: token,
         }
-      })
+        })
         .then(res => {
           setNoticnt(res.data);
         })

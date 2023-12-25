@@ -10,7 +10,7 @@ const NotiActivity = () => {
   const navigate = useNavigate();
   const [noticnt, setNoticnt] = useState();
   useEffect(() => {
-    axios.get(`http://localhost:8090/notiactivity`, {
+    axios.get(`http://13.125.155.38:8090/notiactivity`, {
       headers: {
         Authorization: token,
       }
@@ -19,7 +19,7 @@ const NotiActivity = () => {
         setNotiactiList((_noti_acti_list) => [
           ..._noti_acti_list, ...res.data
         ]);
-        axios.get(`http://localhost:8090/notikeycnt`, {
+        axios.get(`http://13.125.155.38:8090/notikeycnt`, {
           headers: {
             Authorization: token,
           }
