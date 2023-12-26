@@ -65,7 +65,8 @@ public class DslRepository {
 	public List<String> findUnivNameList(String typename) {
 		QUnivData univData = QUnivData.univData;
 		return jpaQueryFactory.select(univData.schoolName).from(univData)
-				.where(univData.schoolName.like("%" + typename + "%")).fetch();
+				.where(univData.schoolName.like("%" + typename + "%"))
+				.orderBy(univData.schoolName.asc()).fetch();
 	}
 
 	public Admin findAdminById(String adminid) {
@@ -76,7 +77,8 @@ public class DslRepository {
 	public List<String> findCorpNameList(String typename) {
 		QCorpData corpData = QCorpData.corpData;
 		return jpaQueryFactory.select(corpData.corp_name).from(corpData)
-				.where(corpData.corp_name.like("%" + typename + "%")).fetch();
+				.where(corpData.corp_name.like("%" + typename + "%"))
+				.orderBy(corpData.corp_name.asc()).fetch();
 	}
 
 	public List<Hot> findHotList() {

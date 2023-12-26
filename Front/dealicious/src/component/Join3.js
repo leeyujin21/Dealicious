@@ -80,8 +80,8 @@ const Join3 = () => {
     };
 
     return (
-        <div className='main' style={{ overflow: "scroll", height: "742px", overflowX: "hidden", paddingTop: "130px", paddingRight: "50px", paddingLeft: "50px" }}>
-            <div style={{ width: "330px", textAlign: "right", paddingBottom: "20px" }}>
+        <div className='main' style={{ overflow: "scroll", height: "742px", overflowX: "hidden", paddingTop: "65px", paddingRight: "50px", paddingLeft: "50px" }}>
+            <div style={{ width: "330px", textAlign: "right" }}>
                 <Link to={"/login"}><CgClose size={30} color="darkgray" /></Link>
             </div>
             <a style={{ fontSize: "30px", fontWeight: "bold", textAlign: "center", color: "#14C38E" }}>회원가입</a>
