@@ -3,7 +3,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { Swal } from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 const Login = () => {
     const [user, setUser] = useState({ email: '', password: '' });
@@ -82,7 +82,7 @@ const Login = () => {
     }
 
     return (
-        <div className='main' style={{ overflow: "scroll", height: "742px", overflowX: "hidden", paddingLeft: "0px", paddingRight: "0px", paddingBottom: "0px", paddingTop:"61px" }}>
+        <div className='main' style={{ overflow: "scroll", height: "742px", overflowX: "hidden", paddingLeft: "0px", paddingRight: "0px", paddingBottom: "0px", paddingTop: "61px" }}>
             <div style={{ paddingRight: "50px", paddingLeft: "50px" }}>
                 <div style={{ width: "330px", textAlign: "left", paddingBottom: "20px" }}>
                     <a href="/"><FaArrowLeft size={30} color="darkgray" /></a>

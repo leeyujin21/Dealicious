@@ -164,17 +164,17 @@ const SaleList = () => {
         : <Link to="/salewrite" style={{ marginLeft: "320px", marginTop: "550px", textAlign: "right", position: "absolute", backgroundColor: "white", width: "45px", height: "45px", borderRadius: "50px" }}>
           <FiPlusCircle size="40" color="#14C38E" />
         </Link>}
-      <div style={{ color: "#14C38E", marginTop: "5px" }}>
-        {user.typename}
-      </div>
       {saleList.length === 0 ?
         <div style={{ textAlign: "center", marginTop: "50px", width: "305px", marginLeft: "40px" }}>
           <img src="\ggulee.png" style={{ width: "100px" }} /><br />
           <b>현재 텅 비어있어요!</b><br />
-          <a style={{ color: '#14C38E', fontWeight: "bold" }}>우리{user.type==="univ"?"학교":"회사"}</a>에서 안전한 중고거래<br />
+          <a style={{ color: '#14C38E', fontWeight: "bold" }}>우리{user.type === "" || user.type === undefined ? "딜리셔스" : user.type === "univ" ? "학교" : "회사"}</a>에서 안전한 중고거래<br />
           <Link to="/salewrite" style={{ color: "black" }}>내가 먼저 시작하기<FaArrowRight /></Link>
         </div> :
         <div>
+          <div style={{ color: "#14C38E", marginTop: "5px" }}>
+            {user.typename}
+          </div>
           {saleList.map((item, index) =>
             <Link to={"/saledetail/only-detail/" + item.num} key={index} style={{ textDecoration: "none", color: "black" }}>
 

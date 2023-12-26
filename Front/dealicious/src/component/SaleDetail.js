@@ -69,7 +69,7 @@ function SaleDetail() {
 
 
   useEffect(() => {
-    if (user.email === "") {
+    if (user.email === "" || user.email === undefined) {
       axios
         .get(`http://localhost:8090/saledetail/${sect}/${num}`)
         .then(res => {
@@ -177,7 +177,7 @@ function SaleDetail() {
 
   const pay = () => {
     if (user.email === writer.email)
-      alert("작성자와 같은사람은 결제할수 없습니다")
+      alert("내가 작성한 글에는 누를 수 없습니다")
     else if (user.email !== writer.email && user.email !== '') {
       navigate(`/gpay/${num}`)
     }
@@ -251,7 +251,7 @@ function SaleDetail() {
             </div>
             <div
               style={{
-                fontSize: "16px",
+                fontSize: "18px",
                 width: "180px",
                 marginLeft: "10px",
                 lineHeight: "60px"
@@ -293,10 +293,10 @@ function SaleDetail() {
         </div>
         <br />
         <div style={{ textAlign: "left" }}>
-          <b>{convertCategoryToKorean(sale.category)}</b>
+          {convertCategoryToKorean(sale.category)}
         </div>
         <tr >
-          <td style={{ textAlign: "left", width: "200px" }}>{sale.place}</td>
+          <td style={{ textAlign: "left", width: "200px" }}><b>{sale.place}</b></td>
           <td
             style={{ width: "250px", fontWeight: "bold", textAlign: "right" }}
           >
@@ -319,7 +319,7 @@ function SaleDetail() {
         <div style={{ display: "flex" }}>
 
           {writer.email === user.email || user.email == '' ?
-            <div style={{ position: "relative", marginTop: "8px" }} onClick={selectGood}>
+            <div style={{ position: "relative", marginTop: "8px" }} onClick={pay}>
               <img src={heart ? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px", position: "absolute" }} />
               <div style={{ position: "relative", width: "40px", textAlign: "center", lineHeight: "30px" }}>{sale.zzimcnt}</div>
             </div>

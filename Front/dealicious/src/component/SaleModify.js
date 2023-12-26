@@ -7,6 +7,7 @@ import { Input, Button } from 'reactstrap';
 import { FaCamera } from "react-icons/fa";
 import axios from 'axios';
 import { GiCancel } from "react-icons/gi";
+import Swal from 'sweetalert2';
 
 const formatPrice = (amount) => {
     if (!amount) return '';
@@ -14,7 +15,7 @@ const formatPrice = (amount) => {
 
     const formattedPrice = numericPrice.toLocaleString('ko-KR');
     return `${formattedPrice}원`;
-  };
+};
 
 const SaleModify = () => {
     const MAX_TITLE_LENGTH = 20;
@@ -161,14 +162,33 @@ const SaleModify = () => {
         const submissionTime = new Date(); // 등록 시간
         calculateTimeAgo(submissionTime); // 함수 호출하여 시간 차이 계산
     }
-    const deleteSale = () => {
-        axios.delete(`http://localhost:8090/saledelete/${num}`)
-            .then(res => {
-                navigate(`/salelist`);
-            })
-            .catch(err => {
-                console.log(err);
-            });
+    const deleteSale = (seq) => {
+        Swal.fire({
+            title: '글을 삭제하시겠습니까?',
+            text: "삭제 후에는 복구할 수 없습니다.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#14C38E',
+            cancelButtonColor: '#d9d9d9',
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if(result.value){
+                axios.delete(`http://localhost:8090/saledelete/${num}`)
+                    .then(res => {
+                        Swal.fire({
+                            title: "삭제되었습니다",
+                            icon: "success",
+                            confirmButtonText: "확인",
+                        })
+                        navigate(`/salelist`);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+        })
+
     };
 
     return (
@@ -197,7 +217,7 @@ const SaleModify = () => {
                         <div style={{ width: "48px", textAlign: "center" }}>
                             <FaCamera size="30" color='gray' />
                         </div>
-                        <div style={{ position: "absolute", textAlign: "center", width: "48px", paddingBottom: "5px", fontWeight: "bold", color:"gray" }}>
+                        <div style={{ position: "absolute", textAlign: "center", width: "48px", paddingBottom: "5px", fontWeight: "bold", color: "gray" }}>
                             {imageCount}/5
                         </div>
                     </div>
