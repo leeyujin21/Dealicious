@@ -204,7 +204,7 @@ const SaleWrite = () => {
 
         console.log(formData)
 
-        axios.post('http://localhost:8090/salewrite', formData)
+        axios.post('http://13.125.155.38:8090/salewrite', formData)
             .then(res => {
                 console.log(res);
 

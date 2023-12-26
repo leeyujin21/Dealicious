@@ -11,7 +11,7 @@ const NotiKeyword = () => {
   const navigate = useNavigate();
   const [noticnt, setNoticnt] = useState();
   useEffect(() => {
-    axios.get(`http://localhost:8090/notikeyword`, {
+    axios.get(`http://13.125.155.38:8090/notikeyword`, {
       headers: {
         Authorization: token,
       }
@@ -20,7 +20,7 @@ const NotiKeyword = () => {
         setNotikeywordList((_noti_keyword_list) => [
           ..._noti_keyword_list, ...res.data
         ]);
-        axios.get(`http://localhost:8090/notiacticnt`, {
+        axios.get(`http://13.125.155.38:8090/notiacticnt`, {
           headers: {
             Authorization: token,
           }
@@ -56,15 +56,29 @@ const NotiKeyword = () => {
     }
     
   };
+  const goActi = () => {
+    axios.get(`http://13.125.155.38:8090/notiactivityread`, {
+              headers: {
+                Authorization: token,
+              }
+            })
+              .then(res => {
+                console.log(res)
+                navigate("/notiactivity");
+              })
+              .catch(err => {
+                console.log(err);
+              })
+  }
 
   return (
     <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden", paddingTop:"10px", paddingLeft:"20px", paddingRight:"20px"}}>
       <br />
       <div>
         <div style={{ display: "flex" }}>
-          <Link to="/notiactivity" style={{ textDecoration: "none", color: "black" }}>
-            {noticnt >= 1 && <div style={{ borderRadius: "50px", position: "absolute", marginTop: "5px", marginLeft: "140px", width: "18px", height: "18px", backgroundColor: "red", justifyContent: "center", alignItems: "center", display: "flex", color: "white", fontSize: "15px" }}>{noticnt}</div>}<div style={{ width: "200px", fontSize: "17px" }}>활동 알림</div>
-          </Link>
+
+            {noticnt >= 1 && <div style={{ borderRadius: "50px", position: "absolute", marginTop: "5px", marginLeft: "140px", width: "18px", height: "18px", backgroundColor: "red", justifyContent: "center", alignItems: "center", display: "flex", color: "white", fontSize: "15px" }}>{noticnt}</div>}<div onClick={goActi}style={{ width: "200px", fontSize: "17px" }}>활동 알림</div>
+          
           <Link to="/notikeyword" style={{ textDecoration: "none", color: "black" }}>
             <div style={{ width: "200px", fontWeight: "bold", fontSize: "17px" }}>키워드 알림</div>
           </Link>

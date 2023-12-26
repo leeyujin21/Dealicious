@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import { useEffect, useState } from "react";
 import { GoArrowLeft } from "react-icons/go";
@@ -9,7 +10,7 @@ const Search = () => {
   const [hotlist, setHotlist] = useState([]);
   const navigate = useNavigate();
   const search = () => {
-    axios.get(`http://localhost:8090/search/${keyword}`)
+    axios.get(`http://13.125.155.38:8090/search/${keyword}`)
       .then(res => {
         console.log("검색어 추가완료");
         navigate(`/salelist/search/${keyword}`);
@@ -19,7 +20,7 @@ const Search = () => {
       })
   }
   useEffect(() => {
-    axios.get(`http://localhost:8090/hotlist`)
+    axios.get(`http://13.125.155.38:8090/hotlist`)
       .then(res => {
         console.log(res.data);
         setHotlist([]);

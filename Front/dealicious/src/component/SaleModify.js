@@ -38,7 +38,7 @@ const SaleModify = () => {
     const [currentImage, setCurrentImage] = useState();
     const { sect, num } = useParams();
     useEffect(() => {
-        axios.get(`http://localhost:8090/saledetail/${sect}/${num}`)
+        axios.get(`http://13.125.155.38:8090/saledetail/${sect}/${num}`)
             .then(res => {
                 console.log(res.data);
                 setSale(res.data.sale);
@@ -150,7 +150,7 @@ const SaleModify = () => {
                 formData.append("file", file.data);
         }
 
-        axios.post('http://localhost:8090/salemodify', formData)
+        axios.post('http://13.125.155.38:8090/salemodify', formData)
             .then(res => {
                 console.log(res);
                 let saleNum = res.data;
@@ -189,7 +189,6 @@ const SaleModify = () => {
             }
         })
 
-    };
 
     return (
         <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "632px", overflowX: "hidden" }}>
@@ -227,7 +226,7 @@ const SaleModify = () => {
                             files.map((file, index) =>
                                 <span key={index}>
                                     <div style={{ position: "relative", display: 'inline-block', marginRight: "10px" }}>
-                                        <img src={file.type === 'i' ? `http://localhost:8090/img/${file.data}` : URL.createObjectURL(file.data)} width="45px" height="45px" alt='' id={index} onClick={imageClick} />
+                                        <img src={file.type === 'i' ? `http://13.125.155.38:8090/img/${file.data}` : URL.createObjectURL(file.data)} width="45px" height="45px" alt='' id={index} onClick={imageClick} />
                                         <button data-idx={index} onClick={() => deleteClick(index)} style={{ position: "absolute", top: "-15px", right: "-15px", background: "none", border: "none", cursor: "pointer" }}><GiCancel /></button>
                                     </div>
                                 </span>
@@ -288,6 +287,7 @@ const SaleModify = () => {
                         style={{ width: "385px", height: "300px", resize: "none" }} name="content" value={sale.content} onChange={handleInputChange}
                         placeholder='상세설명을 입력하세요
 구매날짜, 하자 등 자세하게 작성할수록
+
 구매자에게 편리합니다'></Input>
 
                 </div>

@@ -261,4 +261,34 @@ public class DslRepository {
 		return jpaQueryFactory.selectFrom(notification)
 				.where(notification.email.eq(email).and(notification.isRead.eq("0")).and(notification.type.eq("keyword"))).fetch();
 	}
+	
+	public Long getNonReadCnt(String channelId, String email) {
+	    QChat chat = QChat.chat1;
+	    return jpaQueryFactory.selectFrom(chat)
+	            .where(chat.channelId.eq(channelId)
+	                    .and(chat.isRead.contains(email).not()))
+	            .fetchCount();
+	}
+	
+	public List<Chat> getNonReadChat(User user, String channelId) {
+		QChat chat = QChat.chat1;
+		return jpaQueryFactory.selectFrom(chat)
+				.where(chat.channelId.eq(channelId)
+	                    .and(chat.isRead.contains(user.getEmail()).not()))
+				.fetch();
+	}
+	
+	public List<Notification> findNonReadNotiActiList(String email) {
+		QNotification notification = QNotification.notification;
+		return jpaQueryFactory.selectFrom(notification)
+				.where(notification.email.eq(email).and(notification.type.eq("activity")).and(notification.isRead.eq("0")))
+				.fetch();
+	}
+
+	public List<Notification> findNonReadNotiKeywordList(String email) {
+		QNotification notification = QNotification.notification;
+		return jpaQueryFactory.selectFrom(notification)
+				.where(notification.email.eq(email).and(notification.type.eq("keyword")).and(notification.isRead.eq("0")))
+				.fetch();
+	}
 }
