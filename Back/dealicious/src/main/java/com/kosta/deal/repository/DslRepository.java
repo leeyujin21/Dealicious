@@ -232,7 +232,7 @@ public class DslRepository {
 		QSale sale = QSale.sale;
 		return jpaQueryFactory.select(sale)
 				.from(sale)
-				.where(sale.email.eq(email))
+				.where(sale.email.eq(email).and(sale.checkdelete.eq("0")))
 				.orderBy(sale.writedate.desc())
 				.fetch();
 	}

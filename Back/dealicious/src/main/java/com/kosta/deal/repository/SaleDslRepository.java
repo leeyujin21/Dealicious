@@ -83,6 +83,7 @@ public class SaleDslRepository {
 		QSale sale= QSale.sale;
 		return jpaQueryFactory.selectFrom(sale)
 				.orderBy(sale.viewcnt.desc())  // 조회수를 기준으로 내림차순 정렬
+				.where(sale.checkdelete.eq("0").and(sale.status.eq("판매중")))
 	            .limit(6)  // 최대 6개의 결과만 반환
 	            .fetch();
 	}

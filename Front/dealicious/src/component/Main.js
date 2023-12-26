@@ -50,8 +50,7 @@ const Main = () => {
         지금 <a style={{ color: "#72DBBB" }}>{user.typename === "" || user.typename === undefined ? "딜리셔스" : user.typename}</a>에서<br />
         가장 인기있는 상품&nbsp;<FaFire size='20' color='F4900C' />
       </div>
-      <br />
-      <div style={{ display: "flex", marginBottom: "10px" }}>
+      <div style={{ display: "flex", marginBottom: "10px", marginTop:"5px" }}>
         {firstHalf.map((item, index) => (
           <Link to={`/saledetail/only-detail/${item.num}`} style={{ textDecoration: "none", color: "black" }} key={index}>
             <div style={{ marginRight: "10px" }}>
