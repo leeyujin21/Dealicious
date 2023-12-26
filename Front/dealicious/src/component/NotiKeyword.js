@@ -57,7 +57,7 @@ const NotiKeyword = () => {
     
   };
   const goActi = () => {
-    axios.get(`http://localhost:8090/notiactivityread`, {
+    axios.get(`http://13.125.155.38:8090/notiactivityread`, {
               headers: {
                 Authorization: token,
               }

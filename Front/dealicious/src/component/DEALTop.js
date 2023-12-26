@@ -49,14 +49,14 @@ const DEALTop = () => {
 
   const goNotification = () => {
     if (user.email !== undefined && user.email !== '') {
-      axios.get(`http://localhost:8090/notieachcnt`, {
+      axios.get(`http://13.125.155.38:8090/notieachcnt`, {
         headers: {
           Authorization: token,
         }
       })
         .then(res => {
           if (res.data.actiCnt > 0) {
-            axios.get(`http://localhost:8090/notiactivityread`, {
+            axios.get(`http://13.125.155.38:8090/notiactivityread`, {
               headers: {
                 Authorization: token,
               }
@@ -70,7 +70,7 @@ const DEALTop = () => {
               })
             
           } else if (res.data.keyCnt > 0) {
-            axios.get(`http://localhost:8090/notikeywordread`, {
+            axios.get(`http://13.125.155.38:8090/notikeywordread`, {
               headers: {
                 Authorization: token,
               }

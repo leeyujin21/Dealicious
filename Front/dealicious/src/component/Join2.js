@@ -52,7 +52,7 @@ const Join2 = () => {
   };
 
   return (
-    <div className='main' style={{ overflow: "scroll", height: "832px", overflowX: "hidden", paddingTop: "130px", paddingRight: "50px", paddingLeft: "50px" }}>
+    <div className='main' style={{ overflow: "scroll", height: "742px", overflowX: "hidden", paddingTop: "130px", paddingRight: "50px", paddingLeft: "50px" }}>
       <div style={{ width: "330px", textAlign: "right", paddingBottom: "20px" }}>
         <Link to={"/login"}><CgClose size={30} color="darkgray" /></Link>
       </div>
