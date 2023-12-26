@@ -59,7 +59,7 @@ public class SaleServiceImpl implements SaleService {
 	@Override
 	public List<Sale> saleListByPage(Integer page) throws Exception {
 		PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.DESC, "num"));// PageRequest																											// 페이징																								// API
-		Page<Sale> pages = saleRepository.findAll(pageRequest);
+		Page<Sale> pages = saleRepository.findByCheckdelete("0",pageRequest);
 		List<Sale> saleList = new ArrayList<>();
 		for (Sale sale : pages.getContent()) {
 			saleList.add(sale);
@@ -71,7 +71,7 @@ public class SaleServiceImpl implements SaleService {
 	public List<Sale> categoryListByPage(String category, Integer page) throws Exception {
 		PageRequest pageRequest=PageRequest.of(page-1,10,
 				Sort.by(Sort.Direction.DESC,"num"));
-		Page<Sale> pages = saleRepository.findByCategoryContains(category, pageRequest);
+		Page<Sale> pages = saleRepository.findByCategoryAndCheckdelete(category, "0", pageRequest);
 		List<Sale> saleList = new ArrayList<>();
 		for(Sale sale : pages.getContent()) {
 			saleList.add(sale);
@@ -307,12 +307,4 @@ public class SaleServiceImpl implements SaleService {
 	public List<Sale> hotsalelist() throws Exception {
 		return saleDslRepository.hotsalelist();
 	}
-
-	
-	
-
-	
-
-	
-
 }

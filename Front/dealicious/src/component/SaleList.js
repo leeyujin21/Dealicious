@@ -11,18 +11,10 @@ import { useWebSocket } from './WebSocketProvider';
 const SaleList = () => {
   const { url } = useWebSocket();
   const [saleList, setSaleList] = useState([]);
-  const [categoryList, setCategoryList] = useState([]);
-
   const { category, keyword } = useParams();
   const [page, setPage] = useState(1); // 페이지 번호
-
-
-
   const user = useSelector(state => state.persistedReducer.user);
-
-
   const observerRef = useRef(null);
-
   const formatPrice = (amount) => {
     if (!amount) return '';
     const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
@@ -50,7 +42,6 @@ const SaleList = () => {
     }
 
   };
-
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {//IntersectionObserver를 생성하여 관찰 대상 요소(observerRef.current)의 교차점을 감시
