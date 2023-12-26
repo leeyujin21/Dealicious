@@ -1,6 +1,7 @@
 package com.kosta.deal.controller;
 
 import java.io.File;
+import java.io.InputStream;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -43,9 +44,10 @@ public class UnivDataController implements CommandLineRunner {
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		Resource resource = new ClassPathResource("CORPCODE.xml");
-        File xmlFile = resource.getFile();
+		InputStream inputStream = resource.getInputStream();
+       
 
-		JsonNode jsonNode = xmlMapper.readTree(xmlFile);
+		JsonNode jsonNode = xmlMapper.readTree(inputStream);
 		String jsonString = objectMapper.writeValueAsString(jsonNode);
 		JSONParser parser = new JSONParser();
 		JSONObject mobj = (JSONObject) parser.parse(jsonString);

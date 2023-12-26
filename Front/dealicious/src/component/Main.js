@@ -32,7 +32,14 @@ const Main = () => {
         console.log(err);
       });
   }, []);
+  const formatPrice = (amount) => {
+    if (!amount) return '';
+    const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
 
+    // 숫자를 천단위로 포맷팅합니다.
+    const formattedPrice = numericPrice.toLocaleString('ko-KR');
+    return `${formattedPrice}원`;
+  };
   return (
     <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden" }}>
       <Link to="/about">
@@ -40,7 +47,7 @@ const Main = () => {
       </Link>
       <br /><br />
       <div style={{ textAlign: "left", fontSize: "20px", fontWeight: "bold" }}>
-        지금 <a style={{ color: "#72DBBB" }}>{user.typename===""?"딜리셔스":user.typename}</a>에서<br />
+        지금 <a style={{ color: "#72DBBB" }}>{user.typename === "" || user.typename === undefined ? "딜리셔스" : user.typename}</a>에서<br />
         가장 인기있는 상품&nbsp;<FaFire size='20' color='F4900C' />
       </div>
       <br />
@@ -55,7 +62,7 @@ const Main = () => {
               />
               <div style={{ textAlign: "left" }}>
                 <div style={{ fontSize: "13px" }}>{item.title.length > 10 ? item.title.slice(0, 10) + `...` : item.title}</div>
-                <div style={{ fontSize: "16px", fontWeight: "bold" }}>{item.amount}원</div>
+                <div style={{ fontSize: "16px", fontWeight: "bold" }}>{formatPrice(item.amount)}</div>
               </div>
             </div>
           </Link>
@@ -72,7 +79,7 @@ const Main = () => {
               />
               <div style={{ textAlign: "left" }}>
                 <div style={{ fontSize: "13px" }}>{item.title.length > 10 ? item.title.slice(0, 10) + `...` : item.title}</div>
-                <div style={{ fontSize: "16px", fontWeight: "bold" }}>{item.amount}원</div>
+                <div style={{ fontSize: "16px", fontWeight: "bold" }}>{formatPrice(item.amount)}</div>
               </div>
             </div>
           </Link>

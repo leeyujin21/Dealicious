@@ -121,11 +121,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void verifiedCode(String email, String authCode) throws Exception {
-//        String redisAuthCode = redisService.getValues(AUTH_CODE_PREFIX + email);
-//        boolean authResult = redisService.checkExistsValue(redisAuthCode) && redisAuthCode.equals(authCode);
-//        if (!authResult) {
-//        	throw new Exception("오류");
-//        }
 		EmailCode emailCode = emailCodeRepository.findByEmail(email).get();
         if (!emailCode.getCode().equals(authCode)) { 
         	throw new Exception("이메일 인증코드 오류");

@@ -64,7 +64,6 @@ function SaleDetail() {
     if (!amount) return '';
     const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
 
-    // 숫자를 천단위로 포맷팅합니다.
     const formattedPrice = numericPrice.toLocaleString('ko-KR');
     return `${formattedPrice}원`;
   };
@@ -132,14 +131,22 @@ function SaleDetail() {
         return category;
     }
   };
-
-  const selectGood = (e) => {
-    axios.get(url+`salelike/${user.email}/${num}`)
-      .then(res => {
-        console.log(res.data)
-        setSale({ ...sale, zzimcnt: res.data.zzimCnt });
-        setHeart(res.data.isSelect);
-      })
+  const selectGood = () => {
+    if (user.email === '' || user.email===undefined) {
+      Swal.fire({
+        icon: 'info',
+        title: '로그인이 필요합니다.',
+        text: '로그인 후에 찜하기 기능을 사용할 수 있습니다.',
+        confirmButtonText: '확인',
+      });
+    } else {
+      axios.get(url+`salelike/${user.email}/${num})
+        .then(res => {
+          console.log(res.data)
+          setSale({ ...sale, zzimcnt: res.data.zzimCnt });
+          setHeart(res.data.isSelect);
+        })
+    }
   };
 
   const gochat = () => {
@@ -163,7 +170,6 @@ function SaleDetail() {
 
     } else {
       alert("로그인 해주세요");
-      navigate(`/mypagenl`);
     }
   };
   const goToEditPage = () => {
@@ -176,9 +182,8 @@ function SaleDetail() {
     else if (user.email !== writer.email && user.email !== '') {
       navigate(`/gpay/${num}`)
     }
-    else if (user.email == '') {
+    else if (user.email == '' || user.email===undefined) {
       alert("로그인해주세요")
-      navigate(`/mypagenl`);
     }
   }
 
@@ -315,7 +320,7 @@ function SaleDetail() {
         <div style={{ display: "flex" }}>
 
           {writer.email === user.email || user.email == '' ?
-            <div style={{ position: "relative", marginTop: "8px" }} >
+            <div style={{ position: "relative", marginTop: "8px" }} onClick={selectGood}>
               <img src={heart ? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px", position: "absolute" }} />
               <div style={{ position: "relative", width: "40px", textAlign: "center", lineHeight: "30px" }}>{sale.zzimcnt}</div>
             </div>
