@@ -87,9 +87,4 @@ public class SaleDslRepository {
 	            .limit(6)  // 최대 6개의 결과만 반환
 	            .fetch();
 	}
-
-	
-
-	
-
 }

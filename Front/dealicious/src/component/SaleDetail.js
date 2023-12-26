@@ -267,10 +267,10 @@ function SaleDetail() {
             <div
               style={{
                 border: "1px solid lightgray",
-                marginTop: "12.5px",
+                marginTop: "8px",
                 borderRadius: "10px",
                 width: "133px",
-                height: "45px",
+                height: "44px",
                 textAlign: "center",
               }}
             >
@@ -283,7 +283,7 @@ function SaleDetail() {
                           &nbsp;&nbsp;{item.name}
                         </option>;
                       })}
-                    </select> : <option style={{ lineHeight: "45px" }}>{sale.status}</option>}
+                    </select> : <option style={{ lineHeight: "43px" }}>{sale.status}</option>}
                 </div>
                 :
                 <div style={{ lineHeight: "43px" }}>{sale.status === "결제완료" ? "거래중" : "판매완료"}</div>

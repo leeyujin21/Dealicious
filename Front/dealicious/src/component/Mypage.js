@@ -17,7 +17,6 @@ const Mypage = () => {
     const [user, setUser] = useState({ email: '', nickname: '', password: '', type: '', typename: '', tel: '', accountbank: '', accountbank: '', admincode: '', profileimgurl: '', starpoint: '' });
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    console.log(user.starpoint)
     useEffect(() => {
         axios.get(url + "user1", {
             headers: {
@@ -64,7 +63,7 @@ const Mypage = () => {
     return (
         <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden", paddingTop: "20px" }}>
             <FormGroup style={{ textAlign: "left", paddingBottom: "10px", display: "flex" }}>
-                <div style={{ lineHeight: "38px", cursor:"pointer" }} onClick={backButton}><IoArrowBackOutline size="20" color="#14C38E" /></div>
+                <div style={{ lineHeight: "38px", cursor: "pointer" }} onClick={backButton}><IoArrowBackOutline size="20" color="#14C38E" /></div>
                 <div style={{ width: "360px", textAlign: "center", fontSize: "20px", color: "#14C38E", lineHeight: "38px" }}>마이페이지</div>
             </FormGroup>
             <div style={{ display: "flex", paddingBottom: "30px" }}>
@@ -148,14 +147,17 @@ const Mypage = () => {
                     </div>
                     <div style={{ display: "flex", flexWrap: "wrap", textAlign: "left", marginBottom: "3px" }}>
                         {saleList
-                            .filter(item => filterOption === "전체" || (filterOption === "판매중" && item.status !== "수령완료" && item.status !== "판매완료" && item.status !== "거래완료" ) || (filterOption === "거래완료" && (item.status === "거래완료" || item.status === "판매완료" || item.status === "수령완료")))
+                            .filter(item => filterOption === "전체" || (filterOption === "판매중" && item.status !== "수령완료" && item.status !== "판매완료" && item.status !== "거래완료") || (filterOption === "거래완료" && (item.status === "거래완료" || item.status === "판매완료" || item.status === "수령완료")))
                             .map((item, index) => (
                                 <Link to={"/saledetail/only-detail/" + item.num} key={index} style={{ textDecoration: "none", color: "black" }}>
                                     <div style={{ display: "inline-block", paddingRight: index % 3 === 2 ? "0px" : "10px" }}>
                                         {item.status === "거래완료" || item.status === "수령완료" || item.status === "판매완료" ? (
-                                            <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative", opacity: "0.5" }}>
-                                                <img src={url + `img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
-                                                <a style={{ fontWeight: "bold", color: "white", position: "absolute", top: "41%", left: "26%" }}>판매완료</a>
+                                            <div style={{ width: "120px", height: "120px", borderRadius: "10px" }}>
+                                                <img src={url + `img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px", position: "absolute" }} />
+                                                <div style={{ width: "120px", height: "120px", position: "relative", borderRadius: "10px" }}>
+                                                    <div style={{ backgroundColor: "gray", width: "100%", height: "100%", position: "absolute", borderRadius: "10px", opacity: "0.5" }}></div>
+                                                    <a style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", fontWeight: "bold", color: "white" }}>판매완료</a>
+                                                </div>
                                             </div>
                                         ) : (
                                             <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative" }}>

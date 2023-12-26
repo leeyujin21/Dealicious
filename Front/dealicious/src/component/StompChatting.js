@@ -55,7 +55,7 @@ const StompChatting = () => {
   }, [chatList]);
 
   useEffect(() => { //컴포넌트가 마운트될 때 connect() 함수를 호출하여 Stomp 클라이언트를 연결하고, 컴포넌트가 언마운트될때  disconnect() 함수를 호출하여 연결을 끊습니다.
-    axios.get(url+`chatroom/` + channelId, {
+    axios.get(url + `chatroom/` + channelId, {
       headers: {
         Authorization: token,
       }
@@ -85,7 +85,7 @@ const StompChatting = () => {
           setChatList((_chat_list) => [
             ..._chat_list, receivedata
           ]);
-          axios.post(url+`insertisread`, receivedata, {
+          axios.post(url + `insertisread`, receivedata, {
             headers: {
               Authorization: token,
             }
@@ -208,7 +208,7 @@ const StompChatting = () => {
 
   const receipt = () => {
     console.log("수령완료");
-    axios.get(url+`receipt/` + sale.num, {
+    axios.get(url + `receipt/` + sale.num, {
       headers: {
         Authorization: token,
       }
@@ -242,7 +242,7 @@ const StompChatting = () => {
     // 여기서 실제로 등록하는 로직을 구현.
     // 예시로 console에 선택한 별점을 출력
 
-    axios.get(url+`review/${fixedRating}/${chatpartner.email}/${sale.num}`, {
+    axios.get(url + `review/${fixedRating}/${chatpartner.email}/${sale.num}`, {
       headers: {
         Authorization: token,
       }
@@ -257,7 +257,7 @@ const StompChatting = () => {
     // 등록 후 모달을 닫을 수 있도록 처리
     setModal1IsOpen(false);
   };
-
+  const Image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   return (
     <div className='main' >
       <div style={{ textAlign: "left", color: "#14C38E", display: "flex", verticalAlign: "middle" }}>
@@ -268,7 +268,7 @@ const StompChatting = () => {
         <div style={{ marginTop: "10px", marginBottom: "10px" }}>
           <div style={{ display: "flex" }}>
 
-            <div><img src={url+`img/${fileurlList[0]}`} style={{ width: "80px", height: "80px"  }}></img></div>
+            <div><img src={url + `img/${fileurlList[0]}`} style={{ width: "80px", height: "80px" }}></img></div>
             <div style={{ width: "230px", textAlign: "left", lineHeight: "40px" }}>
               <Link to={"/saledetail/only-detail/" + sale.num} style={{ color: "black", textDecoration: "none" }}><div style={{ textAlign: "left" }}>{sale.title}</div></Link>
               <div style={{ textAlign: "left", fontSize: "18px" }}>{sale.amount}</div>
@@ -287,12 +287,12 @@ const StompChatting = () => {
             item.type == "chat" ?
               item.writerId == user.email ?
                 <div style={{ textAlign: "right", marginBottom: "15px" }}>
-                  <div style={{ display: "inline-block", width: "auto", maxWidth: "210px", borderRadius: "10px", backgroundColor: "#14C38E", padding: "10px", color: "white" }}>{item.chat}</div>
+                  <div style={{ display: "inline-block", width: "auto", maxWidth: "625px", borderRadius: "10px", backgroundColor: "#14C38E", padding: "10px", color: "white" }}>{item.chat}</div>
                 </div>
                 :
                 <div style={{ textAlign: "left", marginBottom: "15px" }}>
-                  <div style={{ display: "inline-block", marginRight: "8px" }}>{chatpartner.profileimgurl==null ? <img src='/profile.png' style={{ width: "50px" }}></img>:<img src={url+`img/${chatpartner.profileimgurl}`} style={{ width: "50px" }}></img>}</div>
-                  <div style={{ display: "inline-block", width: "auto", maxWidth: "210px", borderRadius: "10px", backgroundColor: "#D9D9D9", padding: "10px" }}>{item.chat}</div>
+                  <div style={{ display: "inline-block", marginRight: "5px" }}>{chatpartner.profileimgurl == null ? <img src={Image} style={{ width: "44px", borderRadius:"50px" }}></img> : <img src={url + `img/${chatpartner.profileimgurl}`} style={{ width: "44px", borderRadius:"50px" }}></img>}</div>
+                  <div style={{ display: "inline-block", width: "auto", borderRadius: "10px", backgroundColor: "#D9D9D9", padding: "10px", maxWidth:"325px" }}>{item.chat}</div>
                 </div>
               :
               item.type == "completepay" ?
@@ -339,7 +339,7 @@ const StompChatting = () => {
                   }} isOpen={modal1IsOpen} onRequestClose={() => setModal1IsOpen(false)}>
                     <div style={{ textAlign: "center" }}>
                       <div className="logo">DEALicious</div>
-                      <div><img src={url+`img/${fileurlList[0]}`} style={{width:"100px"}}/></div>
+                      <div><img src={url + `img/${fileurlList[0]}`} style={{ width: "100px" }} /></div>
                       <div style={{ textAlign: "center", marginTop: "5px" }}>{sale.title}</div>
                       <div style={{ textAlign: "center" }}><b>{sale.amount}원</b></div>
                       <div>
