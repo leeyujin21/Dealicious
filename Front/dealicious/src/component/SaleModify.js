@@ -8,8 +8,10 @@ import { FaCamera } from "react-icons/fa";
 import axios from 'axios';
 import { GiCancel } from "react-icons/gi";
 import Swal from 'sweetalert2';
+import { useWebSocket } from './WebSocketProvider';
 
 const formatPrice = (amount) => {
+
     if (!amount) return '';
     const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
 
@@ -18,6 +20,7 @@ const formatPrice = (amount) => {
 };
 
 const SaleModify = () => {
+    const { url } = useWebSocket();
     const MAX_TITLE_LENGTH = 20;
     const navigate = useNavigate();
     const [files, setFiles] = useState([]);
@@ -38,7 +41,7 @@ const SaleModify = () => {
     const [currentImage, setCurrentImage] = useState();
     const { sect, num } = useParams();
     useEffect(() => {
-        axios.get(`http://13.125.155.38:8090/saledetail/${sect}/${num}`)
+        axios.get(url + `saledetail/${sect}/${num}`)
             .then(res => {
                 console.log(res.data);
                 setSale(res.data.sale);
@@ -150,7 +153,7 @@ const SaleModify = () => {
                 formData.append("file", file.data);
         }
 
-        axios.post('http://13.125.155.38:8090/salemodify', formData)
+        axios.post(url + 'salemodify', formData)
             .then(res => {
                 console.log(res);
                 let saleNum = res.data;
@@ -174,7 +177,7 @@ const SaleModify = () => {
             cancelButtonText: '취소'
         }).then((result) => {
             if (result.value) {
-                axios.delete(`http://localhost:8090/saledelete/${num}`)
+                axios.delete(url + `saledelete/${num}`)
                     .then(res => {
                         Swal.fire({
                             title: "삭제되었습니다",
@@ -190,26 +193,22 @@ const SaleModify = () => {
         })
 
 
-        return (
-            <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "632px", overflowX: "hidden" }}>
-                <br />
-                <div style={{ display: 'flex', marginBottom: "20px" }}>
-                    <Link to="/salelist">
-                        <IoArrowBackOutline size="30" color="14C38E" />
-                    </Link>
-                    <div
-                        style={{
-                            color: "#14C38E",
-                            fontSize: "20px",
-                            textAlign: "center",
-                            width: "360px",
-                            marginLeft: "-20px"
-                        }}
-                    >
-                        <b>판매글수정</b>
-                    </div>
-                </div>
-                <div style={{ backgroundColor: "#E9E9E9", width: "48px", height: "63px", textAlign: "center", paddingTop: "5px", position: "relative", cursor: "pointer" }}
+    }
+    return (
+        <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "632px", overflowX: "hidden" }}>
+            <br />
+            <div style={{ display: 'flex', marginBottom: "20px" }}>
+                <Link to="/salelist">
+                    <IoArrowBackOutline size="30" color="14C38E" />
+                </Link>
+                <div
+                    style={{
+                        color: "#14C38E",
+                        fontSize: "20px",
+                        textAlign: "center",
+                        width: "360px",
+                        marginLeft: "-20px"
+                    }}
                 >
                     <div style={{ display: "flex" }}>
                         <div onClick={plusClick}>
@@ -317,7 +316,8 @@ const SaleModify = () => {
                     </div>
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
+
 };
 export default SaleModify;

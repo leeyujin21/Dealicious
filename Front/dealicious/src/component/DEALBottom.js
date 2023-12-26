@@ -13,13 +13,13 @@ const DEALBottom = () => {
   const user = useSelector(state => state.persistedReducer.user);
   const token = useSelector(state => state.persistedReducer.token);
   const [chatcnt, setChatcnt] = useState(0);
-  const {receivedata,resetData} = useWebSocket();
+  const {receivedata,resetData, url} = useWebSocket();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     if(user.email !== undefined && user.email !== '') {
-    axios.get(`http://13.125.155.38:8090/chatcnt`, {
+    axios.get(url+`chatcnt`, {
             headers: {
                 Authorization: token,
             }

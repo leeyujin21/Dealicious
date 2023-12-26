@@ -6,8 +6,10 @@ import { Button, FormGroup, Label } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { FaArrowRight } from "react-icons/fa";
+import { useWebSocket } from './WebSocketProvider';
 
 const Mypage = () => {
+    const { url } = useWebSocket();
     const Image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     const [saleList, setSaleList] = useState([]);
     const token = useSelector(state => state.persistedReducer.token);
@@ -16,7 +18,7 @@ const Mypage = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        axios.get("http://13.125.155.38:8090/user1", {
+        axios.get(url+"user1", {
             headers: {
                 Authorization: token,
             }
@@ -25,7 +27,7 @@ const Mypage = () => {
                 console.log(res)
                 setUser(res.data);
                 dispatch({ type: "user", payload: res.data });
-                axios.get(`http://13.125.155.38:8090/mypagelist/${res.data.email}`)
+                axios.get(url+`mypagelist/${res.data.email}`)
                     .then(res => {
                         console.log(res.data);
                         setSaleList([]);
@@ -62,7 +64,7 @@ const Mypage = () => {
             </FormGroup>
             <div style={{ paddingBottom: "30px", display: "flex", paddingBottom: "30px" }}>
                 <div style={{ paddingBottom: "20px", textAlign: "left" }}>
-                    <img src={user.profileimgurl ? `http://13.125.155.38:8090/img/${user.profileimgurl}` : Image} width="100px" height="100px" alt='' style={{ borderRadius: "50px", width: "65px", height: "65px" }} />
+                    <img src={user.profileimgurl ? url+`img/${user.profileimgurl}` : Image} width="100px" height="100px" alt='' style={{ borderRadius: "50px", width: "65px", height: "65px" }} />
                 </div>
                 <div style={{ fontSize: "20px", fontWeight: "bold", textAlign: "left", paddingLeft: "20px", width: "220px" }}>
                     &nbsp;{user.nickname}
@@ -142,12 +144,12 @@ const Mypage = () => {
                                     <div style={{ display: "inline-block", paddingRight: index % 3 === 2 ? "0px" : "10px" }}>
                                         {item.status === "거래완료" ? (
                                             <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative", opacity: "0.5" }}>
-                                                <img src={`http://13.125.155.38:8090/img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
+                                                <img src={url+`img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
                                                 <a style={{ fontWeight: "bold", color: "white", position: "absolute", top: "41%", left: "26%" }}>판매완료</a>
                                             </div>
                                         ) : (
                                             <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative" }}>
-                                                <img src={`http://13.125.155.38:8090/img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
+                                                <img src={url+`img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px" }} />
                                             </div>
                                         )}
                                         {item.amount.length > 15 ? (
