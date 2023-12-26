@@ -10,10 +10,13 @@ const WebSocketContext = createContext();
 export const WebSocketProvider = ({ children }) => {
   const [stompClient, setStompClient] = useState(null);
   const [receivedata, setReceivedata] = useState(null);
+  // const url = "http://13.125.155.38:8090/";
+  const url = "http://localhost:8090/";
   const user = useSelector(state => state.persistedReducer.user);
   useEffect(() => {
     const createWebSocket = () => {
-      const sock = new SockJS('http://13.125.155.38:8090/ws');
+      // const sock = new SockJS('http://13.125.155.38:8090/ws');
+      const sock = new SockJS('http://localhost:8090/ws');
       return Stomp.over(sock);
     };
 
@@ -57,13 +60,13 @@ export const WebSocketProvider = ({ children }) => {
   };
 
   return (
-    <WebSocketContext.Provider value={{ stompClient, receivedata, resetData, sendDataToServer }}>
+    <WebSocketContext.Provider value={{ stompClient, receivedata, resetData, sendDataToServer,url }}>
       {children}
     </WebSocketContext.Provider>
   );
 };
 
 export const useWebSocket = () => {
-  const { stompClient, receivedata, resetData, sendDataToServer } = useContext(WebSocketContext);
-  return { stompClient, receivedata, resetData, sendDataToServer };
+  const { stompClient, receivedata, resetData, sendDataToServer,url } = useContext(WebSocketContext);
+  return { stompClient, receivedata, resetData, sendDataToServer,url };
 };

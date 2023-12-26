@@ -8,8 +8,10 @@ import { FaCamera } from "react-icons/fa";
 import axios from 'axios';
 import { GiCancel } from "react-icons/gi";
 import Swal from 'sweetalert2';
+import { useWebSocket } from './WebSocketProvider';
 
 const formatPrice = (amount) => {
+
     if (!amount) return '';
     const numericPrice = parseInt(amount.replace(/[^0-9]/g, ''));
 
@@ -18,6 +20,7 @@ const formatPrice = (amount) => {
 };
 
 const SaleModify = () => {
+    const { url } = useWebSocket();
     const MAX_TITLE_LENGTH = 20;
     const navigate = useNavigate();
     const [files, setFiles] = useState([]);
@@ -38,7 +41,7 @@ const SaleModify = () => {
     const [currentImage, setCurrentImage] = useState();
     const { sect, num } = useParams();
     useEffect(() => {
-        axios.get(`http://13.125.155.38:8090/saledetail/${sect}/${num}`)
+        axios.get(url+`saledetail/${sect}/${num}`)
             .then(res => {
                 console.log(res.data);
                 setSale(res.data.sale);
@@ -150,7 +153,7 @@ const SaleModify = () => {
                 formData.append("file", file.data);
         }
 
-        axios.post('http://13.125.155.38:8090/salemodify', formData)
+        axios.post(url+'salemodify', formData)
             .then(res => {
                 console.log(res);
                 let saleNum = res.data;
@@ -174,7 +177,7 @@ const SaleModify = () => {
             cancelButtonText: '취소'
         }).then((result) => {
             if(result.value){
-                axios.delete(`http://localhost:8090/saledelete/${num}`)
+                axios.delete(url+`saledelete/${num}`)
                     .then(res => {
                         Swal.fire({
                             title: "삭제되었습니다",
@@ -226,7 +229,7 @@ const SaleModify = () => {
                             files.map((file, index) =>
                                 <span key={index}>
                                     <div style={{ position: "relative", display: 'inline-block', marginRight: "10px" }}>
-                                        <img src={file.type === 'i' ? `http://13.125.155.38:8090/img/${file.data}` : URL.createObjectURL(file.data)} width="45px" height="45px" alt='' id={index} onClick={imageClick} />
+                                        <img src={file.type === 'i' ? url+`img/${file.data}` : URL.createObjectURL(file.data)} width="45px" height="45px" alt='' id={index} onClick={imageClick} />
                                         <button data-idx={index} onClick={() => deleteClick(index)} style={{ position: "absolute", top: "-15px", right: "-15px", background: "none", border: "none", cursor: "pointer" }}><GiCancel /></button>
                                     </div>
                                 </span>
@@ -318,5 +321,6 @@ const SaleModify = () => {
             </div>
         </div>
     )
+    }
 };
 export default SaleModify;
