@@ -85,7 +85,7 @@ const StompChatting = () => {
           setChatList((_chat_list) => [
             ..._chat_list, receivedata
           ]);
-          axios.post(`http://localhost:8090/insertisread`, receivedata, {
+          axios.post(`http://13.125.155.38:8090/insertisread`, receivedata, {
             headers: {
               Authorization: token,
             }
