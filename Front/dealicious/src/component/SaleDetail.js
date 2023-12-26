@@ -140,7 +140,7 @@ function SaleDetail() {
         confirmButtonText: '확인',
       });
     } else {
-      axios.get(url+`salelike/${user.email}/${num})
+      axios.get(url+`salelike/${user.email}/${num}`)
         .then(res => {
           console.log(res.data)
           setSale({ ...sale, zzimcnt: res.data.zzimCnt });

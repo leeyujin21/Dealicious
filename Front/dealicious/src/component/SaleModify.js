@@ -192,7 +192,7 @@ const SaleModify = () => {
             }
         })
 
-
+    }
     return (
         <div className='main' style={{ textAlign: 'left', overflow: "scroll", height: "632px", overflowX: "hidden" }}>
             <br />
@@ -321,6 +321,5 @@ const SaleModify = () => {
             </div>
         </div>
     )
-    }
 };
 export default SaleModify;
