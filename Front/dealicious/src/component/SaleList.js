@@ -47,7 +47,7 @@ const SaleList = () => {
     const observer = new IntersectionObserver((entries) => {//IntersectionObserver를 생성하여 관찰 대상 요소(observerRef.current)의 교차점을 감시
       if (entries[0].isIntersecting && saleList.length > 0) {//관찰 대상 요소가 뷰포트와 교차되고 데이터가 있을 때(saleList.length > 0), Axios를 사용하여 서버에서 데이터를 가져오는 GET 요청
         if (category == null && keyword == null) {
-          axios.get(url+`salelist/${page + 1}`)
+          axios.get(url + `salelist/${page + 1}`)
             .then(res => {
               const newSaleList = res.data;//새로운 데이터가 수신되면(newSaleList.length > 0), setSaleList 함수를 사용하여 새 데이터를 기존 saleList에 추가하고 페이지 번호를 업데이트
               if (newSaleList.length > 0) {
@@ -61,7 +61,7 @@ const SaleList = () => {
               console.log(err);
             });
         } else if (keyword == null) {
-          axios.get(url+`salelist/${page + 1}/${category}`)
+          axios.get(url + `salelist/${page + 1}/${category}`)
             .then(res => {
               const newSaleList = res.data;//새로운 데이터가 수신되면(newSaleList.length > 0), setSaleList 함수를 사용하여 새 데이터를 기존 saleList에 추가하고 페이지 번호를 업데이트
               if (newSaleList.length > 0) {
@@ -75,7 +75,7 @@ const SaleList = () => {
               console.log(err);
             });
         } else {
-          axios.get(url+`salesearchlist/${page + 1}/${keyword}`)
+          axios.get(url + `salesearchlist/${page + 1}/${keyword}`)
             .then(res => {
               const newSaleList = res.data;//새로운 데이터가 수신되면(newSaleList.length > 0), setSaleList 함수를 사용하여 새 데이터를 기존 saleList에 추가하고 페이지 번호를 업데이트
               if (newSaleList.length > 0) {
@@ -105,7 +105,7 @@ const SaleList = () => {
 
   useEffect(() => {
     if (category == null && keyword == null) {
-      axios.get(url+`salelist/${page}`)
+      axios.get(url + `salelist/${page}`)
         .then(res => {
           console.log(res);
           setSaleList([]);
@@ -117,7 +117,7 @@ const SaleList = () => {
           console.log(err);
         })
     } else if (keyword == null) {
-      axios.get(url+`salelist/${page}/${category}`)
+      axios.get(url + `salelist/${page}/${category}`)
         .then(res => {
           console.log(res);
           setSaleList([]);
@@ -130,7 +130,7 @@ const SaleList = () => {
           console.log(err);
         })
     } else {
-      axios.get(url+`salesearchlist/${page}/${keyword}`)
+      axios.get(url + `salesearchlist/${page}/${keyword}`)
         .then(res => {
           console.log(res);
           setSaleList([]);
@@ -169,28 +169,24 @@ const SaleList = () => {
           </div>
           {saleList.map((item, index) =>
             <Link to={"/saledetail/only-detail/" + item.num} key={index} style={{ textDecoration: "none", color: "black" }}>
-
-              <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "100px" }}>
+              <div style={{ paddingTop: "10px", paddingBottom: "10px", borderBottom: "1px solid lightgray", height: "120px" }}>
                 <div>
                   <div style={{ display: "flex" }} >
                     {item.fileurl == null ? <img src='./profile.png' width="130px" height="87px" />
-                      : <img src={url+`img/${item.fileurl.split(',')[0]}`} width="80px" height="80px" style={{ borderRadius: "10px" }} />}
+                      : <img src={url + `img/${item.fileurl.split(',')[0]}`} width="100px" height="100px" style={{ borderRadius: "10px" }} />}
 
-                    <div style={{ textAlign: "left", marginLeft: "15px", width: "290px" }}>
-                      <a style={{ fontSize: "18px" }}>
+                    <div style={{ textAlign: "left", marginLeft: "15px", width: "265px" }}>
+                      <div style={{ fontSize: "18px", width:"265px" }}>
                         {item.title.length > 20 ? `${item.title.slice(0, 20)}...` : item.title}
-                      </a>
-                      <div style={{ display: "flex" }}>
-                        <div style={{ fontSize: "15px", width: "230px" }}>{item.place}</div>
-                        <div style={{ textAlign: "right", width: "55px" }}>
-                          {item.ggull == 0 ? <img src='' style={{ width: "35px" }} /> : <img src='/ggul.png' style={{ width: "35px" }} />}
-                        </div>
-
-
                       </div>
-
+                      <div style={{ display: "flex", width:"265px" }}>
+                        <div style={{ fontSize: "15px" }}>{item.place}</div>
+                      </div>
+                      <div style={{ textAlign: "right", width: "55px", width: "265px" }}>
+                        {item.ggull == 0 ? <img src='' style={{ width: "35px" }} /> : <img src='/ggul.png' style={{ width: "35px" }} />}
+                      </div>
                       <div style={{ display: "flex" }}>
-                        <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "190px" }}>{formatPrice(item.amount)}</div>
+                        <div style={{ fontSize: "16px", fontWeight: "bold", textAlign: "left", width: "170px", display: "flex" }}>{formatPrice(item.amount)}{item.status === "수령완료" || item.status === "거래완료" ? <div style={{ fontSize: "12px", fontWeight: "normal", marginLeft: "5px", backgroundColor:"#E9E9E9", width:"60px", textAlign:"center", lineHeight:"24px", borderRadius:"5px", fontWeight:"bold", color:"darkgray" }}>판매완료</div> : ""}</div>
                         <div style={{ width: "95px", textAlign: "right" }}>
                           {timediff(item.writedate)}
                         </div>

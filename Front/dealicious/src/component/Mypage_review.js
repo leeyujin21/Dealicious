@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FaArrowRight, FaStar } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, FormGroup, Label } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -14,8 +14,9 @@ const Mypage_review = () => {
     const token = useSelector(state => state.persistedReducer.token);
     const [user, setUser] = useState({ email: '', nickname: '', password: '', type: '', typename: '', tel: '', accountbank: '', accountbank: '', admincode: '', profileimgurl: '', starpoint: '' });
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     useEffect(() => {
-        axios.get(url+"user1", {
+        axios.get(url + "user1", {
             headers: {
                 Authorization: token,
             }
@@ -24,7 +25,7 @@ const Mypage_review = () => {
                 console.log(res)
                 setUser(res.data);
                 dispatch({ type: "user", payload: res.data });
-                axios.get(url+`myreviewlist/${res.data.email}`)
+                axios.get(url + `myreviewlist/${res.data.email}`)
                     .then(res => {
                         console.log(user.email)
                         console.log(res.data);
@@ -42,24 +43,33 @@ const Mypage_review = () => {
             })
     }, []);
 
+    const backButton = () => {
+        navigate(-1);
+    }
+
     return (
 
-        <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden", paddingTop: "50px" }}>
-            <FormGroup style={{ textAlign: "left", paddingBottom: "10px" }}>
-                <IoArrowBackOutline style={{ marginRight: "100px" }} size="30" color="#14C38E" />
-                <Label style={{ fontSize: "25px", fontWeight: "bold", color: "#14C38E" }}>마이페이지</Label>
+        <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden", paddingTop: "20px" }}>
+            <FormGroup style={{ textAlign: "left", paddingBottom: "10px", display: "flex" }}>
+                <div style={{ lineHeight: "38px", cursor: "pointer" }} onClick={backButton}><IoArrowBackOutline size="20" color="#14C38E" /></div>
+                <div style={{ width: "360px", textAlign: "center", fontSize: "20px", color: "#14C38E", lineHeight: "38px" }}>마이페이지</div>
             </FormGroup>
-            <div style={{ paddingBottom: "30px", display: "flex", paddingBottom: "30px" }}>
-                <div style={{ paddingBottom: "20px", textAlign: "left" }}>
-                    <img src={user.profileimgurl ? url+`img/${user.profileimgurl}` : Image} width="100px" height="100px" alt='' style={{ borderRadius: "50px", width: "65px", height: "65px" }} />
+            <div style={{ display: "flex", paddingBottom: "30px" }}>
+                <div style={{ textAlign: "left" }}>
+                    <img src={user.profileimgurl ? url + `img/${user.profileimgurl}` : Image} width="100px" height="100px" alt='' style={{ borderRadius: "50px", width: "65px", height: "65px" }} />
                 </div>
-                <div style={{ fontSize: "20px", fontWeight: "bold", textAlign: "left", paddingLeft: "20px", width: "220px" }}>
-                    &nbsp;{user.nickname}
-                    <br />
+                <div style={{ fontSize: "20px", textAlign: "left", paddingLeft: "15px", width: "220px", lineHeight: "32.5px" }}>
+                    <div style={{ fontWeight: "bold" }}>&nbsp;{user.nickname}</div>
                     <div>
-                    {Array.from({ length: user.starpoint }, (_, index) => (
-                            <FaStar key={index} size="25" color="#F2D43E" />
-                        ))}
+                        {user.starpoint === "" || user.starpoint === undefined || user.starpoint === null || user.starpoint === 0 ?
+                            <div style={{ fontSize: "14px", color: "gray" }}>
+                                &nbsp;아직 받은 별점이 없어요!
+                            </div>
+                            :
+                            <div style={{ lineHeight: "25px" }}>{Array.from({ length: user.starpoint }, (_, index) => (
+                                <FaStar key={index} size="25" color="#F2D43E" />
+                            ))}</div>
+                        }
                     </div>
                 </div>
 
@@ -71,7 +81,7 @@ const Mypage_review = () => {
                         }}>내 정보 수정
                         </Button>
                     </Link><br />
-                    <a href="/logout" style={{ fontSize: "13px", color: "gray", textDecoration: "none", marginRight: "10px" }}>로그아웃</a>
+                    <a href="/logout" style={{ fontSize: "13px", color: "gray", textDecoration: "none", marginRight: "13px" }}>로그아웃</a>
                 </div>
             </div>
             <div style={{ display: "flex", textAlign: "left", marginBottom: "3px" }}>
@@ -93,10 +103,10 @@ const Mypage_review = () => {
             ) : (
                 <div>
                     {reviewList.map((review, index) => (
-                        <div key={index} style={{ marginLeft: "5px", display: "flex", width: "100%", height: "90px", borderBottom: "1px solid lightgray" }}>
-                            <div style={{ height: "70px", marginTop: "7.5px" }}>
+                        <div key={index} style={{ display: "flex", width: "385px", height: "80px", borderBottom: "1px solid lightgray" }}>
+                            <div style={{ height: "70px", marginTop: "7.5px", marginLeft: "5px" }}>
                                 <img
-                                    src={review.profileimgurl ? url+`img/${review.profileimgurl}` : Image}
+                                    src={review.profileimgurl ? url + `img/${review.profileimgurl}` : Image}
                                     style={{ borderRadius: "50px", width: "55px", height: "55px" }}
                                 />
                             </div>
@@ -114,7 +124,7 @@ const Mypage_review = () => {
                                 <img src={review.ggull === "1" ? "\ggul.png" : "\ggul2.png"} style={{ width: "34px", height: "19px" }} />
                             </div>
                             <div style={{ width: "70px", height: "70px", borderRadius: "10px", textAlign: "right" }}>
-                                <img src={url+`img/${review.fileurl.split(',')[0]}`} style={{ width: "70px", height: "70px", borderRadius: "10px" }} />
+                                <img src={url + `img/${review.fileurl.split(',')[0]}`} style={{ width: "70px", height: "70px", borderRadius: "10px" }} />
                             </div>
                         </div>
                     ))}
