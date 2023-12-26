@@ -2,12 +2,15 @@ import {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {persistor} from '../App';
 import axios from "axios";
+import { useWebSocket } from './WebSocketProvider';
+
 const Logout = () => {
+    const { url } = useWebSocket();
     const dispatch = useDispatch();
     const token = useSelector(state => state.persistedReducer.token);
 
     useEffect(()=> {
-        axios.get("http://13.125.155.38:8090/logout1", {
+        axios.get(url+"logout1", {
                     headers: {
                         Authorization: token,
                     }

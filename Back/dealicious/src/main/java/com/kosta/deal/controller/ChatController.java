@@ -138,6 +138,10 @@ public class ChatController {
     	PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
     	User user = principalDetails.getUser();
     	try {
+    		Sale sale = saleService.saleDetail(salenum);
+    		if(sale.getStatus().equals("수령완료")) {
+    			throw new Exception("이미 수령 완료 처리되었습니다.");
+    		}
     		saleService.changesalestatusToreceipt(salenum,user.getEmail());
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch(Exception e) {

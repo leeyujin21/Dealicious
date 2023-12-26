@@ -6,9 +6,10 @@ import { useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { FaArrowRight } from 'react-icons/fa6';
-
+import { useWebSocket } from './WebSocketProvider';
 
 const SaleList = () => {
+  const { url } = useWebSocket();
   const [saleList, setSaleList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
 
@@ -55,7 +56,7 @@ const SaleList = () => {
     const observer = new IntersectionObserver((entries) => {//IntersectionObserver를 생성하여 관찰 대상 요소(observerRef.current)의 교차점을 감시
       if (entries[0].isIntersecting && saleList.length > 0) {//관찰 대상 요소가 뷰포트와 교차되고 데이터가 있을 때(saleList.length > 0), Axios를 사용하여 서버에서 데이터를 가져오는 GET 요청
         if (category == null && keyword == null) {
-          axios.get(`http://13.125.155.38:8090/salelist/${page + 1}`)
+          axios.get(url+`salelist/${page + 1}`)
             .then(res => {
               const newSaleList = res.data;//새로운 데이터가 수신되면(newSaleList.length > 0), setSaleList 함수를 사용하여 새 데이터를 기존 saleList에 추가하고 페이지 번호를 업데이트
               if (newSaleList.length > 0) {
@@ -69,7 +70,7 @@ const SaleList = () => {
               console.log(err);
             });
         } else if (keyword == null) {
-          axios.get(`http://13.125.155.38:8090/salelist/${page + 1}/${category}`)
+          axios.get(url+`salelist/${page + 1}/${category}`)
             .then(res => {
               const newSaleList = res.data;//새로운 데이터가 수신되면(newSaleList.length > 0), setSaleList 함수를 사용하여 새 데이터를 기존 saleList에 추가하고 페이지 번호를 업데이트
               if (newSaleList.length > 0) {
@@ -83,7 +84,7 @@ const SaleList = () => {
               console.log(err);
             });
         } else {
-          axios.get(`http://13.125.155.38:8090/salesearchlist/${page + 1}/${keyword}`)
+          axios.get(url+`salesearchlist/${page + 1}/${keyword}`)
             .then(res => {
               const newSaleList = res.data;//새로운 데이터가 수신되면(newSaleList.length > 0), setSaleList 함수를 사용하여 새 데이터를 기존 saleList에 추가하고 페이지 번호를 업데이트
               if (newSaleList.length > 0) {
@@ -113,7 +114,7 @@ const SaleList = () => {
 
   useEffect(() => {
     if (category == null && keyword == null) {
-      axios.get(`http://13.125.155.38:8090/salelist/${page}`)
+      axios.get(url+`salelist/${page}`)
         .then(res => {
           console.log(res);
           setSaleList([]);
@@ -125,7 +126,7 @@ const SaleList = () => {
           console.log(err);
         })
     } else if (keyword == null) {
-      axios.get(`http://13.125.155.38:8090/salelist/${page}/${category}`)
+      axios.get(url+`salelist/${page}/${category}`)
         .then(res => {
           console.log(res);
           setSaleList([]);
@@ -138,7 +139,7 @@ const SaleList = () => {
           console.log(err);
         })
     } else {
-      axios.get(`http://13.125.155.38:8090/salesearchlist/${page}/${keyword}`)
+      axios.get(url+`salesearchlist/${page}/${keyword}`)
         .then(res => {
           console.log(res);
           setSaleList([]);
@@ -182,7 +183,7 @@ const SaleList = () => {
                 <div>
                   <div style={{ display: "flex" }} >
                     {item.fileurl == null ? <img src='./profile.png' width="130px" height="87px" />
-                      : <img src={`http://13.125.155.38:8090/img/${item.fileurl.split(',')[0]}`} width="80px" height="80px" style={{ borderRadius: "10px" }} />}
+                      : <img src={url+`img/${item.fileurl.split(',')[0]}`} width="80px" height="80px" style={{ borderRadius: "10px" }} />}
 
                     <div style={{ textAlign: "left", marginLeft: "15px", width: "290px" }}>
                       <a style={{ fontSize: "18px" }}>

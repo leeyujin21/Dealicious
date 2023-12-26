@@ -9,14 +9,16 @@ import { MdOutlineMoreHoriz, MdArrowForward } from "react-icons/md";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useWebSocket } from './WebSocketProvider';
 
 const Main = () => {
+  const { url } = useWebSocket();
   const user = useSelector(state => state.persistedReducer.user);
   const [firstHalf, setFirstHalf] = useState([]);
   const [secondHalf, setSecondHalf] = useState([]);
   console.log(user.typename)
   useEffect(() => {
-    axios.get(`http://13.125.155.38:8090/hotsalelist`)
+    axios.get(url+`hotsalelist`)
       .then(res => {
         console.log(res.data);
         if (res.data.length <= 3) {
@@ -54,7 +56,7 @@ const Main = () => {
           <Link to={`/saledetail/only-detail/${item.num}`} style={{ textDecoration: "none", color: "black" }} key={index}>
             <div style={{ marginRight: "10px" }}>
               <img
-                src={`http://13.125.155.38:8090/img/${item.fileurl.split(',')[0]}`}
+                src={url+`img/${item.fileurl.split(',')[0]}`}
                 style={{ width: "120px", height: "120px", borderRadius: "5px" }}
                 alt={`Item ${index + 1}`}
               />
@@ -71,7 +73,7 @@ const Main = () => {
           <Link to={`/saledetail/only-detail/${item.num}`} style={{ textDecoration: "none", color: "black" }} key={index}>
             <div style={{ marginRight: "10px" }}>
               <img
-                src={`http://13.125.155.38:8090/img/${item.fileurl.split(',')[0]}`}
+                src={url+`img/${item.fileurl.split(',')[0]}`}
                 style={{ width: "120px", height: "120px", borderRadius: "5px" }}
                 alt={`Item ${index + 4}`}
               />
