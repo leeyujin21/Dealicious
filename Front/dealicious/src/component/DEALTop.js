@@ -16,13 +16,13 @@ const DEALTop = () => {
   const user = useSelector(state => state.persistedReducer.user);
   const token = useSelector(state => state.persistedReducer.token);
   const [noticnt, setNoticnt] = useState(0);
-  const { receivedata, resetData } = useWebSocket();
+  const { receivedata, resetData,url } = useWebSocket();
   const navigate = useNavigate();
 
   useEffect(() => {
 
     if (user.email !== undefined && user.email !== '') {
-        axios.get(`http://13.125.155.38:8090/noticnt`, {
+        axios.get(url+`noticnt`, {
         headers: {
           Authorization: token,
         }
@@ -49,14 +49,14 @@ const DEALTop = () => {
 
   const goNotification = () => {
     if (user.email !== undefined && user.email !== '') {
-      axios.get(`http://13.125.155.38:8090/notieachcnt`, {
+      axios.get(url+`notieachcnt`, {
         headers: {
           Authorization: token,
         }
       })
         .then(res => {
           if (res.data.actiCnt > 0) {
-            axios.get(`http://13.125.155.38:8090/notiactivityread`, {
+            axios.get(url+`notiactivityread`, {
               headers: {
                 Authorization: token,
               }
@@ -70,7 +70,7 @@ const DEALTop = () => {
               })
             
           } else if (res.data.keyCnt > 0) {
-            axios.get(`http://13.125.155.38:8090/notikeywordread`, {
+            axios.get(url+`notikeywordread`, {
               headers: {
                 Authorization: token,
               }

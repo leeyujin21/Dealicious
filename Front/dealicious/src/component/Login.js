@@ -3,8 +3,10 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { useWebSocket } from './WebSocketProvider';
 
 const Login = () => {
+    const { url } = useWebSocket();
     const [user, setUser] = useState({ email: '', password: '' });
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setpasswordError] = useState(false);
@@ -37,11 +39,11 @@ const Login = () => {
             return;
         }
 
-        axios.post("http://13.125.155.38:8090/login", user)
+        axios.post(url+"login", user)
             .then(res => {
                 console.log(res.headers.authorization);
                 dispatch({ type: "token", payload: res.headers.authorization });
-                axios.get("http://13.125.155.38:8090/user", {
+                axios.get(url+"user", {
                     headers: {
                         Authorization: res.headers.authorization,
                     }
@@ -67,11 +69,11 @@ const Login = () => {
     }
 
     function goToNaver() {
-        window.location.href = "http://13.125.155.38:8090/oauth2/authorization/naver"
+        window.location.href = url+"oauth2/authorization/naver"
     }
 
     function goToKakao() {
-        window.location.href = "http://13.125.155.38:8090/oauth2/authorization/kakao"
+        window.location.href = url+"oauth2/authorization/kakao"
     }
 
     return (

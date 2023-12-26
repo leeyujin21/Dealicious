@@ -4,8 +4,10 @@ import { IoIosSearch } from "react-icons/io";
 import { CgClose } from "react-icons/cg";
 import { useState } from "react";
 import axios from "axios";
+import { useWebSocket } from './WebSocketProvider';
 
 const Join2 = () => {
+  const { url } = useWebSocket();
   const [typename, setTypename] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
@@ -18,7 +20,7 @@ const Join2 = () => {
       setErrorMessage("키워드를 입력하세요");
     } else {
       if (type === "univ") {
-        axios.post('http://13.125.155.38:8090/univ/getSchoolName', { typename: typename })
+        axios.post(url+'univ/getSchoolName', { typename: typename })
           .then(response => {
             setSearchResults(response.data);
           })
@@ -26,7 +28,7 @@ const Join2 = () => {
             console.error('Error making AJAX request:', error);
           });
       } else if (type === "com") {
-        axios.post('http://13.125.155.38:8090/corp/getCorpName', { typename: typename })
+        axios.post(url+'corp/getCorpName', { typename: typename })
           .then(response => {
             setSearchResults(response.data);
           })

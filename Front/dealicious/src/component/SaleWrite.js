@@ -8,8 +8,10 @@ import { FaCamera } from "react-icons/fa";
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { GiCancel } from 'react-icons/gi';
+import { useWebSocket } from './WebSocketProvider';
 
 const SaleWrite = () => {
+    const { url } = useWebSocket();
     const [currentImage, setCurrentImage] = useState("./ggul2.png");
     const navigate = useNavigate();
     const [imageCount, setImageCount] = useState(0); // 상태 변수로 이미지 카운트를 관리.
@@ -204,7 +206,7 @@ const SaleWrite = () => {
 
         console.log(formData)
 
-        axios.post('http://13.125.155.38:8090/salewrite', formData)
+        axios.post(url+'salewrite', formData)
             .then(res => {
                 console.log(res);
 
