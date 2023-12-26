@@ -255,13 +255,10 @@ public class SaleServiceImpl implements SaleService {
 	@Override
 	public void saleDelete(Integer num) throws Exception {
 		Sale sale = saleRepository.findByNum(num);
-		saleRepository.delete(sale);
+		sale.setCheckdelete("1");
+		saleRepository.save(sale);
 	}
-
-
-
 	
-
 	@Override
 	public void payFinish(Integer num) throws Exception {
 		Sale sale = saleRepository.findByNum(num);
