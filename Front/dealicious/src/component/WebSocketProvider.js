@@ -13,7 +13,7 @@ export const WebSocketProvider = ({ children }) => {
   const user = useSelector(state => state.persistedReducer.user);
   useEffect(() => {
     const createWebSocket = () => {
-      const sock = new SockJS('http://localhost:8090/ws');
+      const sock = new SockJS('http://13.125.155.38:8090/ws');
       return Stomp.over(sock);
     };
 
@@ -52,15 +52,18 @@ export const WebSocketProvider = ({ children }) => {
       stompClient.send('/pub/chat', {}, JSON.stringify(data));
     }
   };
+  const resetData = () => {
+    setReceivedata(null);
+  };
 
   return (
-    <WebSocketContext.Provider value={{ stompClient, receivedata, sendDataToServer }}>
+    <WebSocketContext.Provider value={{ stompClient, receivedata, resetData, sendDataToServer }}>
       {children}
     </WebSocketContext.Provider>
   );
 };
 
 export const useWebSocket = () => {
-  const { stompClient, receivedata, sendDataToServer } = useContext(WebSocketContext);
-  return { stompClient, receivedata, sendDataToServer };
+  const { stompClient, receivedata, resetData, sendDataToServer } = useContext(WebSocketContext);
+  return { stompClient, receivedata, resetData, sendDataToServer };
 };

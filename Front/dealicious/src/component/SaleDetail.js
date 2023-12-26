@@ -29,7 +29,7 @@ function SaleDetail() {
       ...prevSale,
       status: e.target.value
     }));
-    axios.get(`http://localhost:8090/changesalestatus/${num}/${e.target.value}`)
+    axios.get(`http://13.125.155.38:8090/changesalestatus/${num}/${e.target.value}`)
       .then(res => {
         console.log(res);
       })
@@ -71,7 +71,7 @@ function SaleDetail() {
   useEffect(() => {
     if (user.email === "") {
       axios
-        .get(`http://localhost:8090/saledetail/${sect}/${num}`)
+        .get(`http://13.125.155.38:8090/saledetail/${sect}/${num}`)
         .then(res => {
           console.log(res.data);
 
@@ -91,7 +91,7 @@ function SaleDetail() {
         });
     } else {
       axios
-        .get(`http://localhost:8090/saledetail/${sect}/${user.email}/${num}`)
+        .get(`http://13.125.155.38:8090/saledetail/${sect}/${user.email}/${num}`)
         .then(res => {
           console.log(res.data);
 
@@ -129,7 +129,6 @@ function SaleDetail() {
         return category;
     }
   };
-
   const selectGood = () => {
     if (user.email === '' || user.email===undefined) {
       Swal.fire({
@@ -139,7 +138,7 @@ function SaleDetail() {
         confirmButtonText: '확인',
       });
     } else {
-      axios.get(`http://localhost:8090/salelike/${user.email}/${num}`)
+      axios.get(`http://13.125.155.38:8090/salelike/${user.email}/${num}`)
         .then(res => {
           console.log(res.data)
           setSale({ ...sale, zzimcnt: res.data.zzimCnt });
@@ -153,7 +152,7 @@ function SaleDetail() {
       const uniqueString = uuidv4();
       const chatRoom = { channelId: uniqueString, creator: user.email, partner: writer.email, saleNum: num };
       console.log(chatRoom);
-      axios.post(`http://localhost:8090/findchatroom`, chatRoom, {
+      axios.post(`http://13.125.155.38:8090/findchatroom`, chatRoom, {
         headers: {
           Authorization: token,
         }
@@ -235,7 +234,7 @@ function SaleDetail() {
             {fileurlList.map((url, index) => (
               <div key={index}>
                 <img
-                  src={`http://localhost:8090/img/${url}`}
+                  src={`http://13.125.155.38:8090/img/${url}`}
                   alt={`slide-${index}`}
                   style={{ width: "385px", height: "210px", borderRadius: "10px" }}
                 />
@@ -247,7 +246,7 @@ function SaleDetail() {
         <div style={{ marginTop: "15px" }}>
           <div style={{ display: "flex" }}>
             <div rowSpan={2}>
-              <img src={writer.fileurl == null ? Image : `http://localhost:8090/img/${writer.fileurl}`} style={{ width: "60px", height: "60px", marginRight: "10px", borderRadius: "50px" }} />
+              <img src={writer.fileurl == null ? Image : `http://13.125.155.38:8090/img/${writer.fileurl}`} style={{ width: "60px", height: "60px", marginRight: "10px", borderRadius: "50px" }} />
             </div>
             <div
               style={{

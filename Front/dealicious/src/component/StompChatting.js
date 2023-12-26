@@ -45,7 +45,7 @@ const StompChatting = () => {
   const { channelId } = useParams();
   const user = useSelector(state => state.persistedReducer.user);
   const { sendDataToServer } = useWebSocket();
-  const { receivedata } = useWebSocket();
+  const { receivedata, resetData } = useWebSocket();
 
   // const chatBox = { border: "1px solid gray", borderRadius: "20%", width: "87px", height: "41px", textAlign: "center", float: "right", backgroundColor: "#14C38E", color: "white", marginTop: "-30px" };
   // const opponent = { backgroundColor: "#D9D9D9", borderRadius: "20%", width: "87px", height: "41px", textAlign: "center", paddingTop: "5px", marginLeft: "20px", marginTop: "20px" }
@@ -55,7 +55,7 @@ const StompChatting = () => {
   }, [chatList]);
 
   useEffect(() => { //컴포넌트가 마운트될 때 connect() 함수를 호출하여 Stomp 클라이언트를 연결하고, 컴포넌트가 언마운트될때  disconnect() 함수를 호출하여 연결을 끊습니다.
-    axios.get(`http://localhost:8090/chatroom/` + channelId, {
+    axios.get(`http://13.125.155.38:8090/chatroom/` + channelId, {
       headers: {
         Authorization: token,
       }
@@ -85,22 +85,36 @@ const StompChatting = () => {
           setChatList((_chat_list) => [
             ..._chat_list, receivedata
           ]);
+          axios.post(`http://13.125.155.38:8090/insertisread`, receivedata, {
+            headers: {
+              Authorization: token,
+            }
+          })
+            .then(res => {
+              console.log(res.data);
+            })
+            .catch(err => {
+              console.log(err);
+            })
         }
       }
+      resetData();
     }
   }, [receivedata]);
 
   const publish = () => {
     console.log("chat:" + chat);
-    const dataToSend = {
-      channelId: channelId,
-      writerId: user.email,
-      receiverId: chatpartner.email,
-      chat: chat,
-      type: "chat"
-    };
-    setChat('');
-    sendDataToServer(dataToSend);
+    if (chat !== '') {
+      const dataToSend = {
+        channelId: channelId,
+        writerId: user.email,
+        receiverId: chatpartner.email,
+        chat: chat,
+        type: "chat"
+      };
+      setChat('');
+      sendDataToServer(dataToSend);
+    }
   };
 
 
@@ -194,7 +208,7 @@ const StompChatting = () => {
 
   const receipt = () => {
     console.log("수령완료");
-    axios.get(`http://localhost:8090/receipt/` + sale.num, {
+    axios.get(`http://13.125.155.38:8090/receipt/` + sale.num, {
       headers: {
         Authorization: token,
       }
@@ -227,7 +241,7 @@ const StompChatting = () => {
     // 여기서 실제로 등록하는 로직을 구현.
     // 예시로 console에 선택한 별점을 출력
 
-    axios.get(`http://localhost:8090/review/${fixedRating}/${chatpartner.email}/${sale.num}`, {
+    axios.get(`http://13.125.155.38:8090/review/${fixedRating}/${chatpartner.email}/${sale.num}`, {
       headers: {
         Authorization: token,
       }
@@ -252,14 +266,15 @@ const StompChatting = () => {
       <div style={{ marginTop: "20px", width: "385px", borderTop: "1px solid gray", borderBottom: "1px solid gray", height: "105px" }}>
         <div style={{ marginTop: "10px", marginBottom: "10px" }}>
           <div style={{ display: "flex" }}>
-            <div><img src={`http://localhost:8090/img/${fileurlList[0]}`} style={{ width: "80px" }}></img></div>
+
+            <div><img src={`http://13.125.155.38:8090/img/${fileurlList[0]}`} style={{ width: "80px", height: "80px"  }}></img></div>
             <div style={{ width: "230px", textAlign: "left", lineHeight: "40px" }}>
               <Link to={"/saledetail/only-detail/" + sale.num} style={{ color: "black", textDecoration: "none" }}><div style={{ textAlign: "left" }}>{sale.title}</div></Link>
               <div style={{ textAlign: "left", fontSize: "18px" }}>{sale.amount}</div>
             </div>
             <div style={{ lineHeight: "40px", width: "80px", textAlign: "right", marginRight: "10px" }}>
               <div>{sale.status}</div>
-              <div>{sale.ggull == 1 ? sale.email == user.email ? <img src='/ggul.png' style={{ width: "34px", height: "19px" }}></img>:<Link to={"/gpay/"+sale.num}><img src='/ggul.png' style={{ width: "34px", height: "19px" }}></img></Link> : ""}</div>
+              <div>{sale.ggull == 1 ? sale.email == user.email ? <img src='/ggul.png' style={{ width: "34px", height: "19px" }}></img> : <Link to={"/gpay/" + sale.num}><img src='/ggul.png' style={{ width: "34px", height: "19px" }}></img></Link> : ""}</div>
             </div>
           </div>
         </div>
@@ -275,7 +290,7 @@ const StompChatting = () => {
                 </div>
                 :
                 <div style={{ textAlign: "left", marginBottom: "15px" }}>
-                  <div style={{ display: "inline-block", marginRight: "8px" }}>{chatpartner.profileimgurl==null ? <img src='/profile.png' style={{ width: "50px" }}></img>:<img src={`http://localhost:8090/img/${chatpartner.profileimgurl}`} style={{ width: "50px" }}></img>}</div>
+                  <div style={{ display: "inline-block", marginRight: "8px" }}>{chatpartner.profileimgurl==null ? <img src='/profile.png' style={{ width: "50px" }}></img>:<img src={`http://13.125.155.38:8090/img/${chatpartner.profileimgurl}`} style={{ width: "50px" }}></img>}</div>
                   <div style={{ display: "inline-block", width: "auto", maxWidth: "210px", borderRadius: "10px", backgroundColor: "#D9D9D9", padding: "10px" }}>{item.chat}</div>
                 </div>
               :
@@ -323,7 +338,7 @@ const StompChatting = () => {
                   }} isOpen={modal1IsOpen} onRequestClose={() => setModal1IsOpen(false)}>
                     <div style={{ textAlign: "center" }}>
                       <div className="logo">DEALicious</div>
-                      <div><img src={`http://localhost:8090/img/${fileurlList[0]}`} style={{width:"100px"}}/></div>
+                      <div><img src={`http://13.125.155.38:8090/img/${fileurlList[0]}`} style={{width:"100px"}}/></div>
                       <div style={{ textAlign: "center", marginTop: "5px" }}>{sale.title}</div>
                       <div style={{ textAlign: "center" }}><b>{sale.amount}원</b></div>
                       <div>
