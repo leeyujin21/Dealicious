@@ -53,7 +53,7 @@ function ChatList() {
                         const sortedChatRoomList = updatedChatRoomList.sort((a, b) => new Date(b.chatdate) - new Date(a.chatdate));
                         return sortedChatRoomList;
                     } else {    // If channelId doesn't exist, add a new chat room
-                        axios.get(`http://localhost:8090/chatroomlist/`+receivedata.channelId, {
+                        axios.get(`http://13.125.155.38:8090/chatroomlist/`+receivedata.channelId, {
                             headers: {
                                 Authorization: token,
                             }
@@ -78,7 +78,7 @@ function ChatList() {
     }, [receivedata]);
 
     const goChatRoom = (e) => {
-        axios.get(`http://localhost:8090/chatRead/${e}`, {
+        axios.get(`http://13.125.155.38:8090/chatRead/${e}`, {
             headers: {
                 Authorization: token,
             }

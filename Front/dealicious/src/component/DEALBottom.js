@@ -19,7 +19,7 @@ const DEALBottom = () => {
 
   useEffect(() => {
     if(user.email !== undefined && user.email !== '') {
-    axios.get(`http://localhost:8090/chatcnt`, {
+    axios.get(`http://13.125.155.38:8090/chatcnt`, {
             headers: {
                 Authorization: token,
             }
