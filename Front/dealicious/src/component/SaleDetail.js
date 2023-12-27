@@ -253,7 +253,7 @@ function SaleDetail() {
                 <img
                   src={url + `img/${imgnum}`}
                   alt={`slide-${index}`}
-                  style={{ width: "385px", height: "210px", borderRadius: "10px" }}
+                  style={{ width: "390px", height: "210px", borderRadius: "10px" }}
                 />
               </div>
             ))}
@@ -322,7 +322,7 @@ function SaleDetail() {
         <Input
           type="textarea"
           style={{
-            width: "385px",
+            width: "390px",
             marginTop: "10px",
             marginBottom: "15px",
             height: "285px",
