@@ -43,14 +43,14 @@ const Main = () => {
   return (
     <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden" }}>
       <Link to="/about">
-        <img src="..\dealmain.png" style={{ width: "385px" }} alt="Dealicious Main" />
+        <img src="..\dealmain.png" style={{ width: "390px" }} alt="Dealicious Main" />
       </Link>
       <br /><br />
-      <div style={{ textAlign: "left", fontSize: "20px" }}>
-        지금 <a style={{ color: "#72DBBB" }}>{user.typename === "" || user.typename === undefined ? "딜리셔스" : user.typename}</a>에서<br />
-        가장 인기있는 상품&nbsp;<FaFire size='20' color='F4900C' />
+      <div style={{ textAlign: "left", fontSize: "20px", marginLeft:"2.5px" }}>
+        <div>지금 <span style={{ color: "#72DBBB" ,fontWeight:"bold" }}>{user.typename === "" || user.typename === undefined ? "딜리셔스" : user.typename}</span>에서</div>
+        <div>가장 인기있는 상품<FaFire size='20' color='F4900C' /></div>
       </div>
-      <div style={{ display: "flex", marginBottom: "10px", marginTop:"5px" }}>
+      <div style={{ display: "flex", marginBottom: "10px", marginTop:"5px", marginLeft:"2.5px" }}>
         {firstHalf.map((item, index) => (
           <Link to={`/saledetail/only-detail/${item.num}`} style={{ textDecoration: "none", color: "black" }} key={index}>
             <div style={{ marginRight: "10px" }}>
@@ -61,7 +61,7 @@ const Main = () => {
               />
               <div style={{ textAlign: "left" }}>
                 <div style={{ fontSize: "13px" }}>{item.title.length > 10 ? item.title.slice(0, 10) + `...` : item.title}</div>
-                <div style={{ fontSize: "16px" }}>{formatPrice(item.amount)}</div>
+                <div style={{ fontSize: "15px" }}>{formatPrice(item.amount)}</div>
               </div>
             </div>
           </Link>
@@ -78,22 +78,20 @@ const Main = () => {
               />
               <div style={{ textAlign: "left" }}>
                 <div style={{ fontSize: "13px" }}>{item.title.length > 10 ? item.title.slice(0, 10) + `...` : item.title}</div>
-                <div style={{ fontSize: "16px", fontWeight: "bold" }}>{formatPrice(item.amount)}</div>
+                <div style={{ fontSize: "15px" }}>{formatPrice(item.amount)}</div>
               </div>
             </div>
           </Link>
         ))}
       </div>
-      <br /><br />
-
-      <div style={{ textAlign: "left", fontSize: "20px", display: "flex" }}>
+      <div style={{ textAlign: "left", fontSize: "20px", display: "flex", paddingTop:"20px" }}>
         <div style={{ height: "30px" }}>카테고리&nbsp;&nbsp;</div>
         <Link to="/salelist" style={{ fontSize: "15px", color: "gray", height: "30px", marginTop: "3px" }}>
           전체보기 <MdArrowForward size="15" style={{ height: "30px", marginBottom: "2.5px" }} />
         </Link>
       </div>
       <br />
-      <div style={{ display: "flex", width: "385px" }}>
+      <div style={{ display: "flex", width: "390px" }}>
         <Link to="/salelist/mobile" style={{ color: "black", width: "33%" }}>
           <FaMobileAlt size="50" color="#E25D5D" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray", fontSize:"14px" }}>모바일/태블릿</div>
@@ -108,7 +106,7 @@ const Main = () => {
         </Link>
       </div>
       <br />
-      <div style={{ display: "flex", width: "385px", paddingBottom: "10px" }}>
+      <div style={{ display: "flex", width: "390px", paddingBottom: "10px" }}>
         <Link to="/salelist/ticket" style={{ color: "black", width: "33%" }}>
           <IoTicketSharp size="50" color="#3FCC80" style={{ marginBottom: "5px" }} /><br />
           <div style={{ color: "gray", fontSize:"14px" }}>티켓/쿠폰</div>

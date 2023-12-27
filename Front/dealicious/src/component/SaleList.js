@@ -3,7 +3,6 @@ import React, { useRef, useState, useEffect } from 'react';
 import { FiPlusCircle } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { FaArrowRight } from 'react-icons/fa6';
 import { useWebSocket } from './WebSocketProvider';

@@ -259,16 +259,16 @@ const StompChatting = () => {
   };
   const Image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   return (
-    <div className='main' >
+    <div className='main' style={{height:"642px"}}>
       <div style={{ textAlign: "left", color: "#14C38E", display: "flex", verticalAlign: "middle" }}>
-        <Link to="/chatlist"><GoArrowLeft size={30} style={{ color: "#14C38E", height: "40px" }} /></Link>
-        <div style={{ fontSize: "20px", fontWeight: "bold", marginLeft: "10px", height: "40px", lineHeight: "40px" }}>{chatpartner.nickname}</div>
+        <Link to="/chatlist"><GoArrowLeft size={20} style={{ height: "40px", color: "black" }} /></Link>
+        <div style={{ fontSize: "18px", marginLeft: "10px", height: "40px", lineHeight: "40px", color: "black" }}>{chatpartner.nickname}</div>
       </div>
-      <div style={{ marginTop: "20px", width: "385px", borderTop: "1px solid gray", borderBottom: "1px solid gray", height: "105px" }}>
+      <div style={{ width: "385px", borderTop: "1px solid #D9D9D9", borderBottom: "1px solid #D9D9D9", height: "85px" }}>
         <div style={{ marginTop: "10px", marginBottom: "10px" }}>
           <div style={{ display: "flex" }}>
 
-            <div><img src={url + `img/${fileurlList[0]}`} style={{ width: "80px", height: "80px" }}></img></div>
+            <div><img src={url + `img/${fileurlList[0]}`} style={{ width: "60px", height: "60px", borderRadius:"10px" }}></img></div>
             <div style={{ width: "230px", textAlign: "left", lineHeight: "40px" }}>
               <Link to={"/saledetail/only-detail/" + sale.num} style={{ color: "black", textDecoration: "none" }}><div style={{ textAlign: "left" }}>{sale.title}</div></Link>
               <div style={{ textAlign: "left", fontSize: "18px" }}>{sale.amount}</div>
@@ -280,7 +280,7 @@ const StompChatting = () => {
           </div>
         </div>
       </div>
-      <div ref={messagesRef} style={{ overflowY: 'auto', height: "477px", maxHeight: "477px", overflowX: "hidden" }}>
+      <div ref={messagesRef} style={{ overflowY: 'auto', height: "437px", maxHeight: "437px", overflowX: "hidden" }}>
         <div style={{ paddingRight: "10px" }}>
           <br />
           {chatList.map((item, index) => <div key={index}>{
@@ -290,23 +290,23 @@ const StompChatting = () => {
                   <div style={{ display: "inline-block", width: "auto", maxWidth: "625px", borderRadius: "10px", backgroundColor: "#14C38E", padding: "10px", color: "white" }}>{item.chat}</div>
                 </div>
                 :
-                <div style={{ textAlign: "left", marginBottom: "15px" }}>
-                  <div style={{ display: "inline-block", marginRight: "5px" }}>{chatpartner.profileimgurl == null ? <img src={Image} style={{ width: "44px", borderRadius:"50px" }}></img> : <img src={url + `img/${chatpartner.profileimgurl}`} style={{ width: "44px", borderRadius:"50px" }}></img>}</div>
-                  <div style={{ display: "inline-block", width: "auto", borderRadius: "10px", backgroundColor: "#D9D9D9", padding: "10px", maxWidth:"325px" }}>{item.chat}</div>
+                <div style={{ textAlign: "left", marginBottom: "15px", height: "44px", maxHeight: "100%", display: "flex" }}>
+                  <div style={{ marginRight: "5px" }}>{chatpartner.profileimgurl == null ? <img src={Image} style={{ width: "44px", borderRadius: "50px" }}></img> : <img src={url + `img/${chatpartner.profileimgurl}`} style={{ width: "44px", borderRadius: "50px" }}></img>}</div>
+                  <div style={{ width: "auto", borderRadius: "10px", backgroundColor: "#D9D9D9", padding: "10px", maxWidth: "325px", height: "44px" }}>{item.chat}</div>
                 </div>
               :
               item.type == "completepay" ?
                 sale.email == user.email ?
-                  <div style={{ borderLeft: "3px solid #D9D9D9", paddingLeft: "10px", textAlign: "left", marginBottom: "15px" }}>
-                    <img src='/dealicious1.png' style={{ marginBottom: "10px", width: "100px" }}></img>
-                    <p style={{ fontWeight: "bold" }}>{sale.title} 의 결제가 완료되었어요.</p>
-                    <p style={{ color: "gray" }}>구매자에게 물건을 전달해주세요:)</p>
+                  <div style={{ borderLeft: "3px solid #D9D9D9", paddingLeft: "10px", textAlign: "left", paddingBottom: "8px", paddingTop:"8px", marginBottom:"15px" }}>
+                    <div className='logo'>DEALicious</div>
+                    <div><span style={{ fontWeight: "bold" }}>"{sale.title}"</span> 의 결제가 완료되었어요.</div>
+                    <div style={{ color: "gray", fontSize: "15px" }}>&nbsp;&nbsp;구매자에게 물건을 전달해주세요:)</div>
                   </div>
-                  : <div style={{ borderLeft: "3px solid #D9D9D9", paddingLeft: "10px", textAlign: "left", marginBottom: "15px" }}>
-                    <img src='/dealicious1.png' style={{ marginBottom: "10px", width: "100px" }}></img>
-                    <p style={{ fontWeight: "bold" }}>{sale.title} 의 결제가 완료되었어요.</p>
-                    <a style={{ color: "gray" }}>수령 후 수령완료 버튼을 눌러주세요:)</a>
-                    <p style={{ color: "gray", fontSize: "12px" }}>수령완료 버튼을 누르면 판매자에게 정산액이 입금됩니다.</p>
+                  : <div style={{ borderLeft: "3px solid #D9D9D9", paddingLeft: "10px", textAlign: "left", paddingBottom: "8px", paddingTop:"8px", marginBottom:"15px" }}>
+                    <div className='logo'>DEALicious</div>
+                    <div><span style={{ fontWeight: "bold" }}>"{sale.title}"</span> 의 결제가 완료되었어요.</div>
+                    <div style={{ color: "gray", fontSize: "15px" }}>수령 후 수령완료 버튼을 눌러주세요:)</div>
+                    <div style={{ color: "gray", fontSize: "12px" }}>&nbsp;&nbsp;수령완료 버튼을 누르면 판매자에게 정산액이 입금됩니다.</div>
                     <button style={{ width: "310px", backgroundColor: "#C7FBEB", border: "white", padding: "5px", borderRadius: "10px", color: "#14C38E", fontWeight: "bold" }} onClick={() => setModal2IsOpen(true)}>수령완료</button>
                     <Modal className='main' style={{
                       content: {
@@ -326,11 +326,11 @@ const StompChatting = () => {
                     </Modal>
                   </div>
                 :
-                <div style={{ borderLeft: "3px solid #D9D9D9", paddingLeft: "10px", textAlign: "left", marginBottom: "15px" }}>
-                  <img src='/dealicious1.png' style={{ marginBottom: "10px", width: "100px" }}></img>
-                  <p style={{ fontWeight: "bold" }}>{sale.title} 의 거래가 완료되었어요.</p>
-                  <p style={{ color: "gray" }}>거래는 만족스러우셨나요? 후기를 남겨주세요 :)</p>
-                  <button style={{ width: "310px", backgroundColor: "#C7FBEB", border: "white", padding: "5px", borderRadius: "10px", color: "#14C38E", fontWeight: "bold" }} onClick={() => setModal1IsOpen(true)}>후기 작성하기</button>
+                <div style={{ borderLeft: "3px solid #D9D9D9", paddingLeft: "10px", textAlign: "left", paddingBottom: "8px", paddingTop:"8px", marginBottom:"15px" }}>
+                  <div className='logo'>DEALicious</div>
+                  <div><span style={{ fontWeight: "bold" }}>"{sale.title}"</span> 의 거래가 완료되었어요.</div>
+                  <div style={{ color: "gray", fontSize: "15px" }}>&nbsp;&nbsp;거래는 만족스러우셨나요? 후기를 남겨주세요 :)</div>
+                  <button style={{ width: "310px", backgroundColor: "#C7FBEB", border: "white", padding: "5px", borderRadius: "10px", color: "#14C38E" }} onClick={() => setModal1IsOpen(true)}>후기 작성하기</button>
                   <Modal className='main' style={{
                     content: {
                       width: "300px", height: "330px", position: "absolute", borderRadius: "20px",
