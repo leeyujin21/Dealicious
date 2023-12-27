@@ -226,11 +226,8 @@ function SaleDetail() {
         height: "632px",
         overflowX: "hidden",
       }}
-
     >
       <div style={{ marginTop: "10px", marginBottom: "20px", display: "flex" }}>
-
-
         <Link to="/salelist">
           <div><IoArrowBackOutline size="30" color="14C38E" /></div>
         </Link>
