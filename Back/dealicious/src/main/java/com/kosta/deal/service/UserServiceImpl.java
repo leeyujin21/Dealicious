@@ -72,7 +72,8 @@ public class UserServiceImpl implements UserService {
 		if (file != null && !file.isEmpty()) {
             try {
                 FileVo fileVo = FileVo.builder().directory(dir).name(file.getOriginalFilename())
-                        .size(file.getSize()).contenttype(file.getContentType()).data(file.getBytes()).build();
+//                        .size(file.getSize()).contenttype(file.getContentType()).data(file.getBytes()).build();
+                .size(file.getSize()).contenttype(file.getContentType()).build();
                 fileVoRepository.save(fileVo);
                 
                 File uploadFile = new File(dir + fileVo.getNum());
