@@ -93,7 +93,7 @@ const NotiKeyword = () => {
               <Button style={{ width: "100px", height: "30px", borderRadius: "5px", backgroundColor: "#D9D9D9", borderStyle:"none", color:"black", fontSize:"11px" }}>키워드 등록하기</Button>
             </Link>
           </div>
-          {notikeywordList.map((item) =>
+          {notikeywordList.length===0?"키워드알림 없음": notikeywordList.map((item) =>
             <Link to={"/saledetail/only-detail/" + item.notification.salenum} style={{ color: "black", textDecoration: "none" }}>
               <div style={{ borderBottom: "1px solid gray", width: "390px" }}>
                 <div style={{ display: "flex", paddingBottom: "10px", paddingTop: "10px" }}>

@@ -125,7 +125,8 @@ public class SaleServiceImpl implements SaleService {
 			for (MultipartFile file : files) {
 				// file table에 insert
 				FileVo fileVo = FileVo.builder().directory(dir).name(file.getOriginalFilename()).size(file.getSize())
-						.contenttype(file.getContentType()).data(file.getBytes()).build();
+//						.contenttype(file.getContentType()).data(file.getBytes()).build();
+				.contenttype(file.getContentType()).build();
 				fileVoRepository.save(fileVo);
 
 				// upload 폴더에 upload
@@ -228,7 +229,8 @@ public class SaleServiceImpl implements SaleService {
 					fileNums += (fileNums.equals("") ? "" : ",") + file.getOriginalFilename();
 				} else {
 					FileVo fileVo = FileVo.builder().directory(dir).name(file.getOriginalFilename())
-							.size(file.getSize()).contenttype(file.getContentType()).data(file.getBytes()).build();
+//							.size(file.getSize()).contenttype(file.getContentType()).data(file.getBytes()).build();
+					.size(file.getSize()).contenttype(file.getContentType()).build();
 					fileVoRepository.save(fileVo);
 
 					// upload 폴더에 upload

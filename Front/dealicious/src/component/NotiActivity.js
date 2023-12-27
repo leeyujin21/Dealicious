@@ -101,8 +101,7 @@ const NotiActivity = () => {
         </div>
       </div>
       <div style={{ overflow: "scroll", height: "584.5px", overflowX: "hidden", paddingTop: "0px" }}>
-        <div>
-          {notiactiList.map((item, index) =>
+        <div>{notiactiList.length===0?"활동알림 없음": notiactiList.map((item, index) =>
             <div key={index} style={{ borderBottom: "1px solid gray", width: "390px", cursor: "pointer" }} onClick={() => goChat(item.channelId)}>
               <div style={{ display: "flex", paddingBottom: "10px", paddingTop: "10px" }}>
                 <div><img src='ggulggulee.png' style={{ width: "40px", height: "40px", marginTop: "5px" }}></img></div>
@@ -116,6 +115,7 @@ const NotiActivity = () => {
               </div>
             </div>
           )}
+          
         </div>
       </div>
     </div>
