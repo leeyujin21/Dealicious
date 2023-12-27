@@ -92,9 +92,9 @@ const NotiActivity = () => {
       <div>
         <div style={{ display: "flex" }}>
           <Link to="/notiactivity" style={{ textDecoration: "none", color: "black" }}>
-            <div style={{ width: "195px", fontWeight: "bold", fontSize: "17px" }}>활동 알림</div>
+            <div style={{ width: "195px", fontSize: "16px" }}>활동 알림</div>
           </Link>
-          <div onClick={goKeyword} style={{ width: "195px", fontSize: "17px", cursor: "pointer", fontWeight:"bold", color:"lightgray" }}>키워드 알림</div>
+          <div onClick={goKeyword} style={{ width: "195px", fontSize: "16px", cursor: "pointer", color:"lightgray" }}>키워드 알림</div>
         </div>
         <div style={{ height: "2px", backgroundColor: "#D9D9D9", width: "390px", position: "relative" }}>
           <div style={{ position: "absolute", height: "3px", width: "195px", backgroundColor: "#14C38E" }} />

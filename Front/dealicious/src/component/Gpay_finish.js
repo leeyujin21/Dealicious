@@ -1,9 +1,7 @@
 import { IoArrowBackOutline } from "react-icons/io5";
-import { Button, Label, Modal } from "reactstrap";
-import { FaCheck } from "react-icons/fa6";
+import { Button, Label } from "reactstrap";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { IoClose } from "react-icons/io5";
 import axios from "axios";
 import { useWebSocket } from './WebSocketProvider';
 
@@ -44,19 +42,15 @@ const Gpay_finish = () => {
 
 
     return (
-        <div className='main' style={{overflow:"scroll", height:"632px", overflowX:"hidden", padding:"20px 50px 0 50px"}}>
-            <div style={{textAlign:"left", paddingBottom:"10px"}}>
-                <IoArrowBackOutline style={{marginRight:"80px"}} size="30" color="lightgray"/>
+        <div className='main' style={{overflow:"scroll", height:"632px", overflowX:"hidden"}}>
+            <div style={{textAlign:"left"}}>
+                <Label style={{fontSize:"18px", fontWeight:"bold", color:"black"}}>꿀페이 결제완료</Label>
             </div>
-            <div style={{textAlign:"left", marginLeft:"10px"}}>
-                <Label style={{fontSize:"20px", fontWeight:"bold", color:"black"}}>꿀페이 결제완료</Label>
-            </div>
-            <div style={{textAlign:"left", paddingBottom:"20px", borderBottom:"1px solid lightgray", display:"flex"}}>
-                &nbsp;&nbsp;
-                <img src={url+`img/${sale.fileurl.split(',')[0]}`}style={{ width: "100px", height: "100px" }}></img>
+            <div style={{textAlign:"left", paddingBottom:"20px", borderBottom:"1px solid lightgray", display:"flex", width:"390px"}}>
+                <img src={url+`img/${sale.fileurl.split(',')[0]}`}style={{ width: "70px", height: "70px", borderRadius:"10px" }}></img>
                 <div style={{ marginLeft: "10px" }}>
-                    <div style={{ marginLeft: "10px", fontSize: "25px", marginBottom: "5px" }}> {sale.title}</div>
-                    <div style={{ marginLeft: "10px" }}> {sale.amount*1.05} 원</div>
+                    <div style={{ fontSize: "17px" }}> {sale.title}</div>
+                    <div style={{ }}> {sale.amount*1.05} 원</div>
                 </div>
             </div>
             <div style={{textAlign:"left", borderBottom:"1px solid lightgray", paddingBottom:"20px"}}>

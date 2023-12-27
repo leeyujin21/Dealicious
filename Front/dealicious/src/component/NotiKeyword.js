@@ -76,9 +76,9 @@ const NotiKeyword = () => {
     <div className='main' style={{ paddingBottom:"0px"}}>
       <div>
         <div style={{ display: "flex" }}>
-          <div onClick={goActi} style={{ width: "195px", fontSize: "17px", cursor: "pointer", fontWeight:"bold", color:"lightgray" }}>활동 알림</div>
+          <div onClick={goActi} style={{ width: "195px", fontSize: "16px", cursor: "pointer", color:"lightgray" }}>활동 알림</div>
           <Link to="/notikeyword" style={{ textDecoration: "none", color: "black" }}>
-            <div style={{ width: "195px", fontWeight: "bold", fontSize: "17px" }}>키워드 알림</div>
+            <div style={{ width: "195px", fontSize: "16px" }}>키워드 알림</div>
           </Link>
         </div>
         <div style={{ height: "2px", backgroundColor: "#D9D9D9", width: "390px", position: "relative" }}>
