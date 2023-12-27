@@ -48,7 +48,7 @@ const Search = () => {
       <p style={{ fontWeight: "bold", textAlign: "left" }}>인기 검색어</p>
 
       {hotlist.map((item, index) =>
-      <Link to={"/salelist/"+item.content} key={index} style={{textDecoration: "none", color: "black" }}>
+      <Link to={"/salelist/search/"+item.content} key={index} style={{textDecoration: "none", color: "black" }}>
 
           <div style={{ height:"35px",marginLeft:"20px",textAlign: "left" }}>{item.content}</div>
 
