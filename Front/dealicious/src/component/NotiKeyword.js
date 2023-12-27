@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { GoArrowLeft } from "react-icons/go";
+import {Button} from 'reactstrap'
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useWebSocket } from './WebSocketProvider';
@@ -76,12 +76,7 @@ const NotiKeyword = () => {
     <div className='main' style={{ paddingBottom:"0px"}}>
       <div>
         <div style={{ display: "flex" }}>
-          {noticnt >= 1 &&
-            <div style={{ borderRadius: "50px", position: "absolute", marginTop: "5px", marginLeft: "140px", width: "18px", height: "18px", backgroundColor: "red", justifyContent: "center", alignItems: "center", display: "flex", color: "white", fontSize: "15px" }}>
-              {noticnt}
-            </div>
-          }
-          <div onClick={goActi} style={{ width: "195px", fontSize: "17px", cursor: "pointer" }}>활동 알림</div>
+          <div onClick={goActi} style={{ width: "195px", fontSize: "17px", cursor: "pointer", fontWeight:"bold", color:"lightgray" }}>활동 알림</div>
           <Link to="/notikeyword" style={{ textDecoration: "none", color: "black" }}>
             <div style={{ width: "195px", fontWeight: "bold", fontSize: "17px" }}>키워드 알림</div>
           </Link>
@@ -93,15 +88,15 @@ const NotiKeyword = () => {
 
       <div style={{ overflow: "scroll", height: "584.5px", overflowX: "hidden", paddingTop: "0px" }}>
         <div>
-          <div style={{ height: "80px", textAlign: "left" }}>
+          <div style={{ height: "30px", textAlign: "left", marginTop:"10px" }}>
             <Link to="/keyword">
-              <button style={{ width: "150px", height: "40px", borderRadius: "5px", backgroundColor: "#D9D9D9", border: "white", fontWeight: "bold", marginTop: "20px" }}>키워드 등록하기</button>
+              <Button style={{ width: "100px", height: "30px", borderRadius: "5px", backgroundColor: "#D9D9D9", borderStyle:"none", color:"black", fontSize:"11px" }}>키워드 등록하기</Button>
             </Link>
           </div>
           {notikeywordList.map((item) =>
             <Link to={"/saledetail/only-detail/" + item.notification.salenum} style={{ color: "black", textDecoration: "none" }}>
               <div style={{ borderBottom: "1px solid gray", width: "390px" }}>
-                <div style={{ display: "flex", paddingBottom: "15px", paddingTop: "15px" }}>
+                <div style={{ display: "flex", paddingBottom: "10px", paddingTop: "10px" }}>
                   <div><img src={url + `img/${item.sale.fileurl.split(',')[0]}`} style={{ width: "50px", height: "50px", borderRadius: "10px" }}></img></div>
                   <div style={{ marginLeft: "10px", width: "330px", height: "50px" }}>
                     <div style={{ textAlign: "left", lineHeight: "25px" }}><b>{item.notification.title}</b> - {item.sale.title}</div>
