@@ -88,8 +88,7 @@ const NotiActivity = () => {
   }
 
   return (
-    <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden", paddingTop: "10px" }}>
-      <br />
+    <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden" }}>
       <div>
         <div style={{ display: "flex" }}>
           <Link to="/notiactivity" style={{ textDecoration: "none", color: "black" }}>
