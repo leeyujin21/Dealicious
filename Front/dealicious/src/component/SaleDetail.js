@@ -181,23 +181,27 @@ function SaleDetail() {
     } else if (user.email == '' || user.email === undefined) {
       alert("로그인해주세요")
     } else if (user.email !== writer.email && user.email !== '') {
-      const uniqueString = uuidv4();
-      const chatRoom = { channelId: uniqueString, creator: user.email, partner: writer.email, saleNum: num };
-      console.log(chatRoom);
-      axios.post(url + `findchatroom`, chatRoom, {
-        headers: {
-          Authorization: token,
-        }
-      })
-        .then(res => {
-          console.log(res.data);
-          navigate(`/gpay/${num}`);
+      if (sale.status === "판매중") {
+        const uniqueString = uuidv4();
+        const chatRoom = { channelId: uniqueString, creator: user.email, partner: writer.email, saleNum: num };
+        console.log(chatRoom);
+        axios.post(url + `findchatroom`, chatRoom, {
+          headers: {
+            Authorization: token,
+          }
         })
-        .catch((err) => {
-          console.log(err);
-        });
-
+          .then(res => {
+            console.log(res.data);
+            navigate(`/gpay/${num}`);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        alert("이미 예약 또는 결제된 상품입니다.");
+      }
     }
+
 
   }
 
