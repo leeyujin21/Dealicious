@@ -132,21 +132,12 @@ function SaleDetail() {
     }
   };
   const selectGood = () => {
-    if (user.email === '' || user.email === undefined) {
-      Swal.fire({
-        icon: 'info',
-        title: '로그인이 필요합니다.',
-        text: '로그인 후에 찜하기 기능을 사용할 수 있습니다.',
-        confirmButtonText: '확인',
-      });
-    } else {
-      axios.get(url + `salelike/${user.email}/${num}`)
-        .then(res => {
-          console.log(res.data)
-          setSale({ ...sale, zzimcnt: res.data.zzimCnt });
-          setHeart(res.data.isSelect);
-        })
-    }
+    axios.get(url + `salelike/${user.email}/${num}`)
+      .then(res => {
+        console.log(res.data)
+        setSale({ ...sale, zzimcnt: res.data.zzimCnt });
+        setHeart(res.data.isSelect);
+      })
   };
 
   const gochat = () => {
@@ -175,6 +166,13 @@ function SaleDetail() {
   };
   const goToEditPage = () => {
     navigate(`/salemodify/${num}`);
+  }
+  const reject = () => {
+    if (user.email === writer.email) {
+      alert("내가 작성한 글에는 누를 수 없습니다")
+    } else if (user.email == '' || user.email === undefined) {
+      alert("로그인해주세요")
+    }
   }
 
   const pay = () => {
@@ -247,7 +245,7 @@ function SaleDetail() {
             ))}
           </Slider>
         </div>
-        <div style={{ display: "flex", marginBottom:"10px" }}>
+        <div style={{ display: "flex", marginBottom: "10px" }}>
           <div rowSpan={2}>
             <img src={writer.fileurl == null ? Image : url + `img/${writer.fileurl}`} style={{ width: "60px", height: "60px", marginRight: "10px", borderRadius: "50px" }} />
           </div>
@@ -285,7 +283,7 @@ function SaleDetail() {
                       </option>;
                     })}
 
-                  </select> : <div style={{ borderStyle: "none", borderRadius: "10px", width: "130px", height: "42px",lineHeight: "43px" }}>{sale.status}</div>}
+                  </select> : <div style={{ borderStyle: "none", borderRadius: "10px", width: "130px", height: "42px", lineHeight: "43px" }}>{sale.status}</div>}
 
               </div>
               :
@@ -298,7 +296,7 @@ function SaleDetail() {
           {convertCategoryToKorean(sale.category)}
         </div>
         <tr >
-          <td style={{ textAlign: "left", width: "300px", fontWeight:"550" }}>{sale.place}</td>
+          <td style={{ textAlign: "left", width: "300px", fontWeight: "550" }}>{sale.place}</td>
           <td
             style={{ width: "150px", fontWeight: "550", textAlign: "right" }}
           >
@@ -321,8 +319,8 @@ function SaleDetail() {
         ></Input>
         <div style={{ display: "flex" }}>
 
-          {writer.email === user.email || user.email == '' ?
-            <div style={{ position: "relative", marginTop: "8px" }} onClick={pay}>
+          {writer.email === user.email || user.email == '' || user.email === undefined ?
+            <div style={{ position: "relative", marginTop: "8px" }} onClick={reject}>
               <img src={heart ? "/zzimheart.png" : "/noheart.png"} style={{ verticalAlign: "middle", width: "40px", position: "absolute" }} />
               <div style={{ position: "relative", width: "40px", textAlign: "center", lineHeight: "30px" }}>{sale.zzimcnt}</div>
             </div>
