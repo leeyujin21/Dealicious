@@ -129,7 +129,7 @@ const Gpay = () => {
     return (
         <div className='main' style={{ overflow: "scroll", height: "632px", overflowX: "hidden" }}>
             <div style={{ textAlign: "left", paddingBottom: "10px", display:"flex" }}>
-                <Link to={backButton}><IoArrowBackOutline style={{ marginRight:"5px", lineHeight:"27px", height:"27px" }} size="20" color="lightgray" /></Link>
+                <div onClick={backButton}><IoArrowBackOutline style={{ marginRight:"5px", lineHeight:"27px", height:"27px" }} size="20" color="lightgray" /></div>
                 <Label style={{ fontSize: "18px", fontWeight: "550", color: "black", lineHeight:"27px" }}>꿀페이 결제하기</Label>
             </div>
             <div style={{ textAlign: "left", paddingBottom: "10px", borderBottom: "1px solid lightgray", display: "flex", width: "390px" }}>

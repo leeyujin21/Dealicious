@@ -303,11 +303,11 @@ const StompChatting = () => {
           <div style={{ display: "flex" }}>
 
             <div><img src={url + `img/${fileurlList[0]}`} style={{ width: "60px", height: "60px", borderRadius: "10px" }}></img></div>
-            <div style={{ width: "230px", textAlign: "left", lineHeight: "30px", marginLeft: "5px" }}>
-              <Link to={"/saledetail/only-detail/" + sale.num} style={{ color: "black", textDecoration: "none" }}><div style={{ textAlign: "left" }}>{sale.title}</div></Link>
+            <div style={{ width: "230px", textAlign: "left", lineHeight: "30px", marginLeft: "10px" }}>
+              <Link to={"/saledetail/only-detail/" + sale.num} style={{ color: "black", textDecoration: "none" }}><div style={{ textAlign: "left" }}>{sale.title.length > 15 ? `${sale.title.slice(0, 15)}...` : sale.title}</div></Link>
               <div style={{ textAlign: "left", fontSize: "18px" }}>{formatPrice(sale.amount)}</div>
             </div>
-            <div style={{ lineHeight: "40px", width: "80px", textAlign: "right", marginRight: "10px" }}>
+            <div style={{ lineHeight: "30px", width: "80px", textAlign: "right", marginRight: "10px" }}>
               <div>{sale.status}</div>
               <div>{sale.ggull == 1 ? sale.email == user.email ? <img src='/ggul.png' style={{ width: "34px", height: "19px" }}></img> : <Link to={"/gpay/" + sale.num}><img src='/ggul.png' style={{ width: "34px", height: "19px" }}></img></Link> : ""}</div>
             </div>
