@@ -113,24 +113,7 @@ function ChatList() {
         }
 
     };
-    const convertCategoryToKorean = (category) => {
-        switch (category) {
-            case "mobile":
-                return "모바일/태블릿";
-            case "pc":
-                return "노트북/PC";
-            case "ticket":
-                return "티켓/쿠폰";
-            case "clothes":
-                return "의류";
-            case "free":
-                return "나눔";
-            case "others":
-                return "기타";
-            default:
-                return category;
-        }
-    };
+    
     const truncateText = (text, maxLength) => {
         if (text.length > maxLength) {
             return `${text.slice(0, maxLength)}...`;
