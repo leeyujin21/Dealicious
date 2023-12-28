@@ -27,7 +27,7 @@ const SaleList = () => {
     const currentDate = new Date(); // 현재 날짜와 시간
     const writeDate = new Date(writedate); // 주어진 날짜
 
-    const diffInMilliseconds = currentDate - writeDate; // 밀리초 단위의 시간 차이
+    const diffInMilliseconds = currentDate - writeDate+1000; // 밀리초 단위의 시간 차이
     const diffInMinutes = diffInMilliseconds / (1000 * 60); // 분 단위의 차이
 
     if (diffInMinutes < 60) {
