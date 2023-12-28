@@ -148,7 +148,7 @@ const Mypage = () => {
                         {saleList
                             .filter(item => filterOption === "전체" || (filterOption === "판매중" && item.status !== "수령완료" && item.status !== "판매완료" && item.status !== "거래완료") || (filterOption === "거래완료" && (item.status === "거래완료" || item.status === "판매완료" || item.status === "수령완료")))
                             .map((item, index) => (
-                                <Link to={"/saledetail/only-detail/" + item.num} key={index} style={{ textDecoration: "none", color: "black" }}>
+                                <Link to={"/saledetail/only-detail/" + item.num} key={index} style={{ textDecoration: "none", color: "black", marginBottom:"3px" }}>
                                     <div style={{ display: "inline-block", paddingRight: index % 3 === 2 ? "0px" : "10px" }}>
                                         {item.status === "거래완료" || item.status === "수령완료" || item.status === "판매완료" ? (
                                             <div style={{ width: "120px", height: "120px", borderRadius: "10px", position: "relative" }}>
