@@ -105,7 +105,7 @@ const AdminSettleList = () => {
       <Table style={{ marginBottom: "10px", borderBottom: "2px solid gray", fontSize: "14px" }}>
         <thead>
           <td>번호</td>
-          <td>판매자</td>
+          <td>판매제목</td>
           <td>정산액</td>
           <td>수수료</td>
           <td>결제금액</td>
