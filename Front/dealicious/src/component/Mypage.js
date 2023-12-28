@@ -119,7 +119,7 @@ const Mypage = () => {
                             style={{
                                 cursor: "pointer",
                                 marginRight: "10px",
-                                fontWeight: filterOption === "전체" ? "bold" : "normal",
+                                fontWeight: filterOption === "전체" ? "550" : "normal",
                             }}
                         >
                             전체
@@ -129,7 +129,7 @@ const Mypage = () => {
                             style={{
                                 cursor: "pointer",
                                 marginRight: "10px",
-                                fontWeight: filterOption === "판매중" ? "bold" : "normal",
+                                fontWeight: filterOption === "판매중" ? "550" : "normal",
                             }}
                         >
                             판매중
@@ -138,7 +138,7 @@ const Mypage = () => {
                             onClick={() => handleFilterChange("거래완료")}
                             style={{
                                 cursor: "pointer",
-                                fontWeight: filterOption === "거래완료" ? "bold" : "normal",
+                                fontWeight: filterOption === "거래완료" ? "550" : "normal",
                             }}
                         >
                             판매완료
@@ -155,7 +155,7 @@ const Mypage = () => {
                                                 <img src={url + `img/${item.fileurl.split(',')[0]}`} style={{ width: "120px", height: "120px", borderRadius: "10px", position: "absolute" }} />
                                                 <div style={{ width: "120px", height: "120px", position: "relative", borderRadius: "10px" }}>
                                                     <div style={{ backgroundColor: "gray", width: "100%", height: "100%", position: "absolute", borderRadius: "10px", opacity: "0.5" }}></div>
-                                                    <a style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", fontWeight: "bold", color: "white" }}>판매완료</a>
+                                                    <a style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", fontWeight: "550", color: "white" }}>판매완료</a>
                                                 </div>
                                             </div>
                                         ) : (
