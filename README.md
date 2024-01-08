@@ -28,9 +28,11 @@
   <img src="/img/딜리셔스10.png" width="200" />
 </p>
 <br><br>
+
 ## ℹ️배포
 http://43.203.108.152:8080
 <br><br>
+
 ## 💻사용 기술 및 라이브러리
 Spring, SpringBoot, Security, JPA<br>
 Java, JWT, OAuth2, MariaDB, Gradle<br>
